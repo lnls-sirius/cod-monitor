@@ -1,0 +1,6 @@
+This website uses the libraries:
+
+- npm 
+- react-router-dom
+- styled-components
+- react-icons
