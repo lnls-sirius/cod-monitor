@@ -1,31 +1,41 @@
 import React from "react";
+import { pages } from "../../assets/text";
 import * as S from './styled';
 
 //Edit change page with < title >
+//Use only one component for the items
 
-const Logo: React.FC = () => {
+const Navigator: React.FC = () => {
+  
+  function pageIndicator(key: string, page: string){
+    let path = window.location.pathname;
+    if(path == '/'){
+      path = '/orbitDrift';
+    }
+    if(path == key){
+      return(
+        <S.PageAct>
+          {page}
+        </S.PageAct>
+      );
+    }else{
+      return(
+        <S.PageLink to={key}>
+          {page}
+        </S.PageLink>
+      );
+    }
+    
+  }
 
-  return (
-    <S.NavWrapper> 
-      <S.GridEle container>
-        <S.GridEle item xs={4} md={4} lg={4}>
-          <S.PageLink to='/orbitDrift'>
-            Orbit Drift
-          </S.PageLink>
-        </S.GridEle>
-        <S.GridEle item xs={4} md={4} lg={4}>
-          <S.PageLink to='/driftCause'>
-            Drift Possible causes
-          </S.PageLink>
-        </S.GridEle>
-        <S.GridEle item xs={4} md={4} lg={4}>
-          <S.PageLink to='/orbitCorrection'>
-            Orbit Correction
-          </S.PageLink>
-        </S.GridEle>
-      </S.GridEle>
+  return(
+    <S.NavWrapper>
+      {Object.entries(pages).map(([key, value]) => (
+        pageIndicator(key, value)
+      ))}
     </S.NavWrapper>
   );
 };
+/**/
 
-export default Logo;
+export default Navigator;
