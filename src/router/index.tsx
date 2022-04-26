@@ -11,13 +11,13 @@ export default function RouterNavigator() {
         <Route  path="/" element={
             <OrbitDrift />
         }/>
-        <Route  path="/orbitDrift" element={
+        <Route  path="/bpmDrift" element={
             <OrbitDrift />
         }/>
         <Route  path="/orbitCorrection" element={
             <OrbitDrift />
         }/>
-        <Route  path="/driftCause" element={
+        <Route  path="/orbitDrift" element={
             <OrbitDrift />
         }/>
     </Routes>

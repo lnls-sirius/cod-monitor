@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../assets/theme";
+import { colors, fonts } from "../../assets/theme";
 
 export const MenuWrapper = styled.div`
   display: flex;
@@ -7,9 +7,9 @@ export const MenuWrapper = styled.div`
 `;
 
 export const Title = styled.div`
-  padding-top: 25px;
-  font-size: 30px;
-  font-family: 'Akshar', sans-serif;
+  padding-top: 15px;
+  font-size: 25px;
+  font-family: ${fonts.primary};
   color: ${colors.txt.primary};
 `;
 

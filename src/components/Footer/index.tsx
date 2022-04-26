@@ -1,13 +1,13 @@
 import React from "react";
+import { footer } from "../../assets/text";
 import * as S from './styled';
 
 const Menu: React.FC = (): JSX.Element => {
   return (
     <S.FooterWrapper>
-      For further information, refer to the
-      project's official website or contact FAC.
+      {footer.text}
       <br />
-      2022-04-19-c73ab22
+      {footer.verInfo}
     </S.FooterWrapper>
   );
 };

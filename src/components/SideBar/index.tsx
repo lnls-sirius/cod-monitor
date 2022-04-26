@@ -2,7 +2,7 @@ import React, { ReactFragment } from "react";
 import {Drawer} from '@mui/material';
 import Menu from "../Menu";
 import * as S from './styled';
-import { settings } from "../../assets/text";
+import { sideMenu } from "../../assets/text";
 import Logo from "../Logo";
 import Footer from "../Footer";
 
@@ -27,10 +27,10 @@ const SideBar: React.FC = () => {
     return (
       <S.ListWrapper>
         <Logo />
-        {Object.entries(settings).map(([key, value]) => (
-          <Menu 
+        {Object.entries(sideMenu).map(([key, value]) => (
+          <Menu
             title={key}
-            items={value}/>
+            items={value.general}/>
         ))}
         <Footer />
       </S.ListWrapper>
@@ -40,7 +40,7 @@ const SideBar: React.FC = () => {
   return (
     <div>
       <S.MenuWrapper>
-        <S.Icon 
+        <S.Icon
           onClick={toggleDrawer(true)}/>
         <Drawer
           anchor={'left'}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../assets/theme";
+import { colors, fonts } from "../../assets/theme";
 
 export const FooterWrapper = styled.div`
   position: fixed;
@@ -7,7 +7,7 @@ export const FooterWrapper = styled.div`
   bottom: 0;
   width: 200px;
   font-size: 13px;
-  font-family: 'Akshar', sans-serif;
+  font-family: ${fonts.primary};
   text-align: center;
   color: ${colors.txt.primary}
 `;

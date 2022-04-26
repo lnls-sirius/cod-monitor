@@ -21,3 +21,7 @@ export const properties = {
         medium: '25px'
     }
 }
+
+export const fonts = {
+    primary: '\'Akshar\', sans-serif'
+}

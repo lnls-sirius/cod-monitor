@@ -4,18 +4,19 @@ import * as S from './styled';
 
 interface MenuItems {
   title: string;
-  items: Array<string>;
+  items: any;
 }
 
 function printItems(itemList: Array<string>){
-  return itemList.map((item)=>
-    <Item title={item}/>
-  );
+  return Object.entries(itemList).map(([name, action]) => (
+    <Item
+      title={name}/>
+  ));
 }
 
 const Menu: React.FC<MenuItems> = (props): JSX.Element => {
   return (
-    <S.MenuWrapper> 
+    <S.MenuWrapper>
       <S.Title>{props.title}</S.Title>
       <S.Content>
         {printItems(props.items)}
