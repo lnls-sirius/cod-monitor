@@ -1,64 +1,50 @@
 import React, { useEffect, useRef, useState } from "react";
-import {Chart} from 'chart.js';
+import Chart, { ChartDataset } from 'chart.js/auto';
 import * as S from './styled';
+import { config, initData } from "./config";
 
 interface Data {
   chartData: number[];
 }
 
-const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-];
-
-const data = {
-  labels: labels,
-  datasets: [{
-    label: 'My First dataset',
-    backgroundColor: 'rgb(255, 99, 132)',
-    borderColor: 'rgb(255, 99, 132)',
-    data: [0, 10, 5, 2, 20, 30, 45],
-  }]
-};
-
-const configu = {
-  type: 'line',
-  data: data,
-  options: {}
-};
-
 const DiffChart: React.FC<Data> = ({ chartData }: Data) => {
-  // use a ref to store the chart instance since it it mutable
-  const chartRef = useRef<Chart | null>(null);
+  const [dataset, setDataset]: ChartDataset<any>[] = useState([]);
+  const chartRef = useRef(null);
+  const [chartInstance, setChartInstance] = useState<Chart>();
 
-  // callback creates the chart on the canvas element
-  const canvasCallback = (canvas: HTMLCanvasElement | null) => {
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      chartRef.current = new Chart(ctx, configu);
+  useEffect(() => {
+    if (chartRef && chartRef.current) {
+      const newChartInstance = new Chart(
+        chartRef.current, {
+          type: 'line',
+          data: initData,
+          options: config
+        });
+      setChartInstance(newChartInstance);
+    }
+  }, [chartRef]);
+
+  const updateDataset = (newData: ChartDataset<any>[] | { data: number[]; xAxisID: string; label: string; }[]) => {
+    if (chartInstance!=null){
+      chartInstance.data.labels = [65, 59, 80, 81, 56, 55, 40];
+      chartInstance.data.datasets = newData;
+      chartInstance.update();
     }
   };
 
-  // // effect to update the chart when props are updated
-  // useEffect(() => {
-  //   // must verify that the chart exists
-  //   const chart = chartRef.current;
-  //   if (chart) {
-  //     // chart.data = formatData(chartData);
-  //     chart.update();
-  //   }
-  // }, [chartData]);
+  const addDataset = () => {
+    setDataset([...dataset,
+      {data: [63, 3, 2, 5, 5, 55, 40], xAxisID: 'x-axis-1', label: 'Series B'}]);
+    updateDataset(dataset);
+  };
 
   return(
-    <S.ChartWrapper>
+    <div>
       <S.Chart
-        ref={canvasCallback}/>
-    </S.ChartWrapper>
+        id="myChart"
+        ref={chartRef}/>
+      <button onClick={addDataset}>Add Dataset</button>
+    </div>
   );
 };
 

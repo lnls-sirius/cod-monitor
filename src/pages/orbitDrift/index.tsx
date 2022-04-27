@@ -8,7 +8,7 @@ const OrbitDrift: React.FC = () => {
     <S.AppLayout>
       <Header />
       <DiffChart
-        chartData={[1,3,5,6,2]}/>
+        chartData={[1,3,5,6,2,6]}/>
     </S.AppLayout>
   );
 };
