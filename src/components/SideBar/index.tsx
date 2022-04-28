@@ -1,10 +1,10 @@
-import React, { ReactFragment } from "react";
+import React from "react";
 import {Drawer} from '@mui/material';
 import Menu from "../Menu";
 import * as S from './styled';
-import { sideMenu } from "../../assets/text";
 import Logo from "../Logo";
 import Footer from "../Footer";
+import { sideMenu } from "../../helpers/constants";
 
 //edit use text.ts to set texts
 const SideBar: React.FC = () => {

@@ -10,11 +10,11 @@ export const Icon = styled(FaTh)`
   padding: 5px;
   border-radius: ${properties.radius.extlight};
   &:hover{
-    background-color: ${colors.btn.hover_btn1};
+    background-color: ${colors.btns.btn1.hover};
   }
   &:active{
-    background-color: ${colors.btn.active_btn1};
-  } 
+    background-color: ${colors.btns.btn1.active};
+  }
 `;
 
 export const MenuWrapper = styled.div`

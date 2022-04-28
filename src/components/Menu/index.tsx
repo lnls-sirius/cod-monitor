@@ -7,10 +7,11 @@ interface MenuItems {
   items: any;
 }
 
-function printItems(itemList: Array<string>){
-  return Object.entries(itemList).map(([name, action]) => (
+function printItems(itemList: Array<()=> void>){
+  return Object.entries(itemList).map(([name, itemAction]) => (
     <Item
-      title={name}/>
+      title={name}
+      action={itemAction}/>
   ));
 }
 

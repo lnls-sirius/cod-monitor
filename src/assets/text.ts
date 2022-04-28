@@ -12,23 +12,3 @@ export const pages = {
     '/orbitDrift': 'Orbit Drift',
     '/orbitCorrection': 'Orbit Correction'
 }
-
-export const sideMenu = {
-    'PVs': {
-        general: {
-            'Add PV': 0,
-            'Modify PV': 1
-        }
-    },
-    'Time': {
-        general: {
-            'Start Time': 0,
-            'End Time': 1
-        }
-    },
-    'Graph': {
-        general: {
-            'Icons': 0
-        }
-    }
-}

@@ -7,10 +7,10 @@ export const MenuWrapper = styled.div`
 `;
 
 export const Title = styled.div`
-  padding-top: 15px;
+  padding-top: 5px;
   font-size: 25px;
   font-family: ${fonts.primary};
-  color: ${colors.txt.primary};
+  color: ${colors.txt.secondary};
 `;
 
 export const Content = styled.div`

@@ -17,10 +17,10 @@ export const PageLink = styled(Link)`
   border-radius: ${properties.radius.medium};
   margin: 5px;
   &:hover{
-    background-color: ${colors.btn.hover_btn1};
+    background-color: ${colors.btns.btn1.hover};
   }
   &:active{
-    background-color: ${colors.btn.active_btn1};
+    background-color: ${colors.btns.btn1.active};
   }
 `
 
@@ -30,5 +30,5 @@ export const PageAct = styled.span`
   padding: 10px;
   margin: 5px;
   border-radius: ${properties.radius.medium};
-  background-color: ${colors.btn.hover_btn1};
+  background-color: ${colors.btns.btn1.hover};
 `
