@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import Modals from "../Modals";
 import * as S from './styled';
 
 interface MenuItems {
   title: string;
-  action: () => void;
+  action: any;
 }
 
 const Item: React.FC<MenuItems> = (props): JSX.Element => {
+  const [modalState, setModalState] = useState(false);
+
   return (
     <S.ItemWrapper>
+      <Modals 
+        type={props.action}
+        close={() => setModalState(false)} 
+        state={modalState}/>
       <S.Button
-        onClick={props.action}>
+        onClick={() =>{setModalState(true)}}>
         {props.title}
       </S.Button>
     </S.ItemWrapper>

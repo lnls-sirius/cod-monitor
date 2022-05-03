@@ -1,5 +1,6 @@
 import React from "react";
 import Item from "../Item";
+import Logo from "../Logo";
 import * as S from './styled';
 
 interface MenuItems {
@@ -7,7 +8,8 @@ interface MenuItems {
   items: any;
 }
 
-function printItems(itemList: Array<()=> void>){
+function printItems(itemList: Array<number>){
+
   return Object.entries(itemList).map(([name, itemAction]) => (
     <Item
       title={name}

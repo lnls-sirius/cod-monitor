@@ -4,3 +4,5 @@ This website uses the libraries:
 - react-router-dom
 - styled-components
 - react-icons
+- bootstrap
+- chart.js

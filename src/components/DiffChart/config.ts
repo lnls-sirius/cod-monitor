@@ -1,5 +1,3 @@
-import Chart from 'chart.js/auto';
-
 const x_axis = {
     type: 'time',
     id: 'x-axis-0',

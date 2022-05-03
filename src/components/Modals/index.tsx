@@ -1,11 +1,27 @@
-import {Modal} from "react-bootstrap";
-import React, { useState } from "react";
+import React from "react";
 import * as S from './styled';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AddPV from "../AddPV";
+
+interface ModalOptions {
+  type: number;
+  close: () => void;
+  state: boolean;
+}
+
+function routerModal(type: number){
+  switch(type){
+    case 0:{
+      return (<AddPV />);
+    }
+    default:
+    return "This function still haven't been implemented!";
+  }
+}
 
 function ModalBox(props: any){
   return (
-    <Modal
+    <S.ModalWrapper
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -16,28 +32,20 @@ function ModalBox(props: any){
           Modal heading
         </S.Title>
       </S.Header>
-      <S.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-      </S.Body>
+      {routerModal(props.component)}
       <S.Footer>
         <button onClick={props.onHide}>Close</button>
       </S.Footer>
-    </Modal>
+    </S.ModalWrapper>
   );
 }
 
-const Modals: React.FC = () => {
-  const [modalState, setModalState] = useState(true);
-
+const Modals: React.FC<ModalOptions> = (props): JSX.Element => {
   return(
     <ModalBox
-      show={modalState}
-      onHide={() => setModalState(false)}
+      show={props.state}
+      onHide={props.close}
+      component={props.type}
     />
   );
 };

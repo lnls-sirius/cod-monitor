@@ -1,5 +1,7 @@
 import React from "react";
 import { pages } from "../../assets/text";
+import { sideMenu } from "../../helpers/constants";
+import Menu from "../Menu";
 import * as S from './styled';
 
 //Edit change page with < title >
@@ -28,14 +30,20 @@ const Navigator: React.FC = () => {
     
   }
 
-  return(
-    <S.NavWrapper>
-      {Object.entries(pages).map(([key, value]) => (
+  
+  /*{Object.entries(pages).map(([key, value]) => (
         pageIndicator(key, value)
+      ))}*/
+  console.log()
+  return(
+    <S.NavWrapper>  
+      {Object.entries(sideMenu).map(([key, value]) => (
+        <Menu
+          title={key}
+          items={value.general}/>
       ))}
     </S.NavWrapper>
   );
 };
-/**/
 
 export default Navigator;
