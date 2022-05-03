@@ -2,10 +2,10 @@ import { posix } from "path";
 import React, { useEffect } from "react";
 
 const AddPV: React.FC = () => {
-  const getData=()=>{
+  /*const getData=()=>{
     fetch('data.json'
     ,{
-      headers : { 
+      headers : {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
        }
@@ -21,8 +21,8 @@ const AddPV: React.FC = () => {
   }
   useEffect(()=>{
     getData()
-  },[])
-  
+  },[])*/
+
   return(
     <div>Teste</div>
   );

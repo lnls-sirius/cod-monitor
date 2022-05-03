@@ -1,6 +1,5 @@
 import React from "react";
 import Item from "../Item";
-import Logo from "../Logo";
 import * as S from './styled';
 
 interface MenuItems {

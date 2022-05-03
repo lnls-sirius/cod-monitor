@@ -20,7 +20,7 @@ export type DBRType =
   | "DBR_WAVEFORM_INT"
   | "DBR_WAVEFORM_SHORT"
   | "DBR_WAVEFORM_STRING";
-  
+
 export interface ArchiverMetadata {
   hostName: string;
   paused: boolean;
@@ -42,12 +42,7 @@ export interface ArchiverData {
 }
 
 export interface DataAccess {
-  query(search: string): Promise<string[]>;
-  getUrl(): string;
-  setUrl(url: string): void;
-  fetchMetadata(pv: string): Promise<null | ArchiverMetadata>;
-  fetchData(pv: string, from: Date, to: Date, ref: Date, isOptimized?: boolean, diff?: boolean, bins?: number): Promise<ArchiverData>;
-  getRemoteDate(): Promise<Date>;
+  fetchData(pv: string, from: Date, to: Date): Promise<ArchiverData>;
 }
 
 export interface DataAccessFactory {

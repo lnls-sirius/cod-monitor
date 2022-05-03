@@ -2,20 +2,27 @@ import React from "react";
 import * as S from './styled';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddPV from "../AddPV";
+import TimeInput from "../TimeInput";
 
 interface ModalOptions {
-  type: number;
+  type: string;
   close: () => void;
   state: boolean;
 }
 
-function routerModal(type: number){
+function routerModal(type: string){
   switch(type){
-    case 0:{
+    case 'Add PV':{
       return (<AddPV />);
     }
+    case 'Start Time':
+    case 'End Time':
+    {
+      return (<TimeInput
+                action={type}/>);
+    }
     default:
-    return "This function still haven't been implemented!";
+      return "This function still haven't been implemented!";
   }
 }
 
@@ -23,16 +30,16 @@ function ModalBox(props: any){
   return (
     <S.ModalWrapper
       {...props}
-      size="lg"
+      width='10px'
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <S.Header>
-        <S.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </S.Title>
+        {props.component}
       </S.Header>
-      {routerModal(props.component)}
+      <S.Body>
+        {routerModal(props.component)}
+      </S.Body>
       <S.Footer>
         <button onClick={props.onHide}>Close</button>
       </S.Footer>

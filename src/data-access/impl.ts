@@ -19,88 +19,8 @@ export class ArchiverDataAccess implements DataAccess{
     this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getData.json`;
 
     this.APPLIANCES = [
-      `${window.location.protocol}//${this.url}`,
-      `${window.location.protocol}//${this.url}/archiver-beamlines`,
+      `${window.location.protocol}//${this.url}`
     ];
-  }
-
-  async getRemoteDate(): Promise<Date> {
-    const dateString: string | null = await axios.get(`${this.BYPASS_URL}/date`, { timeout: 2000 }).then((res) => {
-      if (res.status === 200) {
-        return res.data;
-      }
-    });
-    if (dateString) {
-      return new Date(dateString);
-    }else{
-      return new Date();
-    }
-  }
-
-  private async fetchMetadataFromAppliance(jsonurl: string): Promise<null | ArchiverMetadata> {
-    const data = await axios
-      .get(jsonurl, { timeout: 0, responseType: "json" })
-      .then((res) => {
-        if (res.status !== 200) {
-          return null;
-        }
-        return res.data;
-      })
-      .catch((e) => {
-        return null;
-      });
-
-    if (data === null) {
-      return null;
-    }
-    
-    const metadata: ArchiverMetadata = {
-      pvName: data.pvName,
-      DBRType: data.DBRType,
-      NELM: parseFloat(data.NELM),
-      PREC: parseFloat(data.PREC),
-      EGU: data.EGU,
-      scalar: data.scalar === "true",
-      applianceIdentity: data.applianceIdentity,
-      computedEventRate: parseFloat(data.computedEventRate),
-      hostName: data.hostname,
-      paused: data.paused === "true",
-      samplingMethod: data.samplingMethod,
-      samplingPeriod: parseFloat(data.samplingPeriod),
-    };
-    return metadata;
-  }
-
-  async fetchMetadata(pv: string): Promise<null | ArchiverMetadata> {
-
-    for (const appliance of this.APPLIANCES) {
-      const jsonurl = `${appliance}/retrieval/bpl/getMetadata?pv=${pv}`;
-      const data = await this.fetchMetadataFromAppliance(jsonurl);
-      /* const data = */
-      if (data !== null) {
-        return data;
-      }
-    }
-    return null;
-  }
-
-  setUrl(url: string): void {
-    this.url = url;
-  }
-
-  async query(search: string): Promise<string[]> {
-    const timeout = 10000;
-    const _url = `${window.location.protocol}//${this.url}/retrieval/bpl/getMatchingPVs?${new URLSearchParams({
-      pv: search,
-      limit: "500",
-    }).toString()}`;
-
-    return await axios.get(_url, { method: "GET", timeout: timeout, responseType: "json" }).then((res) => {
-      if (res.status !== 200) {
-        throw `Failed to complete request ${_url}, response ${res}`;
-      }
-      return res.data;
-    });
   }
 
   private parseData(data: any[]): ArchiverDataPoint[] {
@@ -172,7 +92,8 @@ export class ArchiverDataAccess implements DataAccess{
       this.host = window.location.host.indexOf(":") !== -1 ? window.location.host.split(":")[0] : window.location.host;
     }
 
-    if (window.location.host === "localhost:8080" || window.location.host === "127.0.0.1:8080") {
+    if (window.location.host === "localhost:8080" || window.location.host === "127.0.0.1:8080"
+        || window.location.host === "localhost:3000" || window.location.host === "10.20.31.48:3000") {
       this.host = defaultHost;
       console.log(`DEBUG SERVER. Setting host to ${this.host}`);
     }

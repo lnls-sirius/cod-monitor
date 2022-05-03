@@ -3,7 +3,6 @@ import { colors} from "../../assets/theme";
 import {Modal} from "react-bootstrap";
 
 export const ModalWrapper = styled(Modal)`
-
 `;
 
 export const Header = styled.div`
@@ -12,10 +11,14 @@ export const Header = styled.div`
     text-align: center;
 `;
 
-export const Title = styled.div`
-
+export const Body = styled.div`
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
 `;
 
 export const Footer = styled.div`
     text-align: center;
+    padding-bottom: 15px;
 `;

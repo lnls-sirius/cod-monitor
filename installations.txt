@@ -1,8 +1,9 @@
 This website uses the libraries:
 
-- npm 
+- npm
 - react-router-dom
 - styled-components
 - react-icons
 - bootstrap
 - chart.js
+- react datepicker
