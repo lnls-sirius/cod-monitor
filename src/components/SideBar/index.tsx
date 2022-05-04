@@ -38,19 +38,17 @@ const SideBar: React.FC = () => {
   }
 
   return (
-    <div>
-      <S.MenuWrapper>
-        <S.Icon
-          onClick={toggleDrawer(true)}/>
-        <Drawer
-          anchor={'left'}
-          open={sbarState}
-          onClose={toggleDrawer(false)}
-        >
-        {list()}
-        </Drawer>
-      </S.MenuWrapper>
-    </div>
+    <S.MenuWrapper>
+      <S.Icon
+        onClick={toggleDrawer(true)}/>
+      <Drawer
+        anchor={'left'}
+        open={sbarState}
+        onClose={toggleDrawer(false)}
+      >
+      {list()}
+      </Drawer>
+    </S.MenuWrapper>
   );
 }
 

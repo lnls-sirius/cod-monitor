@@ -17,6 +17,7 @@ export const Body = styled.div`
     justify-content: center;
     text-align: center;
     padding: 20px;
+    style={{ zIndex: 50 }}
 `;
 
 export const Footer = styled.div`
