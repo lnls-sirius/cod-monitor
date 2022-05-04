@@ -1,6 +1,11 @@
 import styled from "styled-components";
-import { properties } from "../../assets/theme";
 
-export const Chart = styled.nav`
+export const Table = styled.table`
+    width: 100%;
+`;
 
+export const Row = styled.tr`
+`;
+
+export const Column = styled.td`
 `;

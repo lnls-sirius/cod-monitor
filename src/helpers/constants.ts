@@ -1,7 +1,7 @@
 export const sideMenu = {
     'PVs': {
         general: {
-            'Add PV': 'Add PV',
+            'Add PV': 'Add PV', //Insert in this place - Key / Modal Size
             'Modify PV': 1
         }
     },

@@ -1,4 +1,4 @@
-[
+export const posX = [
   "SI-01C1:DI-BPM-1:PosX-Mon",
   "SI-01C1:DI-BPM-2:PosX-Mon",
   "SI-01C2:DI-BPM:PosX-Mon",

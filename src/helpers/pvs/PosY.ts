@@ -1,4 +1,4 @@
-[
+export const posY = [
   "SI-01C1:DI-BPM-1:PosY-Mon",
   "SI-01C1:DI-BPM-2:PosY-Mon",
   "SI-01C2:DI-BPM:PosY-Mon",

@@ -34,7 +34,8 @@ const Item: React.FC<MenuItems> = (props): JSX.Element => {
       <Modals
         type={props.action}
         close={() => setModalState(false)}
-        state={modalState}/>
+        state={modalState}
+        size='lg'/>
       <S.Button
         onClick={() =>{setModalState(true)}}>
         {props.title}

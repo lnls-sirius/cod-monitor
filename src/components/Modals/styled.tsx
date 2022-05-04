@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { colors} from "../../assets/theme";
 import {Modal} from "react-bootstrap";
 
-export const ModalWrapper = styled(Modal)`
+export const ModalContainer = styled(Modal)`
+    background-color: ${colors.bg.primary50};
 `;
 
 export const Header = styled.div`

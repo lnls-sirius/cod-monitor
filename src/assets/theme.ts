@@ -15,9 +15,11 @@ export const colors = {
     },
     bg:{
         primary: 'linear-gradient(to bottom, #242424, #4D4D4D)',
+        primary50: '#24242477',
         secondary: 'linear-gradient(to bottom, #2E005B, #6400C8)',
         tertiary: 'linear-gradient(to right, #170065, #3100D4)',
         white: '#FFFFFF',
+        green: '#00D502',
         transparent: '#00000000'
     }
 }
@@ -25,7 +27,8 @@ export const properties = {
     radius:{
         extlight: '5px',
         light: '15px',
-        medium: '25px'
+        medium: '25px',
+        high: '50px'
     }
 }
 export const fonts = {

@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import * as S from './styled';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddPV from "../AddPV";
 import TimeInput from "../TimeInput";
 
 interface ModalOptions {
+  size: string;
   type: string;
   close: () => void;
   state: boolean;
@@ -27,11 +28,11 @@ function routerModal(type: string){
 }
 
 function ModalBox(props: any){
+
   return (
-    <S.ModalWrapper
+    <S.ModalContainer
       {...props}
-      width='10px'
-      aria-labelledby="contained-modal-title-vcenter"
+      size={props.size}
       centered
     >
       <S.Header>
@@ -43,7 +44,7 @@ function ModalBox(props: any){
       <S.Footer>
         <button onClick={props.onHide}>Close</button>
       </S.Footer>
-    </S.ModalWrapper>
+    </S.ModalContainer>
   );
 }
 
@@ -52,6 +53,7 @@ const Modals: React.FC<ModalOptions> = (props): JSX.Element => {
     <ModalBox
       show={props.state}
       onHide={props.close}
+      size={props.size}
       component={props.type}
     />
   );
