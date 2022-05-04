@@ -1,22 +1,34 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
+import { setEndDate, setStartDate } from "../../helpers/time";
 import * as S from './styled';
 
 interface TimeOpt{
   action: string;
 }
 
-function setTime(time: Date){
-  console.log(time.toString());
-}
-
 const TimeInput: React.FC<TimeOpt> = (props) => {
-  const curTime = useRef(new Date());
+  const [time, setTime] = useState(new Date());
+
+  function setTimeOpt(time: Date){
+    switch (props.action) {
+      case 'Start Time':{
+        setStartDate(time);
+        break;
+      }
+      case 'End Time':{
+        setEndDate(time);
+        break;
+      }
+    }
+    setTime(time);
+  }
+
   return(
     <S.InputTime
       title="Start/end timestamp"
       showTimeSelect
-      selected={null}
-      onChange={(time: Date)=>setTime(time)}
+      selected={time}
+      onChange={(time: Date)=>setTimeOpt(time)}
       timeFormat="HH:mm"
       timeCaption="time"
       dateFormat="dd/MM/yy h:mm aa"

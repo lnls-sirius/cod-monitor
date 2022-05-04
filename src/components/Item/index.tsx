@@ -7,7 +7,6 @@ import * as S from './styled';
 interface MenuItems {
   title: string;
   action: any;
-  closeSB: (state: boolean)=>void;
 }
 
 const Item: React.FC<MenuItems> = (props): JSX.Element => {
@@ -36,9 +35,9 @@ const Item: React.FC<MenuItems> = (props): JSX.Element => {
         type={props.action}
         close={() =>{setModalState(false)}}
         state={modalState}
-        size='lg'/>
+        size='xl'/>
       <S.Button
-        onClick={() =>{setModalState(true);props.closeSB(false);}}>
+        onClick={() =>{setModalState(true)}}>
         {props.title}
       </S.Button>
     </S.ItemWrapper>

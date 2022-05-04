@@ -10,7 +10,7 @@ export const LogoWrapper = styled.div`
 export const ImageWrapper = styled.img`
   height: 40px;
   margin: 4px;
-  padding: 2px; 
+  padding: 2px;
   background-color: ${colors.bg.white};
   border-radius: ${properties.radius.extlight};
 `;

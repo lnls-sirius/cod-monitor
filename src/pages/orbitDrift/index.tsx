@@ -1,7 +1,7 @@
 import React from "react";
 import DiffChart from "../../components/DiffChart";
 import Header from '../../components/Header';
-import Modal from "../../components/Modals";
+import Menu from "../../components/Menu";
 import * as S from './styled';
 
 const OrbitDrift: React.FC = () => {

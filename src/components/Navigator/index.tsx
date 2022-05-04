@@ -8,7 +8,7 @@ import * as S from './styled';
 //Use only one component for the items
 
 const Navigator: React.FC = () => {
-  
+
   function pageIndicator(key: string, page: string){
     let path = window.location.pathname;
     if(path == '/'){
@@ -27,17 +27,16 @@ const Navigator: React.FC = () => {
         </S.PageLink>
       );
     }
-    
+
   }
-  
+
   /*{Object.entries(pages).map(([key, value]) => (
         pageIndicator(key, value)
       ))}*/
   return(
-    <S.NavWrapper>  
+    <S.NavWrapper>
       {Object.entries(sideMenu).map(([key, value]) => (
         <Menu
-          closeSB={()=>null}
           title={key}
           items={value.general}/>
       ))}

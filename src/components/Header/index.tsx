@@ -1,4 +1,5 @@
 import React from "react";
+import DateInterval from "../DateInterval";
 
 import Logo from '../Logo'
 import Navigator from '../Navigator'
@@ -7,10 +8,11 @@ import * as S from './styled';
 
 const Header: React.FC = () => {
   return (
-    <S.HeaderWrapper> 
+    <S.HeaderWrapper>
       <Logo />
-      <SideBar />
+      {/* <SideBar /> */}
       <Navigator />
+      <DateInterval />
     </S.HeaderWrapper>
   );
 };

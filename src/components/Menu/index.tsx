@@ -3,17 +3,15 @@ import Item from "../Item";
 import * as S from './styled';
 
 interface MenuItems {
-  closeSB: (state: boolean)=>void;
   title: string;
   items: any;
 }
 
-function printItems(itemList: Array<number>, closeSB: (state: boolean)=>void){
+function printItems(itemList: Array<number>){
 
   return Object.entries(itemList).map(([name, itemAction]) => (
     <Item
       title={name}
-      closeSB={closeSB}
       action={itemAction}/>
   ));
 }
@@ -23,7 +21,7 @@ const Menu: React.FC<MenuItems> = (props): JSX.Element => {
     <S.MenuWrapper>
       <S.Title>{props.title}</S.Title>
       <S.Content>
-        {printItems(props.items, props.closeSB)}
+        {printItems(props.items)}
       </S.Content>
     </S.MenuWrapper>
   );

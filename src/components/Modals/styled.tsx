@@ -4,7 +4,6 @@ import {Modal} from "react-bootstrap";
 
 export const ModalContainer = styled(Modal)`
     background-color: ${colors.bg.primary50};
-    z-index: 10;
 `;
 
 export const Header = styled.div`

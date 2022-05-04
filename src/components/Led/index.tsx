@@ -1,19 +1,25 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import * as S from './styled';
 
-const Led: React.FC = () => {
-    const [state, setState] = useState(true);
-    
-    let led = state ? "greenLed" : "purpleLed";
-  
-    function changeColor(){
-      setState(!state)
-    }
+interface onMount{
+  id: string;
+  mountData: (data: any)=>void;
+}
+
+const Led: React.FC<onMount> = (props) => {
+  const [state, setState] = useState(false);
+
+  function setPV(){
+    setState(!state);
+  }
+
+  useEffect(() => {
+    props.mountData([state, setState, props.id]);
+  }, [props.mountData, state]);
 
   return(
-    <S.LedWrapper 
-      onClick={changeColor.bind(this)}
+    <S.LedWrapper
+      onClick={setPV.bind(this)}
       ledState={state}/>
   );
 };
