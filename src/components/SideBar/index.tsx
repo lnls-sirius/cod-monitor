@@ -30,6 +30,7 @@ const SideBar: React.FC = () => {
         {Object.entries(sideMenu).map(([key, value]) => (
           <Menu
             title={key}
+            closeSB={setSbarState}
             items={value.general}/>
         ))}
         <Footer />

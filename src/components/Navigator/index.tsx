@@ -29,16 +29,15 @@ const Navigator: React.FC = () => {
     }
     
   }
-
   
   /*{Object.entries(pages).map(([key, value]) => (
         pageIndicator(key, value)
       ))}*/
-  console.log()
   return(
     <S.NavWrapper>  
       {Object.entries(sideMenu).map(([key, value]) => (
         <Menu
+          closeSB={()=>null}
           title={key}
           items={value.general}/>
       ))}

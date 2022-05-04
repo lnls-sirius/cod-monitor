@@ -21,6 +21,7 @@ export const MenuWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index:0;
 `
 
 export const ListWrapper = styled.nav`
