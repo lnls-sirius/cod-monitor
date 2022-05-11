@@ -19,8 +19,11 @@ export const colors = {
         secondary: 'linear-gradient(to bottom, #2E005B, #6400C8)',
         tertiary: 'linear-gradient(to right, #170065, #3100D4)',
         white: '#FFFFFF',
-        green: '#00D502',
-        transparent: '#00000000'
+        transparent: '#00000000',
+        led: {
+            on: 'radial-gradient(#3100D4, #170063)',
+            off: 'radial-gradient(#00D502, #005e01)'
+        }
     }
 }
 export const properties = {

@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getEndDate, getStartDate } from "../../helpers/time";
+import React from "react";
+import { useSelector} from 'react-redux';
 import * as S from './styled';
 
 const DateInterval: React.FC = () => {
-  const [startDate, setStartDate] = useState(getStartDate());
-  const [endDate, setEndDate] = useState(getEndDate());
-
-  useEffect(()=>{
-    setStartDate(startDate);
-  },[sessionStorage.getItem('Start Time')])
-
-  useEffect(()=>{
-    setEndDate(getEndDate());
-  },[sessionStorage.getItem('End Time')])
+  const startDate = useSelector((state: any) => state.time.start_date);
+  const endDate = useSelector((state: any) => state.time.end_date);
 
   return(
     <S.TextWrapper>

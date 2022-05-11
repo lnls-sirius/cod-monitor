@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { setEndDate, setStartDate } from "../../helpers/time";
+import { useDispatch } from 'react-redux'
+import { setStart, setEnd } from '../../features/timeStore'
 import * as S from './styled';
 
 interface TimeOpt{
@@ -8,15 +9,16 @@ interface TimeOpt{
 
 const TimeInput: React.FC<TimeOpt> = (props) => {
   const [time, setTime] = useState(new Date());
+  const dispatch = useDispatch();
 
   function setTimeOpt(time: Date){
     switch (props.action) {
       case 'Start Time':{
-        setStartDate(time);
+        dispatch(setStart(time));
         break;
       }
       case 'End Time':{
-        setEndDate(time);
+        dispatch(setEnd(time));
         break;
       }
     }

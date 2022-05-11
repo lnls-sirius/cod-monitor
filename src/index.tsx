@@ -1,7 +1,8 @@
-import { Fragment } from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter} from 'react-router-dom'  
+import { Provider } from 'react-redux'
+import {BrowserRouter} from 'react-router-dom'
 import RouterNavigator from './router';
+import store from './storage/store'
 import './style.css'
 
 const root = ReactDOM.createRoot(
@@ -9,9 +10,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <Fragment>
+  <Provider store={store}>
     <BrowserRouter>
       <RouterNavigator />
     </BrowserRouter>
-  </Fragment>
+  </Provider>
 );

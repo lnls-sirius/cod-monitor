@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import * as S from './styled';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import AddPV from "../AddPV";
 import TimeInput from "../TimeInput";
 
@@ -23,7 +24,7 @@ function routerModal(type: string){
                 action={type}/>);
     }
     default:
-      return "This function still haven't been implemented!";
+      return "This function still hasn't been implemented!";
   }
 }
 
@@ -37,13 +38,14 @@ function ModalBox(props: any){
     >
       <S.Header>
         {props.component}
+        {/* */}
+        <S.Close
+          icon={faXmark}
+          onClick={props.onHide}/>
       </S.Header>
       <S.Body>
         {routerModal(props.component)}
       </S.Body>
-      <S.Footer>
-        <button onClick={props.onHide}>Close</button>
-      </S.Footer>
     </S.ModalContainer>
   );
 }

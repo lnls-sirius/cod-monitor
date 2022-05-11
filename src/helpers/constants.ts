@@ -1,14 +1,14 @@
 export const sideMenu = {
     'PVs': {
         general: {
-            'Add PV': 'Add PV', //Insert in this place - Key / Modal Size
-            'Modify PV': 1
+            'Add PV': 'Add PV' //Insert in this place - Key / Modal Size
         }
     },
     'Time': {
         general: {
             'Start Time': 'Start Time',
-            'End Time': 'End Time'
+            'End Time': 'End Time',
+            'Intervals': 1234
         }
     },
     'Graph': {
