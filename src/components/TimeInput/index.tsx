@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch } from 'react-redux'
-import { setStart, setEnd } from '../../features/timeStore'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { setStart, setEnd } from '../../features/timeStore';
+import { outOfRange } from "../../helpers/time";
 import * as S from './styled';
 
 interface TimeOpt{
@@ -8,26 +9,50 @@ interface TimeOpt{
 }
 
 const TimeInput: React.FC<TimeOpt> = (props) => {
-  const [time, setTime] = useState(new Date());
   const dispatch = useDispatch();
+  const startDate = useSelector((state: any) => state.time.start_date);
+  const endDate = useSelector((state: any) => state.time.end_date);
+  const [hint, setHint] = useState("");
+  const [time, setTime] = useState(initDate);
+
+  function initDate(){
+    switch(props.action) {
+      case 'Start Time':{
+        setHint(props.action);
+        return startDate;
+      }
+      case 'End Time':{
+        setHint(props.action);
+        return endDate;
+      }
+      default:{
+        return new Date();
+      }
+    }
+  }
 
   function setTimeOpt(time: Date){
     switch (props.action) {
       case 'Start Time':{
-        dispatch(setStart(time));
+        if(outOfRange(time, endDate)){
+          dispatch(setStart(time));
+          setTime(time);
+        }
         break;
       }
       case 'End Time':{
-        dispatch(setEnd(time));
+        if(outOfRange(startDate, time)){
+
+          setTime(time);
+        }
         break;
       }
     }
-    setTime(time);
   }
 
   return(
     <S.InputTime
-      title="Start/end timestamp"
+      title={hint}
       showTimeSelect
       selected={time}
       onChange={(time: Date)=>setTimeOpt(time)}

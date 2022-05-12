@@ -38,7 +38,6 @@ function ModalBox(props: any){
     >
       <S.Header>
         {props.component}
-        {/* */}
         <S.Close
           icon={faXmark}
           onClick={props.onHide}/>

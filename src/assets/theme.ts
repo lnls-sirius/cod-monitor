@@ -7,6 +7,21 @@ export const colors = {
         btn2: {
             hover: '#f14c0077',
             active: '#af370077'
+        },
+        btn3: {
+            normal: '#ff622c',
+            hover: '#ff4200',
+            active: '#d23600'
+        }
+    },
+    led: {
+        on: {
+            normal: 'radial-gradient(#0000fd, #000020)',
+            hover: 'radial-gradient(#0000ab, #00005a)'
+        },
+        off: {
+            normal: 'radial-gradient(#00ff02, #001e00)',
+            hover: 'radial-gradient(#00bf02, #005f00)'
         }
     },
     txt:{
@@ -19,11 +34,7 @@ export const colors = {
         secondary: 'linear-gradient(to bottom, #2E005B, #6400C8)',
         tertiary: 'linear-gradient(to right, #170065, #3100D4)',
         white: '#FFFFFF',
-        transparent: '#00000000',
-        led: {
-            on: 'radial-gradient(#3100D4, #170063)',
-            off: 'radial-gradient(#00D502, #005e01)'
-        }
+        transparent: '#00000000'
     }
 }
 export const properties = {

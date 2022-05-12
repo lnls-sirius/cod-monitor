@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const bpmData = createSlice({
   name: 'bpm',
   initialState: {
-    listBpm: {}
+    listBpm: '{}'
   },
   reducers: {
     setSelectBpm: (state, action) => {

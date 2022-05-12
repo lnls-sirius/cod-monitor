@@ -3,11 +3,12 @@ import * as S from './styled';
 
 interface onMount{
   id: string;
+  initState: boolean;
   mountData: (data: any)=>void;
 }
 
 const Led: React.FC<onMount> = (props) => {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(props.initState);
 
   function setPV(){
     setState(!state);

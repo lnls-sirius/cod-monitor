@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setSelectBpm } from '../../features/bpmStore'
 import { bpmGroups } from "../../helpers/constants";
 import { posX } from "../../helpers/pvs/PosX";
@@ -8,6 +8,8 @@ import * as S from './styled';
 
 const AddPV: React.FC = () => {
   const dispatch = useDispatch();
+  const ledStates = useSelector((state: any) => state.bpm.listBpm);
+  const states = JSON.parse(ledStates);
   let ledProps: any = {};
 
   useEffect(() => {
@@ -37,17 +39,27 @@ const AddPV: React.FC = () => {
     })
   }
 
+  function getLedState(pv_name: string){
+    if (Object.keys(states).length === 0) {
+      return false;
+    }else{
+      return states[pv_name]['state'];
+    }
+  }
+
   function findPV(number: string, name: string){
-    let pvName;
+    let pvName, state;
     if(name.includes('-1') || name.includes('-2')){
       let nameDiv = name.split('-');
       pvName = "SI-"+number+nameDiv[0]+":DI-BPM-"+nameDiv[1]+":PosX-Mon";
     }else{
       pvName = "SI-"+number+name+":DI-BPM:PosX-Mon";
     }
+    state = getLedState(pvName);
     return <Led
             id={pvName}
-            mountData={onChildMount}/>;
+            mountData={onChildMount}
+            initState={state}/>;
   }
 
   function pvNumber(){
