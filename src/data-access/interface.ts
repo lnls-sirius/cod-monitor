@@ -1,8 +1,8 @@
 export interface ArchiverDataPoint {
   x: Date;
   y: number;
-  severity: number;
-  status: number;
+  // severity: number;
+  // status: number;
 }
 export type DBRType =
   | "DBR_SCALAR_BYTE"

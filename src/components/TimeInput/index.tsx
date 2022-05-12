@@ -10,8 +10,8 @@ interface TimeOpt{
 
 const TimeInput: React.FC<TimeOpt> = (props) => {
   const dispatch = useDispatch();
-  const startDate = useSelector((state: any) => state.time.start_date);
-  const endDate = useSelector((state: any) => state.time.end_date);
+  const startDate = new Date(useSelector((state: any) => state.time.start_date));
+  const endDate = new Date(useSelector((state: any) => state.time.end_date));
   const [hint, setHint] = useState("");
   const [time, setTime] = useState(initDate);
 
@@ -35,14 +35,14 @@ const TimeInput: React.FC<TimeOpt> = (props) => {
     switch (props.action) {
       case 'Start Time':{
         if(outOfRange(time, endDate)){
-          dispatch(setStart(time));
+          dispatch(setStart(time.toString()));
           setTime(time);
         }
         break;
       }
       case 'End Time':{
         if(outOfRange(startDate, time)){
-
+          dispatch(setEnd(time.toString()));
           setTime(time);
         }
         break;

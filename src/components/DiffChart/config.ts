@@ -1,5 +1,5 @@
 const x_axis = {
-    type: 'time',
+    type: "time",
     id: 'x-axis-0',
     offset: false,
     time: {
@@ -16,7 +16,7 @@ const x_axis = {
 }
 
 const y_axis = {
-    type: "linear",
+    type: "line",
     display: false,
     position: "left",
     id: "y-axis-0"
@@ -46,8 +46,8 @@ export const config = {
         },
         title: { display: false },
         scales: {
-            xAxis: x_axis,
-            yAxis: y_axis
+            xAxis: [x_axis],
+            yAxis: [y_axis]
         },
         legend: {
             display: false,
@@ -56,6 +56,5 @@ export const config = {
 }
 
 export const initData = {
-    labels: [],
     datasets: []
 }

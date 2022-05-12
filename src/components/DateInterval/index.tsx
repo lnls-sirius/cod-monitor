@@ -4,8 +4,8 @@ import TimeInput from "../TimeInput";
 import * as S from './styled';
 
 const DateInterval: React.FC = () => {
-  const startDate = useSelector((state: any) => state.time.start_date);
-  const endDate = useSelector((state: any) => state.time.end_date);
+  const startDate = new Date(useSelector((state: any) => state.time.start_date));
+  const endDate = new Date(useSelector((state: any) => state.time.end_date));
 
   return(
     <S.TextWrapper>

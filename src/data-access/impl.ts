@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DataAccess, ArchiverData, ArchiverDataPoint, ArchiverMetadata } from "./interface";
+import { DataAccess, ArchiverData, ArchiverDataPoint} from "./interface";
 
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
 export const defaultHost = "10.0.38.46";
@@ -8,19 +8,12 @@ export class ArchiverDataAccess implements DataAccess{
 
   host: string;
   private url: string;
-  private BYPASS_URL: string;
   private GET_DATA_URL: string;
-  private APPLIANCES: string[];
 
   constructor() {
     this.host = defaultHost;
     this.url = this.getUrl();
-    this.BYPASS_URL = `${window.location.protocol}//${this.url}/archiver-generic-backend`;
     this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getData.json`;
-
-    this.APPLIANCES = [
-      `${window.location.protocol}//${this.url}`
-    ];
   }
 
   private parseData(data: any[]): ArchiverDataPoint[] {
@@ -38,9 +31,7 @@ export class ArchiverDataAccess implements DataAccess{
       if (!isNaN(x.getTime())) {
         outData.push({
           x,
-          y,
-          severity,
-          status,
+          y
         });
       }
     });

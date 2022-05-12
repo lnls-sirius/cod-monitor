@@ -15,12 +15,12 @@ const DiffChart: React.FC<Data> = ({ chartData }: Data) => {
   const chartRef = useRef(null);
   const [dataset, setDataset]: ChartDataset<any>[] = useState([]);
   const [chartInstance, setChartInstance] = useState<Chart>();
-  const startDate = useSelector((state: any) => state.time.start_date);
-  const endDate = useSelector((state: any) => state.time.end_date);
+  const startDate = new Date(useSelector((state: any) => state.time.start_date));
+  const endDate = new Date(useSelector((state: any) => state.time.end_date));
 
-  async function getArchiver(){
+  async function getArchiver(name: string){
     try {
-      const res = await archInterface.fetchData('SI-02C3:DI-BPM-1:PosX-Mon', startDate, endDate);
+      const res = await archInterface.fetchData(name, startDate, endDate);
       const { data } = res;
       return data;
     } catch (e) {
@@ -44,9 +44,18 @@ const DiffChart: React.FC<Data> = ({ chartData }: Data) => {
     }
   }, [chartRef]);
 
-  const updateDataset = (newData: ChartDataset<any>[] | { data: number[]; xAxisID: string; label: string; }[]) => {
+  function setLabels(newData: any){
+    var values=[];
+    for(var c=0; c<newData.length; c++){
+      values.push(newData[c]['x']);
+    }
+    console.log(values);
+    return values;
+  }
+
+  const updateDataset = (newData: any) => {
     if (chartInstance!=null){
-      // chartInstance.data.labels = xLabels;
+      chartInstance.data.labels = setLabels(newData);
       chartInstance.data.datasets = newData;
       chartInstance.update();
     }
@@ -56,10 +65,10 @@ const DiffChart: React.FC<Data> = ({ chartData }: Data) => {
     setDataset([]);
     Object.entries(bpms).map(async ([name, state]) => {
       if(getState(state)){
-        let archiverResult = getArchiver();
-        // setLabels(archiverResult);
+        let archiverResult = await getArchiver(name);
+        console.log(archiverResult);
         setDataset((dataset: any) => [...dataset,
-          {data: [12,1234,1234], xAxisID: 'x-axis-1', label: name}
+          {data: archiverResult, xAxisID: 'x-axis-1', label: name}
         ]);
       }
     });

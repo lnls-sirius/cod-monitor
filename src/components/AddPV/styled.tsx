@@ -19,6 +19,7 @@ export const Header = styled.button`
     background: ${colors.btns.btn3.normal};
     &:hover{
         background-color: ${colors.btns.btn3.hover};
+        transform: translateY(-.2rem);
     }
     &:active{
         background-color: ${colors.btns.btn3.active};
