@@ -12,7 +12,7 @@ export const Header = styled.div`
     color: ${colors.txt.primary};
     text-align: center;
     justify-content: center;
-    padding: 10px 0px;
+    padding: 15px 0px;
 `;
 
 export const Body = styled.div`
@@ -48,29 +48,3 @@ export const Close = styled(FontAwesomeIcon)`
         background-color: ${colors.btns.btn1.active};
     }
 `
-
-
-//   .modal {
-//     width: 60rem;
-//     padding: 4rem 2rem;
-//     border-radius: .8rem;
-
-//     color: var(--light);
-//     background: var(--background);
-//     box-shadow: .4rem .4rem 2.4rem .2rem hsla(236, 50%, 50%, 0.3);
-//     position: relative;
-
-//     overflow: hidden;
-//   }
-
-//   .modal__details {
-//     text-align: center;
-
-//     margin-bottom: 4rem;
-//     padding-bottom: 4rem;
-//     border-bottom: 1px solid hsla(0, 0%, 100%, .4);
-//   }
-
-//   .modal__title {
-//     font-size: 3.2rem;
-//   }

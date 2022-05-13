@@ -13,10 +13,11 @@ const Item: React.FC<MenuItems> = (props): JSX.Element => {
   return (
     <S.ItemWrapper>
       <Modals
-        type={props.action}
+        content={props.action}
         close={() =>{setModalState(false)}}
         state={modalState}
-        size='xl'/>
+        size='xl'
+        title={props.title}/>
       <S.Button
         onClick={() =>{setModalState(true)}}>
         {props.title}

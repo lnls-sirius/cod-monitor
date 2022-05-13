@@ -10,7 +10,7 @@ interface onMount{
 const Led: React.FC<onMount> = (props) => {
   const [state, setState] = useState(props.initState);
 
-  function setPV(){
+  function setBPM(){
     setState(!state);
   }
 
@@ -20,7 +20,7 @@ const Led: React.FC<onMount> = (props) => {
 
   return(
     <S.LedWrapper
-      onClick={setPV.bind(this)}
+      onClick={setBPM.bind(this)}
       ledState={state}/>
   );
 };

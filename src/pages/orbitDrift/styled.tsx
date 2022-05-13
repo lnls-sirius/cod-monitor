@@ -7,3 +7,8 @@ export const AppLayout = styled.div`
     font-family: ${fonts.primary};
     background-image: ${colors.bg.primary};
 `;
+
+export const HeaderWrapper = styled.nav`
+    width: 100%;
+    display: flex;
+`;

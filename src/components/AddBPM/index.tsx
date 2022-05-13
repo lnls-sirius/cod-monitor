@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectBpm } from '../../features/bpmStore'
 import { bpmGroups } from "../../helpers/constants";
-import { posX } from "../../helpers/pvs/PosX";
+import { posX } from "../../helpers/bpms/PosX";
 import Led from "../Led";
 import * as S from './styled';
 
-const AddPV: React.FC = () => {
+const AddBPM: React.FC = () => {
   const dispatch = useDispatch();
   const ledStates = useSelector((state: any) => state.bpm.listBpm);
   const states = JSON.parse(ledStates);
@@ -39,30 +39,30 @@ const AddPV: React.FC = () => {
     })
   }
 
-  function getLedState(pv_name: string){
+  function getLedState(bpm_name: string){
     if (Object.keys(states).length === 0) {
       return false;
     }else{
-      return states[pv_name]['state'];
+      return states[bpm_name]['state'];
     }
   }
 
-  function findPV(number: string, name: string){
-    let pvName, state;
+  function findBPM(number: string, name: string){
+    let bpmName, state;
     if(name.includes('-1') || name.includes('-2')){
       let nameDiv = name.split('-');
-      pvName = "SI-"+number+nameDiv[0]+":DI-BPM-"+nameDiv[1]+":PosX-Mon";
+      bpmName = "SI-"+number+nameDiv[0]+":DI-BPM-"+nameDiv[1]+":PosX-Mon";
     }else{
-      pvName = "SI-"+number+name+":DI-BPM:PosX-Mon";
+      bpmName = "SI-"+number+name+":DI-BPM:PosX-Mon";
     }
-    state = getLedState(pvName);
+    state = getLedState(bpmName);
     return <Led
-            id={pvName}
+            id={bpmName}
             mountData={onChildMount}
             initState={state}/>;
   }
 
-  function pvNumber(){
+  function bpmNumber(){
     return bpmGroups.bpmNumber.map((number: any)=>{
       return(
         <S.Column>
@@ -75,7 +75,7 @@ const AddPV: React.FC = () => {
     })
   }
 
-  function pvTable(){
+  function bpmTable(){
     return bpmGroups.bpmName.map((name: any)=>{
       return(
         <S.Row>
@@ -85,7 +85,11 @@ const AddPV: React.FC = () => {
           </S.Header>
           {
             bpmGroups.bpmNumber.map((number: any)=>{
-              return <S.Column>{findPV(number, name)}</S.Column>
+              if((number=='01') && name=='M1'){
+                return <td></td>
+              }else{
+                return <S.Column>{findBPM(number, name)}</S.Column>
+              }
             })
           }
         </S.Row>
@@ -93,13 +97,28 @@ const AddPV: React.FC = () => {
     })
   }
 
+  function bpmFirst(){
+    const name = bpmGroups.bpmName[0];
+    const number = bpmGroups.bpmNumber[0];
+    return(
+      <S.Row>
+        <S.Header
+          onClick={() => groupSelect(name)}>
+            {name}
+        </S.Header>
+        <S.Column>{findBPM(number, name)}</S.Column>
+      </S.Row>
+    )
+  }
+
   return(
     <S.Table>
       <td></td>
-      {pvNumber()}
-      {pvTable()}
+      {bpmNumber()}
+      {bpmTable()}
+      {bpmFirst()}
     </S.Table>
   );
 };
 
-export default AddPV;
+export default AddBPM;

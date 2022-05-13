@@ -1,19 +1,14 @@
 import React from "react";
-import AddPV from "../AddPV";
-import DateInterval from "../DateInterval";
-
-import Logo from '../Logo'
-import Navigator from '../Navigator'
-import SideBar from "../SideBar";
 import * as S from './styled';
 
-const Header: React.FC = () => {
+type Props = {
+  children?: JSX.Element;
+}
+
+const Header: React.FC<Props> = ({children}) => {
   return (
     <S.HeaderWrapper>
-      <Logo />
-      {/* <SideBar /> */}
-      <Navigator />
-      <DateInterval />
+      {children}
     </S.HeaderWrapper>
   );
 };

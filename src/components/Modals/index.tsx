@@ -2,34 +2,16 @@ import React from "react";
 import * as S from './styled';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import AddPV from "../AddPV";
-import TimeInput from "../TimeInput";
 
-interface ModalOptions {
+type ModalOptions = {
+  title: string;
   size: string;
-  type: string;
-  close: () => void;
+  content: JSX.Element;
   state: boolean;
-}
-
-function routerModal(type: string){
-  switch(type){
-    case 'Add PV':{
-      return (<AddPV />);
-    }
-    case 'Start Time':
-    case 'End Time':
-    {
-      return (<TimeInput
-                action={type}/>);
-    }
-    default:
-      return "This function still hasn't been implemented!";
-  }
+  close: () => void;
 }
 
 function ModalBox(props: any){
-
   return (
     <S.ModalContainer
       {...props}
@@ -37,13 +19,13 @@ function ModalBox(props: any){
       centered
     >
       <S.Header>
-        {props.component}
+        {props.title}
         <S.Close
           icon={faXmark}
           onClick={props.onHide}/>
       </S.Header>
       <S.Body>
-        {routerModal(props.component)}
+        {props.component}
       </S.Body>
     </S.ModalContainer>
   );
@@ -52,10 +34,11 @@ function ModalBox(props: any){
 const Modals: React.FC<ModalOptions> = (props): JSX.Element => {
   return(
     <ModalBox
+      title={props.title}
       show={props.state}
       onHide={props.close}
       size={props.size}
-      component={props.type}
+      component={props.content}
     />
   );
 };

@@ -4,19 +4,21 @@ import * as S from './styled';
 import { config, initData } from "./config";
 import { useSelector } from "react-redux";
 import archInterface from "../../data-access";
+import { TimeDispatcher } from "../../helpers/time";
 
 interface Data {
   chartData: number[];
 }
 
 const DiffChart: React.FC<Data> = ({ chartData }: Data) => {
+  const timeDispatch = new TimeDispatcher();
   const bpmList = useSelector((state: any) => state.bpm.listBpm);
   const bpms = JSON.parse(bpmList);
   const chartRef = useRef(null);
   const [dataset, setDataset]: ChartDataset<any>[] = useState([]);
   const [chartInstance, setChartInstance] = useState<Chart>();
-  const startDate = new Date(useSelector((state: any) => state.time.start_date));
-  const endDate = new Date(useSelector((state: any) => state.time.end_date));
+  const startDate = timeDispatch.GetStartDate();
+  const endDate = timeDispatch.GetEndDate();
 
   async function getArchiver(name: string){
     try {

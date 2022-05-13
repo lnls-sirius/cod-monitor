@@ -1,13 +1,20 @@
+import AddBPM from "../components/AddBPM"
+import TimeInput from "../components/TimeInput";
+
+const addBPM = () => <AddBPM />;
+const startTime = () => <TimeInput action={'Start Time'}/>
+const endTime = () => <TimeInput action={'End Time'}/>
+
 export const sideMenu = {
-    'PVs': {
+    'BPMs': {
         general: {
-            'Add PV': 'Add PV' //Insert in this place - Key / Modal Size
+            'Add BPM': addBPM() //Insert in this place - Key / Modal Size
         }
     },
     'Time': {
         general: {
-            'Start Time': 'Start Time',
-            'End Time': 'End Time',
+            'Start Time': startTime(),
+            'End Time': endTime(),
             'Intervals': 1234
         }
     },
