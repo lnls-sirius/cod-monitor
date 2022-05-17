@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {colors, properties} from "../../assets/theme";
+import {colors, properties, fonts} from "../../assets/theme";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {Modal} from "react-bootstrap";
 
@@ -13,6 +13,9 @@ export const Header = styled.div`
     text-align: center;
     justify-content: center;
     padding: 15px 0px;
+    font-family: ${fonts.primary};
+    font-weight: 900;
+    font-size:${fonts.size.medium};
 `;
 
 export const Body = styled.div`

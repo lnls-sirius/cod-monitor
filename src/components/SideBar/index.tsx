@@ -1,13 +1,13 @@
 import React from "react";
 import {Drawer} from '@mui/material';
-import Menu from "../Menu";
+// import Menu from "../Menu";
 import * as S from './styled';
 import Logo from "../Logo";
 import Footer from "../Footer";
 import { sideMenu } from "../../helpers/general";
 
 //edit use text.ts to set texts
-const SideBar: React.FC = () => {
+/*const SideBar: React.FC = () => {
   const [sbarState, setSbarState] = React.useState(false);
 
   const toggleDrawer =
@@ -53,3 +53,4 @@ const SideBar: React.FC = () => {
 }
 
 export default SideBar;
+*/

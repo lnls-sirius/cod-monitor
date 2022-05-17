@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Chart, { ChartDataset } from 'chart.js/auto';
-import { options } from "./config";
+import { initData, options } from "./config";
 import { useSelector } from "react-redux";
 import archInterface from "../../data-access";
 import * as S from './styled';
@@ -30,9 +30,9 @@ const DiffChart: React.FC = () => {
 
   useEffect(() => {
     if (chartRef && chartRef.current) {
-      const newChartInstance = new Chart(
-        chartRef.current, {
+      const newChartInstance = new Chart(chartRef.current, {
           type: 'line',
+          data: initData,
           options: options
         });
       setChartInstance(newChartInstance);

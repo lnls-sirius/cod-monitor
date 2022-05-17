@@ -1,19 +1,57 @@
-import React, { useEffect } from "react";
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { bpmGroups } from "../../helpers/bpm";
 import { BpmDispatcher } from '../../helpers/bpm';
-import { posX } from "../../helpers/bpms/PosX";
 import Led from "../Led";
 import * as S from './styled';
 
 const AddBPM: React.FC = () => {
   const bpmDispatch = new BpmDispatcher();
-  const ledStates = useSelector((state: any) => state.bpm.listBpm);
-  const states = JSON.parse(ledStates);
+  const bpmList = useSelector((state: any) => state.bpm.listBpm);
+  const states: any = JSON.parse(bpmList);
+  const [axis, setAxis]: any = useState('X');
+  const [othAxis, setOthAxis]: any = useState({});
+  let oldAxis: string = 'X';
   let ledProps: any = {};
 
+  function getName(name: string, reverse: boolean = false): string{
+    let axisT = axis;
+    if(reverse == true){
+      if(axis == 'X'){
+        axisT = 'Y';
+      }else if(axis == 'Y'){
+        axisT = 'X';
+      }
+    }
+    switch(axisT){
+      case 'X':{
+        return name + ':PosX-Mon';
+      }
+      case 'Y':{
+        return name + ':PosY-Mon';
+      }
+      default:{
+        return '';
+      }
+    }
+  }
+
+  // Add onCouple function
+  // Re render on change axis
+  // Save data of hidden axis
+
   useEffect(() => {
-    bpmDispatch.setBpmList(JSON.stringify(ledProps));
+    setOthAxis(ledProps);
+    oldAxis = axis;
+  },[axis]);
+
+  useEffect(() => {
+    let list: any = {};
+    Object.entries(ledProps).map(async ([name, state]: any) => {
+      list[getName(name)] = state['state'];
+      list[getName(name, true)] = othAxis[name]['state'];
+    });
+    bpmDispatch.setBpmList(JSON.stringify(list));
   },[ledProps]);
 
   const onChildMount = (dataFromChild: any) => {
@@ -23,6 +61,16 @@ const AddBPM: React.FC = () => {
     }
   };
 
+  function bpmAxis(){
+    return bpmGroups.axis.map((name)=>{
+      if(axis == name){
+        return <S.Select selected={true}>{name}</S.Select>;
+      }else{
+        return <S.Select selected={false} onClick={() => setAxis(name)}>{name}</S.Select>;
+      }
+    });
+  }
+
   function groupSelect(groupSelected: string){
     let searchString: string;
     if(groupSelected.includes('-')){
@@ -31,7 +79,7 @@ const AddBPM: React.FC = () => {
     }else{
       searchString = groupSelected;
     }
-    posX.map((name: any)=>{
+    Object.keys(ledProps).map((name: any)=>{
       if(name.includes(searchString)){
         let ledState = ledProps[name];
         ledState['setState'](!ledState['state']);
@@ -40,10 +88,10 @@ const AddBPM: React.FC = () => {
   }
 
   function getLedState(bpm_name: string){
-    if (Object.keys(states).length === 0) {
+    if (Object.keys(states).length === 0 || states[bpm_name] == undefined) {
       return false;
     }else{
-      return states[bpm_name]['state'];
+      return states[bpm_name];
     }
   }
 
@@ -51,11 +99,12 @@ const AddBPM: React.FC = () => {
     let bpmName, state;
     if(name.includes('-1') || name.includes('-2')){
       let nameDiv = name.split('-');
-      bpmName = "SI-"+number+nameDiv[0]+":DI-BPM-"+nameDiv[1]+":PosX-Mon";
+      bpmName = "SI-"+number+nameDiv[0]+":DI-BPM-"+nameDiv[1];
     }else{
-      bpmName = "SI-"+number+name+":DI-BPM:PosX-Mon";
+      bpmName = "SI-"+number+name+":DI-BPM";
     }
-    state = getLedState(bpmName);
+    console.log(states);
+    state = getLedState(getName(bpmName));
     return <Led
             id={bpmName}
             mountData={onChildMount}
@@ -113,7 +162,7 @@ const AddBPM: React.FC = () => {
 
   return(
     <S.Table>
-      <td></td>
+      {bpmAxis()}
       {bpmNumber()}
       {bpmTable()}
       {bpmFirst()}

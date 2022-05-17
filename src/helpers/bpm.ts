@@ -11,6 +11,9 @@ export const bpmGroups = {
     bpmName: [
         'M1', 'M2', 'C1-1', 'C1-2',
         'C2', 'C3-1', 'C3-2', 'C4'
+    ],
+    axis: [
+        'X', 'Y', 'X & Y'
     ]
 }
 

@@ -15,14 +15,14 @@ type ModalOptions = {
 
 function getComponent(component: any){
   switch(component){
-    case 1:{
+    case 'add_bpm':{
       return <AddBPM/>
     }
-    case 2:{
+    case 'date_config':{
       return <TimeInput action={'Start Time'}/>
     }
-    case 3:{
-      return <TimeInput action={'End Time'}/>
+    default:{
+      return 'Error'
     }
   }
 }

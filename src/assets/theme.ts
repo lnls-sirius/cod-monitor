@@ -1,17 +1,19 @@
 export const colors = {
     btns:{
         btn1: {
+            normal: '#c33e00',
             hover: '#983000',
             active: '#741700'
         },
         btn2: {
-            hover: '#f14c0077',
-            active: '#af370077'
-        },
-        btn3: {
             normal: '#ff622c',
             hover: '#ff4200',
             active: '#d23600'
+        },
+        btn3: {
+            normal: '#006bfb',
+            hover: '#0053c4',
+            active: '#00357c'
         }
     },
     led: {
@@ -46,5 +48,10 @@ export const properties = {
     }
 }
 export const fonts = {
-    primary: '\'Akshar\', sans-serif'
+    primary: '\'Akshar\', sans-serif',
+    size: {
+        small: '13px',
+        medium: '18px',
+        big: '25px'
+    }
 }

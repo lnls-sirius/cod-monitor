@@ -1,7 +1,5 @@
 import React from "react";
 import { pages } from "../../assets/text";
-import { sideMenu } from "../../helpers/general";
-import Menu from "../Menu";
 import * as S from './styled';
 
 //Edit change page with < title >
@@ -12,7 +10,7 @@ const Navigator: React.FC = () => {
   function pageIndicator(key: string, page: string){
     let path = window.location.pathname;
     if(path == '/'){
-      path = '/orbitDrift';
+      path = '/bpmDrift';
     }
     if(path == key){
       return(

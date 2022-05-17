@@ -6,13 +6,13 @@ interface MenuItems {
   title: string;
   items: any;
 }
-
+/*
 function printItems(itemList: Array<number>){
 
   return Object.entries(itemList).map(([name, itemAction]) => (
     <Item
       title={name}
-      action={itemAction}/>
+      id={itemAction}/>
   ));
 }
 
@@ -27,4 +27,4 @@ const Menu: React.FC<MenuItems> = (props): JSX.Element => {
   );
 };
 
-export default Menu;
+export default Menu;*/

@@ -8,7 +8,7 @@ export const MenuWrapper = styled.div`
 
 export const Title = styled.div`
   padding-top: 5px;
-  font-size: 25px;
+  font-size: ${fonts.size.big};
   font-family: ${fonts.primary};
   color: ${colors.txt.secondary};
 `;
