@@ -1,11 +1,10 @@
 import React from "react";
-import { TimeDispatcher } from "../../helpers/time";
+import { useSelector } from "react-redux";
 import * as S from './styled';
 
 const DateInterval: React.FC = () => {
-  const timeDispatch = new TimeDispatcher();
-  const startDate = timeDispatch.GetStartDate();
-  const endDate = timeDispatch.GetEndDate();
+  const startDate = new Date(useSelector((state: any) => state.time.start_date));
+  const endDate = new Date(useSelector((state: any) => state.time.end_date));
 
   return(
     <S.TextWrapper>

@@ -2,13 +2,29 @@ import React from "react";
 import * as S from './styled';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import AddBPM from "../AddBPM";
+import TimeInput from "../TimeInput";
 
 type ModalOptions = {
   title: string;
   size: string;
-  content: JSX.Element;
+  content: any;
   state: boolean;
   close: () => void;
+}
+
+function getComponent(component: any){
+  switch(component){
+    case 1:{
+      return <AddBPM/>
+    }
+    case 2:{
+      return <TimeInput action={'Start Time'}/>
+    }
+    case 3:{
+      return <TimeInput action={'End Time'}/>
+    }
+  }
 }
 
 function ModalBox(props: any){
@@ -25,7 +41,7 @@ function ModalBox(props: any){
           onClick={props.onHide}/>
       </S.Header>
       <S.Body>
-        {props.component}
+        {getComponent(props.component)}
       </S.Body>
     </S.ModalContainer>
   );

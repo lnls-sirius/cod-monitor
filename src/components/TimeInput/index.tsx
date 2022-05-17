@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { TimeDispatcher, outOfRange } from "../../helpers/time";
 import * as S from './styled';
 
@@ -8,8 +9,8 @@ interface TimeOpt{
 
 const TimeInput: React.FC<TimeOpt> = (props) => {
   const timeDispatch = new TimeDispatcher();
-  const startDate = timeDispatch.GetStartDate();
-  const endDate = timeDispatch.GetEndDate();
+  const startDate = new Date(useSelector((state: any) => state.time.start_date));
+  const endDate = new Date(useSelector((state: any) => state.time.end_date));
   const [hint, setHint] = useState("");
   const [time, setTime] = useState(initDate);
 
@@ -32,16 +33,19 @@ const TimeInput: React.FC<TimeOpt> = (props) => {
   function setTimeOpt(time: Date){
     switch (props.action) {
       case 'Start Time':{
-        timeDispatch.SetStartDate(time);
-        setTime(time);
+        if(outOfRange(time, endDate)){
+          timeDispatch.SetStartDate(time);
+        }
         break;
       }
       case 'End Time':{
-        timeDispatch.SetEndDate(time);
-        setTime(time);
+        if(outOfRange(startDate, time)){
+          timeDispatch.SetEndDate(time);
+        }
         break;
       }
     }
+    setTime(time);
   }
 
   return(

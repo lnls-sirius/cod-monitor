@@ -1,6 +1,6 @@
 import React from "react";
 import { pages } from "../../assets/text";
-import { sideMenu } from "../../helpers/constants";
+import { sideMenu } from "../../helpers/general";
 import Menu from "../Menu";
 import * as S from './styled';
 
@@ -30,15 +30,10 @@ const Navigator: React.FC = () => {
 
   }
 
-  /*{Object.entries(pages).map(([key, value]) => (
-        pageIndicator(key, value)
-      ))}*/
   return(
     <S.NavWrapper>
-      {Object.entries(sideMenu).map(([key, value]) => (
-        <Menu
-          title={key}
-          items={value.general}/>
+      {Object.entries(pages).map(([key, value]) => (
+        pageIndicator(key, value)
       ))}
     </S.NavWrapper>
   );

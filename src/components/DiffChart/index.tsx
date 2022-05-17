@@ -1,24 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import Chart, { ChartDataset } from 'chart.js/auto';
-import * as S from './styled';
-import { config, initData } from "./config";
+import { options } from "./config";
 import { useSelector } from "react-redux";
 import archInterface from "../../data-access";
-import { TimeDispatcher } from "../../helpers/time";
+import * as S from './styled';
 
-interface Data {
-  chartData: number[];
-}
-
-const DiffChart: React.FC<Data> = ({ chartData }: Data) => {
-  const timeDispatch = new TimeDispatcher();
+const DiffChart: React.FC = () => {
   const bpmList = useSelector((state: any) => state.bpm.listBpm);
+  const startDate = new Date(useSelector((state: any) => state.time.start_date));
+  const endDate = new Date(useSelector((state: any) => state.time.end_date));
   const bpms = JSON.parse(bpmList);
   const chartRef = useRef(null);
   const [dataset, setDataset]: ChartDataset<any>[] = useState([]);
   const [chartInstance, setChartInstance] = useState<Chart>();
-  const startDate = timeDispatch.GetStartDate();
-  const endDate = timeDispatch.GetEndDate();
 
   async function getArchiver(name: string){
     try {
@@ -39,38 +33,46 @@ const DiffChart: React.FC<Data> = ({ chartData }: Data) => {
       const newChartInstance = new Chart(
         chartRef.current, {
           type: 'line',
-          data: initData,
-          options: config
+          options: options
         });
       setChartInstance(newChartInstance);
     }
   }, [chartRef]);
 
-  function setLabels(newData: any){
-    var values=[];
-    for(var c=0; c<newData.length; c++){
-      values.push(newData[c]['x']);
-    }
-    console.log(values);
-    return values;
-  }
-
   const updateDataset = (newData: any) => {
     if (chartInstance!=null){
-      chartInstance.data.labels = setLabels(newData);
       chartInstance.data.datasets = newData;
       chartInstance.update();
     }
   };
 
-  const buildDataset = () => {
+  const buildDataset = (data: any) => {
+    return data.map((data: any) => {
+      return {
+        x: data.x.toLocaleString("br-BR") + "." + data.x.getMilliseconds(),
+        y: data.y,
+        backgroundColor: '#FFFFFF',
+        yAxisID: 'yid',
+        xAxisID: 'TimeAxisID',
+        borderWidth: 1.5,
+        data: data,
+        fill: false,
+        pointRadius: 0,
+        showLine: true,
+        steppedLine: true,
+
+      };
+    });
+  }
+
+  const buildChart = () => {
     setDataset([]);
     Object.entries(bpms).map(async ([name, state]) => {
       if(getState(state)){
         let archiverResult = await getArchiver(name);
         console.log(archiverResult);
         setDataset((dataset: any) => [...dataset,
-          {data: archiverResult, xAxisID: 'x-axis-1', label: name}
+          {data: buildDataset(archiverResult), xAxisID: 'x-axis-1', label: name}
         ]);
       }
     });
@@ -82,7 +84,7 @@ const DiffChart: React.FC<Data> = ({ chartData }: Data) => {
       <S.Chart
         id="myChart"
         ref={chartRef}/>
-      <button onClick={buildDataset}>Add Dataset</button>
+      <button onClick={buildChart}>Add Dataset</button>
     </div>
   );
 };

@@ -3,22 +3,22 @@ import {
   Route
 } from "react-router-dom";
 
-import OrbitDrift from "../pages/orbitDrift";
+import BpmDrift from "../pages/bpmDrift";
 
 export default function RouterNavigator() {
   return (
     <Routes>
         <Route  path="/" element={
-            <OrbitDrift />
+            <BpmDrift />
         }/>
         <Route  path="/bpmDrift" element={
-            <OrbitDrift />
+            <BpmDrift />
         }/>
         <Route  path="/orbitCorrection" element={
-            <OrbitDrift />
+            <BpmDrift />
         }/>
         <Route  path="/orbitDrift" element={
-            <OrbitDrift />
+            <BpmDrift />
         }/>
     </Routes>
   );

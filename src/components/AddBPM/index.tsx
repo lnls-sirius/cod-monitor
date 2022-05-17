@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { setSelectBpm } from '../../features/bpmStore'
-import { bpmGroups } from "../../helpers/constants";
+import { useSelector } from 'react-redux'
+import { bpmGroups } from "../../helpers/bpm";
+import { BpmDispatcher } from '../../helpers/bpm';
 import { posX } from "../../helpers/bpms/PosX";
 import Led from "../Led";
 import * as S from './styled';
 
 const AddBPM: React.FC = () => {
-  const dispatch = useDispatch();
+  const bpmDispatch = new BpmDispatcher();
   const ledStates = useSelector((state: any) => state.bpm.listBpm);
   const states = JSON.parse(ledStates);
   let ledProps: any = {};
 
   useEffect(() => {
-    dispatch(setSelectBpm(JSON.stringify(ledProps)));
-  }, [ledProps]);
+    bpmDispatch.setBpmList(JSON.stringify(ledProps));
+  },[ledProps]);
 
   const onChildMount = (dataFromChild: any) => {
     ledProps[dataFromChild[2]] = {
