@@ -8,7 +8,7 @@ import * as S from './styled';
 const AddBPM: React.FC = () => {
   const bpmDispatch = new BpmDispatcher();
   const bpmList = useSelector((state: any) => state.bpm.listBpm);
-  const initStates: any = JSON.parse(bpmList);
+  const [initStates, setInitStates]: any = useState(JSON.parse(bpmList));
   const [axis, setAxis]: any = useState('X');
   const [othAxis, setOthAxis]: any = useState(initStates);
   let ledProps: any = {};
@@ -41,7 +41,11 @@ const AddBPM: React.FC = () => {
     let list: any = {};
     Object.entries(ledProps).map(async ([name, prop]: any) => {
       list[getName(name, false)] = prop.state;
-      list[getName(name, true)] = othAxis[name].state;
+      if(othAxis[name] == undefined){
+        list[getName(name, true)] = initStates[name];
+      }else{
+        list[getName(name, true)] = othAxis[name].state;
+      }
     });
     bpmDispatch.setBpmList(JSON.stringify(list));
   }
