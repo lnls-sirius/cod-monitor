@@ -8,13 +8,14 @@ import * as S from './styled';
 const AddBPM: React.FC = () => {
   const bpmDispatch = new BpmDispatcher();
   const bpmList = useSelector((state: any) => state.bpm.listBpm);
-  const states: any = JSON.parse(bpmList);
+  const initStates: any = JSON.parse(bpmList);
   const [axis, setAxis]: any = useState('X');
-  const [othAxis, setOthAxis]: any = useState({});
-  let oldAxis: string = 'X';
+  const [othAxis, setOthAxis]: any = useState(initStates);
   let ledProps: any = {};
+  
+  // Add onCouple function
 
-  function getName(name: string, reverse: boolean = false): string{
+  function getName(name: string, reverse: boolean): string{
     let axisT = axis;
     if(reverse == true){
       if(axis == 'X'){
@@ -36,22 +37,31 @@ const AddBPM: React.FC = () => {
     }
   }
 
-  // Add onCouple function
-  // Re render on change axis
-  // Save data of hidden axis
+  function saveData(){
+    let list: any = {};
+    Object.entries(ledProps).map(async ([name, prop]: any) => {
+      list[getName(name, false)] = prop.state;
+      list[getName(name, true)] = othAxis[name].state;
+    });
+    bpmDispatch.setBpmList(JSON.stringify(list));
+  }
 
   useEffect(() => {
-    setOthAxis(ledProps);
-    oldAxis = axis;
+    if(axis == 'X'){
+      let extraAxis = othAxis;
+      setOthAxis(ledProps);
+      ledProps = extraAxis;
+    }else{
+      let extraAxis = ledProps;
+      ledProps = othAxis;
+      setOthAxis(extraAxis);
+    }
+    saveData();
+    onChangeAxis();
   },[axis]);
 
   useEffect(() => {
-    let list: any = {};
-    Object.entries(ledProps).map(async ([name, state]: any) => {
-      list[getName(name)] = state['state'];
-      list[getName(name, true)] = othAxis[name]['state'];
-    });
-    bpmDispatch.setBpmList(JSON.stringify(list));
+    saveData();
   },[ledProps]);
 
   const onChildMount = (dataFromChild: any) => {
@@ -60,6 +70,14 @@ const AddBPM: React.FC = () => {
       'setState': dataFromChild[1]
     }
   };
+
+  function onChangeAxis(){
+    Object.entries(ledProps).map(async ([name, prop]: any) => {
+      const newAxisLed = getLedState(getName(name, false));
+      prop.setState(newAxisLed);
+      prop.state = newAxisLed;
+    });
+  }
 
   function bpmAxis(){
     return bpmGroups.axis.map((name)=>{
@@ -82,12 +100,13 @@ const AddBPM: React.FC = () => {
     Object.keys(ledProps).map((name: any)=>{
       if(name.includes(searchString)){
         let ledState = ledProps[name];
-        ledState['setState'](!ledState['state']);
+        ledState.setState(!ledState.state);
       }
     })
   }
 
   function getLedState(bpm_name: string){
+    const states: any = JSON.parse(bpmList);
     if (Object.keys(states).length === 0 || states[bpm_name] == undefined) {
       return false;
     }else{
@@ -103,8 +122,7 @@ const AddBPM: React.FC = () => {
     }else{
       bpmName = "SI-"+number+name+":DI-BPM";
     }
-    console.log(states);
-    state = getLedState(getName(bpmName));
+    state = getLedState(getName(bpmName, false));
     return <Led
             id={bpmName}
             mountData={onChildMount}

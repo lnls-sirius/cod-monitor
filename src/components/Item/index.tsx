@@ -56,7 +56,6 @@ const Item: React.FC<MenuItems> = (props): JSX.Element => {
         content={props.id}
         close={() =>{setModalState(false)}}
         state={modalState}
-        size='xl'
         title={props.title}/>
       {printBtn()}
     </S.ItemWrapper>

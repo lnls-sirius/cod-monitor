@@ -1,13 +1,49 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import {colors, properties, fonts} from "../../assets/theme";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {Modal} from "react-bootstrap";
 
-export const ModalContainer = styled(Modal)`
-    background-color: ${colors.bg.primary50};
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 `;
 
+const fadeOut = keyframes`
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }   
+`;
+
+export const ModalContainer = styled(Modal)`
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: ${colors.bg.primary50}; 
+    animation: ${(props)=>props.show?fadeIn:fadeOut} 0.3s linear;
+`
+
+export const Content = styled.div`
+    position: fixed;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%);
+    min-width: 60rem;
+    border-radius: ${properties.radius.medium};
+    background: ${colors.bg.white};
+`
+
 export const Header = styled.div`
+    width: 100%;
     background-image: ${colors.bg.secondary};
     color: ${colors.txt.primary};
     text-align: center;
@@ -16,6 +52,7 @@ export const Header = styled.div`
     font-family: ${fonts.primary};
     font-weight: 900;
     font-size:${fonts.size.medium};
+    border-radius: ${properties.radius.medium} ${properties.radius.medium} 0px 0px;
 `;
 
 export const Body = styled.div`
