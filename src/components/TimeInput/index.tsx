@@ -11,6 +11,7 @@ const TimeInput: React.FC<TimeOpt> = (props) => {
   const timeDispatch = new TimeDispatcher();
   const startDate = new Date(useSelector((state: any) => state.time.start_date));
   const endDate = new Date(useSelector((state: any) => state.time.end_date));
+  const refDate = new Date(useSelector((state: any) => state.time.ref_date));
   const [hint, setHint] = useState("");
   const [time, setTime] = useState(initDate);
 
@@ -24,6 +25,10 @@ const TimeInput: React.FC<TimeOpt> = (props) => {
         setHint(props.action);
         return endDate;
       }
+      case 'Ref Time':{
+        setHint(props.action);
+        return refDate;
+      }
       default:{
         return new Date();
       }
@@ -35,17 +40,25 @@ const TimeInput: React.FC<TimeOpt> = (props) => {
       case 'Start Time':{
         if(outOfRange(time, endDate)){
           timeDispatch.SetStartDate(time);
+          setTime(time);
         }
         break;
       }
       case 'End Time':{
         if(outOfRange(startDate, time)){
           timeDispatch.SetEndDate(time);
+          setTime(time);
+        }
+        break;
+      }
+      case 'Ref Time':{
+        if(outOfRange(startDate, endDate, time)){
+          timeDispatch.SetRefDate(time);
+          setTime(time);
         }
         break;
       }
     }
-    setTime(time);
   }
 
   return(

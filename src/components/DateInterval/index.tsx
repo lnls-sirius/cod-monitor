@@ -11,6 +11,9 @@ const DateInterval: React.FC = () => {
       to
         <TimeInput
           action='End Time'/>
+      Reference:
+        <TimeInput
+          action='Ref Time'/>
     </S.TextWrapper>
   );
 };

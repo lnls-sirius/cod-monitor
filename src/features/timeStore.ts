@@ -4,7 +4,8 @@ export const timeData = createSlice({
   name: 'time',
   initialState: {
     start_date: (new Date()).toString(),
-    end_date: (new Date()).toString()
+    end_date: (new Date()).toString(),
+    ref_date: (new Date()).toString()
   },
   reducers: {
     setStart: (state, action) => {
@@ -12,10 +13,13 @@ export const timeData = createSlice({
     },
     setEnd: (state, action) => {
       state.end_date = action.payload;
+    },
+    setRef: (state, action) => {
+      state.ref_date = action.payload;
     }
   }
 })
 
-export const { setStart, setEnd } = timeData.actions
+export const { setStart, setEnd, setRef } = timeData.actions
 
 export default timeData.reducer

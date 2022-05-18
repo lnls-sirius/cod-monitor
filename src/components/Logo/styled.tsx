@@ -8,7 +8,7 @@ export const LogoWrapper = styled.div`
 `;
 
 export const ImageWrapper = styled.img`
-  height: 40px;
+  height: 30px;
   margin: 4px;
   padding: 2px;
   background-color: ${colors.bg.white};

@@ -1,8 +1,9 @@
 import { TimeAxisID } from "../../helpers/time";
+import {Chart} from "chart.js";
 
-const x_axis = {
+const x_axes: any = {
     offset: false,
-    id: 'TimeAxisID',
+    id: TimeAxisID,
     type: "time",
     distribution: "linear",
     time: {
@@ -28,45 +29,39 @@ const x_axis = {
     }
 }
 
-const y_axis = {
+const y_axes = {
     type: "line",
     display: false,
     position: "left",
     id: "y-axis-0"
 }
 
-export const options = {
-    plugins: {
-        showLines: true,
-        spanGaps: true,
-        responsiveAnimationDuration: 0,
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: { duration: 0 },
-        ticks: {
-            autoSkip: true,
-            maxTicksLimit: 5
+export const options: any = {
+    showLines: true,
+    spanGaps: true,
+    responsiveAnimationDuration: 0,
+    responsive: true,
+    animation: { duration: 0 },
+    elements: {
+        point: {
+            hoverRadius: 0
         },
-        elements: {
-            point: {
-                hoverRadius: 0,
-            },
-            line: {
-                cubicInterpolationMode: "monotone",
-                stepped: true,
-                tension: 2
-            }
-        },
-        hover: {
-            mode: "nearest",
-            intersect: false,
-            animationDuration: 0
-        },
-        title: { display: false },
-        scales: {
-            xAxis: [x_axis],
-            yAxis: [y_axis]
-        },
+        line: {
+            cubicInterpolationMode: "monotone",
+            stepped: true,
+            tension: 2
+        }
+    },
+    hover: {
+        mode: "nearest",
+        intersect: false
+    },
+    title: { display: false },
+    scales: {
+        xAxes: [x_axes],
+        yAxes: [y_axes]
+    },
+    plugins:{
         legend: {
             display: false
         }
