@@ -3,6 +3,8 @@ import { setEnd, setStart, setRef } from "../features/timeStore";
 
 export const TimeAxisID = "x-axis-0";
 
+export const TimeAxisIndex = 0;
+
 export function outOfRange(start: Date, end: Date, ref?: Date){
     const now = new Date();
     if(start.getTime() > end.getTime() ||

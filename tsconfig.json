@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "../archiver-viewer/src/controllers copy"  ]
 }

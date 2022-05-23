@@ -12,6 +12,7 @@ const DiffChart: React.FC = () => {
   const bpms = JSON.parse(bpmList);
   const chartRef = useRef(null);
   const [dataset, setDataset]: ChartDataset<any>[] = useState([]);
+  const [bpmColor, setBpmColor]: any = useState(0);
   const [chartInstance, setChartInstance] = useState<Chart>();
 
   async function getArchiver(name: string){
@@ -42,42 +43,49 @@ const DiffChart: React.FC = () => {
     }
   };
 
+  //edit
+  // Insert + "." + data.x.getMilliseconds()
   const buildDataset = (data: any) => {
     return data.map((data: any) => {
       return {
-        x: data.x.toLocaleString("br-BR") + "." + data.x.getMilliseconds(),
+        x: data.x.toLocaleString("br-BR"),
         y: data.y
       };
     });
   }
 
-  function getAxesColor(index: number){
+  function getAxesColor(nextColor: boolean){
     let colors = [
       '#FF0000',
       '#00FF00',
-      '#0000FF'
+      '#0000FF',
+      '#00FFFF',
+      '#0F00FF',
+      '#F0F0FF',
     ]
-    return colors[index];
+    if(nextColor){
+      setBpmColor(bpmColor+1);
+    }
+    return colors[bpmColor];
   }
 
   const buildChart = () => {
     setDataset([]);
-    let bpmIndex = 0;
     Object.entries(bpms).map(async ([name, state]) => {
       if(state){
         let archiverResult = await getArchiver(name);
         setDataset((dataset: any) => [...dataset,
           {
             data: buildDataset(archiverResult),
-            xAxisID: bpmIndex,
+            xAxisID: 'x-axis-0',
             label: name,
-            borderColor: getAxesColor(bpmIndex),
-            backgroundColor: getAxesColor(bpmIndex)
+            borderColor: getAxesColor(true),
+            backgroundColor: getAxesColor(true)
           }
         ]);
-        bpmIndex += 1;
       }
     });
+    console.log(dataset);
     updateDataset(dataset);
   };
 

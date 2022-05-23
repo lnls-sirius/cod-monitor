@@ -24,8 +24,7 @@ const x_axes: any = {
         autoSkipPadding: 5,
         maxTicksLimit: 5,
         maxRotation: 0,
-        minRotation: 0,
-        stepSize: 1
+        minRotation: 0
     }
 }
 

@@ -42,7 +42,8 @@ export class ArchiverDataAccess implements DataAccess{
 
     let finalData = null;
 
-    const jsonurl = `${this.GET_DATA_URL}?pv=${pv}&from=${from.toJSON()}&to=${to.toJSON()}`;
+    //edit set optimized
+    const jsonurl = `${this.GET_DATA_URL}?pv=optimized_100(${pv})&from=${from.toJSON()}&to=${to.toJSON()}`;
 
     const res = await axios
       .get(jsonurl, {
