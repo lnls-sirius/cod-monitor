@@ -32,7 +32,8 @@ const y_axes = {
     type: "line",
     display: false,
     position: "left",
-    id: "y-axis-0"
+    id: "y-axis-0",
+    name: "nm"
 }
 
 export const options: any = {

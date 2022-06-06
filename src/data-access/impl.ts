@@ -18,10 +18,10 @@ export class ArchiverDataAccess implements DataAccess{
 
   private parseData(data: any[]): ArchiverDataPoint[] {
     const outData: ArchiverDataPoint[] = [];
-    data.forEach(({ val, secs, nanos, severity, status }) => {
+    data.forEach(({ val, secs, nanos}) => {
       let y;
       if (val instanceof Array) {
-        const [avg, std, min, max, nelm] = val;
+        const [avg] = val;
         y = avg;
       } else {
         y = val;
@@ -40,10 +40,16 @@ export class ArchiverDataAccess implements DataAccess{
 
   async fetchData(pv: string, from: Date, to: Date): Promise<ArchiverData> {
 
+    let jsonurl = '';
     let finalData = null;
+    let optimization = 800;
+    const timeDifference = to.getTime() - from.getTime();
 
-    //edit set optimized
-    const jsonurl = `${this.GET_DATA_URL}?pv=optimized_100(${pv})&from=${from.toJSON()}&to=${to.toJSON()}`;
+    if(timeDifference > 3600000){
+      jsonurl = `${this.GET_DATA_URL}?pv=optimized_`+optimization+`(${pv})&from=${from.toJSON()}&to=${to.toJSON()}`;
+    }else{
+      jsonurl = `${this.GET_DATA_URL}?pv=${pv}&from=${from.toJSON()}&to=${to.toJSON()}`;
+    }
 
     const res = await axios
       .get(jsonurl, {

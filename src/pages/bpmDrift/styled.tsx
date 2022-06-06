@@ -6,7 +6,17 @@ export const AppLayout = styled.div`
     background: ${colors.bg.primary};
 `;
 
-export const HeaderWrapper = styled.nav`
+export const VerticalWrapper = styled.nav`
     width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+export const HorizontalWrapper = styled.nav`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    item-align: center;
+    justify-content: center;
 `;

@@ -25,15 +25,15 @@ export const Button = styled.button`
 `
 
 export const Icon = styled(FontAwesomeIcon)`
-    height: 35px;
-    width: 35px;
+    height: 25px;
+    width: 25px;
     color: ${colors.bg.white};
     padding: 5px;
     border-radius: ${properties.radius.extlight};
     &:hover{
-    background-color: ${colors.btns.btn1.hover};
+        background-color: ${colors.btns.btn1.hover};
     }
     &:active{
-    background-color: ${colors.btns.btn1.active};
+        background-color: ${colors.btns.btn1.active};
     }
 `;

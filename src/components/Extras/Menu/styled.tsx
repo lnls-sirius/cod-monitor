@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, fonts } from "../../assets/theme";
+import { colors, fonts } from "../../../assets/theme";
 
 export const MenuWrapper = styled.div`
   display: flex;

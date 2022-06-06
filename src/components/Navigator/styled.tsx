@@ -13,7 +13,7 @@ export const NavWrapper = styled.nav`
 export const PageLink = styled(Link)`
   color: ${colors.txt.primary};
   text-decoration: none;
-  padding: 10px;
+  padding: 5px;
   border-radius: ${properties.radius.medium};
   margin: 5px;
   &:hover{
@@ -27,7 +27,7 @@ export const PageLink = styled(Link)`
 export const PageAct = styled.span`
   color: ${colors.txt.primary};
   text-decoration: none;
-  padding: 10px;
+  padding: 5px;
   margin: 5px;
   border-radius: ${properties.radius.medium};
   background-color: ${colors.btns.btn1.hover};

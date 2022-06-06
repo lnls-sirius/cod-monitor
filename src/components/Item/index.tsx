@@ -25,7 +25,6 @@ const Item: React.FC<MenuItems> = (props): JSX.Element => {
       }
     }
   }
-
   function printBtn(){
     switch(props.type){
       case 1:{

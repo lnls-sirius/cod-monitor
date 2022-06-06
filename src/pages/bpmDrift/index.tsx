@@ -7,6 +7,7 @@ import Navigator from "../../components/Navigator";
 import * as S from './styled';
 import Item from "../../components/Item";
 import Footer from "../../components/Footer";
+import Interval from "../../components/Interval";
 
 const BpmDrift: React.FC = () => {
   const itemType = 2;
@@ -14,12 +15,19 @@ const BpmDrift: React.FC = () => {
   return (
     <S.AppLayout>
       <Header>
-        <S.HeaderWrapper>
+        <S.HorizontalWrapper>
           <Logo />
-          <Navigator />
-          <Item title='ADD BPM' id='add_bpm' type={itemType}/>
-          <DateInterval />
-        </S.HeaderWrapper>
+          <S.VerticalWrapper>
+            <S.HorizontalWrapper>
+              <Interval />
+            </S.HorizontalWrapper>
+            <S.HorizontalWrapper>
+              <Navigator />
+              <Item title='ADD BPM' id='add_bpm' type={itemType}/>
+              <DateInterval />
+            </S.HorizontalWrapper>
+          </S.VerticalWrapper>
+        </S.HorizontalWrapper>
       </Header>
       <DiffChart/>
       <Footer />

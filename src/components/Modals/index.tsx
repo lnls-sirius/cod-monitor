@@ -16,9 +16,6 @@ function getComponent(component: any){
     case 'add_bpm':{
       return <AddBPM/>
     }
-    case 'date_config':{
-      return <TimeInput action={'Start Time'}/>
-    }
     default:{
       return 'Error'
     }

@@ -13,7 +13,7 @@ export const bpmGroups = {
         'C2', 'C3-1', 'C3-2', 'C4'
     ],
     axis: [
-        'X', 'Y', 'X | Y'
+        'X', 'Y', 'Couple'
     ]
 }
 

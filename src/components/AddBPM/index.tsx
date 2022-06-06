@@ -7,7 +7,7 @@ import * as S from './styled';
 
 const AddBPM: React.FC = () => {
   const bpmDispatch = new BpmDispatcher();
-  const bpmList = useSelector((state: any) => state.bpm.listBpm);
+  const bpmList = useSelector((state: any) => state.bpm.bpm_list);
   const [axis, setAxis]: any = useState('X');
   const [oldAxis, setOldAxis]: any = useState('X');
   let othAxis: any = {};

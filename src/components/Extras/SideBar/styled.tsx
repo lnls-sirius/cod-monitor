@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FaTh } from "react-icons/fa";
-import {colors, properties} from '../../assets/theme';
+import {colors, properties} from '../../../assets/theme';
 
 export const Icon = styled(FaTh)`
   height: 35px;

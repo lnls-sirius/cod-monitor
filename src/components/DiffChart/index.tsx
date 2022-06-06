@@ -1,31 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import Chart, { ChartDataset } from 'chart.js/auto';
 import { initData, options } from "./config";
-import { useSelector } from "react-redux";
 import archInterface from "../../data-access";
+import { connect } from "react-redux";
 import * as S from './styled';
 
-const DiffChart: React.FC = () => {
-  const bpmList = useSelector((state: any) => state.bpm.listBpm);
-  const startDate = new Date(useSelector((state: any) => state.time.start_date));
-  const endDate = new Date(useSelector((state: any) => state.time.end_date));
-  const bpms = JSON.parse(bpmList);
+function mapStateToProps(state: any){
+  const {start_date, end_date, ref_date} = state.time;
+  const {bpm_list} = state.bpm;
+
+  return {
+    bpmList: bpm_list,
+    startDate: new Date(start_date),
+    endDate: new Date(end_date),
+    refDate: new Date(ref_date)
+  }
+}
+
+const DiffChart: React.FC = (props: any) => {
   const chartRef = useRef(null);
+  const bpms = JSON.parse(props.bpmList);
   const [dataset, setDataset]: ChartDataset<any>[] = useState([]);
-  const [bpmColor, setBpmColor]: any = useState(0);
   const [chartInstance, setChartInstance] = useState<Chart>();
-  const colors = [
-    '#FF0000',
-    '#00FF00',
-    '#0000FF',
-    '#00FFFF',
-    '#0F00FF',
-    '#F0F0FF',
-  ];
 
   async function getArchiver(name: string){
     try {
-      const res = await archInterface.fetchData(name, startDate, endDate);
+      const res = await archInterface.fetchData(name, props.startDate, props.endDate);
       const { data } = res;
       return data;
     } catch (e) {
@@ -51,10 +51,8 @@ const DiffChart: React.FC = () => {
     }
   };
 
-  //edit
-  // Insert + "." + data.x.getMilliseconds()
-  const buildDataset = (data: any) => {
-    return data.map((data: any) => {
+  const buildDataset = (dataList: any) => {
+    return dataList.map((data: any) => {
       return {
         x: data.x.toLocaleString("br-BR"),
         y: data.y
@@ -62,22 +60,65 @@ const DiffChart: React.FC = () => {
     });
   }
 
-  function getAxesColor(){
-    console.log("OK");
-    setBpmColor(bpmColor+1);
-    return colors[bpmColor];
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+
+  function getClosestDate(dataArray: any[]): number{
+
+    let valueComp = 0;
+    let selectedDate = new Date();
+    let closestDate = props.refDate.getTime();
+
+
+    dataArray.map((point) =>{
+      let pointDate = new Date(point.x);
+      let dateDiff = (selectedDate.getTime() - pointDate.getTime());
+      if(dateDiff < 0){
+        dateDiff *= -1;
+      }
+      if(closestDate > dateDiff){
+        closestDate = dateDiff;
+        valueComp = point.y;
+      }
+    });
+    return valueComp;
+  }
+
+  function differentiateData(diffData: any[]): any{
+
+    let valueComp = getClosestDate(diffData);
+    diffData.map((point) =>{
+      if(diffData[0] != point){
+        let pointDate = new Date(point.x);
+        point.y = point.y - valueComp;
+        point.x = pointDate.toLocaleString();
+      }else{
+        let pointDate = new Date(point.x);
+        point.y = point.y - diffData[1];
+        point.x = pointDate.toLocaleString();
+      }
+    });
+
+    return diffData;
   }
 
   function buildChart(){
     setDataset([]);
-    let color = '#00FF00';
     Object.entries(bpms).map(async ([name, state]) => {
       if(state){
         let archiverResult = await getArchiver(name);
-        color = getAxesColor();
+        let finalDataset = differentiateData(buildDataset(archiverResult));
+        let color = getRandomColor();
         setDataset((dataset: any) => [...dataset,
           {
-            data: buildDataset(archiverResult),
+            data: finalDataset,
             xAxisID: 'x-axis-0',
             label: name,
             borderColor: color,
@@ -99,4 +140,4 @@ const DiffChart: React.FC = () => {
   );
 };
 
-export default DiffChart;
+export default connect(mapStateToProps)(DiffChart);
