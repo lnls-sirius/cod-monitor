@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import Chart, { ChartDataset } from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { initData, options } from "./config";
 import archInterface from "../../data-access";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { BpmDispatcher } from "../../helpers/bpm";
 import * as S from './styled';
 
 function mapStateToProps(state: any){
@@ -18,10 +19,11 @@ function mapStateToProps(state: any){
 }
 
 const DiffChart: React.FC = (props: any) => {
+  const bpmDispatch = new BpmDispatcher();
   const chartRef = useRef(null);
-  const bpms = JSON.parse(props.bpmList);
-  const [dataset, setDataset]: ChartDataset<any>[] = useState([]);
   const [chartInstance, setChartInstance] = useState<Chart>();
+  const bpms = JSON.parse(props.bpmList);
+  const axisColors = JSON.parse(useSelector((state: any) => state.bpm.colors));
 
   async function getArchiver(name: string){
     try {
@@ -33,8 +35,25 @@ const DiffChart: React.FC = (props: any) => {
     }
   }
 
+  async function getRefArchiver(name: string){
+    try {
+      const interval = 100;
+      const startDate = new Date(props.refDate.getTime() - interval);
+      const endDate = new Date(props.refDate.getTime() + interval);
+      const res = await archInterface.fetchData(name, startDate, endDate);
+      const { data } = res;
+      return data;
+    } catch (e) {
+      console.log("Something went wrong!!" + e);
+    }
+  }
+
   useEffect(() => {
-    if (chartRef && chartRef.current) {
+    buildChartDatasets();
+  }, [props.bpmList, props.startDate, props.endDate])
+
+  useEffect(() => {
+    if (chartRef.current){
       const newChartInstance = new Chart(chartRef.current, {
           type: 'line',
           data: initData,
@@ -44,9 +63,15 @@ const DiffChart: React.FC = (props: any) => {
     }
   }, [chartRef]);
 
-  const updateDataset = (newData: any) => {
+  async function updateDataset(newData: any){
+    let dataset: any = [];
+    Object.entries(newData).map(([name, state]) => {
+      if(state != false){
+        dataset.push(state);
+      }
+    });
     if (chartInstance!=null){
-      chartInstance.data.datasets = newData;
+      chartInstance.data.datasets = dataset;
       chartInstance.update();
     }
   };
@@ -60,83 +85,89 @@ const DiffChart: React.FC = (props: any) => {
     });
   }
 
+  async function getClosestDate(name: string): Promise<number>{
+    const refDate = await getRefArchiver(name);
+    let selectedDate = props.refDate;
+    let closestDate = selectedDate.getTime();
+    let valueComp = 0;
+    try{
+      if(refDate != undefined){
+        refDate.shift();
+        refDate.map((point) =>{
+          let dateDiff = (selectedDate.getTime() - point.x.getTime());
+          if(dateDiff < 0){
+            dateDiff *= -1;
+          }
+          if(closestDate > dateDiff){
+            closestDate = dateDiff;
+            valueComp = point.y;
+          }
+        });
+        return valueComp;
+      }
+    }catch(e){
+      console.log("Error " + e);
+    }
+    return -1;
+  }
+
+  async function differentiateData(diffData: any[], name: string): Promise<any>{
+    let valueComp = await getClosestDate(name);
+    diffData.map((point) =>{
+      point.y = point.y - valueComp;
+    });
+    return diffData;
+  }
+
   function getRandomColor() {
-    var letters = '0123456789ABCDEF'.split('');
+    var letters = '0123456789ABCDEF';
     var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
   }
 
-
-  function getClosestDate(dataArray: any[]): number{
-
-    let valueComp = 0;
-    let selectedDate = new Date();
-    let closestDate = props.refDate.getTime();
-
-
-    dataArray.map((point) =>{
-      let pointDate = new Date(point.x);
-      let dateDiff = (selectedDate.getTime() - pointDate.getTime());
-      if(dateDiff < 0){
-        dateDiff *= -1;
-      }
-      if(closestDate > dateDiff){
-        closestDate = dateDiff;
-        valueComp = point.y;
-      }
-    });
-    return valueComp;
+  function getColor(name: string){
+    if(!(name in axisColors)){
+      axisColors[name] = getRandomColor();
+    }
+    return axisColors[name];
   }
 
-  function differentiateData(diffData: any[]): any{
-
-    let valueComp = getClosestDate(diffData);
-    diffData.map((point) =>{
-      if(diffData[0] != point){
-        let pointDate = new Date(point.x);
-        point.y = point.y - valueComp;
-        point.x = pointDate.toLocaleString();
-      }else{
-        let pointDate = new Date(point.x);
-        point.y = point.y - diffData[1];
-        point.x = pointDate.toLocaleString();
-      }
-    });
-
-    return diffData;
+  async function buildChartDatasets(){
+    updateDataset(await buildChart());
+    bpmDispatch.setColorsList(JSON.stringify(axisColors));
   }
 
-  function buildChart(){
-    setDataset([]);
-    Object.entries(bpms).map(async ([name, state]) => {
-      if(state){
-        let archiverResult = await getArchiver(name);
-        let finalDataset = differentiateData(buildDataset(archiverResult));
-        let color = getRandomColor();
-        setDataset((dataset: any) => [...dataset,
-          {
+  async function buildChart(){
+    return await Promise.all(
+      Object.entries(bpms).map(async ([name, state]) => {
+        if(state){
+          const archiverResult = await getArchiver(name);
+          //Erro
+          const rawDataset = await buildDataset(archiverResult);
+          rawDataset.shift();
+          let finalDataset = await differentiateData(rawDataset, name);
+          const color = getColor(name);
+          const datasetTemp = {
             data: finalDataset,
             xAxisID: 'x-axis-0',
             label: name,
             borderColor: color,
             backgroundColor: color
-          }
-        ]);
-      }
-    });
-    updateDataset(dataset);
-  };
+          };
+          return datasetTemp;
+        }else{
+          return false;
+        }
+      })
+    );
+};
 
   return(
-    <div>
-      <S.Chart
-        id="myChart"
-        ref={chartRef}/>
-      <button onClick={buildChart}>Add Dataset</button>
-    </div>
+    <S.Chart
+      ref={chartRef}/>
   );
 };
 

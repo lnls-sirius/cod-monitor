@@ -12,12 +12,12 @@ export const timeData = createSlice({
   },
   reducers: {
     setStart: (state, action) => {
-      if(outOfRange(new Date(action.payload), new Date(state.end_date))){
+      if(outOfRange(new Date(action.payload), new Date(state.end_date), state.time_mode)){
         state.start_date = action.payload;
       }
     },
     setEnd: (state, action) => {
-      if(outOfRange(new Date(state.start_date), new Date(action.payload))){
+      if(outOfRange(new Date(state.start_date), new Date(action.payload), state.time_mode)){
         state.end_date = action.payload;
       }
     },

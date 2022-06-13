@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getIntervalTime, getTimeMilliseconds, intervals, TimeDispatcher } from "../../helpers/time";
 import * as S from './styled';
@@ -13,8 +13,15 @@ function mapStateToProps(state: any){
 }
 
 const Interval: React.FC<any> = (props): JSX.Element => {
-  const [selIntBtn, setIntBtn] = useState("");
+  const [selIntBtn, setIntBtn] = useState("1h");
   const timeDispatch = new TimeDispatcher();
+
+  useEffect(() => {
+    const timeArray = intervals[selIntBtn];
+    if(timeArray){
+      setInterval(parseFloat(timeArray[0]), timeArray[1], selIntBtn)
+    }
+  },[props.endDate, props.startDate, selIntBtn]);
 
   function setInterval(time: number, unit: string, name: string){
     let timeMil, newDate;
@@ -35,9 +42,6 @@ const Interval: React.FC<any> = (props): JSX.Element => {
   }
 
   function timeInterval(){
-    if(selIntBtn == ""){
-      setInterval(1, "Hour", '1h');
-    }
     if(props.timeMode != 2){
       return Object.entries(intervals).reverse().map(([name, data]: any) => {
         let stateBtn = false;

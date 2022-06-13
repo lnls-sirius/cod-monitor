@@ -1,5 +1,6 @@
 import React from "react";
-import {TimeDispatcher} from "../../helpers/time";
+import { useSelector } from "react-redux";
+import {getIntervalTime, getTimeMilliseconds, TimeDispatcher} from "../../helpers/time";
 import * as S from './styled';
 
 interface TimeOpt{

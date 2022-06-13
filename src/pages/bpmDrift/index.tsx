@@ -8,6 +8,7 @@ import * as S from './styled';
 import Item from "../../components/Item";
 import Footer from "../../components/Footer";
 import Interval from "../../components/Interval";
+import ListBPM from "../../components/ListBPM";
 
 const BpmDrift: React.FC = () => {
   const itemType = 2;
@@ -30,6 +31,7 @@ const BpmDrift: React.FC = () => {
         </S.HorizontalWrapper>
       </Header>
       <DiffChart/>
+      <ListBPM />
       <Footer />
     </S.AppLayout>
   );

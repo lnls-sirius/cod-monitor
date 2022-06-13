@@ -42,14 +42,13 @@ export class ArchiverDataAccess implements DataAccess{
 
     let jsonurl = '';
     let finalData = null;
-    let optimization = 800;
     const timeDifference = to.getTime() - from.getTime();
+    const optimization = 1000;
 
-    if(timeDifference > 3600000){
-      jsonurl = `${this.GET_DATA_URL}?pv=optimized_`+optimization+`(${pv})&from=${from.toJSON()}&to=${to.toJSON()}`;
-    }else{
-      jsonurl = `${this.GET_DATA_URL}?pv=${pv}&from=${from.toJSON()}&to=${to.toJSON()}`;
-    }
+    const pvValue = optimization < (timeDifference/1000)?
+      `optimized_`+optimization+`(${pv})`:pv;
+
+    jsonurl = `${this.GET_DATA_URL}?pv=`+pvValue+`&from=${from.toJSON()}&to=${to.toJSON()}`
 
     const res = await axios
       .get(jsonurl, {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { intervalDict, TimeDispatcher } from "../../helpers/time";
 import TimeInput from "../TimeInput";
@@ -17,6 +17,7 @@ function mapStateToProps(state: any){
 
 const DateInterval: React.FC<any> = (props) => {
   const timeDispatch = new TimeDispatcher();
+
   function getDate(type: string){
     switch (type) {
       case 'Start Time':{

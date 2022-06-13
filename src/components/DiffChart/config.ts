@@ -32,8 +32,7 @@ const y_axes = {
     type: "line",
     display: false,
     position: "left",
-    id: "y-axis-0",
-    name: "nm"
+    id: "y-axis-0"
 }
 
 export const options: any = {
@@ -69,5 +68,13 @@ export const options: any = {
 }
 
 export const initData = {
-    datasets: []
+    datasets: [
+        {
+            data: [],
+            xAxisID: 'x-axis-0',
+            label: "name",
+            borderColor: "#00FF00",
+            backgroundColor: "#000000"
+        }
+    ]
 }

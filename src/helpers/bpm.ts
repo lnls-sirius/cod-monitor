@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import {setSelectBpm} from '../features/bpmStore';
+import {setColorsBpm, setSelectBpm} from '../features/bpmStore';
 
 export const bpmGroups = {
     bpmNumber: [
@@ -22,5 +22,9 @@ export class BpmDispatcher{
 
     setBpmList(list: string){
         this.dispatch(setSelectBpm(list));
+    }
+
+    setColorsList(list: string){
+        this.dispatch(setColorsBpm(list));
     }
 }
