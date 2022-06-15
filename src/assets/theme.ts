@@ -30,6 +30,10 @@ export const colors = {
         primary: '#FFFFFF',
         secondary: '#FF5100'
     },
+    load:{
+        bar: 'linear-gradient(to right, #2E005B, #6400C8)',
+        progress: 'linear-gradient(to right, #ff622c, #d23600)'
+    },
     bg:{
         primary: 'linear-gradient(to bottom, #242424, #4D4D4D)',
         primary50: '#24242477',

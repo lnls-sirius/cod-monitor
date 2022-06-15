@@ -8,6 +8,6 @@ export const InputTime = styled(DatePicker)`
     font-family: ${fonts.primary};
     font-size: ${fonts.size.small};
     height: 0.8rem;
-    width: 6rem;
+    width: 6.5rem;
     border-radius: ${properties.radius.light};
 `;

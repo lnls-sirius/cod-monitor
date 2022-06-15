@@ -4,6 +4,7 @@ import { initData, options } from "./config";
 import archInterface from "../../data-access";
 import { connect, useSelector } from "react-redux";
 import { BpmDispatcher } from "../../helpers/bpm";
+import Loading from "../Loading";
 import * as S from './styled';
 
 function mapStateToProps(state: any){
@@ -22,8 +23,19 @@ const DiffChart: React.FC = (props: any) => {
   const bpmDispatch = new BpmDispatcher();
   const chartRef = useRef(null);
   const [chartInstance, setChartInstance] = useState<Chart>();
+  const [loading, setLoading] = useState<boolean>(false);
   const bpms = JSON.parse(props.bpmList);
   const axisColors = JSON.parse(useSelector((state: any) => state.bpm.colors));
+  let bpmVal = 100/20;
+  const [loading2, setLoading2] = useState<number>(0);
+
+  setTimeout(() => {
+    if(loading2<100){
+      setLoading2(loading2+bpmVal);
+    }else{
+      setLoading2(bpmVal)
+    }
+  }, 50);
 
   async function getArchiver(name: string){
     try {
@@ -49,16 +61,17 @@ const DiffChart: React.FC = (props: any) => {
   }
 
   useEffect(() => {
+    setLoading(loading => loading = true);
     buildChartDatasets();
   }, [props.bpmList, props.startDate, props.endDate])
 
   useEffect(() => {
     if (chartRef.current){
       const newChartInstance = new Chart(chartRef.current, {
-          type: 'line',
-          data: initData,
-          options
-        });
+        type: 'line',
+        data: initData,
+        options
+      });
       setChartInstance(newChartInstance);
     }
   }, [chartRef]);
@@ -135,9 +148,17 @@ const DiffChart: React.FC = (props: any) => {
     return axisColors[name];
   }
 
+  function load(){
+    if(loading == true){
+      return <Loading progress={loading2}/>;
+    }
+    return '';
+  }
+
   async function buildChartDatasets(){
     updateDataset(await buildChart());
     bpmDispatch.setColorsList(JSON.stringify(axisColors));
+    setLoading(loading => loading = false);
   }
 
   async function buildChart(){
@@ -145,10 +166,9 @@ const DiffChart: React.FC = (props: any) => {
       Object.entries(bpms).map(async ([name, state]) => {
         if(state){
           const archiverResult = await getArchiver(name);
-          //Erro
           const rawDataset = await buildDataset(archiverResult);
           rawDataset.shift();
-          let finalDataset = await differentiateData(rawDataset, name);
+          const finalDataset = await differentiateData(rawDataset, name);
           const color = getColor(name);
           const datasetTemp = {
             data: finalDataset,
@@ -163,11 +183,14 @@ const DiffChart: React.FC = (props: any) => {
         }
       })
     );
-};
+  };
 
   return(
-    <S.Chart
-      ref={chartRef}/>
+    <div>
+      {load()}
+      <S.Chart
+        ref={chartRef}/>
+    </div>
   );
 };
 

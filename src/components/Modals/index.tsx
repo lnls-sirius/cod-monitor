@@ -2,7 +2,7 @@ import React from "react";
 import * as S from './styled';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import AddBPM from "../AddBPM";
-import TimeInput from "../TimeInput";
+import Loading from "../Loading";
 
 type ModalOptions = {
   title: string;

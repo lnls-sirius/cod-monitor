@@ -30,9 +30,13 @@ const x_axes: any = {
 
 const y_axes = {
     type: "line",
+    id: "y-axis-0",
     display: false,
-    position: "left",
-    id: "y-axis-0"
+    position: "right",
+    scaleLabel: {
+        display: true,
+        labelString: "234234"
+    }
 }
 
 export const options: any = {

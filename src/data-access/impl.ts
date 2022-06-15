@@ -42,11 +42,16 @@ export class ArchiverDataAccess implements DataAccess{
 
     let jsonurl = '';
     let finalData = null;
+    let pvValue = '';
     const timeDifference = to.getTime() - from.getTime();
     const optimization = 1000;
 
-    const pvValue = optimization < (timeDifference/1000)?
+    pvValue = optimization < (timeDifference/1000)?
       `optimized_`+optimization+`(${pv})`:pv;
+
+    if (timeDifference <= 200){
+      pvValue = pv;
+    }
 
     jsonurl = `${this.GET_DATA_URL}?pv=`+pvValue+`&from=${from.toJSON()}&to=${to.toJSON()}`
 
