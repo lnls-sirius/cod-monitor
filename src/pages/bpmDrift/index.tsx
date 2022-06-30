@@ -8,6 +8,7 @@ import Item from "../../components/Item";
 import Footer from "../../components/Footer";
 import Interval from "../../components/Interval";
 import ListBPM from "../../components/ListBPM";
+import Loading from "../../components/Loading";
 import * as S from './styled';
 
 const BpmDrift: React.FC = () => {

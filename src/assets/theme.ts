@@ -24,15 +24,12 @@ export const colors = {
         off: {
             normal: 'radial-gradient(#00ff02, #001e00)',
             hover: 'radial-gradient(#00bf02, #005f00)'
-        }
+        },
+        load: 'radial-gradient(#6400C8, #000000)'
     },
     txt:{
         primary: '#FFFFFF',
         secondary: '#FF5100'
-    },
-    load:{
-        bar: 'linear-gradient(to right, #2E005B, #6400C8)',
-        progress: 'linear-gradient(to right, #ff622c, #d23600)'
     },
     bg:{
         primary: 'linear-gradient(to bottom, #242424, #4D4D4D)',

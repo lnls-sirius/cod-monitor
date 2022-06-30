@@ -1,22 +1,38 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { colors, properties } from "../../assets/theme";
 
-export const LoadingBar = styled.div`
+const BounceAnimation = keyframes`
+  0% {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  50% {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  100% {
+    width: 1rem;
+    height: 1rem;
+  }
+`
+
+export const LoadingWrapper = styled.div`
+  display: flex;
   position: absolute;
   left: 50% !important;
   top: 50% !important;
+  height: 3rem;
   transform: translate(-50%, -100%);
-  width: 400px;
-  height: 50px;
-  border-radius: ${properties.radius.medium};
-  background: ${colors.load.bar};
-  border: 2px ridge;
-`;
+`
 
-export const Progress = styled.div`
-  width: ${(props: {progress: number}) => (props.progress*4) + 'px'};
-  height: 50px;
-  border-radius: ${properties.radius.medium};
-  background: ${colors.load.progress};
-  transition: width .5s ease-out;
+export const Circle = styled.div`
+  margin: 5px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: ${properties.radius.high};
+  background: ${colors.led.load};
+  animation: ${BounceAnimation} 2s linear infinite;
+  animation-delay: ${(props: { delay: string; }) => props.delay};
 `

@@ -1,6 +1,7 @@
 import { Dictionary } from '@reduxjs/toolkit';
 import { useDispatch} from 'react-redux';
 import { setEnd, setStart, setRef, setTimeMode } from "../features/timeStore";
+import { getRefArchiver, getArchiver} from "../helpers/archiver";
 
 export const TimeAxisID = "x-axis-0";
 export const TimeAxisIndex = 0;
@@ -93,6 +94,31 @@ export function outOfRange(start: Date, end: Date, timeMode: number){
             outRange = false;
     }
     return outRange;
+}
+
+export async function getClosestDate(name: string, selectedDate: Date): Promise<number>{
+    const refDate = await getRefArchiver(name, selectedDate);
+    let closestDate = selectedDate.getTime();
+    let valueComp = 0;
+    try{
+      if(refDate != undefined){
+        refDate.shift();
+        refDate.map((point) =>{
+          let dateDiff = (selectedDate.getTime() - point.x.getTime());
+          if(dateDiff < 0){
+            dateDiff *= -1;
+          }
+          if(closestDate > dateDiff){
+            closestDate = dateDiff;
+            valueComp = point.y;
+          }
+        });
+        return valueComp;
+      }
+    }catch(e){
+      console.log("Error " + e);
+    }
+    return -1;
 }
 
 export class TimeDispatcher{

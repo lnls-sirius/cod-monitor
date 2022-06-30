@@ -1,12 +1,35 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import * as S from './styled';
 
-const Loading: React.FC<{progress: number}> = (props) => {
+interface LoadingAnimation{
+  show: boolean
+}
+
+const Loading: React.FC<LoadingAnimation> = (props: any) => {
+
+  function showAnimation(){
+    if(props.show){
+      return (
+        <S.LoadingWrapper>
+          <S.Circle
+            delay="0s"/>
+          <S.Circle
+            delay="0.25s"/>
+          <S.Circle
+            delay="0.5s"/>
+          <S.Circle
+            delay="0.75s"/>
+        </S.LoadingWrapper>
+      );
+    }
+    return "";
+  }
+
   return (
-    <S.LoadingBar>
-      <S.Progress
-        progress={props.progress}/>
-    </S.LoadingBar>
+    <div>
+      {showAnimation()}
+    </div>
   );
 };
 export default Loading;

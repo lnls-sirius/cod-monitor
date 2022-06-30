@@ -22,11 +22,14 @@ const BpmItem: React.FC<{name: string, color: string}> = (props) => {
 const ListBPM: React.FC = (props: any) => {
 
   function listAllBpm(){
+    let bpmCounter = 0;
     return Object.entries(props.bpmList).map(([name, property]: any) => {
       if(property){
-        return <BpmItem
-                  name={name}
-                  color={props.bpmColors[name]}/>;
+        if (bpmCounter%6 == 0){
+          return <BpmItem
+            name={name}
+            color={props.bpmColors[name]}/>;
+        }
       }
     });
   }

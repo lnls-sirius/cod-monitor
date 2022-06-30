@@ -33,6 +33,7 @@ export const Header = styled.button`
     text-align: center;
     border-radius: ${properties.radius.extlight};
     padding: .08rem .8rem;
+    margin: 5px 0px;
     border: none;
     color: ${colors.txt.primary};
     font-family: ${fonts.primary};
