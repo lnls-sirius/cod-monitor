@@ -1,4 +1,4 @@
-import { TimeAxisID } from "../../helpers/time";
+import { TimeAxisID } from "../../controllers/Time/interval";
 import {Chart} from "chart.js";
 
 const x_axes: any = {

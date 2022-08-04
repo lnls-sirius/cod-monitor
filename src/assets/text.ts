@@ -6,7 +6,6 @@ export const footer = {
     verInfo: version
 }
 
-
 export const pages = {
     '/bpmDrift': 'BPM Drift',
     '/orbitDrift': 'Orbit Drift',

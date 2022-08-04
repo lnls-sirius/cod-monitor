@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { bpmGroups } from "../../helpers/bpm";
-import { BpmDispatcher } from '../../helpers/bpm';
-import Led from "../Led";
+import { bpmGroups } from "../../assets/bpms/groups";
+import { BpmDispatcher } from '../../redux/dispatcher';
+import Led from "../Patterns/Led";
 import * as S from './styled';
 
 const AddBPM: React.FC = () => {
-  const bpmDispatch = new BpmDispatcher();
-  const bpmList = useSelector((state: any) => state.bpm.bpm_list);
+  const bpmList = useSelector((state: any) => state.bpm.list);
   const [axis, setAxis]: any = useState('X');
   const [oldAxis, setOldAxis]: any = useState('X');
   let othAxis: any = {};
@@ -41,7 +40,7 @@ const AddBPM: React.FC = () => {
       list[getName(name, false)] = prop.state;
       list[getName(name, true)] = othAxis[name].state;
     });
-    bpmDispatch.setBpmList(JSON.stringify(list));
+    BpmDispatcher.setBpmList(JSON.stringify(list));
   }
 
   useEffect(() => {

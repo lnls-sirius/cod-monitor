@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import * as S from './styled';
 
 function mapStateToProps(state: any){
-  const {bpm_list, colors} = state.bpm;
+  const {list, colors} = state.bpm;
   return {
-    bpmList: JSON.parse(bpm_list),
+    bpmList: JSON.parse(list),
     bpmColors: JSON.parse(colors)
   }
 }

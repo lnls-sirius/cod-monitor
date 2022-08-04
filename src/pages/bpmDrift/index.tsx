@@ -1,18 +1,16 @@
 import React from "react";
-import DateInterval from "../../components/DateInterval";
+import DateInterval from "../../components/Date/DateInterval";
 import DiffChart from "../../components/DiffChart";
-import Header from '../../components/Header';
-import Logo from "../../components/Logo";
-import Navigator from "../../components/Navigator";
-import Item from "../../components/Item";
-import Footer from "../../components/Footer";
-import Interval from "../../components/Interval";
+import Header from '../../components/Structure/Header';
+import Logo from "../../components/Structure/Logo";
+import Navigator from "../../components/Structure/Navigator";
+import Item from "../../components/Patterns/Item";
+import Footer from "../../components/Structure/Footer";
+import Interval from "../../components/Date/Interval";
 import ListBPM from "../../components/ListBPM";
-import Loading from "../../components/Loading";
 import * as S from './styled';
 
 const BpmDrift: React.FC = () => {
-  const itemType = 2;
   return (
     <S.AppLayout>
       <Header>
@@ -24,7 +22,7 @@ const BpmDrift: React.FC = () => {
             </S.HorizontalWrapper>
             <S.HorizontalWrapper>
               <Navigator />
-              <Item title='ADD BPM' id='add_bpm' type={itemType}/>
+              <Item title='ADD BPM' id='add_bpm' type={2}/>
               <DateInterval />
             </S.HorizontalWrapper>
           </S.VerticalWrapper>

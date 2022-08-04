@@ -1,0 +1,37 @@
+import React from "react";
+import { pages } from "../../../assets/text";
+import * as S from './styled';
+
+const Navigator: React.FC = () => {
+
+  function pageIndicator(key: string, page: string){
+    let path = window.location.pathname;
+    if(path == '/'){
+      path = '/bpmDrift';
+    }
+    if(path == key){
+      return(
+        <S.PageAct>
+          {page}
+        </S.PageAct>
+      );
+    }else{
+      return(
+        <S.PageLink to={key}>
+          {page}
+        </S.PageLink>
+      );
+    }
+
+  }
+
+  return(
+    <S.NavWrapper>
+      {Object.entries(pages).map(([key, value]) => (
+        pageIndicator(key, value)
+      ))}
+    </S.NavWrapper>
+  );
+};
+
+export default Navigator;

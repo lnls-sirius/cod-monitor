@@ -42,7 +42,7 @@ export interface ArchiverData {
 }
 
 export interface DataAccess {
-  fetchData(pv: string, from: Date, to: Date): Promise<ArchiverData>;
+  fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData>;
 }
 
 export interface DataAccessFactory {
