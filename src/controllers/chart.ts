@@ -1,5 +1,4 @@
 import { Dictionary } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';

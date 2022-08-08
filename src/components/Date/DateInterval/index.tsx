@@ -2,16 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { intervalDict } from "../../../controllers/Time/interval";
 import { TimeDispatcher } from '../../../redux/dispatcher';
-import { storeInterface } from "../../../redux/storage/store";
+import { StoreInterface } from "../../../redux/storage/store";
 import TimeInput from "../TimeInput";
 import TimeShow from "../../Date/TimeShow";
 import * as S from './styled';
 import Item from "../../Patterns/Item";
 import { timeInformation } from "../../../controllers/Time/interfaces";
 
-function mapStateToProps(state: storeInterface){
+function mapStateToProps(state: StoreInterface){
   const {time_mode, start_date, end_date, ref_date} = state.time;
-  console.log(state)
   return {
     intervalMode: time_mode,
     startDate: new Date(start_date),
@@ -20,11 +19,9 @@ function mapStateToProps(state: storeInterface){
   }
 }
 
-const TimeMode: React.FC = () => {
-  return (
-    <Item id={"657"} title={"546546"} type={0}/>
-  );
-}
+// const TimeMode: React.FC = () => {
+//   // return <Item id={"657"} title={"546546"} type={0}/>;
+// }
 
 const DateInterval: React.FC<timeInformation> = (props) => {
 
@@ -75,8 +72,7 @@ const DateInterval: React.FC<timeInformation> = (props) => {
         <TimeInput
           id='Ref Time'
           date={getDate('Ref Time')}/>
-      <TimeMode />
-      <S.ChangeMode>M</S.ChangeMode>
+      <S.ChangeMode onClick={()=>countIntervalMode()}>M</S.ChangeMode>
     </S.TextWrapper>
   );
 };

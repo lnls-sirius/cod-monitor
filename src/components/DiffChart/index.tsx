@@ -29,8 +29,8 @@ const DiffChart: React.FC = (props: any) => {
   const axisColors = JSON.parse(useSelector((state: any) => state.bpm.colors));
 
   useEffect(() => {
-    setLoading(true);
-    buildChartDatasets();
+    // setLoading(true);
+    // buildChartDatasets();
   }, [props.bpmList, props.startDate, props.endDate])
 
   useEffect(() => {

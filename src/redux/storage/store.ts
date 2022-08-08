@@ -4,7 +4,7 @@ import {reducer as bpmReducer} from '../features/BpmStore'
 import { timeStore } from '../features/TimeStore/initialState'
 import { bpmStore } from '../features/BpmStore/initialState'
 
-export interface storeInterface {
+export interface StoreInterface {
   time: timeStore,
   bpm: bpmStore
 }

@@ -1,26 +1,7 @@
 import React from "react";
 import * as S from './styled';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import AddBPM from "../../AddBPM";
-import Loading from "../../Loading";
-
-type ModalOptions = {
-  title: string;
-  content: any;
-  state: boolean;
-  close: () => void;
-}
-
-function getComponent(component: any){
-  switch(component){
-    case 'add_bpm':{
-      return <AddBPM/>
-    }
-    default:{
-      return 'Error'
-    }
-  }
-}
+import { ModalInterface } from "../../../controllers/Structure/interfaces";
 
 function ModalBox(props: any){
   return (
@@ -36,20 +17,20 @@ function ModalBox(props: any){
             onClick={props.onHide}/>
         </S.Header>
         <S.Body>
-          {getComponent(props.component)}
+          {props.component}
         </S.Body>
       </S.Content>
     </S.ModalContainer>
   );
 }
 
-const Modals: React.FC<ModalOptions> = (props): JSX.Element => {
+const Modals: React.FC<ModalInterface> = (props): JSX.Element => {
   return(
     <ModalBox
       title={props.title}
       show={props.state}
       onHide={props.close}
-      component={props.content}
+      component={props.component}
     />
   );
 };

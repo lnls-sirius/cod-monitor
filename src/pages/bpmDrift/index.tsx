@@ -8,7 +8,11 @@ import Item from "../../components/Patterns/Item";
 import Footer from "../../components/Structure/Footer";
 import Interval from "../../components/Date/Interval";
 import ListBPM from "../../components/ListBPM";
+import AddBPM from "../../components/AddBPM";
+import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 import * as S from './styled';
+
+const BpmComp = () => <AddBPM />;
 
 const BpmDrift: React.FC = () => {
   return (
@@ -22,7 +26,10 @@ const BpmDrift: React.FC = () => {
             </S.HorizontalWrapper>
             <S.HorizontalWrapper>
               <Navigator />
-              <Item title='ADD BPM' id='add_bpm' type={2}/>
+              <Item
+                title='ADD BPM'
+                component={<BpmComp />}
+                icon={faListCheck}/>
               <DateInterval />
             </S.HorizontalWrapper>
           </S.VerticalWrapper>

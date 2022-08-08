@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { bpmGroups } from "../../assets/bpms/groups";
-import { BpmDispatcher } from '../../redux/dispatcher';
+import { BpmDispatcher } from "../../redux/dispatcher";
+import { StoreInterface } from "../../redux/storage/store";
 import Led from "../Patterns/Led";
 import * as S from './styled';
 
 const AddBPM: React.FC = () => {
-  const bpmList = useSelector((state: any) => state.bpm.list);
+  const listLeds = useSelector((state: StoreInterface) => state.bpm.list);
   const [axis, setAxis]: any = useState('X');
   const [oldAxis, setOldAxis]: any = useState('X');
-  let othAxis: any = {};
-  let ledProps: any = {};
+  // let othAxis: any = {};
+  let ledProps: any = JSON.parse(listLeds);
 
   function getName(name: string, reverse: boolean): string{
     let axisT = axis;
@@ -34,103 +35,108 @@ const AddBPM: React.FC = () => {
     }
   }
 
-  function saveData(){
-    let list: any = {};
-    Object.entries(ledProps).map(async ([name, prop]: any) => {
-      list[getName(name, false)] = prop.state;
-      list[getName(name, true)] = othAxis[name].state;
-    });
-    BpmDispatcher.setBpmList(JSON.stringify(list));
-  }
-
-  useEffect(() => {
-    if(oldAxis != axis){
-      saveData();
-      if(axis == 'X'){
-        let extraAxis = othAxis;
-        othAxis = ledProps;
-        ledProps = extraAxis;
-        onChangeAxis();
-      }else if(axis == 'Y'){
-        let extraAxis = ledProps;
-        ledProps = othAxis;
-        othAxis = extraAxis;
-        onChangeAxis();
-      }else{
-        coupleAxis();
-        setAxis('X');
-      }
-      setOldAxis(axis);
-    }
-  },[axis]);
-
-  useEffect(() => {
-    saveData();
-  },[ledProps]);
-
-
-  const onChildMount = (dataFromChild: any) => {
-    ledProps[dataFromChild[2]] = {
-      'state': dataFromChild[0],
-      'setState': dataFromChild[1]
-    }
-    othAxis[dataFromChild[2]] = {
-      'state': getLedState(getName(dataFromChild[2], true)),
-      'setState': dataFromChild[1]
-    }
-  };
-
-  function coupleAxis(){
-    Object.entries(ledProps).map(async ([name, prop]: any) => {
-      const newAxisLed = getLedState(getName(name, false)) || getLedState(getName(name, true));
-      prop.state = newAxisLed;
-      othAxis[name].state = newAxisLed;
-      prop['setState'](newAxisLed);
-    });
-  }
-
-  function onChangeAxis(){
-    Object.entries(ledProps).map(async ([name, prop]: any) => {
-      const newAxisLed = getLedState(getName(name, false));
-      prop['setState'](newAxisLed);
-      prop.state = newAxisLed;
-    });
-  }
-
-  function bpmAxis(){
-    return bpmGroups.axis.map((name)=>{
-      if(axis == name){
-        return <S.Select selected={true}>{name}</S.Select>;
-      }else{
-        return <S.Select selected={false} onClick={() => setAxis(name)}>{name}</S.Select>;
-      }
-    });
-  }
-
-  function groupSelect(groupSelected: string){
-    let searchString: string;
-    if(groupSelected.includes('-')){
-      let searchNames = groupSelected.split('-');
-      searchString = searchNames[0]+":DI-BPM-"+searchNames[1];
-    }else{
-      searchString = groupSelected;
-    }
-    Object.keys(ledProps).map((name: any)=>{
-      if(name.includes(searchString)){
-        let ledState = ledProps[name];
-        ledState['setState'](!ledState.state);
-      }
-    })
-  }
-
-  function getLedState(bpm_name: string){
-    const states: any = JSON.parse(bpmList);
-    if (Object.keys(states).length === 0 || states[bpm_name] == undefined) {
+  function getLedState(bpm_name: string) {
+    if (Object.keys(ledProps).length === 0 || ledProps[bpm_name] == undefined) {
       return false;
     }else{
-      return states[bpm_name];
+      return ledProps[bpm_name];
     }
   }
+
+  function saveData(){
+    let ledsList: {[key: string]: boolean} = {};
+    Object.entries(ledProps).map(([name, prop]: any) => {
+      ledsList[getName(name, false)] = prop.state;
+      ledsList[getName(name, true)] = false;//othAxis[name].state;
+      ledsList[name] = prop.setState;
+    });
+    console.log(ledProps)
+    BpmDispatcher.setBpmList(JSON.stringify(ledsList));
+  }
+
+  // useEffect(() => {
+  //   if(oldAxis != axis){
+  //     saveData();
+  //     if(axis == 'X'){
+  //       let extraAxis = othAxis;
+  //       othAxis = ledProps;
+  //       ledProps = extraAxis;
+  //       onChangeAxis();
+  //     }else if(axis == 'Y'){
+  //       let extraAxis = ledProps;
+  //       ledProps = othAxis;
+  //       othAxis = extraAxis;
+  //       onChangeAxis();
+  //     }else{
+  //       coupleAxis();
+  //       setAxis('X');
+  //     }
+  //     setOldAxis(axis);
+  //   }
+  // },[axis]);
+
+  const onChildMount = (setFunction: React.Dispatch<React.SetStateAction<boolean>>, id: string) => {
+    ledProps[id] = {
+      'state': false,
+      'setState': setFunction
+    }
+    // othAxis[id] = {
+    //   'state': getLedState(getName(id, true)),
+    //   'setState': setFunction
+    // }
+  };
+
+  const onChildUpdate = (state: boolean, id: string) => {
+    try{
+      ledProps[id].state = state;
+      saveData();
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  // function coupleAxis(){
+  //   Object.entries(ledProps).map(async ([name, prop]: any) => {
+  //     const newAxisLed = getLedState(getName(name, false)) || getLedState(getName(name, true));
+  //     prop.state = newAxisLed;
+  //     othAxis[name].state = newAxisLed;
+  //     prop['setState'](newAxisLed);
+  //   });
+  // }
+
+  // function onChangeAxis(){
+  //   Object.entries(ledProps).map(async ([name, prop]: any) => {
+  //     const newAxisLed = getLedState(getName(name, false));
+  //     prop['setState'](newAxisLed);
+  //     prop.state = newAxisLed;
+  //   });
+  // }
+
+  // function bpmAxis(){
+  //   return bpmGroups.axis.map((name)=>{
+  //     if(axis == name){
+  //       return <S.Select selected={true}>{name}</S.Select>;
+  //     }else{
+  //       return <S.Select selected={false} onClick={() => setAxis(name)}>{name}</S.Select>;
+  //     }
+  //   });
+  // }
+
+  // function groupSelect(groupSelected: string){
+  //   let searchString: string;
+  //   if(groupSelected.includes('-')){
+  //     let searchNames = groupSelected.split('-');
+  //     searchString = searchNames[0]+":DI-BPM-"+searchNames[1];
+  //   }else{
+  //     searchString = groupSelected;
+  //   }
+  //   Object.keys(ledProps).map((name: any)=>{
+  //     if(name.includes(searchString)){
+  //       let ledState = ledProps[name];
+  //       ledState['setState'](!ledState.state);
+  //     }
+  //   })
+  // }
 
   function findBPM(number: string, name: string){
     let bpmName, state;
@@ -144,6 +150,7 @@ const AddBPM: React.FC = () => {
     return <Led
             id={bpmName}
             mountData={onChildMount}
+            updateData={onChildUpdate}
             initState={state}/>;
   }
 
@@ -151,10 +158,10 @@ const AddBPM: React.FC = () => {
     return bpmGroups.bpmNumber.map((number: any)=>{
       return(
         <S.Column>
-          <S.Header
+          {/* <S.Header
             onClick={() => groupSelect(number)}>
               {number}
-          </S.Header>
+          </S.Header> */}
         </S.Column>
       )
     })
@@ -164,10 +171,10 @@ const AddBPM: React.FC = () => {
     return bpmGroups.bpmName.map((name: any)=>{
       return(
         <S.Row>
-          <S.Header
+          {/* <S.Header
             onClick={() => groupSelect(name)}>
               {name}
-          </S.Header>
+          </S.Header> */}
           {
             bpmGroups.bpmNumber.map((number: any)=>{
               if((number=='01') && name=='M1'){
@@ -187,10 +194,10 @@ const AddBPM: React.FC = () => {
     const number = bpmGroups.bpmNumber[0];
     return(
       <S.Row>
-        <S.Header
+        {/* <S.Header
           onClick={() => groupSelect(name)}>
             {name}
-        </S.Header>
+        </S.Header> */}
         <S.Column>{findBPM(number, name)}</S.Column>
       </S.Row>
     )
@@ -198,7 +205,7 @@ const AddBPM: React.FC = () => {
 
   return(
     <S.Table>
-      {bpmAxis()}
+      {/* {bpmAxis()} */}
       {bpmNumber()}
       {bpmTable()}
       {bpmFirst()}

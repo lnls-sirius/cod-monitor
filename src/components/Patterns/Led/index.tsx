@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { OnMount } from "../../../controllers/Structure/interfaces";
 import * as S from './styled';
 
-interface onMount{
-  id: string;
-  initState: boolean;
-  mountData: (data: object)=>void;
-}
-
-const Led: React.FC<onMount> = (props) => {
+const Led: React.FC<OnMount> = (props) => {
   // Led Component that toggles its state when clicked
 
-  const [state, setState] = useState(props.initState);
+  const [state, setState] = useState<boolean>(props.initState);
 
   useEffect(() => {
-    props.mountData([state, setState, props.id]);
-  }, [props.mountData, state]);
+    props.mountData(setState, props.id);
+  }, []);
 
-  function setBPM(): void{
+  useEffect(() => {
+    props.updateData(state, props.id);
+  }, [props.updateData, state]);
+
+  function setBPM(): void {
     setState(!state);
   }
 
