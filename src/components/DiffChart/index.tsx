@@ -31,6 +31,7 @@ const DiffChart: React.FC = (props: any) => {
   useEffect(() => {
     // setLoading(true);
     // buildChartDatasets();
+    console.log(props.bpmList);
   }, [props.bpmList, props.startDate, props.endDate])
 
   useEffect(() => {

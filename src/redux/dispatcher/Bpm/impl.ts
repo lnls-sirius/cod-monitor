@@ -4,11 +4,15 @@ import store from "../../storage/store";
 
 class BpmDispatcherImpl implements BpmDispatcherInterface{
     setBpmList(list: string): void{
-        store.dispatch(actionsBpm.setSelectBpm(list));
+        store.dispatch(actionsBpm.setSelected(list));
     }
 
     setColorsList(list: string): void{
-        store.dispatch(actionsBpm.setColorsBpm(list));
+        store.dispatch(actionsBpm.setColors(list));
+    }
+
+    setLedSetters(list: string): void {
+        store.dispatch(actionsBpm.setSetters(list));
     }
 }
 
