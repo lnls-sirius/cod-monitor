@@ -1,35 +1,38 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { bpmGroups } from "../../assets/bpms/groups";
-import { changeStates, objectExists, reverseAxis } from "../../controllers/Structure/functions";
-import { InitLed } from "../../controllers/Structure/interfaces";
+import { changeStates, getName, objectExists, reverseAxis } from "../../controllers/Structure/functions";
+import { InitLed, DictState, SetterDictState, DispatchBool, ArrDictState } from "../../controllers/Structure/interfaces";
 import { BpmDispatcher } from "../../redux/dispatcher";
+import { StoreInterface } from "../../redux/storage/store";
 import Led from "../Patterns/Led";
 import * as S from './styled';
 
-let othAxis: any = {};
-let ledProps: any = {};
-let ledSetters: {[key:string]: React.Dispatch<React.SetStateAction<boolean>>} = {};
+let othAxis: DictState = {};
+let ledProps: DictState = {};
+let ledSetters: SetterDictState = {};
+
 
 const BPMLed: React.FC<InitLed> = (props) => {
-  const bpmList = useSelector((state: any) => state.bpm.list);
+  const bpmList = useSelector((state: StoreInterface) => state.bpm.list);
 
-  function getName(name: string, axis: string): string{
-    return name + ':Pos'+axis+'-Mon';
-  }
+  function initStates(bpm_name: string): boolean {
+    const states: DictState = JSON.parse(bpmList);
 
-  function initStates(bpm_name: string): boolean{
-    const states: any = JSON.parse(bpmList);
-    if(objectExists(states, getName(bpm_name, props.axis))){
-      ledProps[bpm_name] = states[getName(bpm_name, props.axis)];
+    let name_waxis = getName(bpm_name, props.axis);
+    if(objectExists(states, name_waxis)){
+      ledProps[bpm_name] = states[name_waxis];
     }else{
       ledProps[bpm_name] = false;
     }
-    if(objectExists(states, getName(bpm_name, reverseAxis(props.axis)))){
-      othAxis[bpm_name] = states[getName(bpm_name, reverseAxis(props.axis))];
+
+    name_waxis = getName(bpm_name, reverseAxis(props.axis));
+    if(objectExists(states, name_waxis)){
+      othAxis[bpm_name] = states[name_waxis];
     }else{
       othAxis[bpm_name] = false;
     }
+
     return ledProps[bpm_name];
   }
 
@@ -40,38 +43,37 @@ const BPMLed: React.FC<InitLed> = (props) => {
             initState={initStates(props.id)} />);
 }
 
+
 const AddBPM: React.FC = () => {
-  const [axis, setAxis]: any = useState('X');
+  const [axis, setAxis] = useState<string>('X');
 
-  function getName(name: string, reverse: boolean): string{
-    let axisT = axis;
-    if(reverse == true){
-      axisT = reverseAxis(axis);
-    }
-    return name + ':Pos' + axisT + '-Mon';
-  }
+  function saveData(): void {
+    let list: DictState = {};
 
-  function saveData(){
-    let list: any = {};
-    Object.entries(ledProps).map(async ([name, prop]: any) => {
-      list[getName(name, false)] = prop;
-      list[getName(name, true)] = othAxis[name];
+    Object.entries(ledProps).map(async ([name, prop]: ArrDictState) => {
+      list[getName(name, axis)] = prop;
+      list[getName(name, reverseAxis(axis))] = othAxis[name];
     });
     BpmDispatcher.setBpmList(JSON.stringify(list));
   }
 
-  const onChildUpdate = (state: boolean, id: string) => {
+  function onChildUpdate(state: boolean, id: string): void {
     ledProps[id] = state;
     saveData();
   }
 
-  const onChildMount = (setter: React.Dispatch<React.SetStateAction<boolean>>, id: string) => {
+  function onChildMount(setter: DispatchBool, id: string): void {
     ledSetters[id] = setter;
   };
 
-  // Isn't working properly
-  function coupleAxis(){
-    Object.entries(ledProps).map(async ([name, prop]: any) => {
+  function changeAxis(): void {
+    Object.entries(ledProps).map(([name, prop]: ArrDictState) => {
+      ledSetters[name](prop);
+    });
+  }
+
+  function coupleAxis(): void {
+    Object.keys(ledProps).map(async (name: string) => {
       const newAxisLed = othAxis[name] || ledProps[name];
       ledProps[name] = newAxisLed;
       othAxis[name] = newAxisLed;
@@ -79,12 +81,10 @@ const AddBPM: React.FC = () => {
     });
   }
 
-  function onChangeAxis(axis_name: string){
+  function onChangeAxis(axis_name: string): void {
     if(axis_name == 'X' || axis_name == 'Y'){
       [ledProps, othAxis] = changeStates(ledProps, othAxis);
-      Object.entries(ledProps).map(([name, prop]: any) => {
-        ledSetters[name](prop);
-      });
+      changeAxis();
     }else{
       coupleAxis();
       saveData();
@@ -93,7 +93,7 @@ const AddBPM: React.FC = () => {
     setAxis(axis_name);
   }
 
-  function bpmAxis(){
+  function bpmAxis(): React.ReactElement[] {
     return bpmGroups.axis.map((name)=>{
       if(axis == name){
         return <S.Select selected={true}>{name}</S.Select>;
@@ -103,7 +103,7 @@ const AddBPM: React.FC = () => {
     });
   }
 
-  function groupSelect(groupSelected: string){
+  function groupSelect(groupSelected: string): void{
     let searchString: string;
     if(groupSelected.includes('-')){
       let searchNames = groupSelected.split('-');
@@ -111,14 +111,15 @@ const AddBPM: React.FC = () => {
     }else{
       searchString = groupSelected;
     }
-    Object.entries(ledProps).map(([name, state]: any)=>{
+
+    Object.entries(ledProps).map(([name, state]: ArrDictState)=>{
       if(name.includes(searchString)){
         ledSetters[name](!state);
       }
     })
   }
 
-  function findBPM(number: string, name: string){
+  function findBPM(number: string, name: string): React.ReactElement {
     let bpmName;
     if(name.includes('-1') || name.includes('-2')){
       let nameDiv = name.split('-');
@@ -126,6 +127,7 @@ const AddBPM: React.FC = () => {
     }else{
       bpmName = "SI-"+number+name+":DI-BPM";
     }
+
     return <BPMLed
       id={bpmName}
       axis={axis}
@@ -133,8 +135,8 @@ const AddBPM: React.FC = () => {
       updateData={onChildUpdate}/>;
   }
 
-  function bpmNumber(){
-    return bpmGroups.bpmNumber.map((number: any)=>{
+  function bpmNumber(): React.ReactElement[] {
+    return bpmGroups.bpmNumber.map((number: string)=>{
       return(
         <S.Column>
           <S.Header
@@ -146,8 +148,8 @@ const AddBPM: React.FC = () => {
     })
   }
 
-  function bpmTable(){
-    return bpmGroups.bpmName.map((name: any)=>{
+  function bpmTable(): React.ReactElement[] {
+    return bpmGroups.bpmName.map((name: string)=>{
       return(
         <S.Row>
           <S.Header
@@ -155,7 +157,7 @@ const AddBPM: React.FC = () => {
               {name}
           </S.Header>
           {
-            bpmGroups.bpmNumber.map((number: any)=>{
+            bpmGroups.bpmNumber.map((number: string)=>{
               if((number=='01') && name=='M1'){
                 return <td></td>
               }else{
@@ -168,7 +170,7 @@ const AddBPM: React.FC = () => {
     })
   }
 
-  function bpmFirst(){
+  function bpmFirst(): React.ReactElement {
     const name = bpmGroups.bpmName[0];
     const number = bpmGroups.bpmNumber[0];
     return(

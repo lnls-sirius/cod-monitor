@@ -20,3 +20,11 @@ export function reverseAxis(axis: string){
         return 'X';
     }
 }
+
+export function getName(name: string, axis: string): string {
+    return name + ':Pos'+axis+'-Mon';
+}
+
+// export default {
+
+// }

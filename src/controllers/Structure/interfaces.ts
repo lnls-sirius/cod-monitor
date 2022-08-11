@@ -1,17 +1,28 @@
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
+export type DispatchBool = React.Dispatch<React.SetStateAction<boolean>>;
+export type ArrDictState = [key: string, value: boolean];
+
 export interface OnMount {
     id: string;
     initState: boolean;
-    mountData: (setFunction: React.Dispatch<React.SetStateAction<boolean>>, id: string)=>void;
+    mountData: (setFunction: DispatchBool, id: string)=>void;
     updateData: (state: boolean, id: string)=>void;
 }
 
 export interface InitLed {
     id: string;
     axis: string;
-    mountData: (setFunction: React.Dispatch<React.SetStateAction<boolean>>, id: string)=>void;
+    mountData: (setFunction: DispatchBool, id: string)=>void;
     updateData: (state: boolean, id: string)=>void;
+}
+
+export interface DictState {
+    [key: string]: boolean;
+}
+
+export interface SetterDictState {
+    [key: string]: DispatchBool;
 }
 
 export interface LedInterface {
