@@ -1,24 +1,48 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, registerables } from 'chart.js';
-import { useSelector } from "react-redux";
-import Loading from "../../Loading";
 import { initData } from "./config";
-import { BpmDispatcher } from "../../../redux/dispatcher";
-import { ChartInterface } from "../../../controllers/Patterns/interfaces";
+import { useSelector } from "react-redux";
+import { StoreInterface } from "../../../redux/storage/store";
+import { ChartInterface, DatasetInterface } from "../../../controllers/Patterns/interfaces";
+import { BpmDispatcher, TimeDispatcher } from "../../../redux/dispatcher";
+import { setAxisColor } from "../../../controllers/Patterns/chart";
 import * as S from './styled';
 
 const BaseChart: React.FC<ChartInterface> = (props) => {
   const chartRef = useRef(null);
   const [chartInstance, setChartInstance] = useState<Chart>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const axisColors = JSON.parse(useSelector((state: any) => state.bpm.colors));
+  const axisColors = JSON.parse(useSelector((state: StoreInterface) => state.bpm.colors));
 
   Chart.register(...registerables);
 
   useEffect(() => {
-    setLoading(true);
     buildChartDatasets();
   }, [props.datasets]);
+
+  async function buildChartDatasets(){
+    updateDataset(props.datasets);
+    BpmDispatcher.setColorsList(JSON.stringify(axisColors));
+  }
+
+  async function updateDataset(newData: DatasetInterface){
+    let dataset: any = [];
+    Object.entries(newData).map(([name, state]) => {
+      if(state != false){
+        state = setAxisColor(state.label, state, axisColors);
+        dataset.push(state);
+      }
+    });
+    if (chartInstance!=null){
+      chartInstance.data.datasets = dataset;
+      chartInstance.update();
+    }
+    TimeDispatcher.setChangeTime(false);
+    BpmDispatcher.setChangeBpm(false);
+  };
+
+  function click(evt: React.MouseEvent){
+    props.clickAction(evt, chartInstance);
+  }
 
   useEffect(() => {
     if (chartRef.current){
@@ -31,35 +55,10 @@ const BaseChart: React.FC<ChartInterface> = (props) => {
     }
   }, [chartRef]);
 
-  async function updateDataset(newData: any){
-    let dataset: any = [];
-    Object.entries(newData).map(([name, state]) => {
-      if(state != false){
-        dataset.push(state);
-      }
-    });
-    if (chartInstance!=null){
-      chartInstance.data.datasets = dataset;
-      chartInstance.update();
-    }
-  };
-
-  async function buildChartDatasets(){
-    updateDataset(props.datasets);
-    BpmDispatcher.setColorsList(JSON.stringify(axisColors));
-    setLoading(false);
-  }
-
-  //props.clickAction
-
   return(
-    <div>
-      <Loading
-        show={loading}/>
-      <S.Chart
-        ref={chartRef}
-        onClick={()=>console.log("Click")}/>
-    </div>
+    <S.Chart
+      ref={chartRef}
+      onClick={click}/>
   );
 };
 

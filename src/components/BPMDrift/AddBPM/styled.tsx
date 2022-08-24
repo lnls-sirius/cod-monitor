@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, fonts, properties } from "../../assets/theme";
+import { colors, fonts, properties } from "../../../assets/theme";
 
 export const Table = styled.table`
     width: 100%;

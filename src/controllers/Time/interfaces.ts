@@ -7,7 +7,8 @@ export interface TimeInformation {
     intervalMode: number,
     startDate: Date,
     endDate: Date,
-    refDate: Date
+    refDate: Date,
+    changeTime: boolean
 }
 
 export interface IntervalModeInterface {

@@ -3,20 +3,24 @@ import { actions as actionsTime } from "../../features/TimeStore";
 import TimeDispatcherInterface from "./interface";
 
 class TimeDispatcherImpl implements TimeDispatcherInterface{
-    SetStartDate(date: Date): void {
+    setStartDate(date: Date): void {
         store.dispatch(actionsTime.setStart(date.toString()));
     }
 
-    SetEndDate(date: Date): void {
+    setEndDate(date: Date): void {
         store.dispatch(actionsTime.setEnd(date.toString()));
     }
 
-    SetRefDate(date: Date): void {
+    setRefDate(date: Date): void {
         store.dispatch(actionsTime.setRef(date.toString()));
     }
 
-    SetTimeMode(timeMode: number): void {
+    setTimeMode(timeMode: number): void {
         store.dispatch(actionsTime.setTimeMode(timeMode));
+    }
+
+    setChangeTime(state: boolean): void {
+        store.dispatch(actionsTime.setChangeTime(state));
     }
 }
 

@@ -14,6 +14,10 @@ class BpmDispatcherImpl implements BpmDispatcherInterface{
     setLedSetters(list: string): void {
         store.dispatch(actionsBpm.setSetters(list));
     }
+
+    setChangeBpm(state: boolean): void {
+        store.dispatch(actionsBpm.setChange(state));
+    }
 }
 
 export default BpmDispatcherImpl;

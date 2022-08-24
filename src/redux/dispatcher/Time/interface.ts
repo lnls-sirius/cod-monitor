@@ -1,6 +1,7 @@
 export default interface TimeDispatcherInterface{
-    SetStartDate(date: Date): void;
-    SetEndDate(date: Date): void;
-    SetRefDate(date: Date): void;
-    SetTimeMode(timeMode: number): void;
+    setStartDate(date: Date): void;
+    setEndDate(date: Date): void;
+    setRefDate(date: Date): void;
+    setTimeMode(timeMode: number): void;
+    setChangeTime(state: boolean): void;
 }

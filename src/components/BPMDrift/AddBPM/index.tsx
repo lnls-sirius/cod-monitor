@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { bpmGroups } from "../../assets/bpms/groups";
-import { changeStates, getName, objectExists, reverseAxis } from "../../controllers/Patterns/functions";
-import { InitLed, DictState, SetterDictState, DispatchBool, ArrDictState } from "../../controllers/Patterns/interfaces";
-import { BpmDispatcher } from "../../redux/dispatcher";
-import { StoreInterface } from "../../redux/storage/store";
-import Led from "../Patterns/Led";
+import { bpmGroups } from "../../../assets/bpms/groups";
+import { changeStates, getName, objectExists, reverseAxis } from "../../../controllers/Patterns/functions";
+import { InitLed, DictState, SetterDictState, DispatchBool, ArrDictState } from "../../../controllers/Patterns/interfaces";
+import { BpmDispatcher } from "../../../redux/dispatcher";
+import { StoreInterface } from "../../../redux/storage/store";
+import Led from "../../Patterns/Led";
 import * as S from './styled';
 
 let othAxis: DictState = {};

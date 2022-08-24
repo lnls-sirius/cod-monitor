@@ -11,7 +11,7 @@ export const IntervalBtn = styled.button`
     border-radius: ${properties.radius.light};
     margin: 0rem 0.2rem;
     padding: 0rem 0.5rem;
-    background: ${(props: { selected: any; }) => props.selected?colors.btns.btn3.active:colors.btns.btn3.normal};
+    background: ${(props: { selected: boolean }) => props.selected?colors.btns.btn3.active:colors.btns.btn3.normal};
     &:hover{
         background-color: ${colors.btns.btn3.hover};
         transform: translateY(-.2rem);

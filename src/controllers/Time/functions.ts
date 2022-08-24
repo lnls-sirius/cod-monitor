@@ -86,31 +86,35 @@ export function getDate(timeInfo: TimeInformation, type: string): Date{
 }
 
 export function setDate(id: string, date: Date): void {
-    switch (id) {
-      case 'Start':{
-        TimeDispatcher.SetStartDate(date);
-        break;
-      }
-      case 'End':{
-        TimeDispatcher.SetEndDate(date);
-        break;
-      }
-      case 'Ref':{
-        TimeDispatcher.SetRefDate(date);
-        break;
-      }
-      default:{
-        break;
-      }
+
+  switch (id) {
+    case 'Start':{
+      TimeDispatcher.setStartDate(date);
+      break;
     }
+    case 'End':{
+      TimeDispatcher.setEndDate(date);
+      break;
+    }
+    case 'Ref':{
+      TimeDispatcher.setRefDate(date);
+      break;
+    }
+    default:{
+      break;
+    }
+  }
+  TimeDispatcher.setChangeTime(true);
 }
 
 export function countIntervalMode(intervalMode: number): void {
+
   if(intervalMode != 2){
-    TimeDispatcher.SetTimeMode(intervalMode + 1);
+    TimeDispatcher.setTimeMode(intervalMode + 1);
   }else{
-    TimeDispatcher.SetTimeMode(0);
+    TimeDispatcher.setTimeMode(0);
   }
+  TimeDispatcher.setChangeTime(true);
 }
 
 export function getIntervalTime(time: number, dateRef: Date, intervalMode: number): Date{

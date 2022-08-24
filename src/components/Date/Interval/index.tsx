@@ -7,12 +7,13 @@ import { getDate, getIntervalTime, getTimeMilliseconds, setDate } from "../../..
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
-  const {time_mode, start_date, end_date} = state.time;
+  const {time_mode, start_date, end_date, change_time} = state.time;
   return {
     intervalMode: time_mode,
     startDate: new Date(start_date),
     endDate: new Date(end_date),
-    refDate: new Date()
+    refDate: new Date(),
+    changeTime: change_time
   }
 }
 
@@ -24,7 +25,7 @@ const Interval: React.FC<TimeInformation> = (props): React.ReactElement => {
     if(timeArray){
       setInterval(parseFloat(timeArray[0]), timeArray[1], selIntBtn)
     }
-  },[props.endDate, props.startDate, selIntBtn]);
+  },[selIntBtn]);
 
   function setInterval(time: number, unit: string, name: string){
     if(refModes[props.intervalMode] != undefined){

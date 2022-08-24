@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, properties } from "../../assets/theme";
+import { colors, properties } from "../../../assets/theme";
 
 export const Wrapper = styled.div`
     display: grid;
@@ -11,7 +11,7 @@ export const Square = styled.div`
     width: 25px;
     border: 1px solid ${colors.bg.white};
     border-radius: ${properties.radius.light};
-    background-color: ${(props: { color: any; }) => props.color};
+    background-color: ${(props: { color: string; }) => props.color};
 `
 
 export const ItemWrapper = styled.div`

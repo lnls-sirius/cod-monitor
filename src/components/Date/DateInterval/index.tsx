@@ -16,7 +16,8 @@ function mapStateToProps(state: StoreInterface){
     intervalMode: time_mode,
     startDate: new Date(start_date),
     endDate: new Date(end_date),
-    refDate: new Date(ref_date)
+    refDate: new Date(ref_date),
+    changeTime: false
   }
 }
 

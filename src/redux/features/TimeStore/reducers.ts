@@ -22,9 +22,14 @@ function setTimeMode (state: timeStore, action: PayloadAction<number>): void {
     state.time_mode = action.payload;
 }
 
+function setChangeTime (state: timeStore, action: PayloadAction<boolean>): void {
+    state.change_time = action.payload;
+}
+
 export default {
     setStart,
     setEnd,
     setRef,
-    setTimeMode
+    setTimeMode,
+    setChangeTime
 }
