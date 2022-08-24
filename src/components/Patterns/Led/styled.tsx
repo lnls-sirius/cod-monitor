@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors, properties } from "../../../assets/theme";
-import { LedInterface } from "../../../controllers/Structure/interfaces";
+import { LedInterface } from "../../../controllers/Patterns/interfaces";
 
 export const LedWrapper = styled.button`
     background: ${(props: LedInterface) => props.state?

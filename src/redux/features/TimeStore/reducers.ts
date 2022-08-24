@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { outOfRange } from "../../../controllers/Time/interval";
+import { outOfRange } from "../../../controllers/Time/functions";
 import { timeStore } from "./initialState";
 
 function setStart (state: timeStore, action: PayloadAction<string>): void {

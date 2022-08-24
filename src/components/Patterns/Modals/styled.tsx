@@ -77,7 +77,6 @@ export const Close = styled(FontAwesomeIcon)`
     display: flex;
     justify-content: center;
     align-items: center;
-
     transition: .2s;
     &:hover{
         background-color: ${colors.btns.btn1.hover};

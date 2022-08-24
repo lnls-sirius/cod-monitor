@@ -1,34 +1,25 @@
-import React, { useState } from "react";
-import { MenuItems } from "../../../controllers/Structure/interfaces";
-import Modals from "../Modals";
+import React from "react";
+import { ActionItem, ModalItem } from "../../../controllers/Patterns/interfaces";
 import * as S from './styled';
 
-const Item: React.FC<MenuItems> = (props): JSX.Element => {
-  const [modalState, setModalState] = useState(false);
+const Item: React.FC<ModalItem | ActionItem> = (props): React.ReactElement => {
 
-  function printBtn(){
-    if(props.icon){
+  function printIcon(): React.ReactElement{
+    if('id' in props){
+      props.setModalId(props.id);
       return <S.Icon
         icon={props.icon}
-        onClick={() =>{setModalState(true)}}/>
-    }else{
-      return (
-        <S.Button
-          onClick={() =>{setModalState(true)}}>
-            {props.text}
-        </S.Button>
-      );
+        onClick={() =>{props.setModalState(true)}}/>
     }
+    return <S.Icon
+      icon={props.icon}
+      onClick={() =>{props.action()}}/>
+
   }
 
 return (
     <S.ItemWrapper>
-      <Modals
-        component={props.component}
-        close={() =>{setModalState(false)}}
-        state={modalState}
-        title={props.title}/>
-      {printBtn()}
+      {printIcon()}
     </S.ItemWrapper>
   );
 };

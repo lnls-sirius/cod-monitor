@@ -1,8 +1,8 @@
 import React from "react";
-import { timeOptions } from "../../../controllers/Time/interfaces";
+import { TimeOptions } from "../../../controllers/Time/interfaces";
 import * as S from './styled';
 
-const TimeShow: React.FC<timeOptions> = (props) => {
+const TimeShow: React.FC<TimeOptions> = (props) => {
   return(
     <S.TimeWrapper>
       {props.date.toLocaleString()}

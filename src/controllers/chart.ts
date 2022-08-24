@@ -1,5 +1,3 @@
-import { Dictionary } from "@reduxjs/toolkit";
-
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -9,7 +7,7 @@ function getRandomColor() {
     return color;
 }
 
-export function getColor(name: string, axisColors: Dictionary<String>){
+export function getColor(name: string, axisColors: {[key: string]: string}){
     if(!(name in axisColors)){
       axisColors[name] = getRandomColor();
     }

@@ -19,7 +19,7 @@ export const Select = styled.button`
     border: none;
     font-family: ${fonts.primary};
     color: ${colors.txt.primary};
-    background: ${(props: { selected: any; }) => props.selected?colors.btns.btn3.active:colors.btns.btn3.normal};
+    background: ${(props: { selected: boolean }) => props.selected?colors.btns.btn3.active:colors.btns.btn3.normal};
     &:hover{
         background-color: ${colors.btns.btn3.hover};
         transform: translateY(-.2rem);

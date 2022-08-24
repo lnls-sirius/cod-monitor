@@ -5,7 +5,7 @@ import {colors, properties} from '../../../assets/theme';
 
 export const NavWrapper = styled.nav`
   display: flex;
-  width: 100%;
+  width: 30%;
   justify-content: center;
   align-items: center;
 `;
@@ -13,6 +13,7 @@ export const NavWrapper = styled.nav`
 export const PageLink = styled(Link)`
   color: ${colors.txt.primary};
   text-decoration: none;
+  text-align: center;
   padding: 5px;
   border-radius: ${properties.radius.medium};
   margin: 5px;
@@ -27,6 +28,7 @@ export const PageLink = styled(Link)`
 export const PageAct = styled.span`
   color: ${colors.txt.primary};
   text-decoration: none;
+  text-align: center;
   padding: 5px;
   margin: 5px;
   border-radius: ${properties.radius.medium};

@@ -58,3 +58,7 @@ export const options: any = {
         }
     }
 }
+
+export const initData = {
+    datasets: []
+}

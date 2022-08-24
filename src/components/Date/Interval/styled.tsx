@@ -3,7 +3,7 @@ import { colors, properties } from "../../../assets/theme";
 
 export const ItemWrapper = styled.div`
     display: flex;
-    margin-top: 0.3rem;
+    margin-top: 0.2rem;
 `;
 
 export const IntervalBtn = styled.button`

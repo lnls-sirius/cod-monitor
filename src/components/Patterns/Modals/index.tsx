@@ -1,37 +1,27 @@
 import React from "react";
-import * as S from './styled';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { ModalInterface } from "../../../controllers/Structure/interfaces";
+import { ModalInterface } from "../../../controllers/Patterns/interfaces";
+import { modalInfo } from "../../../controllers/Patterns/constants";
+import * as S from './styled';
 
-function ModalBox(props: any){
-  return (
-    <S.ModalContainer
-      {...props}
-      centered
-    >
-      <S.Content>
-        <S.Header>
-          {props.title}
-          <S.Close
-            icon={faXmark}
-            onClick={props.onHide}/>
-        </S.Header>
-        <S.Body>
-          {props.component}
-        </S.Body>
-      </S.Content>
-    </S.ModalContainer>
-  );
-}
-
-const Modals: React.FC<ModalInterface> = (props): JSX.Element => {
+const Modals: React.FC<ModalInterface> = (props): React.ReactElement => {
   return(
-    <ModalBox
-      title={props.title}
+    <S.ModalContainer
       show={props.state}
       onHide={props.close}
-      component={props.component}
-    />
+      centered>
+        <S.Content>
+          <S.Header>
+            {modalInfo[props.id].title}
+            <S.Close
+              icon={faXmark}
+              onClick={props.close}/>
+          </S.Header>
+          <S.Body>
+            {modalInfo[props.id].component}
+          </S.Body>
+        </S.Content>
+      </S.ModalContainer>
   );
 };
 

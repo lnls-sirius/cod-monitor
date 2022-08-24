@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getIntervalTime, getTimeMilliseconds, intervals } from "../../../controllers/Time/interval";
-import { TimeDispatcher } from '../../../redux/dispatcher';
+import { TimeInformation } from "../../../controllers/Time/interfaces";
+import { intervals, refModes } from "../../../controllers/Time/constants";
+import { StoreInterface } from "../../../redux/storage/store";
+import { getDate, getIntervalTime, getTimeMilliseconds, setDate } from "../../../controllers/Time/functions";
 import * as S from './styled';
 
-function mapStateToProps(state: any){
+function mapStateToProps(state: StoreInterface){
   const {time_mode, start_date, end_date} = state.time;
   return {
-    timeMode: time_mode,
+    intervalMode: time_mode,
     startDate: new Date(start_date),
     endDate: new Date(end_date),
+    refDate: new Date()
   }
 }
 
-const Interval: React.FC<any> = (props): JSX.Element => {
+const Interval: React.FC<TimeInformation> = (props): React.ReactElement => {
   const [selIntBtn, setIntBtn] = useState("1h");
 
   useEffect(() => {
@@ -24,32 +27,28 @@ const Interval: React.FC<any> = (props): JSX.Element => {
   },[props.endDate, props.startDate, selIntBtn]);
 
   function setInterval(time: number, unit: string, name: string){
-    let timeMil, newDate;
-    timeMil = time * getTimeMilliseconds(unit);
-    setIntBtn(name);
-    switch(props.timeMode){
-      case 0: {
-        newDate = getIntervalTime(-timeMil, props.endDate);
-        TimeDispatcher.SetStartDate(newDate);
-        break;
-      }
-      case 1:{
-        newDate = getIntervalTime(timeMil, props.startDate);
-        TimeDispatcher.SetEndDate(newDate);
-        break;
-      }
+    if(refModes[props.intervalMode] != undefined){
+      const timeMil = time * getTimeMilliseconds(unit);
+      setIntBtn(name);
+
+      setDate(
+        refModes[props.intervalMode].mod,
+        getIntervalTime(
+          timeMil,
+          getDate(props, refModes[props.intervalMode].ref),
+          props.intervalMode));
     }
   }
 
   function timeInterval(){
-    if(props.timeMode != 2){
-      return Object.entries(intervals).reverse().map(([name, data]: any) => {
+    if(props.intervalMode != 2){
+      return Object.entries(intervals).reverse().map(([name, data]: [key: string, value: Array<string>]) => {
         let stateBtn = false;
         if(selIntBtn == name){
           stateBtn = true;
         }
         return <S.IntervalBtn
-            onClick={()=>setInterval(data[0], data[1], name)}
+            onClick={()=>setInterval(Number(data[0]), data[1], name)}
             selected={stateBtn}>
               {name}
           </S.IntervalBtn>;

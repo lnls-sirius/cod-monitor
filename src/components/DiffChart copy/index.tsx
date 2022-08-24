@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, registerables } from 'chart.js';
-import { options } from "./config";
+import { initData, options } from "./config";
 import { connect, useSelector } from "react-redux";
+import { TimeDispatcher, BpmDispatcher } from '../../redux/dispatcher';
 import { getArchiver} from "../../controllers/archiver";
 import { getColor } from "../../controllers/chart";
+import Loading from "../Loading";
 import { getClosestDate } from "../../controllers/Time/functions";
-import BaseChart from "../Patterns/Chart";
+import * as S from './styled';
 
 function mapStateToProps(state: any){
   const {start_date, end_date, ref_date} = state.time;
@@ -19,15 +21,43 @@ function mapStateToProps(state: any){
 }
 
 const DiffChart: React.FC = (props: any) => {
-  const [datasets, setDatasets] = useState({});
+  const chartRef = useRef(null);
+  const [chartInstance, setChartInstance] = useState<Chart>();
+  const [loading, setLoading] = useState<boolean>(false);
   const bpms = JSON.parse(props.bpmList);
   const axisColors = JSON.parse(useSelector((state: any) => state.bpm.colors));
 
   Chart.register(...registerables);
 
   useEffect(() => {
-    buildChart();
+    setLoading(true);
+    console.log(chartInstance?.scales);
+    buildChartDatasets();
   }, [props.bpmList, props.startDate, props.endDate])
+
+  useEffect(() => {
+    if (chartRef.current){
+      const newChartInstance = new Chart(chartRef.current, {
+        type: 'line',
+        data: initData,
+        options: options
+      });
+      setChartInstance(newChartInstance);
+    }
+  }, [chartRef]);
+
+  async function updateDataset(newData: any){
+    let dataset: any = [];
+    Object.entries(newData).map(([name, state]) => {
+      if(state != false){
+        dataset.push(state);
+      }
+    });
+    if (chartInstance!=null){
+      chartInstance.data.datasets = dataset;
+      chartInstance.update();
+    }
+  };
 
   const buildDataset = (dataList: any) => {
     return dataList.map((data: any) => {
@@ -46,12 +76,20 @@ const DiffChart: React.FC = (props: any) => {
     return diffData;
   }
 
+  async function buildChartDatasets(){
+    updateDataset(await buildChart());
+    BpmDispatcher.setColorsList(JSON.stringify(axisColors));
+    setLoading(false);
+  }
+
   async function handleCanvasClick(evt: any){
-    // const chartParameters = chartInstance.chartArea;
-    // const chartTimeUnit = (props.endDate.getTime() - props.startDate.getTime())/chartParameters.width;
-    // const widPoint = evt.clientX - chartParameters.left;
-    // const newRefDate = chartTimeUnit * widPoint + props.startDate.getTime();
-    // TimeDispatcher.SetRefDate(new Date(newRefDate));
+    if(chartInstance){
+      const chartParameters = chartInstance.chartArea;
+      const chartTimeUnit = (props.endDate.getTime() - props.startDate.getTime())/chartParameters.width;
+      const widPoint = evt.clientX - chartParameters.left;
+      const newRefDate = chartTimeUnit * widPoint + props.startDate.getTime();
+      TimeDispatcher.SetRefDate(new Date(newRefDate));
+    }
   }
 
   async function buildChart(){
@@ -69,19 +107,22 @@ const DiffChart: React.FC = (props: any) => {
             borderColor: color,
             backgroundColor: color
           };
-          setDatasets(datasetTemp);
+          return datasetTemp;
         }else{
-          setDatasets({});
+          return false;
         }
       })
     );
   };
 
   return(
-    <BaseChart
-      options={options}
-      datasets={datasets}
-      clickAction={handleCanvasClick}/>
+    <div>
+      <Loading
+        show={loading}/>
+      <S.Chart
+        ref={chartRef}
+        onClick={handleCanvasClick}/>
+    </div>
   );
 };
 

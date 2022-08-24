@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { OnMount } from "../../../controllers/Structure/interfaces";
+import { OnMount } from "../../../controllers/Patterns/interfaces";
 import * as S from './styled';
 
 const Led: React.FC<OnMount> = (props) => {
   // Led Component that toggles its state when clicked
-
   const [state, setState] = useState<boolean>(props.initState);
 
   useEffect(() => {
@@ -21,6 +20,7 @@ const Led: React.FC<OnMount> = (props) => {
 
   return(
     <S.LedWrapper
+      key={props.id}
       onClick={setBPM.bind(this)}
       state={state}/>
   );

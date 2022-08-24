@@ -27,8 +27,8 @@ export const Button = styled.button`
 export const Icon = styled(FontAwesomeIcon)`
     height: 25px;
     width: 25px;
-    color: ${colors.bg.white};
     padding: 5px;
+    color: ${colors.bg.white};
     border-radius: ${properties.radius.extlight};
     &:hover{
         background-color: ${colors.btns.btn1.hover};

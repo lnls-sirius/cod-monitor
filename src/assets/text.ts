@@ -1,8 +1,7 @@
-export const version = '2022-04-26-73kw9a1'
+export const version = '2022-08-23-73kw9a1'
 
 export const footer = {
-    text: "For further information, refer to the project\'s "+
-    "official website or contact FAC.",
+    text: "For further information, contact FAC.",
     verInfo: version
 }
 

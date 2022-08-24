@@ -1,13 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { intervalDict } from "../../../controllers/Time/interval";
-import { TimeDispatcher } from '../../../redux/dispatcher';
+import { intervalDict } from "../../../controllers/Time/constants";
 import { StoreInterface } from "../../../redux/storage/store";
+import { TimeInformation } from "../../../controllers/Time/interfaces";
+import { countIntervalMode, getDate } from "../../../controllers/Time/functions";
 import TimeInput from "../TimeInput";
 import TimeShow from "../../Date/TimeShow";
-import * as S from './styled';
 import Item from "../../Patterns/Item";
-import { timeInformation } from "../../../controllers/Time/interfaces";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
+import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
   const {time_mode, start_date, end_date, ref_date} = state.time;
@@ -19,60 +20,33 @@ function mapStateToProps(state: StoreInterface){
   }
 }
 
-// const TimeMode: React.FC = () => {
-//   // return <Item id={"657"} title={"546546"} type={0}/>;
-// }
 
-const DateInterval: React.FC<timeInformation> = (props) => {
-
-  function getDate(type: string){
-    switch (type) {
-      case 'Start Time':{
-        return props.startDate;
-      }
-      case 'End Time':{
-        return props.endDate;
-      }
-      case 'Ref Time':{
-        return props.refDate;
-      }
-      default: {
-        return new Date();
-      }
-    }
-  }
-
-  function countIntervalMode(){
-    if(props.intervalMode != 2){
-      TimeDispatcher.SetTimeMode(props.intervalMode + 1);
-    }else{
-      TimeDispatcher.SetTimeMode(0);
-    }
-  }
+const DateInterval: React.FC<TimeInformation> = (props) => {
 
   function timeMode(type: string){
     let mode = intervalDict[type][props.intervalMode];
     if(mode){
       return <TimeInput
         id={type}
-        date={getDate(type)}/>;
+        date={getDate(props, type)}/>;
     }else{
       return <TimeShow
-        date={getDate(type)}/>;
+        date={getDate(props, type)}/>;
     }
   }
+
 
   return(
     <S.TextWrapper>
       From
-        <S.TextWrapper>{timeMode('Start Time')}</S.TextWrapper>
+        <S.TextWrapper>{timeMode('Start')}</S.TextWrapper>
       to
-        <S.TextWrapper>{timeMode('End Time')}</S.TextWrapper>
+        <S.TextWrapper>{timeMode('End')}</S.TextWrapper>
       Reference:
         <TimeInput
-          id='Ref Time'
-          date={getDate('Ref Time')}/>
-      <S.ChangeMode onClick={()=>countIntervalMode()}>M</S.ChangeMode>
+          id='Ref'
+          date={getDate(props, 'Ref')}/>
+      <Item icon={faClock} action={()=>countIntervalMode(props.intervalMode)}/>
     </S.TextWrapper>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { bpmGroups } from "../../assets/bpms/groups";
-import { changeStates, getName, objectExists, reverseAxis } from "../../controllers/Structure/functions";
-import { InitLed, DictState, SetterDictState, DispatchBool, ArrDictState } from "../../controllers/Structure/interfaces";
+import { changeStates, getName, objectExists, reverseAxis } from "../../controllers/Patterns/functions";
+import { InitLed, DictState, SetterDictState, DispatchBool, ArrDictState } from "../../controllers/Patterns/interfaces";
 import { BpmDispatcher } from "../../redux/dispatcher";
 import { StoreInterface } from "../../redux/storage/store";
 import Led from "../Patterns/Led";
