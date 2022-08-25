@@ -65,7 +65,7 @@ export interface ChartProperties extends TimeInformation, ChangeInterface{
 }
 
 export interface DataInterface {
-    x: Date;
+    x: string;
     y: number;
 }
 

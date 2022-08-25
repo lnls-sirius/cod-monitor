@@ -1,8 +1,6 @@
-import { TimeAxisID } from "../../../controllers/Time/constants";
 import {Chart} from "chart.js";
 
 const x_axes: any = {
-    id: TimeAxisID,
     type: 'time',
     offset: false,
     distribution: "linear",
@@ -27,7 +25,6 @@ const x_axes: any = {
 }
 
 const y_axes: any = {
-    id: "y-axis-0",
     type: "linear",
     position: "left",
     title: {

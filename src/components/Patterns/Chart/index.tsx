@@ -7,6 +7,7 @@ import { ChartInterface, DatasetInterface } from "../../../controllers/Patterns/
 import { BpmDispatcher, TimeDispatcher } from "../../../redux/dispatcher";
 import { setAxisColor } from "../../../controllers/Patterns/chart";
 import * as S from './styled';
+import { TimeAxisIndex } from "../../../controllers/Time/constants";
 
 const BaseChart: React.FC<ChartInterface> = (props) => {
   const chartRef = useRef(null);
@@ -22,6 +23,16 @@ const BaseChart: React.FC<ChartInterface> = (props) => {
   async function buildChartDatasets(){
     updateDataset(props.datasets);
     BpmDispatcher.setColorsList(JSON.stringify(axisColors));
+  }
+
+  function updateTimeAxis(): void {
+    console.log(chartInstance?.config.options?.scales?.x)
+    //scales['x-axis-0'].ticks
+    console.log(chartRef.current)
+    // chartInstance.options.scales.xAxes[TimeAxisIndex].time.unit = unit;
+    // chartInstance.options.scales.xAxes[TimeAxisIndex].time.stepSize = unitStepSize;
+    // chartInstance.options.scales.xAxes[TimeAxisIndex].ticks.min = props.startDate;
+    // chartInstance.options.scales.xAxes[TimeAxisIndex].ticks.max = endDate;
   }
 
   async function updateDataset(newData: DatasetInterface){
@@ -42,6 +53,7 @@ const BaseChart: React.FC<ChartInterface> = (props) => {
 
   function click(evt: React.MouseEvent){
     props.clickAction(evt, chartInstance);
+    updateTimeAxis();
   }
 
   useEffect(() => {
