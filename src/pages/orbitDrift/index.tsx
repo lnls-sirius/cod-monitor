@@ -2,6 +2,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import DateInterval from "../../components/Date/DateInterval";
 import Interval from "../../components/Date/Interval";
+import OrbitInterval from "../../components/Date/OrbitInterval";
 import Item from "../../components/Patterns/Item";
 import Loading from "../../components/Patterns/Loading";
 import Footer from "../../components/Structure/Footer";
@@ -26,6 +27,7 @@ const OrbitDrift: React.FC = () => {
             </S.HorizontalWrapper>
           </S.VerticalWrapper>
       </Header>
+      <OrbitInterval/>
       <Footer />
     </S.AppLayout>
   );
