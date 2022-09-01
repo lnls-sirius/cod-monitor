@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
 import { options } from "./config";
 import { getArchiver} from "../../../controllers/archiver";
-import { buildDataset, differentiateData } from "../../../controllers/Patterns/chart";
+import { buildDataset, differentiateData } from "../../../controllers/Chart/functions";
 import { StoreInterface } from "../../../redux/storage/store";
 import { ChartProperties } from "../../../controllers/Patterns/interfaces";
-import BaseChart from "../../Patterns/Chart";
 import { TimeDispatcher } from "../../../redux/dispatcher";
+import BaseChart from "../../Patterns/Chart";
+import control from "../../../controllers/Chart";
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date, ref_date, change_time} = state.time;
@@ -34,16 +35,20 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
 
   async function updateChart() {
     const datasetList = await buildChart();
+    control.buildChartDatasets(datasetList);
     setDatasets(datasetList);
   }
 
-  async function handleCanvasClick(evt: React.MouseEvent, chartInstance: any){
-    const chartParameters = chartInstance.chartArea;
-    const chartTimeUnit = (props.endDate.getTime() - props.startDate.getTime())/chartParameters.width;
-    const widPoint = evt.clientX - chartParameters.left;
-    const newRefDate = chartTimeUnit * widPoint + props.startDate.getTime();
-    TimeDispatcher.setRefDate(new Date(newRefDate));
-    TimeDispatcher.setChangeTime(true);
+  async function handleCanvasClick(evt: React.MouseEvent){
+    const chart = control.getChart();
+    if(chart != null){
+      const chartParameters = chart.chartArea;
+      const chartTimeUnit = (props.endDate.getTime() - props.startDate.getTime())/chartParameters.width;
+      const widPoint = evt.clientX - chartParameters.left;
+      const newRefDate = chartTimeUnit * widPoint + props.startDate.getTime();
+      TimeDispatcher.setRefDate(new Date(newRefDate));
+      TimeDispatcher.setChangeTime(true);
+    }
   }
 
   async function buildChart(){
@@ -56,7 +61,7 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
             const finalDataset = await differentiateData(rawDataset, name, props.refDate);
             const datasetTemp = {
               data: finalDataset,
-              xAxisID: 'x-axis-0',
+              xID: 'x',
               label: name
             }
             return datasetTemp;
@@ -68,10 +73,11 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
   };
 
   return(
-    <BaseChart
-      options={options}
-      datasets={datasets}
-      clickAction={handleCanvasClick}/>
+    <div
+      onClick={handleCanvasClick}>
+     <BaseChart
+        options={options}/>
+    </div>
   );
 };
 

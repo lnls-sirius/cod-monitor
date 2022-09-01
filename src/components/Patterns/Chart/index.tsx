@@ -1,77 +1,37 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Chart, registerables } from 'chart.js';
+import React, { Component } from "react";
+import { Chart } from 'chart.js';
 import { initData } from "./config";
-import { useSelector } from "react-redux";
-import { StoreInterface } from "../../../redux/storage/store";
-import { ChartInterface, DatasetInterface } from "../../../controllers/Patterns/interfaces";
-import { BpmDispatcher, TimeDispatcher } from "../../../redux/dispatcher";
-import { setAxisColor } from "../../../controllers/Patterns/chart";
+import control from "../../../controllers/Chart";
+import 'chartjs-adapter-moment';
 import * as S from './styled';
-import { TimeAxisIndex } from "../../../controllers/Time/constants";
 
-const BaseChart: React.FC<ChartInterface> = (props) => {
-  const chartRef = useRef(null);
-  const [chartInstance, setChartInstance] = useState<Chart>();
-  const axisColors = JSON.parse(useSelector((state: StoreInterface) => state.bpm.colors));
+class BaseChart extends Component<any>{
+  private chart: Chart | null;
+  private chartRef: React.RefObject<HTMLCanvasElement>;
 
-  Chart.register(...registerables);
-
-  useEffect(() => {
-    buildChartDatasets();
-  }, [props.datasets]);
-
-  async function buildChartDatasets(){
-    updateDataset(props.datasets);
-    BpmDispatcher.setColorsList(JSON.stringify(axisColors));
+  constructor(props: any) {
+    super(props);
+    this.chartRef = React.createRef();
+    this.chart = null;
   }
 
-  function updateTimeAxis(): void {
-    console.log(chartInstance?.config.options?.scales?.x)
-    //scales['x-axis-0'].ticks
-    console.log(chartRef.current)
-    // chartInstance.options.scales.xAxes[TimeAxisIndex].time.unit = unit;
-    // chartInstance.options.scales.xAxes[TimeAxisIndex].time.stepSize = unitStepSize;
-    // chartInstance.options.scales.xAxes[TimeAxisIndex].ticks.min = props.startDate;
-    // chartInstance.options.scales.xAxes[TimeAxisIndex].ticks.max = endDate;
-  }
-
-  async function updateDataset(newData: DatasetInterface){
-    let dataset: any = [];
-    Object.entries(newData).map(([name, state]) => {
-      if(state != false){
-        state = setAxisColor(state.label, state, axisColors);
-        dataset.push(state);
-      }
-    });
-    if (chartInstance!=null){
-      chartInstance.data.datasets = dataset;
-      chartInstance.update();
+  componentDidMount() {
+    const {options} = this.props;
+    if(this.chartRef.current != null){
+      this.chart = new Chart(
+        this.chartRef.current,
+        { type: "line", data: initData, options });
+      control.init(this.chart);
     }
-    TimeDispatcher.setChangeTime(false);
-    BpmDispatcher.setChangeBpm(false);
-  };
-
-  function click(evt: React.MouseEvent){
-    props.clickAction(evt, chartInstance);
-    updateTimeAxis();
   }
 
-  useEffect(() => {
-    if (chartRef.current){
-      const newChartInstance = new Chart(chartRef.current, {
-        type: 'line',
-        data: initData,
-        options: props.options
-      });
-      setChartInstance(newChartInstance);
-    }
-  }, [chartRef]);
-
-  return(
-    <S.Chart
-      ref={chartRef}
-      onClick={click}/>
-  );
-};
+  render() {
+    return (
+      <S.Chart
+        id="canvas"
+        ref={this.chartRef}/>
+    )
+  }
+}
 
 export default BaseChart;

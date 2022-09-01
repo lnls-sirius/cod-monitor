@@ -45,7 +45,7 @@ export class ArchiverDataAccess implements DataAccess{
 
     const timeDifference = to.getTime() - from.getTime();
 
-    pvValue = optimization < (timeDifference/800)?
+    pvValue = optimization < (timeDifference/optimization)?
       `optimized_`+optimization+`(${pv})`:pv;
 
     jsonurl = `${this.GET_DATA_URL}?pv=`+pvValue+`&from=${from.toJSON()}&to=${to.toJSON()}`

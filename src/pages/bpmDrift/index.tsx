@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import DateInterval from "../../components/Date/DateInterval";
 import DiffChart from "../../components/BPMDrift/DiffChart";
 import Header from '../../components/Structure/Header';
-import Logo from "../../components/Structure/Logo";
-import Navigator from "../../components/Structure/Navigator";
 import Item from "../../components/Patterns/Item";
 import Footer from "../../components/Structure/Footer";
 import Interval from "../../components/Date/Interval";
@@ -32,23 +30,19 @@ const BpmDrift: React.FC = () => {
         state={modalState}
         id={modalId}/>
       <Header>
-        <S.HorizontalWrapper>
-          <Logo />
-          <Navigator />
-          <S.VerticalWrapper>
-            <S.HorizontalWrapper>
-              <Interval />
-            </S.HorizontalWrapper>
-            <S.HorizontalWrapper>
-              <Item
-                id={modalId}
-                setModalId={setModalId}
-                setModalState={setModalState}
-                icon={modalInfo[modalId].icon}/>
-              <DateInterval />
-            </S.HorizontalWrapper>
-          </S.VerticalWrapper>
-        </S.HorizontalWrapper>
+        <S.VerticalWrapper>
+          <S.HorizontalWrapper>
+            <Interval />
+          </S.HorizontalWrapper>
+          <S.HorizontalWrapper>
+            <Item
+              id={modalId}
+              setModalId={setModalId}
+              setModalState={setModalState}
+              icon={modalInfo[modalId].icon}/>
+            <DateInterval timeRef={true}/>
+          </S.HorizontalWrapper>
+        </S.VerticalWrapper>
       </Header>
       <DiffChart/>
       <ListBPM />

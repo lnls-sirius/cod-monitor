@@ -54,18 +54,16 @@ export interface ModalInfo {
     }
 }
 
-export interface ChartInterface {
-    options: any;
-    datasets: any;
-    clickAction: (evt: React.MouseEvent, chartInstance: any) => void;
+export interface BpmProperties {
+    bpmList: DictState
 }
 
-export interface ChartProperties extends TimeInformation, ChangeInterface{
-    bpmList: DictString;
+export interface ChartProperties
+    extends TimeInformation, ChangeInterface, BpmProperties {
 }
 
 export interface DataInterface {
-    x: string;
+    x: Date;
     y: number;
 }
 
@@ -77,12 +75,7 @@ export interface DatasetInterface{
     backgroundColor?: string
 }
 
-export interface BpmProperties {
-    bpmList: DictString,
-    bpmColors: DictString
-}
-
-export interface BpmInterface {
+export interface BpmInterface extends BpmProperties{
     name: string,
     color: string
 }

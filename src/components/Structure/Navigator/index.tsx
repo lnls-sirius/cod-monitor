@@ -7,7 +7,7 @@ const Navigator: React.FC = () => {
   function pageIndicator(key: string, page: string){
     let path = window.location.pathname;
     if(path == '/'){
-      path = '/bpmDrift';
+      path = '/orbitDrift';
     }
     if(path == key){
       return(

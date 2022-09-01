@@ -4,12 +4,13 @@ import {
 } from "react-router-dom";
 
 import BpmDrift from "./bpmDrift";
+import OrbitDrift from "./orbitDrift";
 
 export default function RouterNavigator() {
   return (
     <Routes>
         <Route  path="/" element={
-            <BpmDrift />
+            <OrbitDrift />
         }/>
         <Route  path="/bpmDrift" element={
             <BpmDrift />
@@ -18,7 +19,7 @@ export default function RouterNavigator() {
             <BpmDrift />
         }/>
         <Route  path="/orbitDrift" element={
-            <BpmDrift />
+            <OrbitDrift />
         }/>
     </Routes>
   );

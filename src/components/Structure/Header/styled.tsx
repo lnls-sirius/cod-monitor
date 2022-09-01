@@ -3,7 +3,7 @@ import { colors} from "../../../assets/theme";
 
 export const HeaderWrapper = styled.header`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   background-image: ${colors.bg.secondary};

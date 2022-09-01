@@ -17,7 +17,6 @@ const Loading: React.FC<ChangeInterface> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(props.changeBpm || props.changeTime)
     setLoading(props.changeBpm || props.changeTime);
   }, [props.changeBpm, props.changeTime])
 

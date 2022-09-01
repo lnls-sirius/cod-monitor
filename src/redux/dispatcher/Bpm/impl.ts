@@ -7,10 +7,6 @@ class BpmDispatcherImpl implements BpmDispatcherInterface{
         store.dispatch(actionsBpm.setSelected(list));
     }
 
-    setColorsList(list: string): void{
-        store.dispatch(actionsBpm.setColors(list));
-    }
-
     setLedSetters(list: string): void {
         store.dispatch(actionsBpm.setSetters(list));
     }

@@ -5,7 +5,7 @@ import { StoreInterface } from "../../../redux/storage/store";
 import { TimeInformation } from "../../../controllers/Time/interfaces";
 import { countIntervalMode, getDate } from "../../../controllers/Time/functions";
 import TimeInput from "../TimeInput";
-import TimeShow from "../../Date/TimeShow";
+import TimeShow from "../TimeShow";
 import Item from "../../Patterns/Item";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import * as S from './styled';
