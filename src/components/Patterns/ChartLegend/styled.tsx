@@ -23,7 +23,3 @@ justify-content: center;
     transform: translateY(-.2rem);
 }
 `
-
-export const TextWrapper = styled.span`
-padding: 0.25em 1.25em;
-`

@@ -21,6 +21,13 @@ export function getColor(name: string): string {
   return axisColors[name];
 }
 
+export function formatBPMName(name: string){
+  name = name.replace('SI-', '');
+  name = name.replace(':DI-BPM', '');
+  name = name.replace('-Mon', '');
+  return name;
+}
+
 export function setAxisColor(name: string, state: DatasetInterface): DatasetInterface{
   const color = getColor(name);
   state.backgroundColor = color;
@@ -28,14 +35,13 @@ export function setAxisColor(name: string, state: DatasetInterface): DatasetInte
   return state;
 }
 
-export function deleteBpm(nameBpm: string, bpmList: DictState): void {
-  Object.entries(bpmList).map(([name, state]) => {
-    if(state && nameBpm == name){
-      delete bpmList[name];
+export function deleteItem(item: string, list: DictState): DictState {
+  Object.entries(list).map(([name, state]) => {
+    if(state && item == name){
+      delete list[name];
     }
   });
-  BpmDispatcher.setBpmList(JSON.stringify(bpmList));
-  BpmDispatcher.setChangeBpm(true);
+  return list;
 }
 
 export async function differentiateData(diffData: DataInterface[], name: string, refDate: Date): Promise<DataInterface[]>{

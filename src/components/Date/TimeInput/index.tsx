@@ -1,17 +1,19 @@
 import React from "react";
-import { setDate } from "../../../controllers/Time/functions";
-import { TimeOptions } from "../../../controllers/Time/interfaces";
+import { SetDateInterface } from "../../../controllers/Time/interfaces";
 import * as S from './styled';
 
-const TimeInput: React.FC<TimeOptions> = (props) => {
-  const inputType = props.id==undefined?"":props.id;
+const TimeInput: React.FC<SetDateInterface> = (props) => {
+
+  function setDateImp(time: Date){
+    props.setDate(props.type, time, props.id);
+  }
 
   return(
     <S.InputTime
-      title={inputType}
       showTimeSelect
+      id={props.id}
       selected={props.date}
-      onChange={(time: Date)=>setDate(inputType, time)}
+      onChange={setDateImp}
       timeFormat="HH:mm"
       timeCaption="time"
       dateFormat="dd/MM/yy h:mm:ss aa"

@@ -1,8 +1,8 @@
 import { TimeDispatcher } from "../../redux/dispatcher";
-import { TimeInformation } from "./interfaces";
+import { BaseDateInterface, DictBaseDate, TimeInformation } from "./interfaces";
 import { getRefArchiver} from "../archiver";
 
-export function outOfRange(start: Date, end: Date, timeMode: number){
+export function outOfRange(start: Date, end: Date, timeMode: number): boolean{
   const now = new Date();
   let outRange = true;
   if(timeMode == 2 &&
@@ -71,10 +71,10 @@ export function getTimeMilliseconds(unit: string): number{
 export function getDate(timeInfo: TimeInformation, type: string): Date{
   switch (type) {
     case 'Start':{
-      return timeInfo.startDate;
+      return timeInfo.start;
     }
     case 'End':{
-      return timeInfo.endDate;
+      return timeInfo.end;
     }
     case 'Ref':{
       return timeInfo.refDate;
@@ -85,9 +85,8 @@ export function getDate(timeInfo: TimeInformation, type: string): Date{
   }
 }
 
-export function setDate(id: string, date: Date): void {
-
-  switch (id) {
+export function setDate(type: string, date: Date): void {
+  switch (type) {
     case 'Start':{
       TimeDispatcher.setStartDate(date);
       break;
@@ -104,6 +103,28 @@ export function setDate(id: string, date: Date): void {
       break;
     }
   }
+  TimeDispatcher.setChangeTime(true);
+}
+
+export function setDateInterval(id: string, type: string, date: Date, list: DictBaseDate){
+  if (id != undefined){
+    if(type == 'Start'){
+      if(outOfRange(date, new Date(list[id].end), 2)){
+        list[id].start = date;
+      }
+    }else{
+      if(outOfRange(new Date(list[id].start), date, 2)){
+        list[id].end = date;
+      }
+    }
+    TimeDispatcher.setIntervalList(list);
+    TimeDispatcher.setChangeTime(true);
+  }
+}
+
+export function deleteInterval(id: string, list: DictBaseDate){
+  delete list[id];
+  TimeDispatcher.setIntervalList(list);
   TimeDispatcher.setChangeTime(true);
 }
 

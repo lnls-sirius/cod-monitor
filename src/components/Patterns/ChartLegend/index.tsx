@@ -1,27 +1,17 @@
 import React from "react";
-import { BpmInterface } from "../../../controllers/Patterns/interfaces";
-import { deleteBpm } from "../../../controllers/Chart/functions";
+import { LegendInterface } from "../../../controllers/Patterns/interfaces";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import Item from "../Item";
 import * as S from './styled';
 
-const ChartLegend: React.FC<BpmInterface> = (props) => {
-
-    function formatBPMName(name: string){
-        name = name.replace('SI-', '');
-        name = name.replace(':DI-BPM', '');
-        name = name.replace('-Mon', '');
-        return name;
-    }
+const ChartLegend: React.FC<LegendInterface> = (props) => {
 
     return <S.ItemWrapper>
       <S.Square color={props.color} />
-      <S.TextWrapper>
-        {formatBPMName(props.name)}
-      </S.TextWrapper>
+      {props.children}
       <Item
         icon={faTrashCan}
-        action={()=>deleteBpm(props.name, props.bpmList)}/>
+        action={props.deleteAction}/>
     </S.ItemWrapper>
 }
 

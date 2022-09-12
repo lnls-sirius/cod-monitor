@@ -10,12 +10,21 @@ function mapStateToProps(state: StoreInterface){
   const {time_mode, start_date, end_date, change_time} = state.time;
   return {
     intervalMode: time_mode,
-    startDate: new Date(start_date),
-    endDate: new Date(end_date),
+    start: new Date(start_date),
+    end: new Date(end_date),
     refDate: new Date(),
-    changeTime: change_time
+    changeTime: change_time,
+    interval_list: {}
   }
 }
+const defaultProps: TimeInformation = {
+  intervalMode: 0,
+  start: new Date(),
+  end: new Date(),
+  refDate: new Date(),
+  changeTime: false,
+  interval_list: {}
+};
 
 const Interval: React.FC<TimeInformation> = (props): React.ReactElement => {
   const [selIntBtn, setIntBtn] = useState("1h");
@@ -64,4 +73,5 @@ const Interval: React.FC<TimeInformation> = (props): React.ReactElement => {
   );
 };
 
+Interval.defaultProps = defaultProps;
 export default connect(mapStateToProps)(Interval);

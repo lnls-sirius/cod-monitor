@@ -6,3 +6,7 @@ export const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
 `;
+
+export const TextWrapper = styled.span`
+    padding: 0.25em 1.25em;
+`

@@ -3,7 +3,8 @@ export interface timeStore{
     start_date: string,
     end_date: string,
     ref_date: string,
-    change_time: boolean
+    change_time: boolean,
+    list: string
 }
 
 const initialState: timeStore = {
@@ -11,7 +12,8 @@ const initialState: timeStore = {
     start_date: (new Date()).toString(),
     end_date: (new Date()).toString(),
     ref_date: (new Date()).toString(),
-    change_time: false
+    change_time: false,
+    list: "{}"
 }
 
 export default initialState;

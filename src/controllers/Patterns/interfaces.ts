@@ -54,12 +54,12 @@ export interface ModalInfo {
     }
 }
 
-export interface BpmProperties {
-    bpmList: DictState
+export interface ActiveListInterface {
+    state_list: DictState
 }
 
 export interface ChartProperties
-    extends TimeInformation, ChangeInterface, BpmProperties {
+    extends TimeInformation, ChangeInterface, ActiveListInterface {
 }
 
 export interface DataInterface {
@@ -68,16 +68,17 @@ export interface DataInterface {
 }
 
 export interface DatasetInterface{
-    data: DataInterface[],
-    xAxisID: string,
-    label: string,
-    borderColor?: string,
-    backgroundColor?: string
+    data: DataInterface[];
+    xAxisID: string;
+    label: string;
+    borderColor?: string;
+    backgroundColor?: string;
 }
 
-export interface BpmInterface extends BpmProperties{
-    name: string,
-    color: string
+export interface LegendInterface{
+    color: string;
+    children: React.ReactChild;
+    deleteAction: () => void;
 }
 
 export interface ChangeInterface{
