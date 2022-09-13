@@ -27,7 +27,7 @@ export function getName(name: string, axis: string): string {
 
 export function randomIdGen(list: {[key: string]: any}): string {
     let letters = 'AJRTFGSN46283';
-    let randomId = '#';
+    let randomId = '';
     for (var i = 0; i < 5; i++) {
         randomId += letters[Math.floor((Math.random() * 13))];
     }

@@ -21,7 +21,7 @@ class BaseChart extends Component<any>{
       this.chart = new Chart(
         this.chartRef.current,
         { type: "line", data: initData, options });
-      control.init(this.chart);
+      control.init(this.chart, this.props.id);
     }
   }
 

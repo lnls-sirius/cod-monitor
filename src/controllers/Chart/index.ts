@@ -5,41 +5,47 @@ import { BpmDispatcher, TimeDispatcher } from '../../redux/dispatcher';
 import { setAxisColor } from './functions';
 
 class ChartObject {
-    private chart: Chart | null;
+    private chartDiff: Chart | null;
+    private chartOrbit: Chart | null;
     private axisColors = {};
 
     constructor() {
-        this.chart=null;
+        this.chartDiff=null;
+        this.chartOrbit=null;
     }
 
-    init(c: Chart | null){
-        this.chart = c;
+    init(c: Chart | null, id: string){
+        if(id == "diff"){
+            this.chartDiff = c;
+        }
+        this.chartOrbit = c;
     }
 
-    getChart(): Chart | null{
-        return this.chart;
+    getChart(id: string): Chart | null {
+        if(id == "diff"){
+            return this.chartDiff;
+        }
+        return this.chartOrbit;
     }
 
     getAxisColors(): DictString {
         return this.axisColors;
     }
 
-    async buildChartDatasets(datasets: any){
-        this.updateDataset(datasets);
+    async buildChartDatasets(datasets: any, id: string){
+        this.updateDataset(datasets, id);
     }
 
-    async updateDataset(newData: DatasetInterface){
+    async updateDataset(newData: DatasetInterface, id: string){
         let dataset: any = [];
         Object.entries(newData).map(([name, state]) => {
-            if(state != false){
-                state = setAxisColor(state.label, state);
-                dataset.push(state);
-            }
+            state = setAxisColor(state.label, state);
+            dataset.push(state);
         });
-        if (this.chart!=null){
-            this.chart.data.datasets = dataset;
-            this.chart.update();
-            console.log(this.chart.options.scales);
+        let chart: Chart | null = this.getChart(id);
+        if (chart!=null){
+            chart.data.datasets = dataset;
+            chart.update();
         }
         TimeDispatcher.setChangeTime(false);
         BpmDispatcher.setChangeBpm(false);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
 import { options } from "./config";
@@ -26,8 +26,7 @@ function mapStateToProps(state: StoreInterface){
 }
 
 const DiffChart: React.FC<ChartProperties> = (props) => {
-  const [datasets, setDatasets] = useState({});
-
+  const chartId = "diff";
   Chart.register(...registerables);
 
   useEffect(() => {
@@ -36,12 +35,11 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
 
   async function updateChart() {
     const datasetList = await buildChart();
-    control.buildChartDatasets(datasetList);
-    setDatasets(datasetList);
+    control.buildChartDatasets(datasetList, chartId);
   }
 
   async function handleCanvasClick(evt: React.MouseEvent){
-    const chart = control.getChart();
+    const chart = control.getChart(chartId);
     if(chart != null){
       const chartParameters = chart.chartArea;
       const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chartParameters.width;
@@ -77,6 +75,7 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
     <div
       onClick={handleCanvasClick}>
      <BaseChart
+        id="diff"
         options={options}/>
     </div>
   );

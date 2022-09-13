@@ -45,6 +45,7 @@ const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => 
       end: props.end
     }
     TimeDispatcher.setIntervalList(intervalList);
+    TimeDispatcher.setChangeTime(true);
   }
 
   function showReference(): React.ReactElement{
