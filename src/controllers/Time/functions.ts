@@ -1,5 +1,5 @@
 import { TimeDispatcher } from "../../redux/dispatcher";
-import { BaseDateInterface, DictBaseDate, TimeInformation } from "./interfaces";
+import { DictBaseDate, TimeInformation } from "./interfaces";
 import { getRefArchiver} from "../archiver";
 
 export function outOfRange(start: Date, end: Date, timeMode: number): boolean{
@@ -85,7 +85,7 @@ export function getDate(timeInfo: TimeInformation, type: string): Date{
   }
 }
 
-export function setDate(type: string, date: Date): void {
+export function setDate(type: string, date: Date, onChange: boolean): void {
   switch (type) {
     case 'Start':{
       TimeDispatcher.setStartDate(date);
@@ -103,7 +103,9 @@ export function setDate(type: string, date: Date): void {
       break;
     }
   }
-  TimeDispatcher.setChangeTime(true);
+  if(onChange == true){
+    TimeDispatcher.setChangeTime(true);
+  }
 }
 
 export function setDateInterval(id: string, type: string, date: Date, list: DictBaseDate){
@@ -128,19 +130,29 @@ export function deleteInterval(id: string, list: DictBaseDate){
   TimeDispatcher.setChangeTime(true);
 }
 
-export function countIntervalMode(intervalMode: number): void {
-
+export function countIntervalMode(intervalMode: number, onChange: boolean): void {
   if(intervalMode != 2){
     TimeDispatcher.setTimeMode(intervalMode + 1);
   }else{
     TimeDispatcher.setTimeMode(0);
   }
-  TimeDispatcher.setChangeTime(true);
+  if(onChange == true){
+    TimeDispatcher.setChangeTime(true);
+  }
 }
 
-export function getIntervalTime(time: number, dateRef: Date, intervalMode: number): Date{
+export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: number): Date{
   if(intervalMode == 0){
     time = -time;
   }
   return new Date(dateRef.getTime() + time);
+}
+
+export function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: number): Date{
+  let newDate = new Date();
+  if (intervalMode!=2){
+    newDate = getNewTimeInterval(
+      timeMil, dateRef, intervalMode);      
+  }
+  return newDate;
 }

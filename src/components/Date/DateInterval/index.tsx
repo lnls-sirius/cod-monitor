@@ -9,18 +9,18 @@ import TimeInput from "../TimeInput";
 import TimeShow from "../../Date/TimeShow";
 import Item from "../../Patterns/Item";
 import { TimeDispatcher } from "../../../redux/dispatcher";
-import * as S from './styled';
 import { randomIdGen } from "../../../controllers/Patterns/functions";
+import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
-  const {time_mode, start_date, end_date, ref_date, list} = state.time;
+  const {time_mode, start_date, end_date, ref_date, date_list} = state.time;
   return {
     intervalMode: time_mode,
     start: new Date(start_date),
     end: new Date(end_date),
     refDate: new Date(ref_date),
-    changeTime: false,
-    interval_list: JSON.parse(list)
+    interval_list: JSON.parse(date_list),
+    changeTime: false
   }
 }
 
@@ -33,6 +33,7 @@ const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => 
         id="main"
         type={type}
         date={getDate(props, type)}
+        onChange={props.timeRef}
         setDate={setDate}/>;
     }
     return <TimeShow
@@ -57,6 +58,7 @@ const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => 
             id="main"
             type='Ref'
             date={getDate(props, 'Ref')}
+            onChange={props.timeRef}
             setDate={setDate}/>
         </S.TextWrapper>
       )
@@ -77,7 +79,9 @@ const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => 
           {timeMode('End')}
       </S.TextWrapper>
       {showReference()}
-      <Item icon={faClock} action={()=>countIntervalMode(props.intervalMode)}/>
+      <Item 
+        icon={faClock} 
+        action={()=>countIntervalMode(props.intervalMode, props.timeRef)}/>
     </S.TextWrapper>
   );
 };

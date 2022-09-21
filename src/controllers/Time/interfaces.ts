@@ -5,7 +5,8 @@ export interface GetDateInterface {
 export interface SetDateInterface extends GetDateInterface {
     id: string
     type: string
-    setDate: (type: string, date: Date, id?: string)=>void
+    onChange: boolean
+    setDate: (type: string, date: Date, onChange: boolean, id?: string)=>void
 }
 
 export interface BaseDateInterface {

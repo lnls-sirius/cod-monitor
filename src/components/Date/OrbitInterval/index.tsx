@@ -12,9 +12,9 @@ import { deleteInterval, setDateInterval } from "../../../controllers/Time/funct
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
-  const {list} = state.time;
+  const { date_list } = state.time;
   return {
-    interval_list: JSON.parse(list)
+    interval_list: JSON.parse(date_list)
   }
 }
 
@@ -25,7 +25,7 @@ const IntervalEdit: React.FC<IntervalEditInterface> = (props) => {
     setEdit(!editing);
   }
 
-  function setDateIntervalImp(type: string, date: Date, id?: string){
+  function setDateIntervalImp(type: string, date: Date, onChange: boolean, id?: string){
     if(id!=undefined){
       setDateInterval(id, type, date, props.interval_list);
     }
@@ -33,10 +33,10 @@ const IntervalEdit: React.FC<IntervalEditInterface> = (props) => {
 
   function timeMode(type: string, date: Date, id: string){
     if(editing){
-      //Set ID
       return <TimeInput
         type={type}
         id={id}
+        onChange={false}
         date={new Date(date)}
         setDate={setDateIntervalImp}/>;
     }

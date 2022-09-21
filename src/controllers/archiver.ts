@@ -1,9 +1,14 @@
 import archInterface from "../data-access";
 
 export async function getRefArchiver(name: string, refDate: Date){
+    const now = new Date();
     const interval = 1000;
     const start = new Date(refDate.getTime() - interval);
-    const end = new Date(refDate.getTime() + interval);
+    const endTime = refDate.getTime() + interval;
+    let end = now;
+    if (endTime < now.getTime()){
+      end = new Date(endTime);
+    }
     return getArchiver(name, start, end, 1);
 }
 

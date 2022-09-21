@@ -5,6 +5,7 @@ export default interface TimeDispatcherInterface{
     setEndDate(date: Date): void;
     setRefDate(date: Date): void;
     setTimeMode(timeMode: number): void;
+    setIntervalMilliseconds(time: number): void;
     setChangeTime(state: boolean): void;
     setIntervalList(list: DictBaseDate): void;
 }

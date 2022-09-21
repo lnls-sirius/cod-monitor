@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Chart } from 'chart.js';
-import { initData } from "./config";
+import { initData, optionsDiff, optionsOrbit } from "./config";
 import control from "../../../controllers/Chart";
 import 'chartjs-adapter-moment';
 import * as S from './styled';
@@ -15,9 +15,25 @@ class BaseChart extends Component<any>{
     this.chart = null;
   }
 
+  getOptions(): any {
+    const {id} = this.props;
+    console.log(id)
+    switch(id){
+      case "diff": {
+        return optionsDiff;
+      }
+      case "orbit": {
+        return optionsOrbit;
+      }
+      default: {
+        return optionsOrbit;
+      }
+    }
+  }
+
   componentDidMount() {
-    const {options} = this.props;
     if(this.chartRef.current != null){
+      const options = this.getOptions()
       this.chart = new Chart(
         this.chartRef.current,
         { type: "line", data: initData, options });

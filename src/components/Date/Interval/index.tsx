@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { TimeInformation } from "../../../controllers/Time/interfaces";
 import { intervals, refModes } from "../../../controllers/Time/constants";
 import { StoreInterface } from "../../../redux/storage/store";
-import { getDate, getIntervalTime, getTimeMilliseconds, setDate } from "../../../controllers/Time/functions";
+import { getDate, getTimeMilliseconds, setDate } from "../../../controllers/Time/functions";
+import { TimeDispatcher } from "../../../redux/dispatcher";
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
@@ -26,7 +27,7 @@ const defaultProps: TimeInformation = {
   interval_list: {}
 };
 
-const Interval: React.FC<TimeInformation> = (props): React.ReactElement => {
+const Interval: React.FC<TimeInformation & {onChange: boolean}> = (props): React.ReactElement => {
   const [selIntBtn, setIntBtn] = useState("1h");
 
   useEffect(() => {
@@ -37,18 +38,15 @@ const Interval: React.FC<TimeInformation> = (props): React.ReactElement => {
   },[selIntBtn]);
 
   function setInterval(time: number, unit: string, name: string){
-    if(refModes[props.intervalMode] != undefined){
-      const timeMil = time * getTimeMilliseconds(unit);
-      setIntBtn(name);
-
-      setDate(
-        refModes[props.intervalMode].mod,
-        getIntervalTime(
-          timeMil,
-          getDate(props, refModes[props.intervalMode].ref),
-          props.intervalMode));
-    }
-  }
+    const timeMil = time * getTimeMilliseconds(unit);
+    TimeDispatcher.setIntervalMilliseconds(timeMil);
+    const dateRef = getDate(props, refModes[props.intervalMode]);
+    setDate(
+      refModes[props.intervalMode], 
+      dateRef,
+      props.onChange);
+    setIntBtn(name);
+  }  
 
   function timeInterval(){
     if(props.intervalMode != 2){

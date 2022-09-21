@@ -1,11 +1,11 @@
 export interface bpmStore{
+    bpm_list: string;
     leds: string;
-    list: string;
     change_bpm: boolean;
 }
 
 const initialState: bpmStore = {
-    list: '{}',
+    bpm_list: '{}',
     leds: '{}',
     change_bpm: false
 }

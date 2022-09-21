@@ -16,16 +16,7 @@ export const intervalDict: IntervalModeInterface = {
     }
 }
 
-export const refModes = [
-  {
-    mod: 'Start',
-    ref: 'End'
-  },
-  {
-    mod: 'End',
-    ref: 'Start'
-  }
-];
+export const refModes = ['End', 'Start'];
 
 export const intervals: IntervalsInterface = {
     "30s": ["30", "Second"],

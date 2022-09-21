@@ -5,7 +5,7 @@ import * as S from './styled';
 const TimeInput: React.FC<SetDateInterface> = (props) => {
 
   function setDateImp(time: Date){
-    props.setDate(props.type, time, props.id);
+    props.setDate(props.type, time, props.onChange, props.id);
   }
 
   return(

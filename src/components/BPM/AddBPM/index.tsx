@@ -14,7 +14,7 @@ let ledSetters: SetterDictState = {};
 
 
 const BPMLed: React.FC<InitLed> = (props) => {
-  const bpmList = useSelector((state: StoreInterface) => state.bpm.list);
+  const bpmList = useSelector((state: StoreInterface) => state.bpm.bpm_list);
 
   function initStates(bpm_name: string): boolean {
     const states: DictState = JSON.parse(bpmList);

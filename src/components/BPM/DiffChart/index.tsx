@@ -1,57 +1,116 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
-import { options } from "./config";
-import { getArchiver} from "../../../controllers/archiver";
+import { getArchiver, getRefArchiver} from "../../../controllers/archiver";
 import { buildDataset, differentiateData } from "../../../controllers/Chart/functions";
 import { StoreInterface } from "../../../redux/storage/store";
 import { ChartProperties } from "../../../controllers/Patterns/interfaces";
 import { TimeDispatcher } from "../../../redux/dispatcher";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
+import { posX } from "../../../assets/bpms/PosX";
 
 function mapStateToProps(state: StoreInterface){
-  const {start_date, end_date, ref_date, change_time} = state.time;
-  const {list, change_bpm} = state.bpm;
+  const {date_list, start_date, end_date, ref_date, change_time} = state.time;
+  const {bpm_list, change_bpm} = state.bpm;
+
   return {
-    state_list: JSON.parse(list),
+    state_list: JSON.parse(bpm_list),
     changeBpm: change_bpm,
     intervalMode: 0,
     start: new Date(start_date),
     end: new Date(end_date),
     refDate: new Date(ref_date),
     changeTime: change_time,
-    interval_list: {}
+    interval_list: JSON.parse(date_list)
   }
 }
 
-const DiffChart: React.FC<ChartProperties> = (props) => {
-  const chartId = "diff";
+const DiffChart: React.FC<ChartProperties & {id: string}> = (props) => {
   Chart.register(...registerables);
+  
+  useEffect(() => {
+    switch(props.id){
+      case "diff": {
+        updateChartDiff();
+        break;
+      }
+      case "orbit": {
+        updateChartOrbit();
+        break;
+      }
+    }
+  }, [])
 
   useEffect(() => {
-    updateChart();
+    if(props.id == "diff"){
+      updateChartDiff();
+    }
   }, [props.changeBpm, props.changeTime])
 
-  async function updateChart() {
-    const datasetList = await buildChart();
-    control.buildChartDatasets(datasetList, chartId);
+  useEffect(() => {
+    if(props.id == "orbit"){
+      updateChartOrbit();
+    }
+  }, [props.interval_list])
+  
+
+  async function updateChartOrbit() {
+    const datasetList = await buildChartOrbit();
+    console.log(datasetList);
+    control.buildChartDatasets(datasetList, props.id);
   }
 
+  async function updateChartDiff() {
+    const datasetList = await buildChartDiff();
+    console.log(datasetList);
+    await control.buildChartDatasets(datasetList, props.id);
+  }
+
+  async function buildChartOrbit(){
+    let datasetList: any = []
+    await Promise.all(
+      Object.entries(props.interval_list).map(async ([id, interval]) => {
+        let finalDataset: Array<{x: string, y: number}> = [];
+        for (let bpm_id of posX){
+          const start = await getRefArchiver(bpm_id, new Date(interval.start));
+          const end = await getRefArchiver(bpm_id, new Date(interval.end));
+          if(start !=undefined && end !=undefined){
+            const diff = end[0].y - start[0].y;
+            finalDataset.push({
+              x: bpm_id,
+              y: diff
+            });
+          }
+        }
+        const datasetTemp = {
+          data: finalDataset,
+          xID: 'x',
+          label: id
+        }
+        datasetList.push(datasetTemp)
+      })
+    );
+    return datasetList
+  };
+
   async function handleCanvasClick(evt: React.MouseEvent){
-    const chart = control.getChart(chartId);
-    if(chart != null){
-      const chartParameters = chart.chartArea;
-      const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chartParameters.width;
-      const widPoint = evt.clientX - chartParameters.left;
-      const newRefDate = chartTimeUnit * widPoint + props.start.getTime();
-      TimeDispatcher.setRefDate(new Date(newRefDate));
-      TimeDispatcher.setChangeTime(true);
+    if(props.id == "diff"){
+      const chart = control.getChart("diff");
+      if(chart != null){
+        const chartParameters = chart.chartArea;
+        const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chartParameters.width;
+        const widPoint = evt.clientX - chartParameters.left;
+        const newRefDate = chartTimeUnit * widPoint + props.start.getTime();
+        TimeDispatcher.setRefDate(new Date(newRefDate));
+        TimeDispatcher.setChangeTime(true);
+      }
     }
   }
 
-  async function buildChart(){
-    return await Promise.all(
+  async function buildChartDiff(){
+    let datasetList: any = []
+    await Promise.all(
       Object.entries(props.state_list).map(async ([name, state]) => {
         if(state){
           const archiverResult = await getArchiver(name, props.start, props.end, 800);
@@ -63,20 +122,19 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
               xID: 'x',
               label: name
             }
-            return datasetTemp;
+            datasetList.push(datasetTemp);
           }
         }
-        return {};
       })
     );
+    return datasetList
   };
 
   return(
     <div
       onClick={handleCanvasClick}>
      <BaseChart
-        id="diff"
-        options={options}/>
+        id={props.id}/>
     </div>
   );
 };

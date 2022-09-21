@@ -20,6 +20,10 @@ class TimeDispatcherImpl implements TimeDispatcherInterface{
         store.dispatch(actionsTime.setTimeMode(timeMode));
     }
 
+    setIntervalMilliseconds(time: number) {
+        store.dispatch(actionsTime.setIntervalMilliseconds(time));
+    }
+
     setChangeTime(state: boolean): void {
         store.dispatch(actionsTime.setChangeTime(state));
     }
@@ -27,6 +31,7 @@ class TimeDispatcherImpl implements TimeDispatcherInterface{
     setIntervalList(list: DictBaseDate): void {
         store.dispatch(actionsTime.setIntervalList(JSON.stringify(list)));
     }
+
 }
 
 export default TimeDispatcherImpl;

@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { bpmStore } from "./initialState";
 
 function setSelected(state: bpmStore, action: PayloadAction<string>): void {
-    state.list = action.payload;
+    state.bpm_list = action.payload;
 }
 
 function setSetters(state: bpmStore, action: PayloadAction<string>): void {

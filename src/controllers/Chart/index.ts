@@ -10,15 +10,16 @@ class ChartObject {
     private axisColors = {};
 
     constructor() {
-        this.chartDiff=null;
-        this.chartOrbit=null;
+        this.chartDiff = null;
+        this.chartOrbit = null;
     }
 
     init(c: Chart | null, id: string){
         if(id == "diff"){
             this.chartDiff = c;
+        }else{
+            this.chartOrbit = c;
         }
-        this.chartOrbit = c;
     }
 
     getChart(id: string): Chart | null {
@@ -32,20 +33,23 @@ class ChartObject {
         return this.axisColors;
     }
 
-    async buildChartDatasets(datasets: any, id: string){
-        this.updateDataset(datasets, id);
+    updateDataset(chart: any, newData: DatasetInterface){
+        if (chart!=null){
+            chart.data.datasets = newData;
+            chart.update();
+        }
     }
 
-    async updateDataset(newData: DatasetInterface, id: string){
+    async buildChartDatasets(newData: DatasetInterface, id: string){
         let dataset: any = [];
-        Object.entries(newData).map(([name, state]) => {
+        await Object.entries(newData).map(([name, state]) => {
             state = setAxisColor(state.label, state);
             dataset.push(state);
         });
-        let chart: Chart | null = this.getChart(id);
-        if (chart!=null){
-            chart.data.datasets = dataset;
-            chart.update();
+        if(id == "diff"){
+            this.updateDataset(this.chartDiff, dataset);
+        }else{
+            this.updateDataset(this.chartOrbit, dataset);
         }
         TimeDispatcher.setChangeTime(false);
         BpmDispatcher.setChangeBpm(false);

@@ -8,9 +8,9 @@ import ChartLegend from "../../Patterns/ChartLegend";
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
-  const {list} = state.bpm;
+  const {bpm_list} = state.bpm;
   return {
-    state_list: JSON.parse(list)
+    state_list: JSON.parse(bpm_list)
   }
 }
 

@@ -1,7 +1,6 @@
 import { ArchiverDataPoint } from "../../data-access/interface";
 import { getClosestDate } from "../Time/functions";
 import { DataInterface, DatasetInterface, DictState } from "../Patterns/interfaces";
-import { BpmDispatcher } from "../../redux/dispatcher";
 import control from "./";
 
 function getRandomColor(): string {
