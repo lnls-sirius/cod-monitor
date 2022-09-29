@@ -17,7 +17,6 @@ class BaseChart extends Component<any>{
 
   getOptions(): any {
     const {id} = this.props;
-    console.log(id)
     switch(id){
       case "diff": {
         return optionsDiff;
@@ -25,10 +24,8 @@ class BaseChart extends Component<any>{
       case "orbit": {
         return optionsOrbit;
       }
-      default: {
-        return optionsOrbit;
-      }
     }
+    return optionsOrbit;
   }
 
   componentDidMount() {

@@ -1,5 +1,8 @@
 import { getTimeMilliseconds } from "../../../controllers/Time/functions";
 
+const current = new Date();
+const ref = current.getTime() - 5000;
+
 export interface timeStore{
     time_mode: number,
     start_date: string,
@@ -12,9 +15,9 @@ export interface timeStore{
 
 const initialState: timeStore = {
     time_mode: 0,
-    start_date: (new Date()).toString(),
-    end_date: (new Date()).toString(),
-    ref_date: (new Date()).toString(),
+    start_date: current.toString(),
+    end_date: current.toString(),
+    ref_date: (new Date(ref)).toString(),
     change_time: false,
     interval_mil: getTimeMilliseconds("Hour"),
     date_list: "{}"

@@ -49,26 +49,24 @@ export class ArchiverDataAccess implements DataAccess{
       `optimized_`+optimization+`(${pv})`:pv;
 
     jsonurl = `${this.GET_DATA_URL}?pv=`+pvValue+`&from=${from.toJSON()}&to=${to.toJSON()}`
-
     const res = await axios
-      .get(jsonurl, {
-        timeout: 0,
-        method: "GET",
-        responseType: "text",
-        transformResponse: (res) => {
-          if (res.includes("Bad Request")) {
-            throw `Invalid response from ${jsonurl}`;
-          }
-          let data = res.replace(/(-?Infinity)/g, '"$1"');
-          data = data.replace(/(NaN)/g, '"$1"');
-          data = JSON.parse(data);
-          return data;
-        },
-      })
-      .then((res) => {
-        return res.data[0];
-      });
-
+    .get(jsonurl, {
+      timeout: 0,
+      method: "GET",
+      responseType: "text",
+      transformResponse: (res) => {
+        if (res.includes("Bad Request")) {
+          throw `Invalid response from ${jsonurl}`;
+        }
+        let data = res.replace(/(-?Infinity)/g, '"$1"');
+        data = data.replace(/(NaN)/g, '"$1"');
+        data = JSON.parse(data);
+        return data;
+      },
+    })
+    .then((res) => {
+      return res.data[0];
+    });
     finalData = this.parseData(res.data);
 
     return {

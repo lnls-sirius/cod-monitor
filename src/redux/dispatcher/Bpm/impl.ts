@@ -11,6 +11,10 @@ class BpmDispatcherImpl implements BpmDispatcherInterface{
         store.dispatch(actionsBpm.setSetters(list));
     }
 
+    setAxis(axis: string): void {
+        store.dispatch(actionsBpm.setAxis(axis));
+    }
+
     setChangeBpm(state: boolean): void {
         store.dispatch(actionsBpm.setChange(state));
     }

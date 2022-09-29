@@ -25,7 +25,7 @@ export const optionsDiff: any = {
             display: true,
             title: {
                 display: true,
-                text: 'diff'
+                text: "Difference (um)"
             }
         },
         x: {
@@ -54,7 +54,7 @@ export const optionsDiff: any = {
             },
             title:  {
                 display: true,
-                text: "diff"
+                text: "Time Interval"
             }
         }
     },
@@ -90,7 +90,7 @@ export const optionsOrbit: any = {
             display: true,
             title: {
                 display: true,
-                text: 'orbit'
+                text: 'Difference (um)'
             }
         },
         x: {
@@ -99,13 +99,15 @@ export const optionsOrbit: any = {
             offset: false,
             type: 'category',
             ticks: {
+                autoSkip: true,
+                maxTicksLimit: 20,
                 maxRotation: 0,
                 minRotation: 0,
-                stepSize: 1
+                stepsize: 1
             },
             title: {
                 display: true,
-                text: "orbit"
+                text: "BPM"
             }
         }
     },

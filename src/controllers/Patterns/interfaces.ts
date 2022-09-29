@@ -60,6 +60,7 @@ export interface ActiveListInterface {
 
 export interface ChartProperties
     extends TimeInformation, ChangeInterface, ActiveListInterface {
+        axis: string;
 }
 
 export interface DataInterface {

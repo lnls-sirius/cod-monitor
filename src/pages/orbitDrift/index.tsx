@@ -1,4 +1,5 @@
 import React from "react";
+import AxisSelection from "../../components/BPM/AxisSel";
 import DiffChart from "../../components/BPM/DiffChart";
 import DateInterval from "../../components/Date/DateInterval";
 import Interval from "../../components/Date/Interval";
@@ -20,6 +21,7 @@ const OrbitDrift: React.FC = () => {
             </S.HorizontalWrapper>
             <S.HorizontalWrapper>
               <DateInterval timeRef={false}/>
+              <AxisSelection />
             </S.HorizontalWrapper>
           </S.VerticalWrapper>
       </Header>

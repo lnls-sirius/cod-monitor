@@ -43,8 +43,8 @@ export function deleteItem(item: string, list: DictState): DictState {
   return list;
 }
 
-export async function differentiateData(diffData: DataInterface[], name: string, refDate: Date): Promise<DataInterface[]>{
-  let valueComp = await getClosestDate(name, refDate);
+export async function differentiateData(diffData: DataInterface[], name: string, dates: Array<Date>): Promise<DataInterface[]>{
+  let valueComp = await getClosestDate(name, diffData, dates);
   diffData.map((point) =>{
     point.y = point.y - valueComp;
   });

@@ -1,6 +1,7 @@
+import { ArchiverDataPoint } from "../../data-access/interface";
 import { TimeDispatcher } from "../../redux/dispatcher";
+import { getDataInArchiver, getDataInArray } from "../archiver";
 import { DictBaseDate, TimeInformation } from "./interfaces";
-import { getRefArchiver} from "../archiver";
 
 export function outOfRange(start: Date, end: Date, timeMode: number): boolean{
   const now = new Date();
@@ -17,26 +18,17 @@ export function outOfRange(start: Date, end: Date, timeMode: number): boolean{
   return outRange;
 }
 
-export async function getClosestDate(name: string, selectedDate: Date): Promise<number>{
-  const refDate = await getRefArchiver(name, selectedDate);
-  let closestDate = selectedDate.getTime();
+export async function getClosestDate(name: string, dataArray: ArchiverDataPoint[], dates: Array<Date>): Promise<number>{
+  let closestDate = dates[2].getTime();
   let valueComp = 0;
-  try{
-    if(refDate != undefined){
-      refDate.map((point) =>{
-        let dateDiff = (selectedDate.getTime() - point.x.getTime());
-        if(dateDiff < 0){
-          dateDiff *= -1;
-        }
-        if(closestDate > dateDiff){
-          closestDate = dateDiff;
-          valueComp = point.y;
-        }
-      });
-      return valueComp;
+  if(dates[2] != undefined){
+    if (closestDate >= dates[0].getTime() &&
+      closestDate <= dates[1].getTime()){
+        valueComp = getDataInArray(dates[2], dataArray);
+    }else{
+      valueComp = await getDataInArchiver(name, dates[2]);
     }
-  }catch(e){
-    console.log("Error " + e);
+    return valueComp;
   }
   return -1;
 }
