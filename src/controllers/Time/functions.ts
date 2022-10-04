@@ -26,7 +26,7 @@ export async function getClosestDate(name: string, dataArray: ArchiverDataPoint[
       closestDate <= dates[1].getTime()){
         valueComp = getDataInArray(dates[2], dataArray);
     }else{
-      valueComp = await getDataInArchiver(name, dates[2]);
+      valueComp = await getDataInArchiver([name], dates[2]);
     }
     return valueComp;
   }

@@ -4,6 +4,20 @@ export interface ArchiverDataPoint {
   // severity: number;
   // status: number;
 }
+
+export interface ArchiverListRaw {
+  [key: string]: 
+    {
+      severity: number, 
+      val: number, 
+      nanos: number
+    }
+}
+
+export interface ArchiverList {
+  [key: string]: number;
+}
+
 export type DBRType =
   | "DBR_SCALAR_BYTE"
   | "DBR_SCALAR_DOUBLE"
@@ -42,6 +56,7 @@ export interface ArchiverData {
 }
 
 export interface DataAccess {
+  fetchSeveralPV(pv: Array<string>, date: Date): Promise<any>;
   fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData>;
 }
 

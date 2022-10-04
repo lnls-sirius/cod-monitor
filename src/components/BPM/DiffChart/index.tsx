@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
-import { getArchiver} from "../../../controllers/archiver";
+import { getArchiver, getDataInArchiver} from "../../../controllers/archiver";
 import { buildDataset, differentiateData } from "../../../controllers/Chart/functions";
 import { StoreInterface } from "../../../redux/storage/store";
 import { ChartProperties } from "../../../controllers/Patterns/interfaces";
@@ -87,17 +87,17 @@ const DiffChart: React.FC<ChartProperties & {id: string}> = (props) => {
     await Promise.all(
       Object.entries(props.interval_list).map(async ([id, interval]) => {
         let finalDataset: Array<{x: string, y: number}> = [];
-        for (let bpm_id of getBpmAxis(props.axis)){
-          // const start = await getRefArchiver(bpm_id, new Date(interval.start));
-          // const end = await getRefArchiver(bpm_id, new Date(interval.end));
-          // if(start !=undefined && end !=undefined){
-          //   const diff = end[0].y - start[0].y;
-            const diff = 1
+        const bpm_list = getBpmAxis(props.axis);
+        const start = await getDataInArchiver(bpm_list, new Date(interval.start));
+        const end = await getDataInArchiver(bpm_list, new Date(interval.end));
+        if(start != undefined && end != undefined){
+          bpm_list.map((bpm_name) => {
+            const diff = end[bpm_name] - start[bpm_name];
             finalDataset.push({
-              x: getName(bpm_id),
+              x: getName(bpm_name),
               y: diff
             });
-          // }
+          });
         }
         const datasetTemp = {
           data: finalDataset,

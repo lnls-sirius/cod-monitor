@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DataAccess, ArchiverData, ArchiverDataPoint} from "./interface";
+import { DataAccess, ArchiverData, ArchiverDataPoint, ArchiverListRaw, ArchiverList} from "./interface";
 
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
 export const defaultHost = "10.0.38.46";
@@ -38,10 +38,41 @@ export class ArchiverDataAccess implements DataAccess{
     return outData;
   }
 
+  private parseDataList(data: ArchiverListRaw): ArchiverList {
+    const outData: ArchiverList = {};
+    Object.entries(data).map(([name, info]: any) => {
+      outData[name] = info.val;
+    })
+    return outData;
+  }
+
+  async fetchSeveralPV(pvList: Array<string>, date: Date): Promise<ArchiverList> {
+    let jsonurl = '';
+    let finalData = null;
+    this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getDataAtTime`;
+    jsonurl = `${this.GET_DATA_URL}?at=`+date.toJSON()
+
+    const res = await axios.post(jsonurl,
+      pvList,
+      {
+        method: "POST",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    
+    finalData = this.parseDataList(res.data);
+  
+    return finalData;
+  }
+
   async fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData> {
     let jsonurl = '';
     let finalData = null;
     let pvValue = '';
+    this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getData.json`;
 
     const timeDifference = to.getTime() - from.getTime();
 
