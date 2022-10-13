@@ -63,13 +63,18 @@ export interface ChartProperties
         axis: string;
 }
 
-export interface DataInterface {
+export interface BpmPointInterface {
+    x: string,
+    y: number
+}
+
+export interface DatePointInterface {
     x: Date;
     y: number;
 }
 
 export interface DatasetInterface{
-    data: DataInterface[];
+    data: DatePointInterface[];
     xAxisID: string;
     label: string;
     borderColor?: string;
@@ -93,4 +98,8 @@ export interface DictState {
 
 export interface DictString {
     [key: string]: string;
+}
+
+export interface DictNumber {
+    [key: string]: number;
 }

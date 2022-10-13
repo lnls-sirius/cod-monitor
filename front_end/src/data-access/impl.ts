@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { DataAccess, ArchiverData, ArchiverDataPoint, ArchiverListRaw, ArchiverList} from "./interface";
+import { DictNumber } from '../controllers/Patterns/interfaces';
+import { DataAccess, ArchiverData, ArchiverDataPoint, ArchiverListRaw} from "./interface";
 
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
 export const defaultHost = "10.0.38.46";
@@ -38,15 +39,15 @@ export class ArchiverDataAccess implements DataAccess{
     return outData;
   }
 
-  private parseDataList(data: ArchiverListRaw): ArchiverList {
-    const outData: ArchiverList = {};
+  private parseDataList(data: ArchiverListRaw): DictNumber {
+    const outData: DictNumber = {};
     Object.entries(data).map(([name, info]: any) => {
       outData[name] = info.val;
     })
     return outData;
   }
 
-  async fetchSeveralPV(pvList: Array<string>, date: Date): Promise<ArchiverList> {
+  async fetchSeveralPV(pvList: Array<string>, date: Date): Promise<DictNumber> {
     let jsonurl = '';
     let finalData = null;
     this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getDataAtTime`;
@@ -62,9 +63,9 @@ export class ArchiverDataAccess implements DataAccess{
         }
       }
     )
-    
+
     finalData = this.parseDataList(res.data);
-  
+
     return finalData;
   }
 

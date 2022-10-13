@@ -4,12 +4,14 @@ import { Chart, registerables } from 'chart.js';
 import { getArchiver, getDataInArchiver} from "../../../controllers/archiver";
 import { buildDataset, differentiateData } from "../../../controllers/Chart/functions";
 import { StoreInterface } from "../../../redux/storage/store";
-import { ChartProperties } from "../../../controllers/Patterns/interfaces";
+import { BpmPointInterface, ChartProperties, DictNumber } from "../../../controllers/Patterns/interfaces";
 import { TimeDispatcher } from "../../../redux/dispatcher";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
-import { posX } from "../../../assets/bpms/PosX";
-import { posY } from "../../../assets/bpms/PosY";
+import { pos } from "../../../assets/bpms/pos";
+import { getBpmName } from "../../../controllers/Patterns/functions";
+import { corr_CH, corr_CV } from "../../../assets/bpms/corr";
+import { rf } from "../../../assets/bpms/genPv";
 
 function mapStateToProps(state: StoreInterface){
   const {date_list, start_date, end_date, ref_date, change_time} = state.time;
@@ -30,7 +32,7 @@ function mapStateToProps(state: StoreInterface){
 
 const DiffChart: React.FC<ChartProperties & {id: string}> = (props) => {
   Chart.register(...registerables);
-  
+
   useEffect(() => {
     switch(props.id){
       case "diff": {
@@ -55,7 +57,7 @@ const DiffChart: React.FC<ChartProperties & {id: string}> = (props) => {
       updateChartOrbit();
     }
   }, [props.interval_list])
-  
+
 
   async function updateChartOrbit() {
     const datasetList = await buildChartOrbit();
@@ -75,32 +77,62 @@ const DiffChart: React.FC<ChartProperties & {id: string}> = (props) => {
     return label
   }
 
-  function getBpmAxis(axis: string) {
-    if (axis == 'Y'){
-      return posY;
-    }
-    return posX;
+  function getBpmAxis(axis: string): Array<string>{
+    let bpmList: Array<string> = [];
+    pos.map((bpm) => {
+      bpmList.push(getBpmName(bpm, axis));
+    })
+    return bpmList;
+  }
+
+  function delta_list(
+    list: Array<string>, start: DictNumber, end: DictNumber): Array<number> {
+      // let dataset: Array<BpmPointInterface> = []
+      let dataList: Array<number> = []
+      list.map((name) => {
+        const diff = end[name] - start[name];
+        dataList.push(diff)
+        // dataset.push({
+        //   x: getName(name),
+        //   y: diff
+        // });
+      });
+      return dataList
   }
 
   async function buildChartOrbit(){
     let datasetList: any = []
     await Promise.all(
       Object.entries(props.interval_list).map(async ([id, interval]) => {
-        let finalDataset: Array<{x: string, y: number}> = [];
-        const bpm_list = getBpmAxis(props.axis);
-        const start = await getDataInArchiver(bpm_list, new Date(interval.start));
-        const end = await getDataInArchiver(bpm_list, new Date(interval.end));
+        let bpmX: Array<string> = []
+        let bpmY: Array<string> = []
+        let codX: Array<number> = []
+        let codY: Array<number> = []
+        let kickCH: Array<number> = []
+        let kickCV: Array<number> = []
+        let deltaRf: Array<number> = []
+        let delta_kick = []
+        let delta_bpm = []
+        bpmX = getBpmAxis('X');
+        bpmY = getBpmAxis('X');
+        const orbit_info = [...bpmX, ...bpmY, ...corr_CH, ...corr_CV, rf];
+        const start = await getDataInArchiver(
+          orbit_info, new Date(interval.start));
+        const end = await getDataInArchiver(
+          orbit_info, new Date(interval.end));
         if(start != undefined && end != undefined){
-          bpm_list.map((bpm_name) => {
-            const diff = end[bpm_name] - start[bpm_name];
-            finalDataset.push({
-              x: getName(bpm_name),
-              y: diff
-            });
-          });
+          codX = delta_list(bpmX, start, end);
+          codY = delta_list(bpmY, start, end);
+          kickCH = delta_list(corr_CH, start, end);
+          kickCV = delta_list(corr_CV, start, end);
+          deltaRf = delta_list([rf], start, end);
+          delta_kick = [...kickCH, ...kickCV, ...deltaRf]
+          delta_bpm = [...codX, ...codY]
+          console.log(delta_bpm)
+          console.log(delta_kick)
         }
         const datasetTemp = {
-          data: finalDataset,
+          data: [],
           xID: 'x',
           label: id
         }

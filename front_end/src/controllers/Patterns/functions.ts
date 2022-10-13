@@ -21,7 +21,7 @@ export function reverseAxis(axis: string){
     }
 }
 
-export function getName(name: string, axis: string): string {
+export function getBpmName(name: string, axis: string): string {
     return name + ':Pos'+axis+'-Mon';
 }
 

@@ -7,7 +7,6 @@ The main files are:
 The main folders are:
     - bpms -> Consist of a list of the PV names.
         Contain the files:
-        - PosX.ts -> Readings of the X axis
-        - PosY.ts -> Readings of the Y axis
+        - Pos.ts -> Name and order of the BPMs
     - img -> Consist of the images of the website
     - types -> Consist of the type of the files in the code

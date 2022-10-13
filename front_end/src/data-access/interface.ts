@@ -6,16 +6,12 @@ export interface ArchiverDataPoint {
 }
 
 export interface ArchiverListRaw {
-  [key: string]: 
+  [key: string]:
     {
-      severity: number, 
-      val: number, 
+      severity: number,
+      val: number,
       nanos: number
     }
-}
-
-export interface ArchiverList {
-  [key: string]: number;
 }
 
 export type DBRType =

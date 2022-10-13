@@ -25,7 +25,7 @@ export const optionsDiff: any = {
             display: true,
             title: {
                 display: true,
-                text: "Difference (um)"
+                text: "Difference (nm)"
             }
         },
         x: {
@@ -90,7 +90,7 @@ export const optionsOrbit: any = {
             display: true,
             title: {
                 display: true,
-                text: 'Difference (um)'
+                text: 'Difference (nm)'
             }
         },
         x: {

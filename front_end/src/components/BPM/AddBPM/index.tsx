@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { bpmGroups } from "../../../assets/bpms/groups";
-import { changeStates, getName, objectExists, reverseAxis } from "../../../controllers/Patterns/functions";
+import { changeStates, getBpmName, objectExists, reverseAxis } from "../../../controllers/Patterns/functions";
 import { InitLed, DictState, SetterDictState, DispatchBool, ArrDictState } from "../../../controllers/Patterns/interfaces";
 import { BpmDispatcher } from "../../../redux/dispatcher";
 import { StoreInterface } from "../../../redux/storage/store";
@@ -19,14 +19,14 @@ const BPMLed: React.FC<InitLed> = (props) => {
   function initStates(bpm_name: string): boolean {
     const states: DictState = JSON.parse(bpmList);
 
-    let name_waxis = getName(bpm_name, props.axis);
+    let name_waxis = getBpmName(bpm_name, props.axis);
     if(objectExists(states, name_waxis)){
       ledProps[bpm_name] = states[name_waxis];
     }else{
       ledProps[bpm_name] = false;
     }
 
-    name_waxis = getName(bpm_name, reverseAxis(props.axis));
+    name_waxis = getBpmName(bpm_name, reverseAxis(props.axis));
     if(objectExists(states, name_waxis)){
       othAxis[bpm_name] = states[name_waxis];
     }else{
@@ -51,8 +51,8 @@ const AddBPM: React.FC = () => {
     let list: DictState = {};
 
     Object.entries(ledProps).map(async ([name, prop]: ArrDictState) => {
-      list[getName(name, axis)] = prop;
-      list[getName(name, reverseAxis(axis))] = othAxis[name];
+      list[getBpmName(name, axis)] = prop;
+      list[getBpmName(name, reverseAxis(axis))] = othAxis[name];
     });
     BpmDispatcher.setBpmList(JSON.stringify(list));
   }

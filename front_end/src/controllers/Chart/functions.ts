@@ -1,6 +1,6 @@
 import { ArchiverDataPoint } from "../../data-access/interface";
 import { getClosestDate } from "../Time/functions";
-import { DataInterface, DatasetInterface, DictState } from "../Patterns/interfaces";
+import { DatePointInterface, DatasetInterface, DictState } from "../Patterns/interfaces";
 import control from "./";
 
 function getRandomColor(): string {
@@ -43,7 +43,7 @@ export function deleteItem(item: string, list: DictState): DictState {
   return list;
 }
 
-export async function differentiateData(diffData: DataInterface[], name: string, dates: Array<Date>): Promise<DataInterface[]>{
+export async function differentiateData(diffData: DatePointInterface[], name: string, dates: Array<Date>): Promise<DatePointInterface[]>{
   let valueComp = await getClosestDate(name, diffData, dates);
   diffData.map((point) =>{
     point.y = point.y - valueComp;
@@ -51,7 +51,7 @@ export async function differentiateData(diffData: DataInterface[], name: string,
   return diffData;
 }
 
-export const buildDataset = (dataList: ArchiverDataPoint[]): DataInterface[] => {
+export const buildDataset = (dataList: ArchiverDataPoint[]): DatePointInterface[] => {
   return dataList.map((data: ArchiverDataPoint) => {
     return {
       x: data.x,
@@ -59,5 +59,3 @@ export const buildDataset = (dataList: ArchiverDataPoint[]): DataInterface[] => 
     };
   });
 }
-
-
