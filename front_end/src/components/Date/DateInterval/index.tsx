@@ -11,6 +11,7 @@ import Item from "../../Patterns/Item";
 import { TimeDispatcher } from "../../../redux/dispatcher";
 import { randomIdGen } from "../../../controllers/Patterns/functions";
 import * as S from './styled';
+import { compSignatures } from "../../../controllers/archiver";
 
 function mapStateToProps(state: StoreInterface){
   const {time_mode, start_date, end_date, ref_date, date_list} = state.time;
@@ -79,8 +80,8 @@ const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => 
           {timeMode('End')}
       </S.TextWrapper>
       {showReference()}
-      <Item 
-        icon={faClock} 
+      <Item
+        icon={faClock}
         action={()=>countIntervalMode(props.intervalMode, props.timeRef)}/>
     </S.TextWrapper>
   );

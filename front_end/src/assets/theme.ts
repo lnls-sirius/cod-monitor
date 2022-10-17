@@ -35,7 +35,7 @@ export const colors = {
         primary: 'linear-gradient(to bottom, #242424, #4D4D4D)',
         primary50: '#24242477',
         secondary: 'linear-gradient(to bottom, #2E005B, #6400C8)',
-        tertiary: 'linear-gradient(to right, #170065, #3100D4)',
+        tertiary: 'linear-gradient(to top, #001dc1, #006fc1)',
         white: '#FFFFFF',
         transparent: '#00000000'
     }

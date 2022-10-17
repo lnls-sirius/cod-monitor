@@ -5,6 +5,7 @@ import DateInterval from "../../components/Date/DateInterval";
 import Interval from "../../components/Date/Interval";
 import OrbitInterval from "../../components/Date/OrbitInterval";
 import Loading from "../../components/Patterns/Loading";
+import SignatureComp from "../../components/SignatureComp";
 import Footer from "../../components/Structure/Footer";
 import Header from "../../components/Structure/Header";
 import * as S from './styled';
@@ -25,7 +26,8 @@ const OrbitDrift: React.FC = () => {
             </S.HorizontalWrapper>
           </S.VerticalWrapper>
       </Header>
-      <DiffChart id="orbit"/>
+      {/* <DiffChart id="orbit"/> */}
+      <SignatureComp />
       <OrbitInterval/>
       <Footer />
     </S.AppLayout>

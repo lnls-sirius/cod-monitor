@@ -1,5 +1,6 @@
 import archInterface from "../data-access";
 import { ArchiverDataPoint } from "../data-access/interface";
+import { fetchSimulationData, SimulationData } from "./simulation";
 
 export function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[]): number{
   let valueComp = 0;
@@ -32,6 +33,15 @@ export async function getArchiver(name: string, start: Date, end: Date, optimiza
       name, start, end, optimization);
     const { data } = res;
     data.shift();
+    return data;
+  } catch (e) {
+    console.log("Something went wrong!!" + e);
+  }
+}
+
+export async function compSignatures(start: Date, end: Date){
+  try {
+    const data = await fetchSimulationData(start, end);
     return data;
   } catch (e) {
     console.log("Something went wrong!!" + e);
