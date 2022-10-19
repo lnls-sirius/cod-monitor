@@ -3,7 +3,7 @@ import math as _math
 import numpy as np
 from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, request
 
 
 from siriuspy.clientarch import PVDataSet, Time
@@ -13,6 +13,12 @@ from pymodels import si
 
 app = Flask(__name__)
 
+family_dict = {
+  'C': 'Corrector',
+  'D': 'Dipole',
+  'Q': 'Quadrupole',
+  'S': 'Sextupole'
+}
 
 # Normalization function
 def normalize(list1):
@@ -88,7 +94,6 @@ def read_data_from_archiver(time_start, time_stop):
 
   return kick_rf, cod
 
-
 def calc_correlation(cod_rebuilt, signature_files):
     """."""
     corrdata = dict()
@@ -105,36 +110,77 @@ def calc_correlation(cod_rebuilt, signature_files):
                   cody_r = normalize(cod_rebuilt[160:])
                   corrx = np.dot(codx, codx_r) * 100
                   corry = np.dot(cody, cody_r) * 100
-                  corrdata[maname+kick_axis] = (fname+kick_axis, corrx, corry)
+                  corrdata[maname+kick_axis] = (
+                    family_dict[fname[:1]], kick_axis, corrx, corry)
     return corrdata
 
 
-@app.route("/sign_comp", methods=["GET"])
-def signComp():
+def get_time():
+    """."""
     start_date_str = request.args.get("start")
     stop_date_str = request.args.get("stop")
+    date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
+
+    time_start = Time.strptime(
+        start_date_str, date_format)
+    time_stop = Time.strptime(
+        stop_date_str, date_format)
+    return time_start, time_stop
+
+
+def calc_cod_rebuilt():
+  time_start, time_stop = get_time()
+  kick_rf, cod = read_data_from_archiver(time_start, time_stop)
+
+  # read respmat from configdb
+  sofb_mat = read_respmat()
+  # reconstruct orbit distortion from archived kicks difference
+  cod_rebuilt = cod - np.dot(sofb_mat, kick_rf)
+
+  return cod_rebuilt
+
+
+def read_signature_from_file(elem_data):
+  sign_madata = load_json(elem_data[2]+"_kick"+elem_data[1])
+  groups_sign = sign_madata['groups']
+  for group in groups_sign:
+    if elem_data[0] in groups_sign[group]:
+      return groups_sign[group][elem_data[0]]['codx']
+  return []
+
+@app.route("/sign_comp", methods=["GET"])
+def signComp():
 
     signature_files = [
         'C_kick', 'D_kick',
         'Q_kick', 'S_kick'
     ]
 
-    date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
-    time_start = Time.strptime(
-        start_date_str, date_format)
-    time_stop = Time.strptime(
-        stop_date_str, date_format)
-    kick_rf, cod = read_data_from_archiver(time_start, time_stop)
-
-    # read respmat from configdb
-    sofb_mat = read_respmat()
-    # # reconstruct orbit distortion from archived kicks difference
-    cod_rebuilt =  cod - np.dot(sofb_mat, kick_rf)
-
+    cod_rebuilt = calc_cod_rebuilt()
     corr = calc_correlation(cod_rebuilt, signature_files)
-
     return corr
 
+@app.route("/sign_orbit", methods=["GET"])
+def signOrbit():
+    sign_orbit = dict()
+
+    start_date_str = request.args.get("start")
+    stop_date_str = request.args.get("stop")
+    data = request.args.get("data")
+    data = data.split(',')
+    cod_rebuilt = calc_cod_rebuilt()
+
+    sign_orbit['cod_rebuilt'] = cod_rebuilt.tolist()
+
+    for name in data:
+      elem_data = name.split("_")
+      elem_name = elem_data[0] + elem_data[1]
+      sign_orbit[elem_name] = read_signature_from_file(elem_data)
+    return sign_orbit
+
+@app.route("/")
+def home():
+  return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8081, debug=True)

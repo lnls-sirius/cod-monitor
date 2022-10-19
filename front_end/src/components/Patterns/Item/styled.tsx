@@ -6,30 +6,30 @@ export const ItemWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 0.25em;
     font-family: ${fonts.primary};
 `;
 
-export const Button = styled.button`
-    padding: 5px;
-    border: 0px solid ${colors.bg.transparent};
-    border-radius: ${properties.radius.light};
-    background-color: ${colors.bg.transparent};
-    color: ${colors.txt.primary};
-    &:hover{
-        background-color: ${colors.btns.btn1.hover};
-    }
-    &:active{
-        background-color: ${colors.btns.btn1.active};
-    }
-`
-
 export const Icon = styled(FontAwesomeIcon)`
-    height: 25px;
-    width: 25px;
-    padding: 5px;
+    height: ${(
+        (props: {state: boolean, small: boolean|undefined})=>
+            props.small?
+                properties.size.small:
+                properties.size.normal)};
+    width: 1.5em;
+    margin: ${(
+        (props: {state: boolean, small: boolean|undefined})=>
+            props.small?'0':'0.1')}em;
+    padding: ${(
+        (props: {state: boolean, small: boolean|undefined})=>
+            props.small?'0.1':'0.25')}em;
     color: ${colors.bg.white};
     border-radius: ${properties.radius.extlight};
+    background-color: ${(
+        (props: {state: boolean, small: boolean|undefined})=>
+            props.state?
+                colors.bg.transparent:
+                colors.btns.btn1.normal)};
     &:hover{
         background-color: ${colors.btns.btn1.hover};
     }

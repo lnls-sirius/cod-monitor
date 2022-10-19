@@ -11,7 +11,6 @@ import Item from "../../Patterns/Item";
 import { TimeDispatcher } from "../../../redux/dispatcher";
 import { randomIdGen } from "../../../controllers/Patterns/functions";
 import * as S from './styled';
-import { compSignatures } from "../../../controllers/archiver";
 
 function mapStateToProps(state: StoreInterface){
   const {time_mode, start_date, end_date, ref_date, date_list} = state.time;
@@ -41,14 +40,14 @@ const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => 
       date={getDate(props, type)}/>;
   }
 
-  function addDateInterval(intervalList: DictBaseDate){
-    intervalList[randomIdGen(intervalList)] = {
-      start: props.start,
-      end: props.end
-    }
-    TimeDispatcher.setIntervalList(intervalList);
-    TimeDispatcher.setChangeTime(true);
-  }
+  // function addDateInterval(intervalList: DictBaseDate){
+  //   intervalList[randomIdGen(intervalList)] = {
+  //     start: props.start,
+  //     end: props.end
+  //   }
+  //   TimeDispatcher.setIntervalList(intervalList);
+  //   TimeDispatcher.setChangeTime(true);
+  // }
 
   function showReference(): React.ReactElement{
     if(props.timeRef){
@@ -64,9 +63,10 @@ const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => 
         </S.TextWrapper>
       )
     }
-    return <Item
-        icon={faPlusCircle}
-        action={()=>addDateInterval(props.interval_list)}/>;
+    return <div/>;
+    // return <Item
+    //     icon={faPlusCircle}
+    //     action={()=>addDateInterval(props.interval_list)}/>;
   }
 
   return(

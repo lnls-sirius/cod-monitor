@@ -1,24 +1,32 @@
 import styled from "styled-components";
-import { colors, fonts, properties } from "../../assets/theme";
+import { colors, fonts, properties } from "../../../assets/theme";
 
-export const TableWrapper = styled.div`
+export const SignatureWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    height: 100%;
     width: 100%;
     margin: 1em 0em;
     align-items: center;
+    justify-content: flex-start;
+`;
+
+export const TableWrapper = styled.div`
+    display: flex;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: scroll;
+    border-radius: ${properties.radius.medium};
+    background-image: ${colors.bg.tertiary};
 `;
 
 export const Table = styled.table`
-    margin: 1em;
+    width: 100%;
     padding: 1em 2em;
     border-spacing: 0em 0.25em;
-    width: 90%;
+    text-align: center;
     color: ${colors.txt.primary};
     font-family: ${fonts.primary};
-    text-align: center;
-    border-radius: ${properties.radius.medium};
-    background-image: ${colors.bg.tertiary};
 `;
 
 export const Row = styled.tr`

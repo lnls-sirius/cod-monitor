@@ -15,11 +15,16 @@ const BpmDrift: React.FC = () => {
   const [modalState, setModalState] = useState<boolean>(false);
   const [modalId, setModalId] = useState<string>('BPM');
 
-  function closeModal() {
+  function closeModal(): void {
     if(modalInfo[modalId]!=undefined) {
       modalInfo[modalId].close();
     }
     setModalState(false);
+  }
+
+  function activateModal(): void {
+    setModalId(modalId);
+    setModalState(true);
   }
 
   return (
@@ -36,15 +41,13 @@ const BpmDrift: React.FC = () => {
           </S.HorizontalWrapper>
           <S.HorizontalWrapper>
             <Item
-              id={modalId}
-              setModalId={setModalId}
-              setModalState={setModalState}
-              icon={modalInfo[modalId].icon}/>
+              icon={modalInfo[modalId].icon}
+              action={activateModal}/>
             <DateInterval timeRef={true}/>
           </S.HorizontalWrapper>
         </S.VerticalWrapper>
       </Header>
-      <DiffChart id="diff"/>
+      <DiffChart/>
       <ListBPM />
       <Footer />
     </S.AppLayout>

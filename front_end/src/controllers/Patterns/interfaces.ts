@@ -30,13 +30,8 @@ export interface LedInterface {
 export interface ActionItem {
     icon: IconDefinition;
     action: ()=>void;
-}
-
-export interface ModalItem {
-    id: string;
-    icon: IconDefinition;
-    setModalId: React.Dispatch<React.SetStateAction<string>>;
-    setModalState: React.Dispatch<React.SetStateAction<boolean>>;
+    stateActive?: boolean;
+    isSmall?: boolean;
 }
 
 export interface ModalInterface {
@@ -60,7 +55,6 @@ export interface ActiveListInterface {
 
 export interface ChartProperties
     extends TimeInformation, ChangeInterface, ActiveListInterface {
-        axis: string;
 }
 
 export interface BpmPointInterface {

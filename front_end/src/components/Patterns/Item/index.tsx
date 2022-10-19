@@ -1,27 +1,35 @@
-import React from "react";
-import { ActionItem, ModalItem } from "../../../controllers/Patterns/interfaces";
+import React, { useState } from "react";
+import { ActionItem} from "../../../controllers/Patterns/interfaces";
 import * as S from './styled';
 
-const Item: React.FC<ModalItem | ActionItem> = (props): React.ReactElement => {
+const Item: React.FC<ActionItem> = (props): React.ReactElement => {
+  const [state, setState] = useState<boolean>(true);
 
-  function printIcon(): React.ReactElement{
-    if('id' in props){
-      props.setModalId(props.id);
-      return <S.Icon
-        icon={props.icon}
-        onClick={() =>{props.setModalState(true)}}/>
+  function clickHandler(){
+    props.action();
+    if(props.stateActive){
+      setState(!state);
     }
-    return <S.Icon
-      icon={props.icon}
-      onClick={() =>{props.action()}}/>
-
   }
 
-return (
+  function printIcon(): React.ReactElement{
+    return <S.Icon
+      icon={props.icon}
+      onClick={() =>{clickHandler()}}
+      state={state}
+      small={props.isSmall}/>
+  }
+
+  return (
     <S.ItemWrapper>
       {printIcon()}
     </S.ItemWrapper>
   );
 };
+
+Item.defaultProps = {
+  stateActive: false,
+  isSmall: false
+}
 
 export default Item;

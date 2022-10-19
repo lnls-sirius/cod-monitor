@@ -40,14 +40,20 @@ export const colors = {
         transparent: '#00000000'
     }
 }
+
 export const properties = {
-    radius:{
+    radius: {
         extlight: '5px',
         light: '15px',
         medium: '25px',
         high: '50px'
+    },
+    size: {
+        small: '0.75em',
+        normal: '1.5em'
     }
 }
+
 export const fonts = {
     primary: '\'Akshar\', sans-serif',
     size: {

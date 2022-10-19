@@ -5,28 +5,19 @@ import { BpmDispatcher, TimeDispatcher } from '../../redux/dispatcher';
 import { setAxisColor } from './functions';
 
 class ChartObject {
-    private chartDiff: Chart | null;
-    private chartOrbit: Chart | null;
+    private chart: Array<Chart | null>;
     private axisColors = {};
 
     constructor() {
-        this.chartDiff = null;
-        this.chartOrbit = null;
+        this.chart = [];
     }
 
-    init(c: Chart | null, id: string){
-        if(id == "diff"){
-            this.chartDiff = c;
-        }else{
-            this.chartOrbit = c;
-        }
+    init(c: Chart | null, id: number){
+        this.chart[id] = c;
     }
 
-    getChart(id: string): Chart | null {
-        if(id == "diff"){
-            return this.chartDiff;
-        }
-        return this.chartOrbit;
+    getChart(id: number): Chart | null {
+        return this.chart[id];
     }
 
     getAxisColors(): DictString {
@@ -40,17 +31,13 @@ class ChartObject {
         }
     }
 
-    async buildChartDatasets(newData: DatasetInterface, id: string){
+    async buildChartDatasets(newData: DatasetInterface, id: number){
         let dataset: any = [];
         await Object.entries(newData).map(([name, state]) => {
             state = setAxisColor(state.label, state);
             dataset.push(state);
         });
-        if(id == "diff"){
-            this.updateDataset(this.chartDiff, dataset);
-        }else{
-            this.updateDataset(this.chartOrbit, dataset);
-        }
+        this.updateDataset(this.chart[id], dataset);
         TimeDispatcher.setChangeTime(false);
         BpmDispatcher.setChangeBpm(false);
     };
