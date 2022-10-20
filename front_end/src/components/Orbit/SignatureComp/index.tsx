@@ -1,21 +1,27 @@
-import { faC, faChartLine, faD, faQ, faS } from "@fortawesome/free-solid-svg-icons";
+import { faC, faPlus, faD, faQ, faS } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { compSignatures } from "../../../controllers/archiver";
 import { BaseDateInterface } from "../../../controllers/Time/interfaces";
 import { StoreInterface } from "../../../redux/storage/store";
 import Item from "../../Patterns/Item";
+import {setSignature, deleteSignature} from "../../../controllers/Orbit/functions";
+import { BaseMagnet } from "../../../controllers/Orbit/interfaces";
 import * as S from './styled';
+import { OrbitDispatcher } from "../../../redux/dispatcher";
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date} = state.time;
+  const {signatures} = state.orbit;
+
   return {
     start: new Date(start_date),
-    end: new Date(end_date)
+    end: new Date(end_date),
+    sign_list: JSON.parse(signatures)
   }
 }
 
-const SignatureComp: React.FC<BaseDateInterface> = (props) => {
+const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (props) => {
   const [compList, setComparison] = useState<Array<any>>([]);
   const [nameFilter, setNameFilter] = useState<string>('');
   const [sortState, setSortStates] = useState<Array<boolean>>(
@@ -83,6 +89,12 @@ const SignatureComp: React.FC<BaseDateInterface> = (props) => {
     return true;
   }
 
+  function signToChart(name: string, axis: string, magnet: string): void{
+    setSignature(
+      name+axis, [name, axis, magnet], props.sign_list);
+    OrbitDispatcher.setChangeOrbit(true);
+  }
+
   function showHeader(){
     return (
       <tr>
@@ -92,7 +104,7 @@ const SignatureComp: React.FC<BaseDateInterface> = (props) => {
         <th><S.Header onClick={() => sortCompList(2)}>Kick Axis</S.Header></th>
         <th><S.Header onClick={() => sortCompList(3)}>COD X</S.Header></th>
         <th><S.Header onClick={() => sortCompList(4)}>COD Y</S.Header></th>
-        <th><S.Header>Chart</S.Header></th>
+        <th><S.Header>Add to Chart</S.Header></th>
       </tr>
     );
   }
@@ -114,9 +126,9 @@ const SignatureComp: React.FC<BaseDateInterface> = (props) => {
                 <S.Cell>{properties[4]}</S.Cell>
                 <S.Cell>
                   <Item
-                    icon={faChartLine}
-                    action={()=>null}
-                    stateActive={true}
+                    icon={faPlus}
+                    action={()=>signToChart(
+                      properties[0], properties[2], properties[1][0])}
                     isSmall={true}/>
                 </S.Cell>
               </S.Row>

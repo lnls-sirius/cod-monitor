@@ -1,6 +1,6 @@
 import archInterface from "../data-access";
 import { ArchiverDataPoint } from "../data-access/interface";
-import { fetchSimulationData, SimulationData } from "./simulation";
+import { fetchSimulationData } from "./simulation";
 
 export function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[]): number{
   let valueComp = 0;

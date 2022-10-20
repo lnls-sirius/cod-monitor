@@ -33,7 +33,9 @@ class ChartObject {
 
     async buildChartDatasets(newData: DatasetInterface, id: number){
         let dataset: any = [];
+
         await Object.entries(newData).map(([name, state]) => {
+            console.log(newData)
             state = setAxisColor(state.label, state);
             dataset.push(state);
         });

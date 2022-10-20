@@ -1,9 +1,11 @@
 export interface orbitStore{
-    signatures: string
+    signatures: string,
+    change_orbit: boolean
 }
 
 const initialState: orbitStore = {
-    signatures: '{}'
+    signatures: '{}',
+    change_orbit: false
 }
 
 export default initialState;

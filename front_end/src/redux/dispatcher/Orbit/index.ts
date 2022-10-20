@@ -1,5 +1,5 @@
-import TimeDispatcherImpl from "./impl";
-import TimeDispatcher from "./interface";
+import OrbitDispatcherImpl from "./impl";
+import OrbitDispatcher from "./interface";
 
-const eventDispatch: TimeDispatcher = new TimeDispatcherImpl();
+const eventDispatch: OrbitDispatcher = new OrbitDispatcherImpl();
 export default eventDispatch;

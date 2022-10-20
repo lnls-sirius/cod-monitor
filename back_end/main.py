@@ -20,15 +20,6 @@ family_dict = {
   'S': 'Sextupole'
 }
 
-# Normalization function
-def normalize(list1):
-  sumEle = sum(list1**2)
-  if sumEle != 0:
-    return list1 / _math.sqrt(sumEle)
-  else:
-    return list1
-
-
 # Load a dictionary from a json file
 def load_json(filename):
   file = open('./data_sim/'+filename+'.json', "r")
@@ -105,9 +96,9 @@ def calc_correlation(cod_rebuilt, signature_files):
               for maname in data[group]:
                   datum = data[group][maname]
                   codx, cody = np.array(datum['codx']), np.array(datum['cody'])
-                  codx, cody = normalize(codx), normalize(cody)
-                  codx_r = normalize(cod_rebuilt[:160])
-                  cody_r = normalize(cod_rebuilt[160:])
+                  codx, cody = normalized_array(codx), normalized_array(cody)
+                  codx_r = normalized_array(cod_rebuilt[:160])
+                  cody_r = normalized_array(cod_rebuilt[160:])
                   corrx = np.dot(codx, codx_r) * 100
                   corry = np.dot(cody, cody_r) * 100
                   corrdata[maname+kick_axis] = (
@@ -140,12 +131,24 @@ def calc_cod_rebuilt():
   return cod_rebuilt
 
 
+def normalized_array(array):
+  norm = np.linalg.norm(array)
+  if norm == 0:
+    return np.array(array)
+  return array/norm
+
+
 def read_signature_from_file(elem_data):
   sign_madata = load_json(elem_data[2]+"_kick"+elem_data[1])
   groups_sign = sign_madata['groups']
   for group in groups_sign:
     if elem_data[0] in groups_sign[group]:
-      return groups_sign[group][elem_data[0]]['codx']
+      orbit_sign = groups_sign[group][elem_data[0]]
+      return [
+        normalized_array(
+          orbit_sign['codx']).tolist(),
+        normalized_array(
+          orbit_sign['cody']).tolist()]
   return []
 
 @app.route("/sign_comp", methods=["GET"])
@@ -170,12 +173,15 @@ def signOrbit():
     data = data.split(',')
     cod_rebuilt = calc_cod_rebuilt()
 
-    sign_orbit['cod_rebuilt'] = cod_rebuilt.tolist()
+    sign_orbit['cod_rebuilt'] = [
+      normalized_array(cod_rebuilt[:160]).tolist(),
+      normalized_array(cod_rebuilt[160:]).tolist()]
 
-    for name in data:
-      elem_data = name.split("_")
-      elem_name = elem_data[0] + elem_data[1]
-      sign_orbit[elem_name] = read_signature_from_file(elem_data)
+    if 'cod_rebuilt' not in data:
+      for name in data:
+        elem_data = name.split("_")
+        elem_name = elem_data[0] + elem_data[1]
+        sign_orbit[elem_name] = read_signature_from_file(elem_data)
     return sign_orbit
 
 @app.route("/")

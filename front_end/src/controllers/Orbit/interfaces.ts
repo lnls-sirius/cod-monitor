@@ -1,3 +1,9 @@
-export interface DictOrbit {
-    [key: string]: Array<number>
+export interface BaseMagnet {
+    [key: string]: Array<string>
+}
+
+export interface SimulationData {
+    [key: string]: [
+        string, number, number
+    ]
 }

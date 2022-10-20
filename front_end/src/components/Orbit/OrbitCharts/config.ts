@@ -5,16 +5,17 @@ export const optionsOrbit: any = {
     spanGaps: true,
     responsiveAnimationDuration: 0,
     responsive: true,
+    bezierCurve: false,
     animation: { duration: 0 },
     elements: {
         point: {
           hoverRadius: 0,
-        },
-        line: {
-          cubicInterpolationMode: "monotone",
-          stepped: true,
-          tension: 0
-        },
+        }
+        // line: {
+        //   cubicInterpolationMode: "monotone",
+        //   stepped: true,
+        //   tension: 0
+        // },
       },
     hover: {
         mode: "nearest",
@@ -25,7 +26,7 @@ export const optionsOrbit: any = {
             display: true,
             title: {
                 display: true,
-                text: 'Difference (nm)'
+                text: 'Difference'
             }
         },
         x: {

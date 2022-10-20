@@ -7,9 +7,12 @@ import * as S from './styled';
 function mapStateToProps(state: StoreInterface){
   const {change_time} = state.time;
   const {change_bpm} = state.bpm;
+  const {change_orbit} = state.orbit;
+
   return {
     changeBpm: change_bpm,
-    changeTime: change_time
+    changeTime: change_time,
+    changeOrbit: change_orbit
   }
 }
 
@@ -17,8 +20,8 @@ const Loading: React.FC<ChangeInterface> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setLoading(props.changeBpm || props.changeTime);
-  }, [props.changeBpm, props.changeTime])
+    setLoading(props.changeBpm || props.changeTime || props.changeOrbit);
+  }, [props.changeBpm, props.changeTime, props.changeOrbit])
 
   function showAnimation(){
     if(loading){

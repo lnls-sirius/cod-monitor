@@ -5,16 +5,17 @@ export const optionsDiff: any = {
     spanGaps: true,
     responsiveAnimationDuration: 0,
     responsive: true,
+    bezierCurve: false,
     animation: { duration: 0 },
     elements: {
         point: {
           hoverRadius: 0,
-        },
-        line: {
-          cubicInterpolationMode: "monotone",
-          stepped: true,
-          tension: 0
-        },
+        }
+        // line: {
+        //   cubicInterpolationMode: "monotone",
+        //   stepped: true,
+        //   tension: 0
+        // },
       },
     hover: {
         mode: "nearest",

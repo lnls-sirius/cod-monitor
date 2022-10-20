@@ -1,6 +1,7 @@
 import { ArchiverDataPoint } from "../../data-access/interface";
 import { getClosestDate } from "../Time/functions";
 import { DatePointInterface, DatasetInterface, DictState } from "../Patterns/interfaces";
+import { pos } from "../../assets/bpms/pos";
 import control from "./";
 
 function getRandomColor(): string {
@@ -57,5 +58,14 @@ export const buildDataset = (dataList: ArchiverDataPoint[]): DatePointInterface[
       x: data.x,
       y: data.y
     };
+  });
+}
+
+export const buildDatasetOrbit = (dataList: any): Array<any> => {
+  return dataList.map((sign_data: any, idx: number) => {
+    return {
+      x: formatBPMName(pos[idx]),
+      y: sign_data
+    }
   });
 }

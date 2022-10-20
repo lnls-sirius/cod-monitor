@@ -54,7 +54,7 @@ export interface ActiveListInterface {
 }
 
 export interface ChartProperties
-    extends TimeInformation, ChangeInterface, ActiveListInterface {
+    extends TimeInformation, ChangeBpmInterface, ActiveListInterface {
 }
 
 export interface BpmPointInterface {
@@ -81,9 +81,18 @@ export interface LegendInterface{
     deleteAction: () => void;
 }
 
-export interface ChangeInterface{
+export interface ChangeBpmInterface{
     changeBpm: boolean;
     changeTime: boolean;
+}
+
+export interface ChangeOrbitInterface{
+    changeOrbit: boolean;
+    changeTime: boolean;
+}
+
+export interface ChangeInterface
+    extends ChangeBpmInterface, ChangeOrbitInterface{
 }
 
 export interface DictState {

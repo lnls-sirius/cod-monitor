@@ -1,5 +1,6 @@
-import { DictOrbit } from "../../../controllers/Orbit/interfaces";
+import { BaseMagnet } from "../../../controllers/Orbit/interfaces";
 
-export default interface OrbitDispatcherInterface{
-    setSignatureList(list: DictOrbit): void;
+export default interface OrbitDispatcher{
+    setChangeOrbit(change: boolean): void;
+    setSignatureList(list: BaseMagnet): void;
 }
