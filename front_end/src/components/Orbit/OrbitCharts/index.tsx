@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { createRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
 import { StoreInterface } from "../../../redux/storage/store";
@@ -7,37 +7,39 @@ import control from "../../../controllers/Chart";
 import { optionsOrbit } from "./config";
 import { fetchSignatureOrbit } from "../../../controllers/simulation";
 import { buildDatasetOrbit } from "../../../controllers/Chart/functions";
-import * as S from './styled';
 import { BaseMagnet } from "../../../controllers/Orbit/interfaces";
 import { BaseDateInterface } from "../../../controllers/Time/interfaces";
 import { OrbitDispatcher } from "../../../redux/dispatcher";
+import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
-  const {start_date, end_date} = state.time;
-  const {signatures} = state.orbit;
+  const {start_date, end_date, change_time} = state.time;
+  const {change_orbit, signatures} = state.orbit;
 
   return {
+    changeTime: change_time,
     start: new Date(start_date),
     end: new Date(end_date),
-    sign_list: JSON.parse(signatures)
+    sign_list: JSON.parse(signatures),
+    changeOrbit: change_orbit
   }
 }
 
-const OrbitCharts: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (props) => {
+const OrbitCharts: React.FC<BaseDateInterface& {sign_list: BaseMagnet, changeOrbit: boolean, changeTime: boolean}> = (props) => {
   Chart.register(...registerables);
+  const chartXRef = createRef();
+  const chartYRef = createRef();
 
   useEffect(() => {
     updateChartOrbit();
-  }, []);
-
-  useEffect(() => {
-    updateChartOrbit();
-  }, [props.start, props.end])
+  }, [props.changeOrbit, props.changeTime])
 
   async function updateChartOrbit() {
+    control.setOptions(1, optionsOrbit);
+    control.setOptions(2, optionsOrbit);
     const datasetList = await buildChartOrbit();
-    control.buildChartDatasets(datasetList[0], 1);
-    control.buildChartDatasets(datasetList[1], 2);
+    await control.buildChartDatasets(datasetList[0], 1);
+    await control.buildChartDatasets(datasetList[1], 2);
     OrbitDispatcher.setChangeOrbit(false);
   }
 
@@ -48,13 +50,13 @@ const OrbitCharts: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (props
       label: name
     }
     datasetList.push(datasetTemp);
-    return datasetList
+    return datasetList;
   }
 
   function dictToList(sign_list: BaseMagnet){
     let signatures: any = [];
     Object.entries(sign_list).map(([name, elem_info]: any) => {
-      signatures.push(elem_info)
+      signatures.push(elem_info);
     })
     return signatures
   }
@@ -86,11 +88,13 @@ const OrbitCharts: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (props
       COD X
       <BaseChart
         id={1}
-        options={optionsOrbit}/>
+        options={optionsOrbit}
+        reference={chartXRef}/>
       COD Y
       <BaseChart
         id={2}
-        options={optionsOrbit}/>
+        options={optionsOrbit}
+        reference={chartYRef}/>
     </S.ChartWrapper>
   );
 };

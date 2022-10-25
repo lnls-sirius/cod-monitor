@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { createRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
 import { getArchiver } from "../../../controllers/archiver";
 import { buildDataset, differentiateData } from "../../../controllers/Chart/functions";
 import { StoreInterface } from "../../../redux/storage/store";
 import { ChartProperties } from "../../../controllers/Patterns/interfaces";
-import { TimeDispatcher } from "../../../redux/dispatcher";
+import { BpmDispatcher, TimeDispatcher } from "../../../redux/dispatcher";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { optionsDiff } from "./config";
@@ -27,24 +27,22 @@ function mapStateToProps(state: StoreInterface){
 }
 
 const DiffChart: React.FC<ChartProperties> = (props) => {
-  const chartId = 0;
+  const chartDiff = createRef();
   Chart.register(...registerables);
-
-  useEffect(() => {
-    updateChartDiff();
-  }, []);
 
   useEffect(() => {
     updateChartDiff();
   }, [props.changeBpm, props.changeTime])
 
   async function updateChartDiff() {
+    control.setOptions(0, optionsDiff);
     const datasetList = await buildChartDiff();
-    await control.buildChartDatasets(datasetList, chartId);
+    await control.buildChartDatasets(datasetList, 0);
+    BpmDispatcher.setChangeBpm(false);
   }
 
   async function handleCanvasClick(evt: React.MouseEvent){
-    const chart = control.getChart(chartId);
+    const chart = control.getChart(0);
     if(chart != null){
       const chartParameters = chart.chartArea;
       const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chartParameters.width;
@@ -83,7 +81,8 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
       onClick={handleCanvasClick}>
       <BaseChart
         id={0}
-        options={optionsDiff}/>
+        options={optionsDiff}
+        reference={chartDiff}/>
     </div>
   );
 };

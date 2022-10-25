@@ -65,7 +65,6 @@ export class ArchiverDataAccess implements DataAccess{
     )
 
     finalData = this.parseDataList(res.data);
-
     return finalData;
   }
 

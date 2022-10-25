@@ -18,9 +18,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "react-jsx"
   },
   "include": [
-    "src"
-, "../archiver-viewer/src/controllers copy"  ]
+    "src",
+    "../archiver-viewer/src/controllers copy"
+  ]
 }

@@ -21,6 +21,11 @@ const ListSignatures: React.FC<{sign_list: BaseMagnet}> = (props) => {
     deleteSignature(name, props.sign_list);
   }
 
+  function deleteHandler(name: string){
+    deleteFromList(name);
+    OrbitDispatcher.setChangeOrbit(true);
+  }
+
   function listAllBpm(){
     return Object.entries(props.sign_list).map(([name, property]: any) => {
       if(property){
@@ -29,10 +34,7 @@ const ListSignatures: React.FC<{sign_list: BaseMagnet}> = (props) => {
           <ChartLegend
             color={getColor(color_label)}
             deleteAction={
-              () => {
-                deleteFromList(name);
-                OrbitDispatcher.setChangeOrbit(true);
-              }}>
+              () => deleteHandler(name)}>
               <S.TextWrapper>
                 {property[0]} - Kick: {property[1]}
               </S.TextWrapper>
@@ -45,7 +47,7 @@ const ListSignatures: React.FC<{sign_list: BaseMagnet}> = (props) => {
     <S.Wrapper>
       <ChartLegend
         color={getColor('cod_rebuilt')}
-        deleteAction={() => null}>
+        deleteAction={null}>
           <S.TextWrapper>
             COD Rebuilt
           </S.TextWrapper>

@@ -7,6 +7,5 @@ export const footer = {
 
 export const pages = {
     '/bpmDrift': 'BPM Drift',
-    '/orbitDrift': 'Orbit Drift',
-    '/orbitCorrection': 'Orbit Correction'
+    '/orbitDrift': 'Orbit Drift'
 }

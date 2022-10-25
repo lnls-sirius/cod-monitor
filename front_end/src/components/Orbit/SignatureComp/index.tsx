@@ -1,14 +1,15 @@
-import { faC, faPlus, faD, faQ, faS } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { compSignatures } from "../../../controllers/archiver";
 import { BaseDateInterface } from "../../../controllers/Time/interfaces";
 import { StoreInterface } from "../../../redux/storage/store";
-import Item from "../../Patterns/Item";
-import {setSignature, deleteSignature} from "../../../controllers/Orbit/functions";
+import {setSignature} from "../../../controllers/Orbit/functions";
 import { BaseMagnet } from "../../../controllers/Orbit/interfaces";
-import * as S from './styled';
 import { OrbitDispatcher } from "../../../redux/dispatcher";
+import Item from "../../Patterns/Item";
+import * as S from './styled';
+import SignatureFilter from "../SignatureFilter";
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date} = state.time;
@@ -23,9 +24,8 @@ function mapStateToProps(state: StoreInterface){
 
 const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (props) => {
   const [compList, setComparison] = useState<Array<any>>([]);
-  const [nameFilter, setNameFilter] = useState<string>('');
-  const [sortState, setSortStates] = useState<Array<boolean>>(
-    [false, false, false, false]);
+  const [globExp, setGlobExp] = useState<string>('*');
+  const [sortState, setSortStates] = useState<[number, boolean]>([0, false]);
   const [filterState, setFilterStates] = useState<Array<boolean>>(
     [true, true, true, true]);
 
@@ -42,16 +42,28 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (pro
           sortedList.push([
             name.substring(0, name.length-1), ...property]);
       });
-      setComparison(sortedList);
+      sortCompList(sortState[0], sortedList, false);
     }
   }
 
-  function sortCompList(elem: number){
-    let sortedList = [...compList]
+  function sortCompList(elem: number, rawList?: Array<any>, change?: boolean){
+    let sortedList = [];
+    let sortOrder = true;
+
+    if(rawList == undefined){
+      sortedList = [...compList]
+    }else{
+      sortedList = [...rawList]
+    }
+
+    if(sortState[0] == elem && change == undefined){
+      sortOrder = !sortState[1]
+    }
+
     if (elem > 2){
       sortedList.sort(
         (first: any, second: any) => {
-          return first[elem] - second[elem];
+          return Math.abs(first[elem]) - Math.abs(second[elem]);
         }
       );
     }else{
@@ -61,19 +73,12 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (pro
         }
       );
     }
-    if (sortState[elem]){
+    if (sortOrder){
       sortedList.reverse();
     }
-    let states = [...sortState];
-    states[elem] = !sortState[elem];
+    let states:[number, boolean] = [elem, sortOrder];
     setSortStates(states);
     setComparison(sortedList);
-  }
-
-  function filterMagnet(magnet: number){
-    let magnetStates = [...filterState];
-    magnetStates[magnet] = !magnetStates[magnet];
-    setFilterStates(magnetStates);
   }
 
   function showMagnet(readFile: string): boolean{
@@ -95,6 +100,7 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (pro
     OrbitDispatcher.setChangeOrbit(true);
   }
 
+
   function showHeader(){
     return (
       <tr>
@@ -110,11 +116,13 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (pro
   }
 
   function listAllComparisons(){
+    var globToRegExp = require('glob-to-regexp');
     let index = 0;
+    var reg_exp = globToRegExp(globExp);
     return compList.map((properties: any) => {
       if(properties){
         if(showMagnet(properties[1])){
-          if(properties[0].indexOf(nameFilter)>=0 || nameFilter == ''){
+          if(reg_exp.test(properties[0])){
             index += 1;
             return (
               <S.Row>
@@ -122,8 +130,8 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (pro
                 <S.Cell>{properties[0]}</S.Cell>
                 <S.Cell>{properties[1]}</S.Cell>
                 <S.Cell>{properties[2]}</S.Cell>
-                <S.Cell>{properties[3]}</S.Cell>
-                <S.Cell>{properties[4]}</S.Cell>
+                <S.Cell>{properties[3].toFixed(4)}</S.Cell>
+                <S.Cell>{properties[4].toFixed(4)}</S.Cell>
                 <S.Cell>
                   <Item
                     icon={faPlus}
@@ -141,29 +149,10 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (pro
 
   return(
     <S.SignatureWrapper>
-      <S.Filter>
-        Filter:
-          <S.NameFilter type='text'
-            value={nameFilter}
-            onChange={(event)=>setNameFilter(
-              event.target.value.toUpperCase())}/>
-          <Item
-            icon={faC}
-            action={()=>filterMagnet(0)}
-            stateActive={true}/>
-          <Item
-            icon={faD}
-            action={()=>filterMagnet(1)}
-            stateActive={true}/>
-          <Item
-            icon={faQ}
-            action={()=>filterMagnet(2)}
-            stateActive={true}/>
-          <Item
-            icon={faS}
-            action={()=>filterMagnet(3)}
-            stateActive={true}/>
-      </S.Filter>
+      <SignatureFilter
+        setGlobExp={setGlobExp}
+        filterState={filterState}
+        setFilterStates={setFilterStates} />
       <S.TableWrapper>
         <S.Table>
           {showHeader()}

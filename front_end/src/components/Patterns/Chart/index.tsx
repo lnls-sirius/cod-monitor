@@ -12,6 +12,7 @@ export const initData = {
       backgroundColor: '#000000'
   }]
 }
+
 class BaseChart extends Component<any>{
   private id: number;
   private chart: Chart | null;
@@ -20,7 +21,7 @@ class BaseChart extends Component<any>{
 
   constructor(props: any) {
     super(props);
-    this.chartRef = React.createRef();
+    this.chartRef = props.reference;
     this.options = props.options;
     this.id = props.id;
     this.chart = null;

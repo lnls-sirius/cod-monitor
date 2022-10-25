@@ -78,7 +78,7 @@ export interface DatasetInterface{
 export interface LegendInterface{
     color: string;
     children: React.ReactChild;
-    deleteAction: () => void;
+    deleteAction: null | (() => void);
 }
 
 export interface ChangeBpmInterface{

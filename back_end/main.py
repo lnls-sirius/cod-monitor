@@ -5,7 +5,6 @@ from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
 from flask import Flask, render_template, request
 
-
 from siriuspy.clientarch import PVDataSet, Time
 from siriuspy.clientconfigdb import ConfigDBDocument
 
@@ -37,23 +36,36 @@ def read_respmat():
   return respm
 
 
-def read_archiver(pvnames, time_ref):
-  """."""
-  pvds = PVDataSet(pvnames)
-  pvds.time_start = time_ref - 5
-  pvds.time_stop = time_ref + 5
+def update_time_stamp(pvds, time_ref, interval):
+  if Time.now() > (time_ref + interval):
+    pvds.time_start = time_ref - interval
+    pvds.time_stop = time_ref + interval
+  else:
+    pvds.time_start = time_ref - interval
+    pvds.time_stop = time_ref
   pvds.update()
 
+def read_archiver(pvnames, time_ref):
+  """."""
+  interval = 5
+  pvds = PVDataSet(pvnames)
+  pvds.timeout = 20
+  update_time_stamp(pvds, time_ref, interval)
   data = dict()
   for pvname in pvnames:
-    tstmp = np.array(pvds[pvname].timestamp)
-    value = np.array(pvds[pvname].value)
-    if not tstmp[0] <= time_ref.timestamp() <= tstmp[-1]:
-      raise ValueError('Could not find data at reference time within 10s window!')
+    while interval < 1500:
+      tstmp = np.array(pvds[pvname].timestamp)
+      value = np.array(pvds[pvname].value)
+      if (not (tstmp[0] <= time_ref.timestamp() <= tstmp[-1])) or len(value)<2:
+        print('Could not find data at reference time at '+time_ref.strftime("%m/%d/%Y, %H:%M:%S")+' within '+str(interval)+'s window!')
+        interval *= 2
+        time_ref -= interval/2
+        update_time_stamp(pvds, time_ref, interval)
+      else:
+        break
     func = interp1d(tstmp, value, axis=0)
     value_fit = func(time_ref.timestamp())
     data[pvname] = value_fit
-
   return data
 
 
@@ -70,17 +82,16 @@ def read_data_from_archiver(time_start, time_stop):
   """."""
   pvnames = ['SI-Glob:AP-SOFB:KickCH-Mon', 'SI-Glob:AP-SOFB:KickCV-Mon']
   kickx, kicky = get_wfm_diff(pvnames, time_start, time_stop)
-
   pvnames = ['SI-Glob:AP-SOFB:SlowOrbX-Mon', 'SI-Glob:AP-SOFB:SlowOrbY-Mon']
   codx, cody = get_wfm_diff(pvnames, time_start, time_stop)
-  codx = codx[:160]
-  cody = cody[:160]
 
   pvnames = ['RF-Gen:GeneralFreq-RB', 'RF-Gen:GeneralFreq-RB']
   rfx, rfy = get_wfm_diff(pvnames, time_start, time_stop)
 
   kicks = np.append(kickx, kicky)
   kick_rf = np.append(kicks, rfx)
+  codx = codx[:160]
+  cody = cody[:160]
   cod = np.append(codx, cody)
 
   return kick_rf, cod
@@ -99,8 +110,8 @@ def calc_correlation(cod_rebuilt, signature_files):
                   codx, cody = normalized_array(codx), normalized_array(cody)
                   codx_r = normalized_array(cod_rebuilt[:160])
                   cody_r = normalized_array(cod_rebuilt[160:])
-                  corrx = np.dot(codx, codx_r) * 100
-                  corry = np.dot(cody, cody_r) * 100
+                  corrx = np.dot(codx, codx_r)
+                  corry = np.dot(cody, cody_r)
                   corrdata[maname+kick_axis] = (
                     family_dict[fname[:1]], kick_axis, corrx, corry)
     return corrdata
@@ -113,16 +124,15 @@ def get_time():
     date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
 
     time_start = Time.strptime(
-        start_date_str, date_format)
+        start_date_str, date_format) - 10800
     time_stop = Time.strptime(
-        stop_date_str, date_format)
+        stop_date_str, date_format) - 10800
     return time_start, time_stop
 
 
 def calc_cod_rebuilt():
   time_start, time_stop = get_time()
   kick_rf, cod = read_data_from_archiver(time_start, time_stop)
-
   # read respmat from configdb
   sofb_mat = read_respmat()
   # reconstruct orbit distortion from archived kicks difference

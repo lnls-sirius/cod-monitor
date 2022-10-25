@@ -6,12 +6,19 @@ import * as S from './styled';
 
 const ChartLegend: React.FC<LegendInterface> = (props) => {
 
-    return <S.ItemWrapper>
+  function showDeleteOpt(){
+    if(props.deleteAction !== null){
+      return (
+        <Item
+          icon={faTrashCan}
+          action={props.deleteAction}/>)
+    }
+  }
+
+  return <S.ItemWrapper>
       <S.Square color={props.color} />
       {props.children}
-      <Item
-        icon={faTrashCan}
-        action={props.deleteAction}/>
+      {showDeleteOpt()}
     </S.ItemWrapper>
 }
 
