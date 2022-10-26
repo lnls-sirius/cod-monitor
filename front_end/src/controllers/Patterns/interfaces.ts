@@ -75,6 +75,14 @@ export interface DatasetInterface{
     backgroundColor?: string;
 }
 
+export interface DatasetInterface1{
+    data: BpmPointInterface[];
+    xAxisID: string;
+    label: string;
+    borderColor?: string;
+    backgroundColor?: string;
+}
+
 export interface LegendInterface{
     color: string;
     children: React.ReactChild;

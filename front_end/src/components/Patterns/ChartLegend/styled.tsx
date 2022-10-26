@@ -10,6 +10,7 @@ background-color: ${(props: { color: string; }) => props.color};
 `
 
 export const ItemWrapper = styled.div`
+min-height: 2.75em;
 display: flex;
 margin: 5px;
 padding: 5px;

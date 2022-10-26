@@ -9,7 +9,7 @@ export const optionsOrbit: any = {
     animation: { duration: 0 },
     elements: {
         point: {
-          hoverRadius: 0,
+          hoverRadius: 1,
         }
         // line: {
         //   cubicInterpolationMode: "monotone",

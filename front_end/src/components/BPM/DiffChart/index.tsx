@@ -1,14 +1,15 @@
-import React, { createRef, useEffect } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
 import { getArchiver } from "../../../controllers/archiver";
 import { buildDataset, differentiateData } from "../../../controllers/Chart/functions";
 import { StoreInterface } from "../../../redux/storage/store";
-import { ChartProperties } from "../../../controllers/Patterns/interfaces";
+import { ChartProperties, DatasetInterface } from "../../../controllers/Patterns/interfaces";
 import { BpmDispatcher, TimeDispatcher } from "../../../redux/dispatcher";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { optionsDiff } from "./config";
+import { setDate } from "../../../controllers/Time/functions";
 
 function mapStateToProps(state: StoreInterface){
   const {date_list, start_date, end_date, ref_date, change_time} = state.time;
@@ -27,29 +28,50 @@ function mapStateToProps(state: StoreInterface){
 }
 
 const DiffChart: React.FC<ChartProperties> = (props) => {
-  const chartDiff = createRef();
+  const [keyPressed, onKeyPressed] = useState<string>('');
+  const chartRef: React.RefObject<BaseChart> = createRef();
   Chart.register(...registerables);
+
+  window.addEventListener('keydown', (event) => {
+    if (event.repeat){
+      return;
+    }
+    onKeyPressed(event.key);
+  });
 
   useEffect(() => {
     updateChartDiff();
   }, [props.changeBpm, props.changeTime])
 
   async function updateChartDiff() {
-    control.setOptions(0, optionsDiff);
-    const datasetList = await buildChartDiff();
-    await control.buildChartDatasets(datasetList, 0);
-    BpmDispatcher.setChangeBpm(false);
+    if(chartRef.current){
+      const chart = chartRef.current.chart[0];
+      if(chart != null){
+        const datasetList = await buildChartDiff();
+        await control.buildChartDatasets(
+          chart, datasetList, optionsDiff);
+        BpmDispatcher.setChangeBpm(false);
+      }
+    }
   }
 
   async function handleCanvasClick(evt: React.MouseEvent){
-    const chart = control.getChart(0);
-    if(chart != null){
-      const chartParameters = chart.chartArea;
-      const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chartParameters.width;
-      const widPoint = evt.clientX - chartParameters.left;
-      const newRefDate = chartTimeUnit * widPoint + props.start.getTime();
-      TimeDispatcher.setRefDate(new Date(newRefDate));
-      TimeDispatcher.setChangeTime(true);
+    if(chartRef.current){
+      const chart = chartRef.current.chart[0];
+      if(chart != null){
+        const chartParameters = chart.chartArea;
+        const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chart.width;
+        const widPoint = evt.clientX - chartParameters.left;
+        const newRefDate = new Date(chartTimeUnit * widPoint + props.start.getTime());
+        TimeDispatcher.setRefDate(newRefDate);
+        console.log(keyPressed)
+        if(keyPressed == 'Control'){
+          setDate('Start', newRefDate, true)
+        }
+        if(keyPressed == 'Shift'){
+          setDate('End', newRefDate, true)
+        }
+      }
     }
   }
 
@@ -82,7 +104,7 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
       <BaseChart
         id={0}
         options={optionsDiff}
-        reference={chartDiff}/>
+        ref={chartRef}/>
     </div>
   );
 };

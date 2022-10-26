@@ -72,11 +72,11 @@ const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => 
   return(
     <S.TextWrapper>
       <S.TextWrapper>
-        From
+        Marker-1
           {timeMode('Start')}
       </S.TextWrapper>
       <S.TextWrapper>
-        to
+        Marker-2
           {timeMode('End')}
       </S.TextWrapper>
       {showReference()}

@@ -27,20 +27,25 @@ function mapStateToProps(state: StoreInterface){
 
 const OrbitCharts: React.FC<BaseDateInterface& {sign_list: BaseMagnet, changeOrbit: boolean, changeTime: boolean}> = (props) => {
   Chart.register(...registerables);
-  const chartXRef = createRef();
-  const chartYRef = createRef();
+  const chartRef: Array<any> = [createRef(), createRef()];
 
   useEffect(() => {
     updateChartOrbit();
   }, [props.changeOrbit, props.changeTime])
 
   async function updateChartOrbit() {
-    control.setOptions(1, optionsOrbit);
-    control.setOptions(2, optionsOrbit);
-    const datasetList = await buildChartOrbit();
-    await control.buildChartDatasets(datasetList[0], 1);
-    await control.buildChartDatasets(datasetList[1], 2);
-    OrbitDispatcher.setChangeOrbit(false);
+    const chartX = chartRef[0].current.chart[1];
+    const chartY = chartRef[1].current.chart[2];
+    if(chartX != null && chartY != null){
+      const datasetList = await buildChartOrbit();
+      await control.buildChartDatasets(
+        chartX, datasetList[0], optionsOrbit);
+      await control.buildChartDatasets(
+        chartY, datasetList[1], optionsOrbit);
+      OrbitDispatcher.setChangeOrbit(false);
+    }else{
+      console.log("ERROR!")
+    }
   }
 
   function saveDataset(name: string, sign_orbit: Array<number>, datasetList: any){
@@ -89,12 +94,12 @@ const OrbitCharts: React.FC<BaseDateInterface& {sign_list: BaseMagnet, changeOrb
       <BaseChart
         id={1}
         options={optionsOrbit}
-        reference={chartXRef}/>
+        ref={chartRef[0]}/>
       COD Y
       <BaseChart
         id={2}
         options={optionsOrbit}
-        reference={chartYRef}/>
+        ref={chartRef[1]}/>
     </S.ChartWrapper>
   );
 };
