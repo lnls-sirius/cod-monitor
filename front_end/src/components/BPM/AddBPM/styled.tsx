@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { colors, fonts, properties } from "../../../assets/theme";
+import { AnimButton, AnimButton2 } from "../../../assets/gen_styles";
+import { colors, fonts, properties } from "../../../assets/themes";
 
 export const Table = styled.table`
     width: 100%;
@@ -12,37 +13,15 @@ export const Column = styled.td`
 `;
 
 export const Select = styled.button`
-    text-align: center;
-    border-radius: ${properties.radius.extlight};
-    padding: .05rem .8rem;
-    margin: 0.1rem .1rem;
-    border: none;
-    font-family: ${fonts.primary};
-    color: ${colors.txt.primary};
-    background: ${(props: { selected: boolean }) => props.selected?colors.btns.btn3.active:colors.btns.btn3.normal};
-    &:hover{
-        background-color: ${colors.btns.btn3.hover};
-        transform: translateY(-.2rem);
-    }
-    &:active{
-        background-color: ${colors.btns.btn3.active};
-    }
+    ${AnimButton2}
+    margin: 0rem 0.2rem;
+    padding: 0rem 0.5rem;
 `
 
+
 export const Header = styled.button`
-    text-align: center;
-    border-radius: ${properties.radius.extlight};
-    padding: .08rem .8rem;
-    margin: 5px 0px;
-    border: none;
-    color: ${colors.txt.primary};
-    font-family: ${fonts.primary};
     background: ${colors.btns.btn2.normal};
-    &:hover{
-        background-color: ${colors.btns.btn2.hover};
-        transform: translateY(-.2rem);
-    }
-    &:active{
-        background-color: ${colors.btns.btn2.active};
-    }
+    padding: .08rem .8rem;
+    margin: 0.5em 0em;
+    ${AnimButton}
 `;

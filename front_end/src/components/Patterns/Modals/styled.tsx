@@ -1,7 +1,8 @@
 import styled, { keyframes } from "styled-components";
-import {colors, properties, fonts} from "../../../assets/theme";
+import {colors, properties, fonts} from "../../../assets/themes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {Modal} from "react-bootstrap";
+import { AnimButton } from "../../../assets/gen_styles";
 
 const fadeIn = keyframes`
     from {
@@ -68,22 +69,8 @@ export const Footer = styled.div`
 `;
 
 export const Close = styled(FontAwesomeIcon)`
-    padding: 5px;
-    color: ${colors.bg.white};
-    border-radius: ${properties.radius.extlight};
     position: absolute;
-    top: 0.75rem;
-    right: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: .2s;
-    &:hover{
-        background-color: ${colors.btns.btn1.hover};
-        border-color: hsla(0, 0%, 100%, .6);
-        transform: translateY(-.2rem);
-    }
-    &:active{
-        background-color: ${colors.btns.btn1.active};
-    }
+    top: 0.5em;
+    right: 1em;
+    ${AnimButton}
 `

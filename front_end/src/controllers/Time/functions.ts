@@ -1,19 +1,25 @@
 import { ArchiverDataPoint } from "../../data-access/interface";
 import { TimeDispatcher } from "../../redux/dispatcher";
 import { getDataInArchiver, getDataInArray } from "../archiver";
-import { DictBaseDate, TimeInformation } from "./interfaces";
+import { intervals, refModes } from "./constants";
+import { DateInfoInterface, DictBaseDate} from "./interfaces";
 
-export function outOfRange(start: Date, end: Date, timeMode: number): boolean{
+export function pastDate(start: Date, end: Date): boolean{
   const now = new Date();
   let outRange = true;
-  if(timeMode == 2 &&
-      (start.getTime() > end.getTime() ||
-      end.getTime() < start.getTime())){
-          outRange = false;
-  }
   if(start.getTime() > now.getTime() ||
       end.getTime() > now.getTime()){
-          outRange = false;
+        outRange = false;
+  }
+  return outRange;
+}
+
+export function validInterval(start: Date, end: Date): boolean{
+  let outRange = true;
+  if(start.getTime() > end.getTime() ||
+      end.getTime() < start.getTime()){
+        outRange = false;
+        console.log("3432")
   }
   return outRange;
 }
@@ -31,6 +37,17 @@ export async function getClosestDate(name: string, dataArray: ArchiverDataPoint[
     return valueComp;
   }
   return -1;
+}
+
+export function getIntervalFromMilliseconds(milliseconds: number): string{
+  let int_name = '';
+  Object.entries(intervals).map(([name, data]: [string, Array<string>]) => {
+    const mil = Number(data[0]) * getTimeMilliseconds(data[1])
+    if (mil == milliseconds){
+      int_name = name;
+    }
+  })
+  return int_name;
 }
 
 export function getTimeMilliseconds(unit: string): number{
@@ -60,7 +77,7 @@ export function getTimeMilliseconds(unit: string): number{
   return 0;
 }
 
-export function getDate(timeInfo: TimeInformation, type: string): Date{
+export function getDate(timeInfo: DateInfoInterface, type: string): Date{
   switch (type) {
     case 'Start':{
       return timeInfo.start;
@@ -69,7 +86,10 @@ export function getDate(timeInfo: TimeInformation, type: string): Date{
       return timeInfo.end;
     }
     case 'Ref':{
-      return timeInfo.refDate;
+      if(timeInfo.refDate!=undefined){
+        return timeInfo.refDate;
+      };
+      return new Date();
     }
     default: {
       return new Date();
@@ -77,7 +97,7 @@ export function getDate(timeInfo: TimeInformation, type: string): Date{
   }
 }
 
-export function setDate(type: string, date: Date, onChange: boolean): void {
+export function setDate(type: string, date: Date): void {
   switch (type) {
     case 'Start':{
       TimeDispatcher.setStartDate(date);
@@ -95,19 +115,27 @@ export function setDate(type: string, date: Date, onChange: boolean): void {
       break;
     }
   }
-  if(onChange == true){
-    TimeDispatcher.setChangeTime(true);
-  }
+  TimeDispatcher.setChangeTime(true);
+}
+
+export function changeInterval(dateInfo: DateInfoInterface, time: number, unit: string, intervalMode: number){
+  const timeMil = time * getTimeMilliseconds(unit);
+  const dateRef = getDate(dateInfo, refModes[intervalMode]);
+  setDate(
+    refModes[intervalMode],
+    dateRef);
+  TimeDispatcher.setIntervalMilliseconds(timeMil);
+  TimeDispatcher.setChangeTime(true);
 }
 
 export function setDateInterval(id: string, type: string, date: Date, list: DictBaseDate){
   if (id != undefined){
     if(type == 'Start'){
-      if(outOfRange(date, new Date(list[id].end), 2)){
+      if(pastDate(date, new Date(list[id].end))){
         list[id].start = date;
       }
     }else{
-      if(outOfRange(new Date(list[id].start), date, 2)){
+      if(pastDate(new Date(list[id].start), date)){
         list[id].end = date;
       }
     }
@@ -122,15 +150,13 @@ export function deleteInterval(id: string, list: DictBaseDate){
   TimeDispatcher.setChangeTime(true);
 }
 
-export function countIntervalMode(intervalMode: number, onChange: boolean): void {
+export function countIntervalMode(intervalMode: number): void {
   if(intervalMode != 2){
     TimeDispatcher.setTimeMode(intervalMode + 1);
   }else{
     TimeDispatcher.setTimeMode(0);
   }
-  if(onChange == true){
-    TimeDispatcher.setChangeTime(true);
-  }
+  TimeDispatcher.setChangeTime(true);
 }
 
 export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: number): Date{
@@ -142,9 +168,7 @@ export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: nu
 
 export function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: number): Date{
   let newDate = new Date();
-  if (intervalMode!=2){
-    newDate = getNewTimeInterval(
-      timeMil, dateRef, intervalMode);      
-  }
+  newDate = getNewTimeInterval(
+    timeMil, dateRef, intervalMode);
   return newDate;
 }

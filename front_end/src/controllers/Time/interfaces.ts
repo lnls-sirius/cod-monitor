@@ -3,10 +3,8 @@ export interface GetDateInterface {
 }
 
 export interface SetDateInterface extends GetDateInterface {
-    id: string
     type: string
-    onChange: boolean
-    setDate: (type: string, date: Date, onChange: boolean, id?: string)=>void
+    setDate: (type: string, date: Date, id?: string)=>void
 }
 
 export interface BaseDateInterface {
@@ -14,10 +12,32 @@ export interface BaseDateInterface {
     end: Date
 }
 
-export interface TimeInformation extends BaseDateInterface, IntervalListInterface{
-    intervalMode: number
+export interface RefInterface {
     refDate: Date
-    changeTime: boolean
+    timeRef?: boolean
+}
+
+export interface DateInfoInterface
+    extends BaseDateInterface, RefInterface{
+}
+
+
+export interface IntervalBtnsInterface
+    extends BaseDateInterface {
+        intervalMode: number
+        intervalMil: number
+}
+
+export interface DateIntervalInterface
+    extends BaseDateInterface, RefInterface {
+        intervalMode: number
+}
+
+export interface TimeInformation
+    extends BaseDateInterface, IntervalListInterface{
+        refDate: Date
+        intervalMode: number
+        changeTime: boolean
 }
 
 export interface IntervalEditInterface extends BaseDateInterface, IntervalListInterface{
@@ -28,10 +48,6 @@ export interface IntervalModeInterface {
     [key: string]: {
         [key: number]: boolean
     }
-}
-
-export interface IntervalsInterface {
-    [key: string]: Array<string>
 }
 
 export interface DictBaseDate {

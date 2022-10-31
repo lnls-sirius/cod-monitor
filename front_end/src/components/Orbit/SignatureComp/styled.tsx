@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { colors, fonts, properties } from "../../../assets/theme";
+import { AnimButton } from "../../../assets/gen_styles";
+import { colors, fonts, properties } from "../../../assets/themes";
 
 export const SignatureWrapper = styled.div`
     display: flex;
@@ -39,19 +40,8 @@ export const Cell = styled.td`
 `;
 
 export const Header = styled.button`
-    text-align: center;
-    border-radius: ${properties.radius.extlight};
-    padding: .08rem .8rem;
-    margin: 0em;
-    border: none;
-    color: ${colors.txt.primary};
-    font-family: ${fonts.primary};
     background: ${colors.btns.btn2.normal};
-    &:hover{
-        background-color: ${colors.btns.btn2.hover};
-        transform: translateY(-.2rem);
-    }
-    &:active{
-        background-color: ${colors.btns.btn2.active};
-    }
+    padding: .08rem .8rem;
+    margin: 0.5em 0em;
+    ${AnimButton}
 `;

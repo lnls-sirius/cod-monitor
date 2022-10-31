@@ -9,19 +9,13 @@ const Navigator: React.FC = () => {
     if(path == '/'){
       path = '/orbitDrift';
     }
-    if(path == key){
-      return(
-        <S.PageAct>
+    return(
+      <S.PageLink
+        to={key}
+        selected={path == key}>
           {page}
-        </S.PageAct>
-      );
-    }else{
-      return(
-        <S.PageLink to={key}>
-          {page}
-        </S.PageLink>
-      );
-    }
+      </S.PageLink>
+    );
 
   }
 

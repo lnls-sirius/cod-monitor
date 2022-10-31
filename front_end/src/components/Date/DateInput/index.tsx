@@ -1,25 +1,33 @@
 import React from "react";
+
 import { SetDateInterface } from "../../../controllers/Time/interfaces";
+
 import * as S from './styled';
 
-const TimeInput: React.FC<SetDateInterface> = (props) => {
+const defaultProps: SetDateInterface = {
+  date: new Date(),
+  type: 'Start',
+  setDate: ()=>null
+};
+
+const DateInput: React.FC<SetDateInterface> = (props) => {
+  // Component that shows an input of the type date
 
   function setDateImp(time: Date){
-    props.setDate(props.type, time, props.onChange, props.id);
+    props.setDate(props.type, time);
   }
 
   return(
     <S.InputTime
       showTimeSelect
-      id={props.id}
       selected={props.date}
       onChange={setDateImp}
       timeFormat="HH:mm"
       timeCaption="time"
       dateFormat="yyyy/MM/dd h:mm:ss aa"
-      maxDate={new Date()}
-      />
+      maxDate={new Date()}/>
   );
 };
 
-export default TimeInput;
+DateInput.defaultProps = defaultProps;
+export default DateInput;

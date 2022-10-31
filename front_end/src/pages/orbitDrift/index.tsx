@@ -16,10 +16,10 @@ const OrbitDrift: React.FC = () => {
       <Header>
         <S.VerticalWrapper>
             <S.HorizontalWrapper>
-              <Interval onChange={true} />
+              <Interval />
             </S.HorizontalWrapper>
             <S.HorizontalWrapper>
-              <DateInterval timeRef={false}/>
+              <DateInterval/>
             </S.HorizontalWrapper>
           </S.VerticalWrapper>
       </Header>

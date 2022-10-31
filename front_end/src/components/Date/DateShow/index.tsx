@@ -1,9 +1,17 @@
 import React from "react";
 import { format } from 'date-fns'
+
 import { GetDateInterface } from "../../../controllers/Time/interfaces";
+
 import * as S from './styled';
 
-const TimeShow: React.FC<GetDateInterface> = (props) => {
+const defaultProps: GetDateInterface = {
+  date: new Date()
+};
+
+const DateShow: React.FC<GetDateInterface> = (props) => {
+  // Component that shows a formatted date
+
   return(
     <S.TimeWrapper>
       {format(props.date, 'yyyy/MM/dd h:mm:ss aa')}
@@ -11,4 +19,5 @@ const TimeShow: React.FC<GetDateInterface> = (props) => {
   );
 };
 
-export default TimeShow;
+DateShow.defaultProps = defaultProps;
+export default DateShow;

@@ -1,6 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { colors, fonts, properties } from "../../../assets/theme";
+import { AnimButton } from "../../../assets/gen_styles";
+import { colors, fonts, properties } from "../../../assets/themes";
+
+interface IconStyle {
+    state: boolean
+    small: boolean|undefined
+}
 
 export const ItemWrapper = styled.div`
     display: flex;
@@ -12,28 +18,22 @@ export const ItemWrapper = styled.div`
 
 export const Icon = styled(FontAwesomeIcon)`
     height: ${(
-        (props: {state: boolean, small: boolean|undefined})=>
+        (props: IconStyle)=>
             props.small?
                 properties.size.small:
                 properties.size.normal)};
-    width: 1.5em;
     margin: ${(
-        (props: {state: boolean, small: boolean|undefined})=>
+        (props: IconStyle)=>
             props.small?'0':'0.1')}em;
-    padding: ${(
-        (props: {state: boolean, small: boolean|undefined})=>
-            props.small?'0.1':'0.25')}em;
+    padding: 0.1em ${(
+        (props: IconStyle)=>
+            props.small?'0.2':'0.25')}em;
     color: ${colors.bg.white};
     border-radius: ${properties.radius.extlight};
     background-color: ${(
-        (props: {state: boolean, small: boolean|undefined})=>
+        (props: IconStyle)=>
             props.state?
                 colors.bg.transparent:
-                colors.btns.btn1.normal)};
-    &:hover{
-        background-color: ${colors.btns.btn1.hover};
-    }
-    &:active{
-        background-color: ${colors.btns.btn1.active};
-    }
+                colors.btns.btn2.normal)};
+    ${AnimButton}
 `;

@@ -47,24 +47,27 @@ def update_time_stamp(pvds, time_ref, interval):
 
 def read_archiver(pvnames, time_ref):
   """."""
-  interval = 5
   pvds = PVDataSet(pvnames)
   pvds.timeout = 20
-  update_time_stamp(pvds, time_ref, interval)
   data = dict()
   for pvname in pvnames:
+    interval = 10
     while interval < 1500:
+      update_time_stamp(pvds, time_ref, interval)
       tstmp = np.array(pvds[pvname].timestamp)
       value = np.array(pvds[pvname].value)
-      if (not (tstmp[0] <= time_ref.timestamp() <= tstmp[-1])) or len(value)<2:
+      if value is None or not (tstmp[0] <= time_ref.timestamp() <= tstmp[-1]):
+        print(value)
         print('Could not find data at reference time at '+time_ref.strftime("%m/%d/%Y, %H:%M:%S")+' within '+str(interval)+'s window!')
         interval *= 2
-        time_ref -= interval/2
-        update_time_stamp(pvds, time_ref, interval)
+        time_ref -= 3*interval/2
       else:
         break
-    func = interp1d(tstmp, value, axis=0)
-    value_fit = func(time_ref.timestamp())
+    if len(value)>2:
+      func = interp1d(tstmp, value, axis=0, fill_value='extrapolate')
+      value_fit = func(time_ref.timestamp())
+    else:
+      value_fit = value[0]
     data[pvname] = value_fit
   return data
 

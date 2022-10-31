@@ -37,7 +37,7 @@ const BpmDrift: React.FC = () => {
       <Header>
         <S.VerticalWrapper>
           <S.HorizontalWrapper>
-            <Interval onChange={true}/>
+            <Interval/>
           </S.HorizontalWrapper>
           <S.HorizontalWrapper>
             <Item

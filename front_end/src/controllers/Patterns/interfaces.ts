@@ -1,9 +1,12 @@
 import React from "react";
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { TimeInformation } from "../Time/interfaces";
 
 export type DispatchBool = React.Dispatch<React.SetStateAction<boolean>>;
 export type ArrDictState = [key: string, value: boolean];
+
+export interface SelectedInterface {
+    selected: boolean
+}
 
 interface BasicLed{
     id: string;
@@ -28,8 +31,8 @@ export interface LedInterface {
 }
 
 export interface ActionItem {
-    icon: IconDefinition;
     action: ()=>void;
+    icon: string;
     stateActive?: boolean;
     isSmall?: boolean;
 }
@@ -44,7 +47,7 @@ export interface ModalInfo {
     [key: string]: {
         title: string;
         component: React.ReactElement;
-        icon: IconDefinition;
+        icon: string;
         close: () => void;
     }
 }
@@ -113,4 +116,8 @@ export interface DictString {
 
 export interface DictNumber {
     [key: string]: number;
+}
+
+export interface BaseStrArrayDict {
+    [key: string]: Array<string>
 }

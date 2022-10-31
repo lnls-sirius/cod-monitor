@@ -1,90 +1,84 @@
 import React from "react";
 import { connect } from "react-redux";
+
+import DateInput from "../DateInput";
+import DateShow from "../../Date/DateShow";
+import Item from "../../Patterns/Item";
+
+import { countIntervalMode, getDate, setDate } from "../../../controllers/Time/functions";
 import { intervalDict } from "../../../controllers/Time/constants";
 import { StoreInterface } from "../../../redux/storage/store";
-import { DictBaseDate, TimeInformation } from "../../../controllers/Time/interfaces";
-import { countIntervalMode, getDate, setDate } from "../../../controllers/Time/functions";
-import { faClock, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import TimeInput from "../TimeInput";
-import TimeShow from "../../Date/TimeShow";
-import Item from "../../Patterns/Item";
-import { TimeDispatcher } from "../../../redux/dispatcher";
-import { randomIdGen } from "../../../controllers/Patterns/functions";
+import { DateIntervalInterface } from "../../../controllers/Time/interfaces";
+
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
-  const {time_mode, start_date, end_date, ref_date, date_list} = state.time;
+  const { time_mode, start_date, end_date, ref_date } = state.time;
   return {
     intervalMode: time_mode,
     start: new Date(start_date),
     end: new Date(end_date),
-    refDate: new Date(ref_date),
-    interval_list: JSON.parse(date_list),
-    changeTime: false
+    refDate: new Date(ref_date)
   }
 }
 
-const DateInterval: React.FC<TimeInformation & {timeRef: boolean}> = (props) => {
+const defaultProps: DateIntervalInterface = {
+  intervalMode: 0,
+  start: new Date(),
+  end: new Date(),
+  refDate: new Date(),
+  timeRef: false
+};
 
-  function timeMode(type: string){
+const DateInterval: React.FC<DateIntervalInterface> = (props) => {
+  // Component that show the 2 Time Markers, the reference and the time mode button
+
+  function dateMode(type: string): React.ReactElement {
+    // Changes the type of the component
     let mode = intervalDict[type][props.intervalMode];
     if(mode){
-      return <TimeInput
-        id="main"
+      return <DateInput
         type={type}
         date={getDate(props, type)}
-        onChange={props.timeRef}
         setDate={setDate}/>;
     }
-    return <TimeShow
+    return <DateShow
       date={getDate(props, type)}/>;
   }
 
-  // function addDateInterval(intervalList: DictBaseDate){
-  //   intervalList[randomIdGen(intervalList)] = {
-  //     start: props.start,
-  //     end: props.end
-  //   }
-  //   TimeDispatcher.setIntervalList(intervalList);
-  //   TimeDispatcher.setChangeTime(true);
-  // }
-
-  function showReference(): React.ReactElement{
+  function inputReference(): React.ReactElement {
+    // Show the input for the date reference if needed
     if(props.timeRef){
       return (
         <S.TextWrapper>
           Reference:
-          <TimeInput
-            id="main"
+          <DateInput
             type='Ref'
-            date={getDate(props, 'Ref')}
-            onChange={props.timeRef}
+            date={props.refDate}
             setDate={setDate}/>
         </S.TextWrapper>
       )
     }
     return <div/>;
-    // return <Item
-    //     icon={faPlusCircle}
-    //     action={()=>addDateInterval(props.interval_list)}/>;
   }
 
   return(
     <S.TextWrapper>
       <S.TextWrapper>
         Marker-1
-          {timeMode('Start')}
+          {dateMode('Start')}
       </S.TextWrapper>
       <S.TextWrapper>
         Marker-2
-          {timeMode('End')}
+          {dateMode('End')}
       </S.TextWrapper>
-      {showReference()}
+      {inputReference()}
       <Item
-        icon={faClock}
-        action={()=>countIntervalMode(props.intervalMode, props.timeRef)}/>
+        icon='clock'
+        action={()=>countIntervalMode(props.intervalMode)}/>
     </S.TextWrapper>
   );
 };
 
+DateInterval.defaultProps = defaultProps;
 export default connect(mapStateToProps)(DateInterval);

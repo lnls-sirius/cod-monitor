@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, properties } from "../../../assets/theme";
+import { colors, properties } from "../../../assets/themes";
 import { LedInterface } from "../../../controllers/Patterns/interfaces";
 
 export const LedWrapper = styled.button`

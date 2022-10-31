@@ -1,7 +1,7 @@
 import store from "../../storage/store";
 import { actions as actionsOrbit } from "../../features/OrbitStore";
 import OrbitDispatcherInterface from "./interface";
-import { BaseMagnet } from "../../../controllers/Orbit/interfaces";
+import { BaseStrArrayDict } from "../../../controllers/Patterns/interfaces";
 
 class OrbitDispatcherImpl implements OrbitDispatcherInterface{
 
@@ -9,7 +9,7 @@ class OrbitDispatcherImpl implements OrbitDispatcherInterface{
         store.dispatch(actionsOrbit.setChange(change));
     }
 
-    setSignatureList(list: BaseMagnet): void {
+    setSignatureList(list: BaseStrArrayDict): void {
         store.dispatch(actionsOrbit.setSignatureList(JSON.stringify(list)));
     }
 

@@ -1,11 +1,11 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { compSignatures } from "../../../controllers/archiver";
 import { BaseDateInterface } from "../../../controllers/Time/interfaces";
 import { StoreInterface } from "../../../redux/storage/store";
 import {setSignature} from "../../../controllers/Orbit/functions";
-import { BaseMagnet } from "../../../controllers/Orbit/interfaces";
+import { BaseStrArrayDict } from "../../../controllers/Patterns/interfaces";
 import { OrbitDispatcher } from "../../../redux/dispatcher";
 import Item from "../../Patterns/Item";
 import * as S from './styled';
@@ -22,7 +22,7 @@ function mapStateToProps(state: StoreInterface){
   }
 }
 
-const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (props) => {
+const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> = (props) => {
   const [compList, setComparison] = useState<Array<any>>([]);
   const [globExp, setGlobExp] = useState<string>('*');
   const [sortState, setSortStates] = useState<[number, boolean]>([0, false]);
@@ -134,7 +134,7 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseMagnet}> = (pro
                 <S.Cell>{properties[4].toFixed(4)}</S.Cell>
                 <S.Cell>
                   <Item
-                    icon={faPlus}
+                    icon='plus'
                     action={()=>signToChart(
                       properties[0], properties[2], properties[1][0])}
                     isSmall={true}/>

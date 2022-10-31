@@ -1,14 +1,9 @@
 export const colors = {
     btns:{
-        btn1: {
-            normal: '#c33e00',
-            hover: '#983000',
-            active: '#741700'
-        },
         btn2: {
             normal: '#ff622c',
-            hover: '#ff4200',
-            active: '#d23600'
+            hover: '#ff4200CC',
+            active: '#d23600CC'
         },
         btn3: {
             normal: '#006bfb',

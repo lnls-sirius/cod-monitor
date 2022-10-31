@@ -4,7 +4,7 @@ import { StoreInterface } from "../../../redux/storage/store";
 import { getColor } from "../../../controllers/Chart/functions";
 import ChartLegend from "../../Patterns/ChartLegend";
 import { deleteSignature } from "../../../controllers/Orbit/functions";
-import { BaseMagnet } from "../../../controllers/Orbit/interfaces";
+import { BaseStrArrayDict } from "../../../controllers/Patterns/interfaces";
 import * as S from './styled';
 import { OrbitDispatcher } from "../../../redux/dispatcher";
 
@@ -15,7 +15,7 @@ function mapStateToProps(state: StoreInterface){
   }
 }
 
-const ListSignatures: React.FC<{sign_list: BaseMagnet}> = (props) => {
+const ListSignatures: React.FC<{sign_list: BaseStrArrayDict}> = (props) => {
 
   function deleteFromList(name: string): void {
     deleteSignature(name, props.sign_list);
@@ -27,7 +27,7 @@ const ListSignatures: React.FC<{sign_list: BaseMagnet}> = (props) => {
   }
 
   function listAllBpm(){
-    return Object.entries(props.sign_list).map(([name, property]: any) => {
+    return Object.entries(props.sign_list).map(([name, property]: [string, Array<string>]) => {
       if(property){
         const color_label = property[0]+"-Kick "+property[1]
         return (

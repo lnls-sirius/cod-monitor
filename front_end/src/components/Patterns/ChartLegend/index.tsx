@@ -1,6 +1,5 @@
 import React from "react";
 import { LegendInterface } from "../../../controllers/Patterns/interfaces";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import Item from "../Item";
 import * as S from './styled';
 
@@ -10,7 +9,7 @@ const ChartLegend: React.FC<LegendInterface> = (props) => {
     if(props.deleteAction !== null){
       return (
         <Item
-          icon={faTrashCan}
+          icon='trash'
           action={props.deleteAction}/>)
     }
   }

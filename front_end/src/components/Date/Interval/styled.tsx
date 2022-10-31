@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, properties } from "../../../assets/theme";
+import { AnimButton2 } from "../../../assets/gen_styles";
 
 export const ItemWrapper = styled.div`
     display: flex;
@@ -7,16 +7,7 @@ export const ItemWrapper = styled.div`
 `;
 
 export const IntervalBtn = styled.button`
-    border: .1px solid ${colors.bg.transparent};
-    border-radius: ${properties.radius.light};
+    ${AnimButton2}
     margin: 0rem 0.2rem;
     padding: 0rem 0.5rem;
-    background: ${(props: { selected: boolean }) => props.selected?colors.btns.btn3.active:colors.btns.btn3.normal};
-    &:hover{
-        background-color: ${colors.btns.btn3.hover};
-        transform: translateY(-.2rem);
-    }
-    &:active{
-        background-color: ${colors.btns.btn3.active};
-    }
-`;
+`

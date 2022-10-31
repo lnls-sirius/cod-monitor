@@ -1,4 +1,5 @@
-import { IntervalModeInterface, IntervalsInterface } from './interfaces';
+import { BaseStrArrayDict } from '../Patterns/interfaces';
+import { IntervalModeInterface } from './interfaces';
 
 export const TimeAxisID = "x-axis-0";
 export const TimeAxisIndex = 0;
@@ -18,7 +19,7 @@ export const intervalDict: IntervalModeInterface = {
 
 export const refModes = ['End', 'Start'];
 
-export const intervals: IntervalsInterface = {
+export const intervals: BaseStrArrayDict = {
     "30s": ["30", "Second"],
     "1m": ["1", "Minute"],
     "5m": ["5", "Minute"],

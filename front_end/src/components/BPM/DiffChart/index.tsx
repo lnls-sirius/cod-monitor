@@ -39,6 +39,15 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
     onKeyPressed(event.key);
   });
 
+  window.addEventListener('keyup', (event) => {
+    if (event.repeat){
+      return;
+    }
+    if(keyPressed == event.key){
+      onKeyPressed('');
+    }
+  });
+
   useEffect(() => {
     updateChartDiff();
   }, [props.changeBpm, props.changeTime])
@@ -60,17 +69,19 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
       const chart = chartRef.current.chart[0];
       if(chart != null){
         const chartParameters = chart.chartArea;
-        const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chart.width;
+        const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chartParameters.width;
         const widPoint = evt.clientX - chartParameters.left;
         const newRefDate = new Date(chartTimeUnit * widPoint + props.start.getTime());
-        TimeDispatcher.setRefDate(newRefDate);
-        console.log(keyPressed)
         if(keyPressed == 'Control'){
-          setDate('Start', newRefDate, true)
+          TimeDispatcher.setTimeMode(2)
+          setDate('Start', newRefDate)
+        }else if(keyPressed == 'Shift'){
+          TimeDispatcher.setTimeMode(2)
+          setDate('End', newRefDate)
+        }else{
+          TimeDispatcher.setRefDate(newRefDate);
         }
-        if(keyPressed == 'Shift'){
-          setDate('End', newRefDate, true)
-        }
+        TimeDispatcher.setChangeTime(true);
       }
     }
   }

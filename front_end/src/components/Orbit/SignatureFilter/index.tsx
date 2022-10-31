@@ -1,4 +1,3 @@
-import { faC, faD, faQ, faS } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import Item from "../../Patterns/Item";
 import * as S from './styled';
@@ -27,19 +26,19 @@ const SignatureFilter: React.FC<{setGlobExp: any, filterState: any, setFilterSta
             event.target.value)}
           onKeyDown={submitHandler}/>
         <Item
-          icon={faC}
+          icon='c'
           action={()=>filterMagnet(0)}
           stateActive={true}/>
         <Item
-          icon={faD}
+          icon='d'
           action={()=>filterMagnet(1)}
           stateActive={true}/>
         <Item
-          icon={faQ}
+          icon='q'
           action={()=>filterMagnet(2)}
           stateActive={true}/>
         <Item
-          icon={faS}
+          icon='s'
           action={()=>filterMagnet(3)}
           stateActive={true}/>
     </S.Filter>
