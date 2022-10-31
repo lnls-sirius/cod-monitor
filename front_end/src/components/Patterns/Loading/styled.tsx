@@ -20,10 +20,10 @@ const BounceAnimation = keyframes`
 
 export const LoadingWrapper = styled.div`
   display: flex;
+  height: 3rem;
   position: absolute;
   left: 50% !important;
   top: 50% !important;
-  height: 3rem;
   transform: translate(-50%, -100%);
 `
 
@@ -33,6 +33,6 @@ export const Circle = styled.div`
   height: 1rem;
   border-radius: ${properties.radius.high};
   background: ${colors.led.load};
-  animation: ${BounceAnimation} 2s linear infinite;
+  animation: ${BounceAnimation} 1.5s linear infinite;
   animation-delay: ${(props: { delay: string; }) => props.delay};
 `

@@ -1,17 +1,28 @@
 import React from "react";
-import { LegendInterface } from "../../../controllers/Patterns/interfaces";
+
 import Item from "../Item";
+
+import { LegendInterface } from "../../../controllers/Patterns/interfaces";
 import * as S from './styled';
 
-const ChartLegend: React.FC<LegendInterface> = (props) => {
+const defaultProps: LegendInterface = {
+  color: '#FFFFFFFF',
+  children: null,
+  deleteAction: null
+}
 
-  function showDeleteOpt(){
+const ChartLegend: React.FC<LegendInterface> = (props) => {
+  // Display the legend of one axis of the chart
+
+  // Set delete Option to the Axis element
+  function showDeleteOpt(): React.ReactElement | string {
     if(props.deleteAction !== null){
       return (
         <Item
           icon='trash'
           action={props.deleteAction}/>)
     }
+    return ''
   }
 
   return <S.ItemWrapper>
@@ -21,4 +32,5 @@ const ChartLegend: React.FC<LegendInterface> = (props) => {
     </S.ItemWrapper>
 }
 
+ChartLegend.defaultProps = defaultProps;
 export default ChartLegend;

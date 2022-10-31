@@ -1,7 +1,7 @@
 import { ArchiverDataPoint } from "../../data-access/interface";
 import { TimeDispatcher } from "../../redux/dispatcher";
 import { getDataInArchiver, getDataInArray } from "../archiver";
-import { intervals, refModes } from "./constants";
+import { intervals, refModes } from "../../assets/constants/date";
 import { DateInfoInterface, DictBaseDate} from "./interfaces";
 
 export function pastDate(start: Date, end: Date): boolean{

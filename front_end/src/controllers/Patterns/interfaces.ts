@@ -14,8 +14,7 @@ interface BasicLed{
     updateData: (state: boolean, id: string)=>void;
 }
 
-export interface OnMount extends BasicLed {
-    initState: boolean;
+export interface OnMount extends BasicLed, LedInterface{
 }
 
 export interface InitLed extends BasicLed{
@@ -30,6 +29,10 @@ export interface LedInterface {
     state: boolean;
 }
 
+export interface IconStyle extends LedInterface {
+    small: boolean | undefined;
+}
+
 export interface ActionItem {
     action: ()=>void;
     icon: string;
@@ -37,9 +40,8 @@ export interface ActionItem {
     isSmall?: boolean;
 }
 
-export interface ModalInterface {
+export interface ModalInterface extends LedInterface {
     id: string;
-    state: boolean;
     close: () => void;
 }
 
@@ -86,9 +88,12 @@ export interface DatasetInterface1{
     backgroundColor?: string;
 }
 
-export interface LegendInterface{
+export interface ChildrenInterface{
+    children: React.ReactNode;
+}
+
+export interface LegendInterface extends ChildrenInterface{
     color: string;
-    children: React.ReactChild;
     deleteAction: null | (() => void);
 }
 

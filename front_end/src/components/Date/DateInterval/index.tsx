@@ -6,7 +6,7 @@ import DateShow from "../../Date/DateShow";
 import Item from "../../Patterns/Item";
 
 import { countIntervalMode, getDate, setDate } from "../../../controllers/Time/functions";
-import { intervalDict } from "../../../controllers/Time/constants";
+import { intervalDict } from "../../../assets/constants/date";
 import { StoreInterface } from "../../../redux/storage/store";
 import { DateIntervalInterface } from "../../../controllers/Time/interfaces";
 

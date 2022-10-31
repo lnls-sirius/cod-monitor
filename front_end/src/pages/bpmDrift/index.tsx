@@ -6,7 +6,7 @@ import Item from "../../components/Patterns/Item";
 import Footer from "../../components/Structure/Footer";
 import Interval from "../../components/Date/Interval";
 import Modals from "../../components/Patterns/Modals";
-import { modalInfo } from "../../controllers/Patterns/constants";
+import { modalInfo } from "../../assets/constants/patterns";
 import ListBPM from "../../components/BPM/ListBPM";
 import Loading from "../../components/Patterns/Loading";
 import * as S from './styled';

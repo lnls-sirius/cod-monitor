@@ -1,5 +1,5 @@
-import { BaseStrArrayDict } from '../Patterns/interfaces';
-import { IntervalModeInterface } from './interfaces';
+import { BaseStrArrayDict } from '../../controllers/Patterns/interfaces';
+import { IntervalModeInterface } from '../../controllers/Time/interfaces';
 
 export const TimeAxisID = "x-axis-0";
 export const TimeAxisIndex = 0;

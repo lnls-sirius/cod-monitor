@@ -1,7 +1,6 @@
 import React from "react";
 
 import { SetDateInterface } from "../../../controllers/Time/interfaces";
-
 import * as S from './styled';
 
 const defaultProps: SetDateInterface = {
@@ -13,7 +12,7 @@ const defaultProps: SetDateInterface = {
 const DateInput: React.FC<SetDateInterface> = (props) => {
   // Component that shows an input of the type date
 
-  function setDateImp(time: Date){
+  function setDateImp(time: Date): void {
     props.setDate(props.type, time);
   }
 

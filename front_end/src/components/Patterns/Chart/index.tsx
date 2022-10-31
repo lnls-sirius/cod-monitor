@@ -1,6 +1,7 @@
 import React, { Component, createRef } from "react";
 import { Chart } from 'chart.js';
 import 'chartjs-adapter-moment';
+
 import * as S from './styled';
 
 export const initData = {
@@ -13,12 +14,14 @@ export const initData = {
 }
 
 class BaseChart extends Component<any>{
+  // Create a Basic Chart Element
   private id: number;
   private options: any;
   private chartRef: React.RefObject<HTMLCanvasElement>;
   public chart: Array<Chart>;
 
-  constructor(props: any) {
+  // Initialize chart variables
+  constructor(props: any){
     super(props);
     this.chartRef = createRef();
     this.options = props.options;
@@ -26,7 +29,8 @@ class BaseChart extends Component<any>{
     this.chart = [];
   }
 
-  componentDidMount() {
+  // Create and configure chart component
+  componentDidMount(): void {
     if(this.chartRef.current != null){
       const options = this.options;
       this.chart[this.id] = new Chart(

@@ -1,4 +1,4 @@
-import { ModalInfo } from "./interfaces"
+import { ModalInfo } from "../../controllers/Patterns/interfaces"
 import { BpmDispatcher } from "../../redux/dispatcher";
 import AddBPM from "../../components/BPM/AddBPM";
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import { changeInterval, getIntervalFromMilliseconds, getTimeMilliseconds } from "../../../controllers/Time/functions";
-import { intervals } from "../../../controllers/Time/constants";
+import { intervals } from "../../../assets/constants/date";
 import { DateInfoInterface, IntervalBtnsInterface } from "../../../controllers/Time/interfaces";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
@@ -40,7 +40,7 @@ const Interval: React.FC<IntervalBtnsInterface> = (props): React.ReactElement =>
   },[selIntBtn]);
 
   // Update dates on change selected interval
-  function setInterval(time: number, unit: string, name: string){
+  function setInterval(time: number, unit: string, name: string): void{
     const dateInfo: DateInfoInterface = {
       start: props.start,
       end: props.end,
@@ -52,7 +52,7 @@ const Interval: React.FC<IntervalBtnsInterface> = (props): React.ReactElement =>
   }
 
   // Displays all the interval buttons
-  function timeInterval(){
+  function timeInterval(): React.ReactElement[] | string{
     if(props.intervalMode != 2){
       return Object.entries(intervals).reverse().map(([name, data]: [key: string, value: Array<string>]) => {
         let stateBtn = false;
@@ -66,6 +66,7 @@ const Interval: React.FC<IntervalBtnsInterface> = (props): React.ReactElement =>
           </S.IntervalBtn>;
       });
     }
+    return ''
   }
 
   return (

@@ -1,10 +1,18 @@
 import React from "react";
+
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { modalInfo } from "../../../assets/constants/patterns";
 import { ModalInterface } from "../../../controllers/Patterns/interfaces";
-import { modalInfo } from "../../../controllers/Patterns/constants";
 import * as S from './styled';
 
+const defaultProps: ModalInterface = {
+  state: false,
+  id: 'BPM',
+  close: ()=>null
+};
+
 const Modals: React.FC<ModalInterface> = (props): React.ReactElement => {
+  // Display a modal component with the content determined in the modalInfo file
   return(
     <S.ModalContainer
       show={props.state}
@@ -25,4 +33,5 @@ const Modals: React.FC<ModalInterface> = (props): React.ReactElement => {
   );
 };
 
+Modals.defaultProps = defaultProps;
 export default Modals;

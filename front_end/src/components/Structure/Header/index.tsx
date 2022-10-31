@@ -1,13 +1,16 @@
 import React from "react";
+
 import Logo from "../Logo";
 import Navigator from "../Navigator";
+import { ChildrenInterface } from "../../../controllers/Patterns/interfaces";
 import * as S from './styled';
 
-type Props = {
-  children?: React.ReactElement;
+const defaultProps: ChildrenInterface = {
+  children: null
 }
 
-const Header: React.FC<Props> = ({children}) => {
+const Header: React.FC<ChildrenInterface> = ({children}) => {
+  // Display the header pattern on the pages
   return (
     <S.HeaderWrapper>
       <Logo />
@@ -16,4 +19,6 @@ const Header: React.FC<Props> = ({children}) => {
     </S.HeaderWrapper>
   );
 };
+
+Header.defaultProps = defaultProps;
 export default Header;

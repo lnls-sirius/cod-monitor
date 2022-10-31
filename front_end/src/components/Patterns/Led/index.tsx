@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
+
 import { OnMount } from "../../../controllers/Patterns/interfaces";
 import * as S from './styled';
 
+const defaultProps: OnMount = {
+  id: '0',
+  state: false,
+  mountData: () => null,
+  updateData: () => null
+}
+
 const Led: React.FC<OnMount> = (props) => {
   // Led Component that toggles its state when clicked
-  const [state, setState] = useState<boolean>(props.initState);
+  const [state, setState] = useState<boolean>(props.state);
 
+  // Initialize Led Component
   useEffect(() => {
     props.mountData(setState, props.id);
   }, []);
 
+  // Update Led State
   useEffect(() => {
     props.updateData(state, props.id);
   }, [props.updateData, state]);
@@ -26,4 +36,5 @@ const Led: React.FC<OnMount> = (props) => {
   );
 };
 
+Led.defaultProps = defaultProps;
 export default Led;

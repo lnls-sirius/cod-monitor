@@ -1,37 +1,38 @@
 import React, { useState } from "react";
+
 import { iconList } from "../../../assets/icons";
 import { ActionItem} from "../../../controllers/Patterns/interfaces";
 import * as S from './styled';
 
+const defaultProps: ActionItem = {
+  action: () => null,
+  icon: 'plus',
+  stateActive: false,
+  isSmall: false
+}
+
 const Item: React.FC<ActionItem> = (props): React.ReactElement => {
+  // Display an icon button
   const [state, setState] = useState<boolean>(true);
 
-  function clickHandler(){
+  // Activate function and set button state
+  function clickHandler(): void {
     props.action();
     if(props.stateActive){
       setState(!state);
     }
   }
 
-  function printIcon(): React.ReactElement{
-      return <S.Icon
+  return (
+    <S.ItemWrapper>
+      <S.Icon
         icon={iconList[props.icon]}
         onClick={() =>{clickHandler()}}
         state={state}
         small={props.isSmall}/>
-
-  }
-
-  return (
-    <S.ItemWrapper>
-      {printIcon()}
     </S.ItemWrapper>
   );
 };
 
-Item.defaultProps = {
-  stateActive: false,
-  isSmall: false
-}
-
+Item.defaultProps = defaultProps;
 export default Item;

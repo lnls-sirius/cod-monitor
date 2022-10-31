@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+
 import { ChangeInterface } from "../../../controllers/Patterns/interfaces";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
@@ -16,14 +17,22 @@ function mapStateToProps(state: StoreInterface){
   }
 }
 
+const defaultProps: ChangeInterface = {
+  changeBpm: false,
+  changeTime: false,
+  changeOrbit: false
+}
+
 const Loading: React.FC<ChangeInterface> = (props) => {
+  // Display Loading Animation
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Set animation if any change flag is detected as true
   useEffect(() => {
     setLoading(props.changeBpm || props.changeTime || props.changeOrbit);
   }, [props.changeBpm, props.changeTime, props.changeOrbit])
 
-  function showAnimation(){
+  function showAnimation(): React.ReactElement | string{
     if(loading){
       return (
         <S.LoadingWrapper>
@@ -47,4 +56,6 @@ const Loading: React.FC<ChangeInterface> = (props) => {
     </div>
   );
 };
+
+Loading.defaultProps = defaultProps;
 export default connect(mapStateToProps)(Loading);

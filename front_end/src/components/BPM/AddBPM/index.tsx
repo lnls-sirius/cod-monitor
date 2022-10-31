@@ -40,7 +40,7 @@ const BPMLed: React.FC<InitLed> = (props) => {
             id={props.id}
             mountData={props.mountData}
             updateData={props.updateData}
-            initState={initStates(props.id)} />);
+            state={initStates(props.id)} />);
 }
 
 

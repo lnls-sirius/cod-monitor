@@ -38,18 +38,17 @@ export const Content = styled.div`
     left: 50% !important;
     top: 50% !important;
     transform: translate(-50%, -50%);
-    min-width: 60rem;
+    min-width: 60em;
     border-radius: ${properties.radius.medium};
     background: ${colors.bg.white};
 `
 
 export const Header = styled.div`
-    width: 100%;
     background-image: ${colors.bg.secondary};
     color: ${colors.txt.primary};
     text-align: center;
     justify-content: center;
-    padding: 15px 0px;
+    padding: 0.75em 0px;
     font-family: ${fonts.primary};
     font-weight: 900;
     font-size:${fonts.size.medium};
@@ -60,17 +59,12 @@ export const Body = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px;
-`;
-
-export const Footer = styled.div`
-    text-align: center;
-    padding-bottom: 15px;
+    padding: 1.5em;
 `;
 
 export const Close = styled(FontAwesomeIcon)`
     position: absolute;
-    top: 0.5em;
+    top: 1em;
     right: 1em;
     ${AnimButton}
 `
