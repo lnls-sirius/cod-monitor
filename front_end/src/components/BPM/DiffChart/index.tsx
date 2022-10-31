@@ -1,15 +1,15 @@
 import React, { createRef, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
-import { getArchiver } from "../../../controllers/archiver";
-import { buildDataset, differentiateData } from "../../../controllers/Chart/functions";
-import { StoreInterface } from "../../../redux/storage/store";
-import { ChartProperties } from "../../../assets/interfaces/patterns";
-import { BpmDispatcher, TimeDispatcher } from "../../../redux/dispatcher";
+
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
+import { getArchiver } from "../../../controllers/archiver";
+import { buildDataset, changeDateClick, differentiateData, unsetBPMChange } from "../../../controllers/Chart/functions";
+
 import { optionsDiff } from "./config";
-import { setDate } from "../../../controllers/Time/functions";
+import { ChartProperties } from "../../../assets/interfaces/patterns";
+import { StoreInterface } from "../../../redux/storage/store";
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date, ref_date, change_time} = state.time;
@@ -17,13 +17,21 @@ function mapStateToProps(state: StoreInterface){
 
   return {
     state_list: JSON.parse(bpm_list),
-    changeBpm: change_bpm,
-    intervalMode: 0,
     start: new Date(start_date),
     end: new Date(end_date),
     refDate: new Date(ref_date),
+    changeBpm: change_bpm,
     changeTime: change_time
   }
+}
+
+const defaultProps = {
+  state_list: {},
+  start: new Date(),
+  end: new Date(),
+  refDate: new Date(),
+  changeBpm: false,
+  changeTime: false
 }
 
 const DiffChart: React.FC<ChartProperties> = (props) => {
@@ -49,8 +57,8 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
     }
   });
 
-  // Detect click on canvas
-  async function handleCanvasClick(evt: React.MouseEvent){
+  // Detect click on canvas and update respective date
+  async function handleCanvasClick(evt: React.MouseEvent): Promise<void>{
     if(chartRef.current){
       const chart = chartRef.current.chart[0];
       if(chart != null){
@@ -58,24 +66,17 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
         const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chartParameters.width;
         const widPoint = evt.clientX - chartParameters.left;
         const newRefDate = new Date(chartTimeUnit * widPoint + props.start.getTime());
-        if(keyPressed == 'Control'){
-          TimeDispatcher.setTimeMode(2)
-          setDate('Start', newRefDate)
-        }else if(keyPressed == 'Shift'){
-          TimeDispatcher.setTimeMode(2)
-          setDate('End', newRefDate)
-        }else{
-          TimeDispatcher.setRefDate(newRefDate);
-        }
-        TimeDispatcher.setChangeTime(true);
+        changeDateClick(newRefDate, keyPressed);
       }
     }
   }
 
+  // Detect change on time or selected BPMs
   useEffect(() => {
     updateChartDiff();
   }, [props.changeBpm, props.changeTime])
 
+  // Update Difference Chart
   async function updateChartDiff() {
     if(chartRef.current){
       const chart = chartRef.current.chart[0];
@@ -83,11 +84,12 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
         const datasetList = await buildChartDiff();
         await control.buildChartDatasets(
           chart, datasetList, optionsDiff);
-        BpmDispatcher.setChangeBpm(false);
+        unsetBPMChange();
       }
     }
   }
 
+  // Build difference Chart
   async function buildChartDiff(){
     let datasetList: any = [];
     await Promise.all(
@@ -122,4 +124,5 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
   );
 };
 
+DiffChart.defaultProps = defaultProps;
 export default connect(mapStateToProps)(DiffChart);

@@ -1,9 +1,9 @@
 import { ArchiverDataPoint } from "../../data-access/interface";
-import { getClosestDate } from "../Time/functions";
+import { getClosestDate, setDate } from "../Time/functions";
 import { DatePointInterface, DatasetInterface, DictState, BaseStrArrayDict } from "../../assets/interfaces/patterns";
 import { pos } from "../../assets/bpms/pos";
 import control from "./";
-import { BpmDispatcher, OrbitDispatcher } from "../../redux/dispatcher";
+import { BpmDispatcher, OrbitDispatcher, TimeDispatcher } from "../../redux/dispatcher";
 import { getBpmName, reverseAxis } from "../Patterns/functions";
 import { ArrDictState } from "../../assets/interfaces/types";
 
@@ -46,6 +46,24 @@ export function deleteBPM(id: string, list: DictState){
   BpmDispatcher.setChangeBpm(true);
 }
 
+export function changeDateClick(newRefDate: Date, keyPressed: string){
+  if(keyPressed == 'Control'){
+    TimeDispatcher.setTimeMode(2)
+    setDate('Start', newRefDate)
+  }else if(keyPressed == 'Shift'){
+    TimeDispatcher.setTimeMode(2)
+    setDate('End', newRefDate)
+  }else{
+    TimeDispatcher.setRefDate(newRefDate);
+  }
+  TimeDispatcher.setChangeTime(true);
+  BpmDispatcher.setChangeBpm(false);
+}
+
+export function unsetBPMChange(){
+  BpmDispatcher.setChangeBpm(false);
+}
+
 export function setAxisColor(name: string, state: DatasetInterface): DatasetInterface{
   const color = getColor(name);
   state.backgroundColor = color;
@@ -83,6 +101,7 @@ export function setSignature(id: string, element_info: any, list: BaseStrArrayDi
   if (id != undefined){
     list[id] = element_info;
     OrbitDispatcher.setSignatureList(list);
+    OrbitDispatcher.setChangeOrbit(true);
   }
 }
 

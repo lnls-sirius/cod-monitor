@@ -36,7 +36,6 @@ export interface DateIntervalInterface
 export interface TimeInformation
     extends BaseDateInterface{
         refDate: Date
-        intervalMode: number
         changeTime: boolean
 }
 

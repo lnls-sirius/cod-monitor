@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+
 import Item from "../../Patterns/Item";
+import { magnet_types } from "../../../assets/constants/patterns";
 import { FilterInterface } from "../../../assets/interfaces/orbit";
 import * as S from './styled';
-import { magnet_types } from "../../../assets/constants/patterns";
-import { DictState } from "../../../assets/interfaces/patterns";
 
 const defaultProps: FilterInterface = {
   setGlobExp: () => null,
@@ -14,21 +14,18 @@ const defaultProps: FilterInterface = {
 const SignatureFilter: React.FC<FilterInterface> = (props) => {
   // Display the Filter for the signatures
   const [nameFilter, setNameFilter] = useState<string>('');
-  const [magnetFilter, setMagnetFilter] = useState<DictState>(props.filterState);
 
   // Set Filter for the magnets types
   function filterMagnet(magnet: string): void {
-    console.log("2")
     let magnetStates = props.filterState;
     magnetStates[magnet] = !magnetStates[magnet];
-    setMagnetFilter(magnetStates);
+    props.setFilterStates(magnetStates);
   }
 
   // Submit filter changes on Enter press
   function submitHandler(event: React.KeyboardEvent): void {
     if(event.key == 'Enter'){
       props.setGlobExp(nameFilter);
-      props.setFilterStates(magnetFilter);
     }
   }
 
