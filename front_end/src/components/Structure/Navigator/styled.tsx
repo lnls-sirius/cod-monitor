@@ -26,5 +26,5 @@ export const PageAct = styled.span`
     padding: 5px;
     margin: 5px;
     border-radius: ${properties.radius.medium};
-    background-color: ${colors.btns.btn2.normal};
+    background-color: ${colors.btns.btn1.normal};
 `

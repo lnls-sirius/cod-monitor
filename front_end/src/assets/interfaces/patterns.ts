@@ -1,8 +1,7 @@
 import React from "react";
-import { TimeInformation } from "../Time/interfaces";
+import { TimeInformation } from "./date";
+import { DispatchBool } from "./types";
 
-export type DispatchBool = React.Dispatch<React.SetStateAction<boolean>>;
-export type ArrDictState = [key: string, value: boolean];
 
 export interface SelectedInterface {
     selected: boolean
@@ -19,6 +18,8 @@ export interface OnMount extends BasicLed, LedInterface{
 
 export interface InitLed extends BasicLed{
     axis: string;
+    ledProps: DictState;
+    othAxis: DictState;
 }
 
 export interface SetterDictState {

@@ -1,7 +1,7 @@
 import React from "react";
 import { format } from 'date-fns'
 
-import { GetDateInterface } from "../../../controllers/Time/interfaces";
+import { GetDateInterface } from "../../../assets/interfaces/date";
 
 import * as S from './styled';
 

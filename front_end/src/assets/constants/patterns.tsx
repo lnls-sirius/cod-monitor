@@ -1,4 +1,4 @@
-import { ModalInfo } from "../../controllers/Patterns/interfaces"
+import { ModalInfo } from "../interfaces/patterns"
 import { BpmDispatcher } from "../../redux/dispatcher";
 import AddBPM from "../../components/BPM/AddBPM";
 
@@ -10,3 +10,10 @@ export const modalInfo: ModalInfo = {
         close: ()=>BpmDispatcher.setChangeBpm(true)
     }
 }
+
+export const magnet_types = [
+    'C',
+    'D',
+    'Q',
+    'S'
+]

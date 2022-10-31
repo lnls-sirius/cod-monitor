@@ -1,5 +1,3 @@
-import { DictBaseDate } from "../../../controllers/Time/interfaces";
-
 export default interface TimeDispatcherInterface{
     setStartDate(date: Date): void;
     setEndDate(date: Date): void;
@@ -7,5 +5,4 @@ export default interface TimeDispatcherInterface{
     setTimeMode(timeMode: number): void;
     setIntervalMilliseconds(time: number): void;
     setChangeTime(state: boolean): void;
-    setIntervalList(list: DictBaseDate): void;
 }

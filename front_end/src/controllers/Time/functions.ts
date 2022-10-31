@@ -2,7 +2,8 @@ import { ArchiverDataPoint } from "../../data-access/interface";
 import { TimeDispatcher } from "../../redux/dispatcher";
 import { getDataInArchiver, getDataInArray } from "../archiver";
 import { intervals, refModes } from "../../assets/constants/date";
-import { DateInfoInterface, DictBaseDate} from "./interfaces";
+import { ArrDictArrStr } from "../../assets/interfaces/types";
+import { DateInfoInterface } from "../../assets/interfaces/date";
 
 export function pastDate(start: Date, end: Date): boolean{
   const now = new Date();
@@ -19,7 +20,6 @@ export function validInterval(start: Date, end: Date): boolean{
   if(start.getTime() > end.getTime() ||
       end.getTime() < start.getTime()){
         outRange = false;
-        console.log("3432")
   }
   return outRange;
 }
@@ -41,7 +41,7 @@ export async function getClosestDate(name: string, dataArray: ArchiverDataPoint[
 
 export function getIntervalFromMilliseconds(milliseconds: number): string{
   let int_name = '';
-  Object.entries(intervals).map(([name, data]: [string, Array<string>]) => {
+  Object.entries(intervals).map(([name, data]: ArrDictArrStr) => {
     const mil = Number(data[0]) * getTimeMilliseconds(data[1])
     if (mil == milliseconds){
       int_name = name;
@@ -125,28 +125,6 @@ export function changeInterval(dateInfo: DateInfoInterface, time: number, unit: 
     refModes[intervalMode],
     dateRef);
   TimeDispatcher.setIntervalMilliseconds(timeMil);
-  TimeDispatcher.setChangeTime(true);
-}
-
-export function setDateInterval(id: string, type: string, date: Date, list: DictBaseDate){
-  if (id != undefined){
-    if(type == 'Start'){
-      if(pastDate(date, new Date(list[id].end))){
-        list[id].start = date;
-      }
-    }else{
-      if(pastDate(new Date(list[id].start), date)){
-        list[id].end = date;
-      }
-    }
-    TimeDispatcher.setIntervalList(list);
-    TimeDispatcher.setChangeTime(true);
-  }
-}
-
-export function deleteInterval(id: string, list: DictBaseDate){
-  delete list[id];
-  TimeDispatcher.setIntervalList(list);
   TimeDispatcher.setChangeTime(true);
 }
 

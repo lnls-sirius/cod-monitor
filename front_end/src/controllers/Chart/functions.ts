@@ -1,8 +1,11 @@
 import { ArchiverDataPoint } from "../../data-access/interface";
 import { getClosestDate } from "../Time/functions";
-import { DatePointInterface, DatasetInterface, DictState } from "../Patterns/interfaces";
+import { DatePointInterface, DatasetInterface, DictState, BaseStrArrayDict } from "../../assets/interfaces/patterns";
 import { pos } from "../../assets/bpms/pos";
 import control from "./";
+import { BpmDispatcher, OrbitDispatcher } from "../../redux/dispatcher";
+import { getBpmName, reverseAxis } from "../Patterns/functions";
+import { ArrDictState } from "../../assets/interfaces/types";
 
 function getRandomColor(): string {
   let letters = '0123456789ABC';
@@ -28,20 +31,26 @@ export function formatBPMName(name: string){
   return name;
 }
 
+export function saveBPMList(ledProps: DictState, othAxis: DictState, axis: string){
+  let list: DictState = {};
+  Object.entries(ledProps).map(async ([name, prop]: ArrDictState) => {
+    list[getBpmName(name, axis)] = prop;
+    list[getBpmName(name, reverseAxis(axis))] = othAxis[name];
+  });
+  BpmDispatcher.setBpmList(JSON.stringify(list));
+}
+
+export function deleteBPM(id: string, list: DictState){
+  delete list[id];
+  BpmDispatcher.setBpmList(JSON.stringify(list));
+  BpmDispatcher.setChangeBpm(true);
+}
+
 export function setAxisColor(name: string, state: DatasetInterface): DatasetInterface{
   const color = getColor(name);
   state.backgroundColor = color;
   state.borderColor = color;
   return state;
-}
-
-export function deleteItem(item: string, list: DictState): DictState {
-  Object.entries(list).map(([name, state]) => {
-    if(state && item == name){
-      delete list[name];
-    }
-  });
-  return list;
 }
 
 export async function differentiateData(diffData: DatePointInterface[], name: string, dates: Array<Date>): Promise<DatePointInterface[]>{
@@ -68,4 +77,17 @@ export const buildDatasetOrbit = (dataList: any): Array<any> => {
       y: sign_data
     }
   });
+}
+
+export function setSignature(id: string, element_info: any, list: BaseStrArrayDict){
+  if (id != undefined){
+    list[id] = element_info;
+    OrbitDispatcher.setSignatureList(list);
+  }
+}
+
+export function deleteSignature(id: string, list: BaseStrArrayDict){
+  delete list[id];
+  OrbitDispatcher.setSignatureList(list);
+  OrbitDispatcher.setChangeOrbit(true);
 }

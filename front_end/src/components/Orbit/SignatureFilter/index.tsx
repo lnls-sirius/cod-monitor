@@ -1,20 +1,45 @@
 import React, { useState } from "react";
 import Item from "../../Patterns/Item";
+import { FilterInterface } from "../../../assets/interfaces/orbit";
 import * as S from './styled';
+import { magnet_types } from "../../../assets/constants/patterns";
+import { DictState } from "../../../assets/interfaces/patterns";
 
-const SignatureFilter: React.FC<{setGlobExp: any, filterState: any, setFilterStates: any}> = (props) => {
+const defaultProps: FilterInterface = {
+  setGlobExp: () => null,
+  filterState: {},
+  setFilterStates: () => null
+}
+
+const SignatureFilter: React.FC<FilterInterface> = (props) => {
+  // Display the Filter for the signatures
   const [nameFilter, setNameFilter] = useState<string>('');
+  const [magnetFilter, setMagnetFilter] = useState<DictState>(props.filterState);
 
-  function filterMagnet(magnet: number){
-    let magnetStates = [...props.filterState];
+  // Set Filter for the magnets types
+  function filterMagnet(magnet: string): void {
+    console.log("2")
+    let magnetStates = props.filterState;
     magnetStates[magnet] = !magnetStates[magnet];
-    props.setFilterStates(magnetStates);
+    setMagnetFilter(magnetStates);
   }
 
-  function submitHandler(event: React.KeyboardEvent){
+  // Submit filter changes on Enter press
+  function submitHandler(event: React.KeyboardEvent): void {
     if(event.key == 'Enter'){
       props.setGlobExp(nameFilter);
+      props.setFilterStates(magnetFilter);
     }
+  }
+
+  // Display filter Buttons
+  function filterMagnetBtns(): React.ReactElement[]{
+    return magnet_types.map((mag_type: string) => {
+      return <Item
+        icon={mag_type}
+        action={()=>filterMagnet(mag_type)}
+        stateActive={true}/>
+    })
   }
 
   return(
@@ -25,24 +50,10 @@ const SignatureFilter: React.FC<{setGlobExp: any, filterState: any, setFilterSta
           onChange={(event)=>setNameFilter(
             event.target.value)}
           onKeyDown={submitHandler}/>
-        <Item
-          icon='c'
-          action={()=>filterMagnet(0)}
-          stateActive={true}/>
-        <Item
-          icon='d'
-          action={()=>filterMagnet(1)}
-          stateActive={true}/>
-        <Item
-          icon='q'
-          action={()=>filterMagnet(2)}
-          stateActive={true}/>
-        <Item
-          icon='s'
-          action={()=>filterMagnet(3)}
-          stateActive={true}/>
+      {filterMagnetBtns()}
     </S.Filter>
   );
 };
 
+SignatureFilter.defaultProps = defaultProps;
 export default SignatureFilter;

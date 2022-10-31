@@ -52,16 +52,11 @@ function setChangeTime (state: timeStore, action: PayloadAction<boolean>): void 
     state.change_time = action.payload;
 }
 
-function setIntervalList (state: timeStore, action: PayloadAction<string>): void {
-    state.date_list = action.payload;
-}
-
 export default {
     setStart,
     setEnd,
     setRef,
     setTimeMode,
     setIntervalMilliseconds,
-    setChangeTime,
-    setIntervalList
+    setChangeTime
 }

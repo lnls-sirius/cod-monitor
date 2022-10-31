@@ -2,7 +2,7 @@ import React from "react";
 
 import Logo from "../Logo";
 import Navigator from "../Navigator";
-import { ChildrenInterface } from "../../../controllers/Patterns/interfaces";
+import { ChildrenInterface } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
 const defaultProps: ChildrenInterface = {

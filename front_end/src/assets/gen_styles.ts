@@ -1,5 +1,5 @@
 import {css} from "styled-components";
-import { SelectedInterface } from "../controllers/Patterns/interfaces";
+import { SelectedInterface } from "./interfaces/patterns";
 import { colors, fonts, properties } from "./themes";
 
 export const DateTheme = css`
@@ -22,18 +22,18 @@ export const AnimButton2 = css`
     background: ${
         (props: SelectedInterface) =>
             props.selected?
-            colors.btns.btn3.active:
-            colors.btns.btn3.normal};
+            colors.btns.btn2.active:
+            colors.btns.btn2.normal};
     ${
         (props: SelectedInterface) =>
             props.selected?
             '':
             `&:hover{
-                background-color: ${colors.btns.btn3.hover};
+                background-color: ${colors.btns.btn2.hover};
                 transform: translateY(-.2rem);
             }
             &:active{
-                background-color: ${colors.btns.btn3.active};
+                background-color: ${colors.btns.btn2.active};
             }`
     }
 `
@@ -48,10 +48,10 @@ export const AnimButton = css`
     border-radius: ${properties.radius.extlight};
     transition: 0.2s;
     &:hover{
-        background-color: ${colors.btns.btn2.hover};
+        background-color: ${colors.btns.btn1.hover};
         transform: translateY(-.2rem);
     }
     &:active{
-        background-color: ${colors.btns.btn2.active};
+        background-color: ${colors.btns.btn1.active};
     }
 `

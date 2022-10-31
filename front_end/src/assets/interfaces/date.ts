@@ -34,13 +34,13 @@ export interface DateIntervalInterface
 }
 
 export interface TimeInformation
-    extends BaseDateInterface, IntervalListInterface{
+    extends BaseDateInterface{
         refDate: Date
         intervalMode: number
         changeTime: boolean
 }
 
-export interface IntervalEditInterface extends BaseDateInterface, IntervalListInterface{
+export interface IntervalEditInterface extends BaseDateInterface{
     id: string
 }
 
@@ -48,12 +48,4 @@ export interface IntervalModeInterface {
     [key: string]: {
         [key: number]: boolean
     }
-}
-
-export interface DictBaseDate {
-    [key: string]: BaseDateInterface
-}
-
-export interface IntervalListInterface {
-    interval_list: DictBaseDate
 }

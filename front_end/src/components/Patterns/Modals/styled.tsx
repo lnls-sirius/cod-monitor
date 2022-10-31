@@ -64,7 +64,8 @@ export const Body = styled.div`
 
 export const Close = styled(FontAwesomeIcon)`
     position: absolute;
-    top: 1em;
-    right: 1em;
+    top: 0.75em;
+    right: 1.25em;
+    padding: 0.25em;
     ${AnimButton}
 `

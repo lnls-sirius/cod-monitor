@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { OnMount } from "../../../controllers/Patterns/interfaces";
+import { OnMount } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
 const defaultProps: OnMount = {

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import { AnimButton } from "../../../assets/gen_styles";
 import { colors, fonts, properties } from "../../../assets/themes";
-import { IconStyle } from "../../../controllers/Patterns/interfaces";
+import { IconStyle } from "../../../assets/interfaces/patterns";
 
 export const ItemWrapper = styled.div`
     display: flex;
@@ -30,6 +30,6 @@ export const Icon = styled(FontAwesomeIcon)`
         (props: IconStyle)=>
             props.state?
                 colors.bg.transparent:
-                colors.btns.btn2.normal)};
+                colors.btns.btn1.normal)};
     ${AnimButton}
 `;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DictNumber } from '../controllers/Patterns/interfaces';
+import { DictNumber } from '../assets/interfaces/patterns';
 import { DataAccess, ArchiverData, ArchiverDataPoint, ArchiverListRaw} from "./interface";
 
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;

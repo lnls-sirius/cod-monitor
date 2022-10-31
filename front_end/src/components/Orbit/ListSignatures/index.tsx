@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StoreInterface } from "../../../redux/storage/store";
-import { getColor } from "../../../controllers/Chart/functions";
+
 import ChartLegend from "../../Patterns/ChartLegend";
-import { deleteSignature } from "../../../controllers/Orbit/functions";
-import { BaseStrArrayDict } from "../../../controllers/Patterns/interfaces";
+import { deleteSignature, getColor } from "../../../controllers/Chart/functions";
+import { SignatureList } from "../../../assets/interfaces/orbit";
+import { ArrDictArrStr } from "../../../assets/interfaces/types";
+import { StoreInterface } from "../../../redux/storage/store";
+
 import * as S from './styled';
-import { OrbitDispatcher } from "../../../redux/dispatcher";
 
 function mapStateToProps(state: StoreInterface){
   const {signatures} = state.orbit;
@@ -15,26 +16,23 @@ function mapStateToProps(state: StoreInterface){
   }
 }
 
-const ListSignatures: React.FC<{sign_list: BaseStrArrayDict}> = (props) => {
+const defaultProps: SignatureList = {
+  sign_list: {}
+}
 
-  function deleteFromList(name: string): void {
-    deleteSignature(name, props.sign_list);
-  }
-
-  function deleteHandler(name: string){
-    deleteFromList(name);
-    OrbitDispatcher.setChangeOrbit(true);
-  }
+const ListSignatures: React.FC<SignatureList> = (props) => {
+  // Display all the legend items of the Signatures in the Orbit Drift
 
   function listAllBpm(){
-    return Object.entries(props.sign_list).map(([name, property]: [string, Array<string>]) => {
+    // Show all the selected Signatures in the legend
+    return Object.entries(props.sign_list).map(([name, property]: ArrDictArrStr) => {
       if(property){
         const color_label = property[0]+"-Kick "+property[1]
         return (
           <ChartLegend
             color={getColor(color_label)}
             deleteAction={
-              () => deleteHandler(name)}>
+              () => deleteSignature(name, props.sign_list)}>
               <S.TextWrapper>
                 {property[0]} - Kick: {property[1]}
               </S.TextWrapper>
@@ -57,4 +55,5 @@ const ListSignatures: React.FC<{sign_list: BaseStrArrayDict}> = (props) => {
   );
 };
 
+ListSignatures.defaultProps = defaultProps;
 export default connect(mapStateToProps)(ListSignatures);

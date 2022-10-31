@@ -1,4 +1,4 @@
-import { BaseStrArrayDict } from "../../../controllers/Patterns/interfaces";
+import { BaseStrArrayDict } from "../../../assets/interfaces/patterns";
 
 export default interface OrbitDispatcher{
     setChangeOrbit(change: boolean): void;

@@ -11,11 +11,6 @@ export const optionsOrbit: any = {
         point: {
           hoverRadius: 1,
         }
-        // line: {
-        //   cubicInterpolationMode: "monotone",
-        //   stepped: true,
-        //   tension: 0
-        // },
       },
     hover: {
         mode: "nearest",

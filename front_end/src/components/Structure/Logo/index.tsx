@@ -5,6 +5,8 @@ import labLogo2 from "../../../assets/img/labLogo2.png";
 import * as S from './styled';
 
 const Logo: React.FC = () => {
+  // Display the Logos
+  
   return (
     <S.LogoWrapper>
       <S.ImageWrapper src={labLogo1} alt='CNPEM'/>

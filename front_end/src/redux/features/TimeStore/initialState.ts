@@ -9,8 +9,7 @@ export interface timeStore{
     end_date: string,
     ref_date: string,
     interval_mil: number,
-    change_time: boolean,
-    date_list: string
+    change_time: boolean
 }
 
 const initialState: timeStore = {
@@ -19,8 +18,7 @@ const initialState: timeStore = {
     end_date: current.toString(),
     ref_date: (new Date(ref)).toString(),
     change_time: false,
-    interval_mil: getTimeMilliseconds("Hour"),
-    date_list: "{}"
+    interval_mil: getTimeMilliseconds("Hour")
 }
 
 export default initialState;

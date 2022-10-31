@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
-import { ChangeInterface } from "../../../controllers/Patterns/interfaces";
+import { ChangeInterface } from "../../../assets/interfaces/patterns";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
 

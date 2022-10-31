@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SimulationData } from './Orbit/interfaces';
+import { SimulationData } from '../assets/interfaces/orbit';
 
 // export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
 export const defaultHost = "127.0.0.1";

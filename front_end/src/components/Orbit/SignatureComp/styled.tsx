@@ -40,7 +40,7 @@ export const Cell = styled.td`
 `;
 
 export const Header = styled.button`
-    background: ${colors.btns.btn2.normal};
+    background: ${colors.btns.btn1.normal};
     padding: .08rem .8rem;
     margin: 0.5em 0em;
     ${AnimButton}

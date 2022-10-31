@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { compSignatures } from "../../../controllers/archiver";
-import { BaseDateInterface } from "../../../controllers/Time/interfaces";
+import { BaseDateInterface } from "../../../assets/interfaces/date";
 import { StoreInterface } from "../../../redux/storage/store";
-import {setSignature} from "../../../controllers/Orbit/functions";
-import { BaseStrArrayDict } from "../../../controllers/Patterns/interfaces";
+import { BaseStrArrayDict, DictState } from "../../../assets/interfaces/patterns";
 import { OrbitDispatcher } from "../../../redux/dispatcher";
 import Item from "../../Patterns/Item";
 import * as S from './styled';
 import SignatureFilter from "../SignatureFilter";
+import { setSignature } from "../../../controllers/Chart/functions";
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date} = state.time;
@@ -26,8 +26,8 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> 
   const [compList, setComparison] = useState<Array<any>>([]);
   const [globExp, setGlobExp] = useState<string>('*');
   const [sortState, setSortStates] = useState<[number, boolean]>([0, false]);
-  const [filterState, setFilterStates] = useState<Array<boolean>>(
-    [true, true, true, true]);
+  const [filterState, setFilterStates] = useState<DictState>({});
+  //"C": true, "D": true, "Q": true, "S": true
 
   useEffect(() => {
     updateComparisonList();
@@ -81,16 +81,16 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> 
     setComparison(sortedList);
   }
 
-  function showMagnet(readFile: string): boolean{
-    if(readFile.indexOf("C")>=0 && !filterState[0]){
-      return false;
-    }else if(readFile.indexOf("D")>=0 && !filterState[1]){
-      return false;
-    }else if(readFile.indexOf("Q")>=0 && !filterState[2]){
-      return false;
-    }else if(readFile.indexOf("S")>=0 && !filterState[3]){
-      return false;
-    }
+  function showMagnet(readFile: string){
+    // if(filterState["C"]){
+    //   return false;
+    // }else if(readFile.indexOf("D")>=0 && !filterState["D"]){
+    //   return false;
+    // }else if(readFile.indexOf("Q")>=0 && !filterState["Q"]){
+    //   return false;
+    // }else if(readFile.indexOf("S")>=0 && !filterState["S"]){
+    //   return false;
+    // }
     return true;
   }
 

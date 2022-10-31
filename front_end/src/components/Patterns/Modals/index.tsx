@@ -2,7 +2,7 @@ import React from "react";
 
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { modalInfo } from "../../../assets/constants/patterns";
-import { ModalInterface } from "../../../controllers/Patterns/interfaces";
+import { ModalInterface } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
 const defaultProps: ModalInterface = {

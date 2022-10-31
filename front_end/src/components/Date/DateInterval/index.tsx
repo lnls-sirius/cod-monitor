@@ -8,7 +8,7 @@ import Item from "../../Patterns/Item";
 import { countIntervalMode, getDate, setDate } from "../../../controllers/Time/functions";
 import { intervalDict } from "../../../assets/constants/date";
 import { StoreInterface } from "../../../redux/storage/store";
-import { DateIntervalInterface } from "../../../controllers/Time/interfaces";
+import { DateIntervalInterface } from "../../../assets/interfaces/date";
 
 import * as S from './styled';
 

@@ -1,16 +1,20 @@
 import React from "react";
+
 import { pages } from "../../../assets/text";
 import * as S from './styled';
 
 const Navigator: React.FC = () => {
+  // Display the Navigator buttons
 
-  function pageIndicator(key: string, page: string){
+  // Detect active page and show buttons
+  function pageIndicator(key: string, page: string): React.ReactElement {
     let path = window.location.pathname;
     if(path == '/'){
       path = '/orbitDrift';
     }
     return(
       <S.PageLink
+        key={key}
         to={key}
         selected={path == key}>
           {page}

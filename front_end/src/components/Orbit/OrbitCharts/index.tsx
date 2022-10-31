@@ -7,8 +7,8 @@ import control from "../../../controllers/Chart";
 import { optionsOrbit } from "./config";
 import { fetchSignatureOrbit } from "../../../controllers/simulation";
 import { buildDatasetOrbit } from "../../../controllers/Chart/functions";
-import { BaseStrArrayDict } from "../../../controllers/Patterns/interfaces";
-import { BaseDateInterface } from "../../../controllers/Time/interfaces";
+import { BaseStrArrayDict } from "../../../assets/interfaces/patterns";
+import { BaseDateInterface } from "../../../assets/interfaces/date";
 import { OrbitDispatcher, TimeDispatcher } from "../../../redux/dispatcher";
 import * as S from './styled';
 

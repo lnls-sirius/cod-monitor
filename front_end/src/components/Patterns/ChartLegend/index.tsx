@@ -2,7 +2,7 @@ import React from "react";
 
 import Item from "../Item";
 
-import { LegendInterface } from "../../../controllers/Patterns/interfaces";
+import { LegendInterface } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
 const defaultProps: LegendInterface = {

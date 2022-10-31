@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SetDateInterface } from "../../../controllers/Time/interfaces";
+import { SetDateInterface } from "../../../assets/interfaces/date";
 import * as S from './styled';
 
 const defaultProps: SetDateInterface = {

@@ -1,11 +1,11 @@
 export const colors = {
     btns:{
-        btn2: {
+        btn1: {
             normal: '#ff622c',
             hover: '#ff4200CC',
             active: '#d23600CC'
         },
-        btn3: {
+        btn2: {
             normal: '#006bfb',
             hover: '#0053c4',
             active: '#00357c'
@@ -23,8 +23,7 @@ export const colors = {
         load: 'radial-gradient(#6400C8, #000000)'
     },
     txt:{
-        primary: '#FFFFFF',
-        secondary: '#FF5100'
+        primary: '#FFFFFF'
     },
     bg:{
         primary: 'linear-gradient(to bottom, #242424, #4D4D4D)',

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { iconList } from "../../../assets/icons";
-import { ActionItem} from "../../../controllers/Patterns/interfaces";
+import { ActionItem} from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
 const defaultProps: ActionItem = {

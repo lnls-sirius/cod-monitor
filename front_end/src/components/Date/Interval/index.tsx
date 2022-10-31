@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { changeInterval, getIntervalFromMilliseconds, getTimeMilliseconds } from "../../../controllers/Time/functions";
 import { intervals } from "../../../assets/constants/date";
-import { DateInfoInterface, IntervalBtnsInterface } from "../../../controllers/Time/interfaces";
+import { DateInfoInterface, IntervalBtnsInterface } from "../../../assets/interfaces/date";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
 
@@ -59,11 +59,14 @@ const Interval: React.FC<IntervalBtnsInterface> = (props): React.ReactElement =>
         if(selIntBtn == name){
           stateBtn = true;
         }
-        return <S.IntervalBtn
+        return(
+          <S.IntervalBtn
+            key={name}
             onClick={()=>setInterval(Number(data[0]), data[1], name)}
             selected={stateBtn}>
               {name}
-          </S.IntervalBtn>;
+          </S.IntervalBtn>
+        );
       });
     }
     return ''
