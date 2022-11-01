@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { colors, properties } from "../../../assets/themes";
+import { colors, properties } from "../../../assets/style/themes";
 
 const BounceAnimation = keyframes`
   0% {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Chart } from "chart.js";
-import { DatasetInterface, DatasetInterface1, DictString } from '../../assets/interfaces/patterns';
+import { DatasetInterface, DictString } from '../../assets/interfaces/patterns';
+import { DatasetInterface1 } from '../../assets/interfaces/bpm';
 import { TimeDispatcher } from '../../redux/dispatcher';
 import { setAxisColor } from './functions';
 

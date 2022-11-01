@@ -19,3 +19,16 @@ export interface SignatureList {
 export interface OrbitChartInterface
     extends BaseDateInterface, SignatureList{
 }
+
+export interface SignatureListInterface {
+    sign_list: BaseStrArrayDict
+}
+
+export interface ChangeOrbitInterface{
+    changeOrbit: boolean;
+    changeTime: boolean;
+}
+
+export interface ChartOrbitInterface
+    extends BaseDateInterface, ChangeOrbitInterface, SignatureListInterface{
+}

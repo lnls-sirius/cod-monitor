@@ -1,15 +1,9 @@
 import styled from "styled-components";
-import { AnimButton, AnimButton2 } from "../../../assets/gen_styles";
-import { colors, fonts, properties } from "../../../assets/themes";
+import { AnimButton, AnimButton2 } from "../../../assets/style/gen_styles";
+import { colors } from "../../../assets/style/themes";
 
 export const Table = styled.table`
     width: 100%;
-`;
-
-export const Row = styled.tr`
-`;
-
-export const Column = styled.td`
 `;
 
 export const Select = styled.button`

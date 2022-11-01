@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AnimButton2 } from "../../../assets/gen_styles";
+import { AnimButton2 } from "../../../assets/style/gen_styles";
 
 export const ItemWrapper = styled.div`
     display: flex;

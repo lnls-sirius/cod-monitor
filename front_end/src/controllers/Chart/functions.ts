@@ -1,7 +1,7 @@
 import { ArchiverDataPoint } from "../../data-access/interface";
 import { getClosestDate, setDate } from "../Time/functions";
-import { DatePointInterface, DatasetInterface, DictState, BaseStrArrayDict } from "../../assets/interfaces/patterns";
-import { pos } from "../../assets/bpms/pos";
+import { DatePointInterface, DatasetInterface, DictState, BaseStrArrayDict, DictString } from "../../assets/interfaces/patterns";
+import { pos } from "../../assets/constants/pos";
 import control from "./";
 import { BpmDispatcher, OrbitDispatcher, TimeDispatcher } from "../../redux/dispatcher";
 import { getBpmName, reverseAxis } from "../Patterns/functions";
@@ -17,7 +17,7 @@ function getRandomColor(): string {
 }
 
 export function getColor(name: string): string {
-  const axisColors = control.getAxisColors();
+  const axisColors: DictString = control.getAxisColors();
   if(!(name in axisColors) && name != undefined){
     axisColors[name] = getRandomColor();
   }
@@ -64,8 +64,12 @@ export function unsetBPMChange(){
   BpmDispatcher.setChangeBpm(false);
 }
 
+export function unsetOrbitChange(){
+  OrbitDispatcher.setChangeOrbit(false);
+}
+
 export function setAxisColor(name: string, state: DatasetInterface): DatasetInterface{
-  const color = getColor(name);
+  const color: string = getColor(name);
   state.backgroundColor = color;
   state.borderColor = color;
   return state;
@@ -79,7 +83,7 @@ export async function differentiateData(diffData: DatePointInterface[], name: st
   return diffData;
 }
 
-export const buildDataset = (dataList: ArchiverDataPoint[]): DatePointInterface[] => {
+export function buildDataset(dataList: ArchiverDataPoint[]): DatePointInterface[]{
   return dataList.map((data: ArchiverDataPoint) => {
     return {
       x: data.x,
@@ -88,7 +92,7 @@ export const buildDataset = (dataList: ArchiverDataPoint[]): DatePointInterface[
   });
 }
 
-export const buildDatasetOrbit = (dataList: any): Array<any> => {
+export function buildDatasetOrbit(dataList: any): Array<any>{
   return dataList.map((sign_data: any, idx: number) => {
     return {
       x: formatBPMName(pos[idx]),

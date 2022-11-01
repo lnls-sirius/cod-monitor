@@ -1,8 +1,8 @@
 import styled, { keyframes } from "styled-components";
-import {colors, properties, fonts} from "../../../assets/themes";
+import {colors, properties, fonts} from "../../../assets/style/themes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {Modal} from "react-bootstrap";
-import { AnimButton } from "../../../assets/gen_styles";
+import { AnimButton } from "../../../assets/style/gen_styles";
 
 const fadeIn = keyframes`
     from {

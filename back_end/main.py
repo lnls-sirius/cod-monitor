@@ -12,6 +12,7 @@ from pymodels import si
 
 app = Flask(__name__)
 
+# Dictionary of families
 family_dict = {
   'C': 'Corrector',
   'D': 'Dipole',
@@ -27,6 +28,7 @@ def load_json(filename):
   return data
 
 
+# Read the response matrix from SOFB
 def read_respmat():
   """."""
   cdb = ConfigDBDocument(config_type='si_orbcorr_respm')
@@ -36,6 +38,7 @@ def read_respmat():
   return respm
 
 
+# Update the interval used to fetch the pv value
 def update_time_stamp(pvds, time_ref, interval):
   if Time.now() > (time_ref + interval):
     pvds.time_start = time_ref - interval
@@ -45,6 +48,8 @@ def update_time_stamp(pvds, time_ref, interval):
     pvds.time_stop = time_ref
   pvds.update()
 
+
+# Read several PVs from archiver
 def read_archiver(pvnames, time_ref):
   """."""
   pvds = PVDataSet(pvnames)
@@ -57,7 +62,6 @@ def read_archiver(pvnames, time_ref):
       tstmp = np.array(pvds[pvname].timestamp)
       value = np.array(pvds[pvname].value)
       if value is None or not (tstmp[0] <= time_ref.timestamp() <= tstmp[-1]):
-        print(value)
         print('Could not find data at reference time at '+time_ref.strftime("%m/%d/%Y, %H:%M:%S")+' within '+str(interval)+'s window!')
         interval *= 2
         time_ref -= 3*interval/2
@@ -72,6 +76,7 @@ def read_archiver(pvnames, time_ref):
   return data
 
 
+# Get the difference between the values read on the start and stop time
 def get_wfm_diff(pvnames, time_start, time_stop):
   """."""
   data_start = read_archiver(pvnames, time_start)
@@ -81,6 +86,7 @@ def get_wfm_diff(pvnames, time_start, time_stop):
   return datax, datay
 
 
+# Read the Kicks from the CHs, CVs and the RF and the Orbit X and Y from Archiver
 def read_data_from_archiver(time_start, time_stop):
   """."""
   pvnames = ['SI-Glob:AP-SOFB:KickCH-Mon', 'SI-Glob:AP-SOFB:KickCV-Mon']
@@ -99,6 +105,8 @@ def read_data_from_archiver(time_start, time_stop):
 
   return kick_rf, cod
 
+
+# Calculate the correlation of the Signature orbits with the COD Rebuild
 def calc_correlation(cod_rebuilt, signature_files):
     """."""
     corrdata = dict()
@@ -120,6 +128,7 @@ def calc_correlation(cod_rebuilt, signature_files):
     return corrdata
 
 
+# Get formatted time from URL
 def get_time():
     """."""
     start_date_str = request.args.get("start")
@@ -133,6 +142,7 @@ def get_time():
     return time_start, time_stop
 
 
+# Calculate the COD Rebuild
 def calc_cod_rebuilt():
   time_start, time_stop = get_time()
   kick_rf, cod = read_data_from_archiver(time_start, time_stop)
@@ -144,6 +154,7 @@ def calc_cod_rebuilt():
   return cod_rebuilt
 
 
+# Normalize an array
 def normalized_array(array):
   norm = np.linalg.norm(array)
   if norm == 0:
@@ -151,6 +162,7 @@ def normalized_array(array):
   return array/norm
 
 
+# Read the signature CODX and CODY
 def read_signature_from_file(elem_data):
   sign_madata = load_json(elem_data[2]+"_kick"+elem_data[1])
   groups_sign = sign_madata['groups']
@@ -164,6 +176,9 @@ def read_signature_from_file(elem_data):
           orbit_sign['cody']).tolist()]
   return []
 
+
+# Returns the list of signature with the information
+# about the correlation with the COD Rebuilt
 @app.route("/sign_comp", methods=["GET"])
 def signComp():
 
@@ -176,6 +191,9 @@ def signComp():
     corr = calc_correlation(cod_rebuilt, signature_files)
     return corr
 
+
+# Returns the CODX and CODY of the COD Rebuilt
+# and the signatures select on the URL
 @app.route("/sign_orbit", methods=["GET"])
 def signOrbit():
     sign_orbit = dict()
@@ -197,6 +215,8 @@ def signOrbit():
         sign_orbit[elem_name] = read_signature_from_file(elem_data)
     return sign_orbit
 
+
+# Returns the page with the information about the URL Request
 @app.route("/")
 def home():
   return render_template('index.html')

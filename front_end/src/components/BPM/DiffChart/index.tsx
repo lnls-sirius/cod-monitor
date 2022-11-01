@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Chart, registerables } from 'chart.js';
+import { Chart, ChartArea, registerables } from 'chart.js';
 
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
@@ -8,7 +8,9 @@ import { getArchiver } from "../../../controllers/archiver";
 import { buildDataset, changeDateClick, differentiateData, unsetBPMChange } from "../../../controllers/Chart/functions";
 
 import { optionsDiff } from "./config";
-import { ChartProperties } from "../../../assets/interfaces/patterns";
+import { DatePointInterface } from "../../../assets/interfaces/patterns";
+import { ChartDiffProperties } from "../../../assets/interfaces/bpm";
+import { ArchiverDataPoint } from "../../../data-access/interface";
 import { StoreInterface } from "../../../redux/storage/store";
 
 function mapStateToProps(state: StoreInterface){
@@ -25,7 +27,7 @@ function mapStateToProps(state: StoreInterface){
   }
 }
 
-const defaultProps = {
+const defaultProps: ChartDiffProperties = {
   state_list: {},
   start: new Date(),
   end: new Date(),
@@ -34,7 +36,8 @@ const defaultProps = {
   changeTime: false
 }
 
-const DiffChart: React.FC<ChartProperties> = (props) => {
+const DiffChart: React.FC<ChartDiffProperties> = (props) => {
+  // Display the chart of the BPM Drift
   const [keyPressed, onKeyPressed] = useState<string>('');
   const chartRef: React.RefObject<BaseChart> = createRef();
   Chart.register(...registerables);
@@ -60,12 +63,12 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
   // Detect click on canvas and update respective date
   async function handleCanvasClick(evt: React.MouseEvent): Promise<void>{
     if(chartRef.current){
-      const chart = chartRef.current.chart[0];
+      const chart: Chart = chartRef.current.chart[0];
       if(chart != null){
-        const chartParameters = chart.chartArea;
-        const chartTimeUnit = (props.end.getTime() - props.start.getTime())/chartParameters.width;
-        const widPoint = evt.clientX - chartParameters.left;
-        const newRefDate = new Date(chartTimeUnit * widPoint + props.start.getTime());
+        const chartParameters: ChartArea = chart.chartArea;
+        const chartTimeUnit: number = (props.end.getTime() - props.start.getTime())/chartParameters.width;
+        const widPoint: number = evt.clientX - chartParameters.left;
+        const newRefDate: Date = new Date(chartTimeUnit * widPoint + props.start.getTime());
         changeDateClick(newRefDate, keyPressed);
       }
     }
@@ -79,9 +82,9 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
   // Update Difference Chart
   async function updateChartDiff() {
     if(chartRef.current){
-      const chart = chartRef.current.chart[0];
+      const chart: Chart = chartRef.current.chart[0];
       if(chart != null){
-        const datasetList = await buildChartDiff();
+        const datasetList: any = await buildChartDiff();
         await control.buildChartDatasets(
           chart, datasetList, optionsDiff);
         unsetBPMChange();
@@ -95,12 +98,12 @@ const DiffChart: React.FC<ChartProperties> = (props) => {
     await Promise.all(
       Object.entries(props.state_list).map(async ([name, state]) => {
         if(state){
-          const archiverResult = await getArchiver(name, props.start, props.end, 800);
+          const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(name, props.start, props.end, 800);
           if(archiverResult != undefined){
-            const rawDataset = await buildDataset(archiverResult);
-            const finalDataset = await differentiateData(
+            const rawDataset: Array<ArchiverDataPoint> = await buildDataset(archiverResult);
+            const finalDataset: Array<DatePointInterface> = await differentiateData(
               rawDataset, name, [props.start, props.end, props.refDate]);
-            const datasetTemp = {
+            const datasetTemp: any = {
               data: finalDataset,
               xID: 'x',
               label: name

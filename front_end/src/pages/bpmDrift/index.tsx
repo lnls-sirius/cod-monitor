@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import DateInterval from "../../components/Date/DateInterval";
 import DiffChart from "../../components/BPM/DiffChart";
 import Header from '../../components/Structure/Header';
@@ -6,12 +7,13 @@ import Item from "../../components/Patterns/Item";
 import Footer from "../../components/Structure/Footer";
 import Interval from "../../components/Date/Interval";
 import Modals from "../../components/Patterns/Modals";
-import { modalInfo } from "../../assets/constants/patterns";
 import ListBPM from "../../components/BPM/ListBPM";
 import Loading from "../../components/Patterns/Loading";
+import { modalInfo } from "../../assets/constants/patterns";
 import * as S from './styled';
 
 const BpmDrift: React.FC = () => {
+  // Display the BPM Drift Interface
   const [modalState, setModalState] = useState<boolean>(false);
   const [modalId, setModalId] = useState<string>('BPM');
 

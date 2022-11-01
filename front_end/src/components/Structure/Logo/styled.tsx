@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, properties } from "../../../assets/themes";
+import { colors, properties } from "../../../assets/style/themes";
 
 export const LogoWrapper = styled.div`
   display: flex;

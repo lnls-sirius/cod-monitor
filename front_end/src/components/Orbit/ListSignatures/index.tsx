@@ -30,6 +30,7 @@ const ListSignatures: React.FC<SignatureList> = (props) => {
         const color_label = property[0]+"-Kick "+property[1]
         return (
           <ChartLegend
+            key={name}
             color={getColor(color_label)}
             deleteAction={
               () => deleteSignature(name, props.sign_list)}>

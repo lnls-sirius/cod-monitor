@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {colors, fonts} from '../../assets/themes';
+import {colors, fonts} from '../../assets/style/themes';
 
 export const AppLayout = styled.div`
     font-family: ${fonts.primary};

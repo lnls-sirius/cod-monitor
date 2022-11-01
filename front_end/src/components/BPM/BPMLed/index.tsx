@@ -2,7 +2,8 @@ import { useSelector } from "react-redux";
 
 import Led from "../../Patterns/Led";
 import { getBpmName, objectExists, reverseAxis } from "../../../controllers/Patterns/functions";
-import { DictState, InitLed } from "../../../assets/interfaces/patterns";
+import { DictState } from "../../../assets/interfaces/patterns";
+import { InitLed } from "../../../assets/interfaces/bpm";
 import { StoreInterface } from "../../../redux/storage/store";
 
 const defaultProps: InitLed = {
@@ -46,6 +47,7 @@ const BPMLed: React.FC<InitLed> = (props) => {
 
       return (
         <Led
+          key={props.id}
           id={props.id}
           mountData={props.mountData}
           updateData={props.updateData}

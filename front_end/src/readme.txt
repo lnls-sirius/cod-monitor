@@ -1,6 +1,5 @@
 This is a website designed for the visualization of:
-    - BPM (Beam Position Monitor) or Orbit drifts for the Sirius storage ring.
-    - Total Orbit Correction applied to the storage ring.
+    - BPM (Beam Position Monitor) amd Orbit drifts for the Sirius storage ring.
 
 The organization of this code is divided in several folders:
     - assets: Consists of helpful static information and patterns.

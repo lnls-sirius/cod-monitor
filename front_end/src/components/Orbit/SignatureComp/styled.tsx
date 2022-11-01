@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { AnimButton } from "../../../assets/gen_styles";
-import { colors, fonts, properties } from "../../../assets/themes";
+import { AnimButton } from "../../../assets/style/gen_styles";
+import { colors, fonts, properties } from "../../../assets/style/themes";
 
 export const SignatureWrapper = styled.div`
     display: flex;

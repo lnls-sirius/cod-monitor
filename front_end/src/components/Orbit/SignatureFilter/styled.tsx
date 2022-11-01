@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, fonts, properties } from "../../../assets/themes";
+import { colors, fonts, properties } from "../../../assets/style/themes";
 
 export const Filter = styled.div`
     display: flex;

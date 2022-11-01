@@ -1,4 +1,5 @@
-export const pos = [
+// List of the names of the BPMs
+export const pos: Array<string> = [
   "SI-01M2:DI-BPM",
   "SI-01C1:DI-BPM-1",
   "SI-01C1:DI-BPM-2",

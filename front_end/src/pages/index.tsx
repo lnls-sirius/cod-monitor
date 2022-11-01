@@ -7,6 +7,7 @@ import BpmDrift from "./bpmDrift";
 import OrbitDrift from "./orbitDrift";
 
 export default function RouterNavigator() {
+  // Manage the routing of the pages
   return (
     <Routes>
         <Route  path="/" element={

@@ -21,7 +21,6 @@ export interface DateInfoInterface
     extends BaseDateInterface, RefInterface{
 }
 
-
 export interface IntervalBtnsInterface
     extends BaseDateInterface {
         intervalMode: number
@@ -39,8 +38,9 @@ export interface TimeInformation
         changeTime: boolean
 }
 
-export interface IntervalEditInterface extends BaseDateInterface{
-    id: string
+export interface IntervalEditInterface
+    extends BaseDateInterface{
+        id: string
 }
 
 export interface IntervalModeInterface {

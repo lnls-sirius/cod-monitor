@@ -1,3 +1,5 @@
+// File that contain the themes used in the component's styling
+
 export const colors = {
     btns:{
         btn1: {

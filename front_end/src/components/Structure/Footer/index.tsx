@@ -1,6 +1,6 @@
 import React from "react";
 
-import { footer } from "../../../assets/text";
+import { footer } from "../../../assets/constants/text";
 import * as S from './styled';
 
 const Menu: React.FC = (): React.ReactElement => {

@@ -63,7 +63,7 @@ const Interval: React.FC<IntervalBtnsInterface> = (props): React.ReactElement =>
           <S.IntervalBtn
             key={name}
             onClick={()=>setInterval(Number(data[0]), data[1], name)}
-            selected={stateBtn}>
+            state={stateBtn}>
               {name}
           </S.IntervalBtn>
         );

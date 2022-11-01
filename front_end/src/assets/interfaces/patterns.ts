@@ -1,36 +1,32 @@
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { TimeInformation } from "./date";
+import { ChangeBpmInterface } from "./bpm";
+import { ChangeOrbitInterface } from "./orbit";
 import { DispatchBool } from "./types";
 
-
-export interface SelectedInterface {
-    selected: boolean
-}
-
-interface BasicLed{
+export interface BasicLed{
     id: string;
     mountData: (setFunction: DispatchBool, id: string)=>void;
     updateData: (state: boolean, id: string)=>void;
 }
 
-export interface OnMount extends BasicLed, LedInterface{
-}
-
-export interface InitLed extends BasicLed{
-    axis: string;
-    ledProps: DictState;
-    othAxis: DictState;
+export interface OnMount
+    extends BasicLed, StateInterface{
 }
 
 export interface SetterDictState {
     [key: string]: DispatchBool;
 }
 
-export interface LedInterface {
+export interface StateInterface {
     state: boolean;
 }
 
-export interface IconStyle extends LedInterface {
+export interface iconListInterface{
+    [key: string]: IconDefinition
+}
+
+export interface IconStyle extends StateInterface {
     small: boolean | undefined;
 }
 
@@ -41,7 +37,7 @@ export interface ActionItem {
     isSmall?: boolean;
 }
 
-export interface ModalInterface extends LedInterface {
+export interface ModalInterface extends StateInterface {
     id: string;
     close: () => void;
 }
@@ -53,19 +49,6 @@ export interface ModalInfo {
         icon: string;
         close: () => void;
     }
-}
-
-export interface ActiveListInterface {
-    state_list: DictState
-}
-
-export interface ChartProperties
-    extends TimeInformation, ChangeBpmInterface, ActiveListInterface {
-}
-
-export interface BpmPointInterface {
-    x: string,
-    y: number
 }
 
 export interface DatePointInterface {
@@ -81,14 +64,6 @@ export interface DatasetInterface{
     backgroundColor?: string;
 }
 
-export interface DatasetInterface1{
-    data: BpmPointInterface[];
-    xAxisID: string;
-    label: string;
-    borderColor?: string;
-    backgroundColor?: string;
-}
-
 export interface ChildrenInterface{
     children: React.ReactNode;
 }
@@ -96,16 +71,6 @@ export interface ChildrenInterface{
 export interface LegendInterface extends ChildrenInterface{
     color: string;
     deleteAction: null | (() => void);
-}
-
-export interface ChangeBpmInterface{
-    changeBpm: boolean;
-    changeTime: boolean;
-}
-
-export interface ChangeOrbitInterface{
-    changeOrbit: boolean;
-    changeTime: boolean;
 }
 
 export interface ChangeInterface

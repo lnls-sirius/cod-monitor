@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import ChartLegend from "../../Patterns/ChartLegend";
 import { deleteBPM, formatBPMName, getColor } from "../../../controllers/Chart/functions";
-import { ActiveListInterface } from "../../../assets/interfaces/patterns";
+import { ActiveListInterface } from "../../../assets/interfaces/bpm";
 import { StoreInterface } from "../../../redux/storage/store";
 
 import * as S from './styled';
@@ -29,6 +29,7 @@ const ListBPM: React.FC<ActiveListInterface> = (props) => {
         if(property){
           return (
             <ChartLegend
+              key={name}
               color={getColor(name)}
               deleteAction={
                 () => deleteBPM(name, props.state_list)}>

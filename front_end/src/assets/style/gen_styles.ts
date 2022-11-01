@@ -1,5 +1,6 @@
+// General styling used
 import {css} from "styled-components";
-import { SelectedInterface } from "./interfaces/patterns";
+import { StateInterface } from "../interfaces/patterns";
 import { colors, fonts, properties } from "./themes";
 
 export const DateTheme = css`
@@ -20,13 +21,13 @@ export const AnimButton2 = css`
     color: ${colors.txt.primary};
     transition: 0.2s;
     background: ${
-        (props: SelectedInterface) =>
-            props.selected?
+        (props: StateInterface) =>
+            props.state?
             colors.btns.btn2.active:
             colors.btns.btn2.normal};
     ${
-        (props: SelectedInterface) =>
-            props.selected?
+        (props: StateInterface) =>
+            props.state?
             '':
             `&:hover{
                 background-color: ${colors.btns.btn2.hover};

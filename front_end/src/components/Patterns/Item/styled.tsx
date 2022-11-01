@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { AnimButton } from "../../../assets/gen_styles";
-import { colors, fonts, properties } from "../../../assets/themes";
+import { AnimButton } from "../../../assets/style/gen_styles";
+import { colors, fonts, properties } from "../../../assets/style/themes";
 import { IconStyle } from "../../../assets/interfaces/patterns";
 
 export const ItemWrapper = styled.div`

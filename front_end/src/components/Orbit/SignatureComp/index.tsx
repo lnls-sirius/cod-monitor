@@ -121,7 +121,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   // Show one Signature information (one row)
   function showSignature(index: number, properties: OrbitData): React.ReactElement{
     return (
-      <S.Row>
+      <S.Row key={properties[0]+properties[2]}>
         <S.Cell>{index}</S.Cell>
         <S.Cell>{properties[0]}</S.Cell>
         <S.Cell>{properties[1]}</S.Cell>

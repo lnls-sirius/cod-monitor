@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import BPMLed from "../BPMLed";
 import { changeStates } from "../../../controllers/Patterns/functions";
 import { saveBPMList } from "../../../controllers/Chart/functions";
-import { bpmGroups } from "../../../assets/bpms/groups";
+import { bpmGroups } from "../../../assets/constants/patterns";
 import { DictState, SetterDictState } from "../../../assets/interfaces/patterns";
 import { ArrDictState, DispatchBool } from "../../../assets/interfaces/types";
 
@@ -83,7 +83,7 @@ const AddBPM: React.FC = () => {
       return (
         <S.Select
           key={name}
-          selected={(axis == name)}
+          state={(axis == name)}
           onClick={() => onChangeAxis(name)}>
             {name}
         </S.Select>);
@@ -94,12 +94,12 @@ const AddBPM: React.FC = () => {
   function bpmNumber(): React.ReactElement[] {
     return bpmGroups.bpmNumber.map((number: string)=>{
       return(
-        <S.Column>
+        <td>
           <S.Header
             onClick={() => groupSelect(number)}>
               {number}
           </S.Header>
-        </S.Column>
+        </td>
       )
     })
   }
@@ -115,6 +115,7 @@ const AddBPM: React.FC = () => {
     }
 
     return <BPMLed
+      key={bpmName}
       id={bpmName}
       axis={axis}
       ledProps={ledProps}
@@ -127,7 +128,7 @@ const AddBPM: React.FC = () => {
   function bpmTable(): React.ReactElement[] {
     return bpmGroups.bpmName.map((name: string)=>{
       return(
-        <S.Row>
+        <tr>
           <S.Header
             onClick={() => groupSelect(name)}>
               {name}
@@ -137,11 +138,11 @@ const AddBPM: React.FC = () => {
               if((number=='01') && name=='M1'){
                 return <td></td>
               }else{
-                return <S.Column>{findBPM(number, name)}</S.Column>
+                return <td>{findBPM(number, name)}</td>
               }
             })
           }
-        </S.Row>
+        </tr>
       )
     })
   }
@@ -151,15 +152,15 @@ const AddBPM: React.FC = () => {
     const name = bpmGroups.bpmName[0];
     const number = bpmGroups.bpmNumber[0];
     return(
-      <S.Row>
+      <tr>
         <S.Header
           onClick={() => groupSelect(name)}>
             {name}
         </S.Header>
-        <S.Column>
+        <td>
           {findBPM(number, name)}
-        </S.Column>
-      </S.Row>
+        </td>
+      </tr>
     )
   }
 

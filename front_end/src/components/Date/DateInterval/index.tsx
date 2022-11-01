@@ -6,6 +6,7 @@ import DateShow from "../../Date/DateShow";
 import Item from "../../Patterns/Item";
 
 import { countIntervalMode, getDate, setDate } from "../../../controllers/Time/functions";
+import { markers } from "../../../assets/constants/text";
 import { intervalDict } from "../../../assets/constants/date";
 import { StoreInterface } from "../../../redux/storage/store";
 import { DateIntervalInterface } from "../../../assets/interfaces/date";
@@ -65,11 +66,11 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
   return(
     <S.TextWrapper>
       <S.TextWrapper>
-        Marker-1
+        {markers[0]}
           {dateMode('Start')}
       </S.TextWrapper>
       <S.TextWrapper>
-        Marker-2
+        {markers[1]}
           {dateMode('End')}
       </S.TextWrapper>
       {inputReference()}

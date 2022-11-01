@@ -1,12 +1,11 @@
+// File that import all the icons used
+import { iconListInterface } from "../interfaces/patterns";
+
 import {
     faClock, faPencilAlt, faPlus,
     faC, faD, faQ, faS, faTrashCan,
-    faListCheck, IconDefinition
+    faListCheck
 } from "@fortawesome/free-solid-svg-icons";
-
-interface iconListInterface{
-    [key: string]: IconDefinition
-}
 
 export const iconList: iconListInterface = {
     'clock': faClock,

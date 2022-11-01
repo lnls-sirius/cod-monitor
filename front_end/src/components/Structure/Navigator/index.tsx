@@ -1,6 +1,6 @@
 import React from "react";
 
-import { pages } from "../../../assets/text";
+import { pages } from "../../../assets/constants/text";
 import * as S from './styled';
 
 const Navigator: React.FC = () => {
@@ -16,7 +16,7 @@ const Navigator: React.FC = () => {
       <S.PageLink
         key={key}
         to={key}
-        selected={path == key}>
+        state={path == key}>
           {page}
       </S.PageLink>
     );

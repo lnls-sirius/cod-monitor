@@ -1,8 +1,6 @@
+// File that contains the infomation for the date
 import { BaseStrArrayDict } from '../interfaces/patterns';
 import { IntervalModeInterface } from '../interfaces/date';
-
-export const TimeAxisID = "x-axis-0";
-export const TimeAxisIndex = 0;
 
 export const intervalDict: IntervalModeInterface = {
     'Start': {

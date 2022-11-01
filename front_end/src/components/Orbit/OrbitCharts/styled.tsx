@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { properties } from "../../../assets/themes";
+import { properties } from "../../../assets/style/themes";
 
 export const ChartWrapper = styled.div`
     position: relative;

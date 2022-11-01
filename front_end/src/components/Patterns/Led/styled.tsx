@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { colors, properties } from "../../../assets/themes";
-import { LedInterface } from "../../../assets/interfaces/patterns";
+import { colors, properties } from "../../../assets/style/themes";
+import { StateInterface } from "../../../assets/interfaces/patterns";
 
 export const LedWrapper = styled.button`
-    background: ${(props: LedInterface) => props.state?
+    background: ${(props: StateInterface) => props.state?
         colors.led.on.normal:colors.led.off.normal};
     border-radius: ${properties.radius.high};
     border: none;
@@ -11,7 +11,7 @@ export const LedWrapper = styled.button`
     height: 25px;
     margin: 5px;
     &:hover{
-        background: ${(props: LedInterface) => props.state?
+        background: ${(props: StateInterface) => props.state?
             colors.led.on.hover:colors.led.off.hover};
     }
 `;

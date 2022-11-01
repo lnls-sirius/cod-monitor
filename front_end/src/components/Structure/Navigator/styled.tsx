@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
-import {colors, properties} from '../../../assets/themes';
-import { AnimButton2 } from "../../../assets/gen_styles";
+import {colors, properties} from '../../../assets/style/themes';
+import { AnimButton2 } from "../../../assets/style/gen_styles";
 
 
 export const NavWrapper = styled.nav`
