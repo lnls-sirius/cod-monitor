@@ -23,7 +23,7 @@ const defaultProps: SignatureList = {
 const ListSignatures: React.FC<SignatureList> = (props) => {
   // Display all the legend items of the Signatures in the Orbit Drift
 
-  function listAllBpm(){
+  function listAllSignatures(): (React.ReactElement | undefined)[]{
     // Show all the selected Signatures in the legend
     return Object.entries(props.sign_list).map(([name, property]: ArrDictArrStr) => {
       if(property){
@@ -50,7 +50,7 @@ const ListSignatures: React.FC<SignatureList> = (props) => {
             COD Rebuilt
           </S.TextWrapper>
       </ChartLegend>
-      {listAllBpm()}
+      {listAllSignatures()}
     </S.Wrapper>
   );
 };

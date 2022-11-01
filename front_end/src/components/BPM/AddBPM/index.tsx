@@ -19,7 +19,7 @@ const AddBPM: React.FC = () => {
 
   // Save details to alter one led state and of its state
   function onChildMount(setter: DispatchBool, id: string): void {
-    let setterList = ledSetters;
+    let setterList: SetterDictState = ledSetters;
     setterList[id] = setter;
     setLedSetters(setterList);
   };
@@ -64,7 +64,7 @@ const AddBPM: React.FC = () => {
   function groupSelect(groupSelected: string): void{
     let searchString: string;
     if(groupSelected.includes('-')){
-      let searchNames = groupSelected.split('-');
+      let searchNames: Array<string> = groupSelected.split('-');
       searchString = searchNames[0]+":DI-BPM-"+searchNames[1];
     }else{
       searchString = groupSelected;
@@ -106,9 +106,9 @@ const AddBPM: React.FC = () => {
 
   // Display one BPM Led
   function findBPM(number: string, name: string): React.ReactElement {
-    let bpmName;
+    let bpmName: string;
     if(name.includes('-1') || name.includes('-2')){
-      let nameDiv = name.split('-');
+      let nameDiv: Array<string> = name.split('-');
       bpmName = "SI-"+number+nameDiv[0]+":DI-BPM-"+nameDiv[1];
     }else{
       bpmName = "SI-"+number+name+":DI-BPM";

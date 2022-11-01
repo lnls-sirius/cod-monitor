@@ -35,7 +35,7 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
 
   function dateMode(type: string): React.ReactElement {
     // Changes the type of the component
-    let mode = intervalDict[type][props.intervalMode];
+    let mode: boolean = intervalDict[type][props.intervalMode];
     if(mode){
       return <DateInput
         type={type}

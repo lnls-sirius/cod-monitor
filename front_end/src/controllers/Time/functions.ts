@@ -7,7 +7,7 @@ import { DateInfoInterface } from "../../assets/interfaces/date";
 
 export function pastDate(start: Date, end: Date): boolean{
   const now = new Date();
-  let outRange = true;
+  let outRange: boolean = true;
   if(start.getTime() > now.getTime() ||
       end.getTime() > now.getTime()){
         outRange = false;
@@ -16,7 +16,7 @@ export function pastDate(start: Date, end: Date): boolean{
 }
 
 export function validInterval(start: Date, end: Date): boolean{
-  let outRange = true;
+  let outRange: boolean = true;
   if(start.getTime() > end.getTime() ||
       end.getTime() < start.getTime()){
         outRange = false;
@@ -25,8 +25,8 @@ export function validInterval(start: Date, end: Date): boolean{
 }
 
 export async function getClosestDate(name: string, dataArray: ArchiverDataPoint[], dates: Array<Date>): Promise<number>{
-  let closestDate = dates[2].getTime();
-  let valueComp = 0;
+  let closestDate: number = dates[2].getTime();
+  let valueComp: number = 0;
   if(dates[2] != undefined){
     if (closestDate >= dates[0].getTime() &&
       closestDate <= dates[1].getTime()){
@@ -40,7 +40,7 @@ export async function getClosestDate(name: string, dataArray: ArchiverDataPoint[
 }
 
 export function getIntervalFromMilliseconds(milliseconds: number): string{
-  let int_name = '';
+  let int_name: string = '';
   Object.entries(intervals).map(([name, data]: ArrDictArrStr) => {
     const mil = Number(data[0]) * getTimeMilliseconds(data[1])
     if (mil == milliseconds){
@@ -145,7 +145,7 @@ export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: nu
 }
 
 export function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: number): Date{
-  let newDate = new Date();
+  let newDate: Date = new Date();
   newDate = getNewTimeInterval(
     timeMil, dateRef, intervalMode);
   return newDate;

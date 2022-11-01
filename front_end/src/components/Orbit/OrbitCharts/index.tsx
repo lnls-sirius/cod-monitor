@@ -11,6 +11,7 @@ import { BaseStrArrayDict } from "../../../assets/interfaces/patterns";
 import { BaseDateInterface } from "../../../assets/interfaces/date";
 import { OrbitDispatcher, TimeDispatcher } from "../../../redux/dispatcher";
 import * as S from './styled';
+import { ArrDictArrStr } from "../../../assets/interfaces/types";
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date, change_time} = state.time;
@@ -60,8 +61,8 @@ const OrbitCharts: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict, cha
   }
 
   function dictToList(sign_list: BaseStrArrayDict){
-    let signatures: any = [];
-    Object.entries(sign_list).map(([name, elem_info]: any) => {
+    let signatures: Array<Array<string>> = [];
+    Object.entries(sign_list).map(([name, elem_info]: ArrDictArrStr) => {
       signatures.push(elem_info);
     })
     return signatures

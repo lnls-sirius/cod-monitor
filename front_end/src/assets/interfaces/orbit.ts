@@ -1,10 +1,9 @@
+import { BaseDateInterface } from "./date"
 import { BaseStrArrayDict, DictState } from "./patterns"
-import { DispatchDictState, DispatchString } from "./types"
+import { DispatchDictState, DispatchString, DictOrbitData } from "./types"
 
 export interface SimulationData {
-    [key: string]: [
-        string, number, number
-    ]
+    [key: string]: DictOrbitData
 }
 
 export interface FilterInterface {
@@ -15,4 +14,8 @@ export interface FilterInterface {
 
 export interface SignatureList {
     sign_list: BaseStrArrayDict
+}
+
+export interface OrbitChartInterface
+    extends BaseDateInterface, SignatureList{
 }

@@ -20,7 +20,7 @@ export class ArchiverDataAccess implements DataAccess{
   private parseData(data: any[]): ArchiverDataPoint[] {
     const outData: ArchiverDataPoint[] = [];
     data.forEach(({ val, secs, nanos}) => {
-      let y;
+      let y: any;
       if (val instanceof Array) {
         const [avg] = val;
         y = avg;
@@ -48,8 +48,8 @@ export class ArchiverDataAccess implements DataAccess{
   }
 
   async fetchSeveralPV(pvList: Array<string>, date: Date): Promise<DictNumber> {
-    let jsonurl = '';
-    let finalData = null;
+    let jsonurl: string = '';
+    let finalData: DictNumber = {};
     this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getDataAtTime`;
     jsonurl = `${this.GET_DATA_URL}?at=`+date.toJSON()
 
@@ -69,9 +69,9 @@ export class ArchiverDataAccess implements DataAccess{
   }
 
   async fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData> {
-    let jsonurl = '';
-    let finalData = null;
-    let pvValue = '';
+    let jsonurl: string = '';
+    let finalData: Array<ArchiverDataPoint> = [];
+    let pvValue: string = '';
     this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getData.json`;
 
     const timeDifference = to.getTime() - from.getTime();
@@ -89,7 +89,7 @@ export class ArchiverDataAccess implements DataAccess{
         if (res.includes("Bad Request")) {
           throw `Invalid response from ${jsonurl}`;
         }
-        let data = res.replace(/(-?Infinity)/g, '"$1"');
+        let data: string = res.replace(/(-?Infinity)/g, '"$1"');
         data = data.replace(/(NaN)/g, '"$1"');
         data = JSON.parse(data);
         return data;

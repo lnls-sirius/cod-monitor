@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import Item from "../../Patterns/Item";
 import { magnet_types } from "../../../assets/constants/patterns";
+import { DictState } from "../../../assets/interfaces/patterns";
 import { FilterInterface } from "../../../assets/interfaces/orbit";
 import * as S from './styled';
 
@@ -17,12 +18,12 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
 
   // Set Filter for the magnets types
   function filterMagnet(magnet: string): void {
-    let magnetStates = props.filterState;
-    magnetStates[magnet] = !magnetStates[magnet];
+    let magnetStates: DictState = {...props.filterState};
+    magnetStates[magnet] = !props.filterState[magnet];
     props.setFilterStates(magnetStates);
   }
 
-  // Submit filter changes on Enter press
+  // Submit text filter changes on Enter press
   function submitHandler(event: React.KeyboardEvent): void {
     if(event.key == 'Enter'){
       props.setGlobExp(nameFilter);

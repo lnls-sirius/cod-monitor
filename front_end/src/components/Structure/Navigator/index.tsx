@@ -8,7 +8,7 @@ const Navigator: React.FC = () => {
 
   // Detect active page and show buttons
   function pageIndicator(key: string, page: string): React.ReactElement {
-    let path = window.location.pathname;
+    let path: string = window.location.pathname;
     if(path == '/'){
       path = '/orbitDrift';
     }

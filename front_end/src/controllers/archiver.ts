@@ -3,11 +3,11 @@ import { ArchiverDataPoint } from "../data-access/interface";
 import { fetchSimulationData } from "./simulation";
 
 export function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[]): number{
-  let valueComp = 0;
-  let closestDate = selectedDate.getTime();
+  let valueComp: number = 0;
+  let closestDate: number = selectedDate.getTime();
 
   dataArray.map((point) =>{
-    let dateDiff = (selectedDate.getTime() - point.x.getTime());
+    let dateDiff: number = (selectedDate.getTime() - point.x.getTime());
     if(dateDiff < 0){
       dateDiff *= -1;
     }
@@ -20,7 +20,7 @@ export function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[
 }
 
 export async function getDataInArchiver(pv: Array<string>, refDate: Date){
-  let archiverInterval = await archInterface.fetchSeveralPV(pv, refDate);
+  let archiverInterval: any = await archInterface.fetchSeveralPV(pv, refDate);
   if(Object.keys(archiverInterval).length == 1){
     return archiverInterval[pv[0]]
   }

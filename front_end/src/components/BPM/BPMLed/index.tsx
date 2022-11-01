@@ -31,7 +31,7 @@ const BPMLed: React.FC<InitLed> = (props) => {
     function initStates(bpm_name: string): boolean {
         const states: DictState = JSON.parse(bpmList);
 
-        let name_waxis = getBpmName(
+        let name_waxis: string = getBpmName(
             bpm_name, props.axis);
         initBPMAxis(
             props.ledProps, states, name_waxis, bpm_name);

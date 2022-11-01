@@ -6,10 +6,13 @@ import Item from "../../Patterns/Item";
 import SignatureFilter from "../SignatureFilter";
 import { compSignatures } from "../../../controllers/archiver";
 import { setSignature } from "../../../controllers/Chart/functions";
-import { BaseStrArrayDict, DictState } from "../../../assets/interfaces/patterns";
-import { BaseDateInterface } from "../../../assets/interfaces/date";
+import { sortList } from "../../../controllers/Patterns/functions";
+import { DictState } from "../../../assets/interfaces/patterns";
+import { OrbitChartInterface, SimulationData } from "../../../assets/interfaces/orbit";
+import { DictOrbitData, OrbitData } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
+
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date} = state.time;
@@ -22,23 +25,32 @@ function mapStateToProps(state: StoreInterface){
   }
 }
 
-const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> = (props) => {
-  const [compList, setComparison] = useState<Array<any>>([]);
+const defaultProps = {
+  start: new Date(),
+  end: new Date(),
+  sign_list: {}
+}
+
+const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
+  // Display the list of signatures
+  const [compList, setComparison] = useState<Array<OrbitData>>([]);
   const [globExp, setGlobExp] = useState<string>('*');
   const [sortState, setSortStates] = useState<[number, boolean]>([0, false]);
-  const [filterState, setFilterStates] = useState<DictState>(
-    {"C": true, "D": true, "Q": true, "S": true});
+  const [filterState, setFilterStates] = useState<DictState>({
+    C: false, D: false, Q: false, S: false});
 
+  // Detect change on the interval time
   useEffect(() => {
     updateComparisonList();
   }, [props.start, props.end])
 
-  async function updateComparisonList(){
-    const simulationResult = await compSignatures(props.start, props.end);
+  // Update the list of signatures
+  async function updateComparisonList(): Promise<void> {
+    const simulationResult: SimulationData|undefined = await compSignatures(props.start, props.end);
     if(simulationResult != undefined){
-      let sortedList: any = [];
+      let sortedList: Array<OrbitData> = [];
       Object.entries(simulationResult).map(
-        ([name, property]: [string, [string, number, number]]) => {
+        ([name, property]: [string, DictOrbitData]) => {
           sortedList.push([
             name.substring(0, name.length-1), ...property]);
       });
@@ -46,9 +58,11 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> 
     }
   }
 
-  function sortCompList(elem: number, rawList?: Array<any>, change?: boolean){
-    let sortedList = [];
-    let sortOrder = true;
+  // Sort the list of signatures with strings or numbers and save the sorted list
+  function sortCompList(elem: number, rawList?: Array<OrbitData>, change?: boolean): void {
+    let sortedList: Array<OrbitData> = [];
+    let sortOrder: boolean = true;
+    let states:[number, boolean] = [elem, sortOrder];
 
     if(rawList == undefined){
       sortedList = [...compList]
@@ -60,46 +74,37 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> 
       sortOrder = !sortState[1]
     }
 
-    if (elem > 2){
-      sortedList.sort(
-        (first: any, second: any) => {
-          return Math.abs(first[elem]) - Math.abs(second[elem]);
-        }
-      );
-    }else{
-      sortedList.sort(
-        (first: any, second: any) => {
-          return first[elem].localeCompare(second[elem]);
-        }
-      );
-    }
+    sortedList = sortList(sortedList, elem);
     if (sortOrder){
       sortedList.reverse();
     }
-    let states:[number, boolean] = [elem, sortOrder];
+    states = [elem, sortOrder];
     setSortStates(states);
     setComparison(sortedList);
   }
 
-  function showMagnet(readFile: string){
-    if(readFile.indexOf("C")>=0){
-      console.log(readFile+filterState["C"]+"C")
-    }else if(readFile.indexOf("D")>=0 && !filterState["D"]){
-      console.log(readFile+filterState["D"]+"D")
-    }else if(readFile.indexOf("Q")>=0 && !filterState["Q"]){
-      console.log(readFile+filterState["Q"]+"Q")
-    }else if(readFile.indexOf("S")>=0 && !filterState["S"]){
-      console.log(readFile+filterState["S"]+"S")
+  // Filter Magnets by type
+  function showMagnet(readFile: string): boolean {
+    if(readFile.indexOf("C")>=0 && filterState.C){
+      return false;
+    }else if(readFile.indexOf("D")>=0 && filterState.D){
+      return false;
+    }else if(readFile.indexOf("Q")>=0 && filterState.Q){
+      return false;
+    }else if(readFile.indexOf("S")>=0 && filterState.S){
+      return false;
     }
+    return true;
   }
 
-  function signToChart(name: string, axis: string, magnet: string): void{
+  // Add Signature to Chart
+  function signToChart(name: string, axis: string, magnet: string): void {
     setSignature(
       name+axis, [name, axis, magnet], props.sign_list);
   }
 
-
-  function showHeader(){
+  // Show list head with Sort Buttons
+  function showHeader(): React.ReactElement{
     return (
       <tr>
         <th><S.Header onClick={() => sortCompList(0)}>Index</S.Header></th>
@@ -113,31 +118,39 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> 
     );
   }
 
-  function listAllComparisons(){
-    var globToRegExp = require('glob-to-regexp');
-    let index = 0;
-    var reg_exp = globToRegExp(globExp);
+  // Show one Signature information (one row)
+  function showSignature(index: number, properties: OrbitData): React.ReactElement{
+    return (
+      <S.Row>
+        <S.Cell>{index}</S.Cell>
+        <S.Cell>{properties[0]}</S.Cell>
+        <S.Cell>{properties[1]}</S.Cell>
+        <S.Cell>{properties[2]}</S.Cell>
+        <S.Cell>{properties[3].toFixed(4)}</S.Cell>
+        <S.Cell>{properties[4].toFixed(4)}</S.Cell>
+        <S.Cell>
+          <Item
+            icon='plus'
+            action={()=>signToChart(
+              properties[0], properties[2], properties[1][0])}
+            isSmall={true}/>
+        </S.Cell>
+      </S.Row>
+    );
+  }
+
+  // List all Signatures applying the filters
+  function listAllComparisons(): (React.ReactElement | undefined)[]{
+    let globToRegExp: NodeRequire = require('glob-to-regexp');
+    let index: number = 0;
+    let reg_exp: any = globToRegExp(globExp);
     return compList.map((properties: any) => {
       if(properties){
         if(reg_exp.test(properties[0])){
-          index += 1;
-          return (
-            <S.Row>
-              <S.Cell>{index}</S.Cell>
-              <S.Cell>{properties[0]}</S.Cell>
-              <S.Cell>{properties[1]}</S.Cell>
-              <S.Cell>{properties[2]}</S.Cell>
-              <S.Cell>{properties[3].toFixed(4)}</S.Cell>
-              <S.Cell>{properties[4].toFixed(4)}</S.Cell>
-              <S.Cell>
-                <Item
-                  icon='plus'
-                  action={()=>signToChart(
-                    properties[0], properties[2], properties[1][0])}
-                  isSmall={true}/>
-              </S.Cell>
-            </S.Row>
-          );
+          if(showMagnet(properties[1])){
+            index += 1;
+            return showSignature(index, properties);
+          }
         }
       }
     });
@@ -145,7 +158,6 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> 
 
   return(
     <S.SignatureWrapper>
-      <button onClick={()=>showMagnet('C_kickX')}/>
       <SignatureFilter
         setGlobExp={setGlobExp}
         filterState={filterState}
@@ -160,4 +172,5 @@ const SignatureComp: React.FC<BaseDateInterface& {sign_list: BaseStrArrayDict}> 
   );
 };
 
+SignatureComp.defaultProps = defaultProps;
 export default connect(mapStateToProps)(SignatureComp);
