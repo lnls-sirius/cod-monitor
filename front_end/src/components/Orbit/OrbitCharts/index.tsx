@@ -5,7 +5,7 @@ import { Chart, registerables } from 'chart.js';
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { fetchSignatureOrbit } from "../../../controllers/simulation";
-import { buildDatasetOrbit, unsetOrbitChange } from "../../../controllers/Chart/functions";
+import { buildDatasetOrbit, unsetOrbitChange } from "../../../controllers/orbit";
 
 import { optionsOrbit } from "./config";
 import { BaseStrArrayDict } from "../../../assets/interfaces/patterns";

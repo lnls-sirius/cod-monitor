@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 
 import Led from "../../Patterns/Led";
-import { getBpmName, objectExists, reverseAxis } from "../../../controllers/Patterns/functions";
+import { reverseAxis } from "../../../controllers/patterns";
+import { getBpmName } from "../../../controllers/bpm";
 import { DictState } from "../../../assets/interfaces/patterns";
 import { InitLed } from "../../../assets/interfaces/bpm";
 import { StoreInterface } from "../../../redux/storage/store";
@@ -12,7 +13,7 @@ const defaultProps: InitLed = {
     ledProps: {},
     othAxis: {},
     mountData: () => null,
-    updateData: ()=> null,
+    updateData: ()=> null
 }
 
 const BPMLed: React.FC<InitLed> = (props) => {
@@ -21,7 +22,7 @@ const BPMLed: React.FC<InitLed> = (props) => {
 
     //Initialize one BPM led in one axis
     function initBPMAxis(list: DictState, states: DictState, name_waxis: string, bpm_name: string): void {
-        if(objectExists(states, name_waxis)){
+        if(name_waxis in states){
             list[bpm_name] = states[name_waxis];
         }else{
             list[bpm_name] = false;

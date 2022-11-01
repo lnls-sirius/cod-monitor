@@ -1,7 +1,10 @@
-import archInterface from "../data-access";
+import { SimulationData } from "../assets/interfaces/orbit";
 import { ArchiverDataPoint } from "../data-access/interface";
 import { fetchSimulationData } from "./simulation";
+import archInterface from "../data-access";
 
+// Get the closest value of the position difference from a data point array,
+// based on a reference date
 export function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[]): number{
   let valueComp: number = 0;
   let closestDate: number = selectedDate.getTime();
@@ -19,7 +22,9 @@ export function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[
   return valueComp;
 }
 
-export async function getDataInArchiver(pv: Array<string>, refDate: Date){
+// Get the closest value of the position difference from Archiver,
+// based on a reference date
+export async function getDataInArchiver(pv: Array<string>, refDate: Date): Promise<any> {
   let archiverInterval: any = await archInterface.fetchSeveralPV(pv, refDate);
   if(Object.keys(archiverInterval).length == 1){
     return archiverInterval[pv[0]]
@@ -27,7 +32,8 @@ export async function getDataInArchiver(pv: Array<string>, refDate: Date){
   return archiverInterval;
 }
 
-export async function getArchiver(name: string, start: Date, end: Date, optimization: number){
+// Get an interval from Archiver
+export async function getArchiver(name: string, start: Date, end: Date, optimization: number): Promise<undefined|ArchiverDataPoint[]>{
   try {
     const res = await archInterface.fetchData(
       name, start, end, optimization);
@@ -39,7 +45,8 @@ export async function getArchiver(name: string, start: Date, end: Date, optimiza
   }
 }
 
-export async function compSignatures(start: Date, end: Date){
+// Get data from the backend simulations
+export async function compSignatures(start: Date, end: Date): Promise<undefined|SimulationData>{
   try {
     const data = await fetchSimulationData(start, end);
     return data;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
-import { changeInterval, getIntervalFromMilliseconds, getTimeMilliseconds } from "../../../controllers/Time/functions";
+import { changeInterval, getIntervalFromMilliseconds, getTimeMilliseconds } from "../../../controllers/time";
 import { intervals } from "../../../assets/constants/date";
 import { DateInfoInterface, IntervalBtnsInterface } from "../../../assets/interfaces/date";
 import { StoreInterface } from "../../../redux/storage/store";

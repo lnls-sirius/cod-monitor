@@ -17,6 +17,7 @@ export class ArchiverDataAccess implements DataAccess{
     this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getData.json`;
   }
 
+  // Parse a point dictionary from the values read in Archiver
   private parseData(data: any[]): ArchiverDataPoint[] {
     const outData: ArchiverDataPoint[] = [];
     data.forEach(({ val, secs, nanos}) => {
@@ -39,6 +40,7 @@ export class ArchiverDataAccess implements DataAccess{
     return outData;
   }
 
+  // Parse a list from the values read in Archiver
   private parseDataList(data: ArchiverListRaw): DictNumber {
     const outData: DictNumber = {};
     Object.entries(data).map(([name, info]: any) => {
@@ -47,6 +49,7 @@ export class ArchiverDataAccess implements DataAccess{
     return outData;
   }
 
+  // Fetch several PVs at one fixed time
   async fetchSeveralPV(pvList: Array<string>, date: Date): Promise<DictNumber> {
     let jsonurl: string = '';
     let finalData: DictNumber = {};
@@ -68,6 +71,7 @@ export class ArchiverDataAccess implements DataAccess{
     return finalData;
   }
 
+  // Fetch PV data in an interval
   async fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData> {
     let jsonurl: string = '';
     let finalData: Array<ArchiverDataPoint> = [];
@@ -106,6 +110,7 @@ export class ArchiverDataAccess implements DataAccess{
     };
   }
 
+  // Fetch the URL
   getUrl(): string {
     if (window.location.host === "vpn.cnpem.br") {
       // If using WEB VPN

@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 import ChartLegend from "../../Patterns/ChartLegend";
-import { deleteSignature, getColor } from "../../../controllers/Chart/functions";
+import { getColor } from "../../../controllers/chart";
+import { deleteSignature } from "../../../controllers/orbit";
 import { SignatureList } from "../../../assets/interfaces/orbit";
 import { ArrDictArrStr } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";

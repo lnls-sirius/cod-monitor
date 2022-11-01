@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 import ChartLegend from "../../Patterns/ChartLegend";
-import { deleteBPM, formatBPMName, getColor } from "../../../controllers/Chart/functions";
+import { getColor } from "../../../controllers/chart";
+import { deleteBPM, formatBPMName } from "../../../controllers/bpm";
 import { ActiveListInterface } from "../../../assets/interfaces/bpm";
 import { StoreInterface } from "../../../redux/storage/store";
 

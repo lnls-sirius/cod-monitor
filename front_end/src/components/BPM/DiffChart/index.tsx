@@ -5,7 +5,9 @@ import { Chart, ChartArea, registerables } from 'chart.js';
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { getArchiver } from "../../../controllers/archiver";
-import { buildDataset, changeDateClick, differentiateData, unsetBPMChange } from "../../../controllers/Chart/functions";
+import { buildDataset } from "../../../controllers/chart";
+import { differentiateData, unsetBPMChange } from "../../../controllers/bpm";
+import { changeDateClick } from "../../../controllers/time";
 
 import { optionsDiff } from "./config";
 import { DatePointInterface } from "../../../assets/interfaces/patterns";

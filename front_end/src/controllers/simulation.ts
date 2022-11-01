@@ -1,9 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { SimulationData } from '../assets/interfaces/orbit';
 
 // export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
 export const defaultHost = "127.0.0.1";
 
+// Send a request to the backend
 async function httpRequest(jsonurl: string): Promise<SimulationData>{
   return await axios
   .get(jsonurl, {
@@ -18,6 +19,8 @@ async function httpRequest(jsonurl: string): Promise<SimulationData>{
   });
 }
 
+
+// Fetch the list with the information of the signatures
 export async function fetchSimulationData(start: Date, end: Date): Promise<SimulationData> {
     let jsonurl: string = '';
     const GET_DATA_URL = `${window.location.protocol}//127.0.0.1:8081/sign_comp`;
@@ -26,6 +29,8 @@ export async function fetchSimulationData(start: Date, end: Date): Promise<Simul
     return res
 }
 
+
+// Fetch the dictionary with the information of the CODX and CODY of the signatures
 export async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date): Promise<SimulationData> {
   let jsonurl: string = '';
   const GET_DATA_URL = `${window.location.protocol}//127.0.0.1:8081/sign_orbit`;

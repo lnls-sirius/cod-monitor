@@ -1,4 +1,4 @@
-import { getTimeMilliseconds } from "../../../controllers/Time/functions";
+import { getTimeMilliseconds } from "../../../controllers/time";
 
 const current = new Date();
 const ref = current.getTime() - 5000;

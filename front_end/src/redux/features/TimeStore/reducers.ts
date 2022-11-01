@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { pastDate, updateTimeRef, validInterval } from "../../../controllers/Time/functions";
+import { pastDate, updateTimeRef, validInterval } from "../../../controllers/time";
 import { timeStore } from "./initialState";
 
 function setStart (state: timeStore, action: PayloadAction<string>): void {

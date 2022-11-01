@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import BPMLed from "../BPMLed";
-import { changeStates } from "../../../controllers/Patterns/functions";
-import { saveBPMList } from "../../../controllers/Chart/functions";
+import { changeStates } from "../../../controllers/patterns";
+import { saveBPMList } from "../../../controllers/bpm";
 import { bpmGroups } from "../../../assets/constants/patterns";
 import { DictState, SetterDictState } from "../../../assets/interfaces/patterns";
 import { ArrDictState, DispatchBool } from "../../../assets/interfaces/types";

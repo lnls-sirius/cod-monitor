@@ -1,12 +1,14 @@
-import { ArchiverDataPoint } from "../../data-access/interface";
-import { TimeDispatcher } from "../../redux/dispatcher";
-import { getDataInArchiver, getDataInArray } from "../archiver";
-import { intervals, refModes } from "../../assets/constants/date";
-import { ArrDictArrStr } from "../../assets/interfaces/types";
-import { DateInfoInterface } from "../../assets/interfaces/date";
+import { ArchiverDataPoint } from "../data-access/interface";
+import { TimeDispatcher } from "../redux/dispatcher";
+import { getDataInArchiver, getDataInArray } from "./archiver";
+import { intervals, refModes } from "../assets/constants/date";
+import { ArrDictArrStr } from "../assets/interfaces/types";
+import { DateInfoInterface } from "../assets/interfaces/date";
 
+
+// Detect if the date is in the past
 export function pastDate(start: Date, end: Date): boolean{
-  const now = new Date();
+  const now: Date = new Date();
   let outRange: boolean = true;
   if(start.getTime() > now.getTime() ||
       end.getTime() > now.getTime()){
@@ -15,6 +17,7 @@ export function pastDate(start: Date, end: Date): boolean{
   return outRange;
 }
 
+// Detect if the selected interval is a valid one
 export function validInterval(start: Date, end: Date): boolean{
   let outRange: boolean = true;
   if(start.getTime() > end.getTime() ||
@@ -24,6 +27,7 @@ export function validInterval(start: Date, end: Date): boolean{
   return outRange;
 }
 
+// Get the difference value based on the reference date
 export async function getClosestDate(name: string, dataArray: ArchiverDataPoint[], dates: Array<Date>): Promise<number>{
   let closestDate: number = dates[2].getTime();
   let valueComp: number = 0;
@@ -39,10 +43,11 @@ export async function getClosestDate(name: string, dataArray: ArchiverDataPoint[
   return -1;
 }
 
+// Get interval name with the milliseconds interval
 export function getIntervalFromMilliseconds(milliseconds: number): string{
   let int_name: string = '';
   Object.entries(intervals).map(([name, data]: ArrDictArrStr) => {
-    const mil = Number(data[0]) * getTimeMilliseconds(data[1])
+    const mil: number = Number(data[0]) * getTimeMilliseconds(data[1])
     if (mil == milliseconds){
       int_name = name;
     }
@@ -50,6 +55,7 @@ export function getIntervalFromMilliseconds(milliseconds: number): string{
   return int_name;
 }
 
+// Get milliseconds time from interval configuration
 export function getTimeMilliseconds(unit: string): number{
   switch(unit){
       case "Second":{
@@ -77,7 +83,8 @@ export function getTimeMilliseconds(unit: string): number{
   return 0;
 }
 
-export function getDate(timeInfo: DateInfoInterface, type: string): Date{
+// Get one of the configurable dates
+export function getDate(timeInfo: DateInfoInterface, type: string): Date {
   switch (type) {
     case 'Start':{
       return timeInfo.start;
@@ -97,6 +104,7 @@ export function getDate(timeInfo: DateInfoInterface, type: string): Date{
   }
 }
 
+// Set one of the configurable dates
 export function setDate(type: string, date: Date): void {
   switch (type) {
     case 'Start':{
@@ -118,9 +126,10 @@ export function setDate(type: string, date: Date): void {
   TimeDispatcher.setChangeTime(true);
 }
 
-export function changeInterval(dateInfo: DateInfoInterface, time: number, unit: string, intervalMode: number){
-  const timeMil = time * getTimeMilliseconds(unit);
-  const dateRef = getDate(dateInfo, refModes[intervalMode]);
+// Change the selected time interval
+export function changeInterval(dateInfo: DateInfoInterface, time: number, unit: string, intervalMode: number): void {
+  const timeMil: number = time * getTimeMilliseconds(unit);
+  const dateRef: Date = getDate(dateInfo, refModes[intervalMode]);
   setDate(
     refModes[intervalMode],
     dateRef);
@@ -128,6 +137,7 @@ export function changeInterval(dateInfo: DateInfoInterface, time: number, unit: 
   TimeDispatcher.setChangeTime(true);
 }
 
+// Change the interval mode
 export function countIntervalMode(intervalMode: number): void {
   if(intervalMode != 2){
     TimeDispatcher.setTimeMode(intervalMode + 1);
@@ -137,6 +147,7 @@ export function countIntervalMode(intervalMode: number): void {
   TimeDispatcher.setChangeTime(true);
 }
 
+// Get a date from the time interval
 export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: number): Date{
   if(intervalMode == 0){
     time = -time;
@@ -144,9 +155,25 @@ export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: nu
   return new Date(dateRef.getTime() + time);
 }
 
+// Update the static date(start or end) from the selected time interval
+// and the configurable date(end or start)
 export function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: number): Date{
   let newDate: Date = new Date();
   newDate = getNewTimeInterval(
     timeMil, dateRef, intervalMode);
   return newDate;
+}
+
+// Change date with a click
+export function changeDateClick(newRefDate: Date, keyPressed: string): void {
+  if(keyPressed == 'Control'){
+    TimeDispatcher.setTimeMode(2)
+    setDate('Start', newRefDate)
+  }else if(keyPressed == 'Shift'){
+    TimeDispatcher.setTimeMode(2)
+    setDate('End', newRefDate)
+  }else{
+    TimeDispatcher.setRefDate(newRefDate);
+  }
+  TimeDispatcher.setChangeTime(true);
 }
