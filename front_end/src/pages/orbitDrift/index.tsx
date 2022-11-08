@@ -5,6 +5,7 @@ import ListSignatures from "../../components/Orbit/ListSignatures";
 import OrbitCharts from "../../components/Orbit/OrbitCharts";
 import SignatureComp from "../../components/Orbit/SignatureComp";
 import Loading from "../../components/Patterns/Loading";
+import Modals from "../../components/Patterns/Modals";
 import Footer from "../../components/Structure/Footer";
 import Header from "../../components/Structure/Header";
 import * as S from './styled';
@@ -14,6 +15,8 @@ const OrbitDrift: React.FC = () => {
 
   return (
     <S.AppLayout>
+      <Modals/>
+      <Loading/>
       <Header>
         <S.VerticalWrapper>
             <S.HorizontalWrapper>
@@ -32,7 +35,6 @@ const OrbitDrift: React.FC = () => {
         <ListSignatures />
       </S.VerticalWrapper>
       <Footer />
-      <Loading/>
     </S.AppLayout>
   );
 };

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Item from "../../Patterns/Item";
 import SignatureFilter from "../SignatureFilter";
 import { compSignatures } from "../../../controllers/archiver";
-import { setSignature } from "../../../controllers/orbit";
+import { deleteSignature, setSignature } from "../../../controllers/orbit";
 import { sortList } from "../../../controllers/patterns";
 import { DictState } from "../../../assets/interfaces/patterns";
 import { OrbitChartInterface, SimulationData } from "../../../assets/interfaces/orbit";
@@ -100,7 +100,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   // Add Signature to Chart
   function signToChart(name: string, axis: string, magnet: string): void {
     setSignature(
-      name+axis, [name, axis, magnet], props.sign_list);
+      name+axis, [name, axis, magnet, 'true'], props.sign_list);
   }
 
   // Show list head with Sort Buttons
@@ -118,23 +118,43 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     );
   }
 
+  // Show add to chart button
+  function showAddToChart(properties: OrbitData, inChart: boolean): React.ReactElement{
+    if(!inChart){
+      return(
+        <S.Cell>
+          <Item
+            icon='plus'
+            action={()=>signToChart(
+              properties[0], properties[2], properties[1])}
+            isSmall={true}/>
+        </S.Cell>);
+    }
+    return (
+      <Item
+        icon='trash'
+        isSmall={true}
+        action={() => deleteSignature(
+          properties[0]+properties[2], props.sign_list)}/>
+    );
+  }
+
   // Show one Signature information (one row)
   function showSignature(index: number, properties: OrbitData): React.ReactElement{
+    let id_name: string = properties[0]+properties[2];
+    let inChart: boolean = false;
+    if(id_name in props.sign_list){
+        inChart = true;
+    }
     return (
-      <S.Row key={properties[0]+properties[2]}>
+      <S.Row key={id_name} inChart={inChart}>
         <S.Cell>{index}</S.Cell>
         <S.Cell>{properties[0]}</S.Cell>
         <S.Cell>{properties[1]}</S.Cell>
         <S.Cell>{properties[2]}</S.Cell>
         <S.Cell>{properties[3].toFixed(4)}</S.Cell>
         <S.Cell>{properties[4].toFixed(4)}</S.Cell>
-        <S.Cell>
-          <Item
-            icon='plus'
-            action={()=>signToChart(
-              properties[0], properties[2], properties[1][0])}
-            isSmall={true}/>
-        </S.Cell>
+        {showAddToChart(properties, inChart)}
       </S.Row>
     );
   }

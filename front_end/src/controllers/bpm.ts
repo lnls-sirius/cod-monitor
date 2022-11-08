@@ -1,9 +1,10 @@
 import { reverseAxis } from "./patterns";
 import { getClosestDate } from "./time";
 import { BpmDispatcher } from "../redux/dispatcher";
+import control from './Modals';
 import { ArrDictState } from "../assets/interfaces/types";
 import { DatePointInterface, DictState } from "../assets/interfaces/patterns";
-
+import { DictBPM } from "../assets/interfaces/bpm";
 
 // Format the BPM Axis with the axis
 export function getBpmName(name: string, axis: string): string {
@@ -20,20 +21,29 @@ export function formatBPMName(name: string): string {
 
 // Save a list with all the selected BPMs
 export function saveBPMList(ledProps: DictState, othAxis: DictState, axis: string): void {
-    let list: DictState = {};
+    let list: DictBPM = {};
     Object.entries(ledProps).map(async ([name, prop]: ArrDictState) => {
-        list[getBpmName(name, axis)] = prop;
-        list[getBpmName(name, reverseAxis(axis))] = othAxis[name];
+        list[getBpmName(name, axis)] = [prop, true];
+        list[getBpmName(name, reverseAxis(axis))] = [othAxis[name], true];
     });
     BpmDispatcher.setBpmList(JSON.stringify(list));
 }
 
 // Remove a BPM from the selection list
-export function deleteBPM(id: string, list: DictState): void {
+export function deleteBPM(id: string, list: DictBPM): void {
     delete list[id];
+    // control.setAlert('Al_Rem_BPM');
     BpmDispatcher.setBpmList(JSON.stringify(list));
     BpmDispatcher.setChangeBpm(true);
 }
+
+// Toggle BPM visibility
+export function visibleBPM(id: string, list: DictBPM): void {
+    list[id][1] = !list[id][1];
+    BpmDispatcher.setBpmList(JSON.stringify(list));
+    BpmDispatcher.setChangeBpm(true);
+}
+
 
 // Remove change flag of BPM
 export function unsetBPMChange(): void {

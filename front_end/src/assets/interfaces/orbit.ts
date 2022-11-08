@@ -12,16 +12,12 @@ export interface FilterInterface {
     setFilterStates: DispatchDictState
 }
 
-export interface SignatureList {
+export interface SignatureListInterface {
     sign_list: BaseStrArrayDict
 }
 
 export interface OrbitChartInterface
-    extends BaseDateInterface, SignatureList{
-}
-
-export interface SignatureListInterface {
-    sign_list: BaseStrArrayDict
+    extends BaseDateInterface, SignatureListInterface{
 }
 
 export interface ChangeOrbitInterface{

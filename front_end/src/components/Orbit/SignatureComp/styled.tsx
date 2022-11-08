@@ -31,6 +31,9 @@ export const Table = styled.table`
 `;
 
 export const Row = styled.tr`
+    background-image: ${
+        (props: { inChart: boolean; }) =>
+        props.inChart?colors.bg.secondary_inac:colors.bg.transparent};
     &:hover{
         background-image: ${colors.bg.secondary};
     }

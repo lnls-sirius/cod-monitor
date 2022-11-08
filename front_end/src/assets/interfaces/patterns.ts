@@ -37,18 +37,11 @@ export interface ActionItem {
     isSmall?: boolean;
 }
 
-export interface ModalInterface extends StateInterface {
-    id: string;
-    close: () => void;
-}
-
-export interface ModalInfo {
-    [key: string]: {
-        title: string;
-        component: React.ReactElement;
-        icon: string;
-        close: () => void;
-    }
+export interface ModalInterface {
+    title: string;
+    component: React.ReactElement;
+    icon: string;
+    close?: () => void;
 }
 
 export interface DatePointInterface {
@@ -70,7 +63,9 @@ export interface ChildrenInterface{
 
 export interface LegendInterface extends ChildrenInterface{
     color: string;
+    isVisible: boolean;
     deleteAction: null | (() => void);
+    visibleAction: () => void;
 }
 
 export interface ChangeInterface

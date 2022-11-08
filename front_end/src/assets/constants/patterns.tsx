@@ -1,14 +1,41 @@
 // File that contains the infomation for the modals and groups
-import { BaseStrArrayDict, ModalInfo } from "../interfaces/patterns"
+import control from "../../controllers/Modals";
+import { BaseStrArrayDict, ModalInterface } from "../interfaces/patterns"
 import { BpmDispatcher } from "../../redux/dispatcher";
 import AddBPM from "../../components/BPM/AddBPM";
+import Message from "../../components/Patterns/Message";
 
-export const modalInfo: ModalInfo = {
+function addBPMAlert(){
+    BpmDispatcher.setChangeBpm(true);
+    // control.setAlert('Al_Add_BPM');
+}
+
+export const modalInfo: {[key: string]: ModalInterface} = {
     "BPM": {
         title: "Add BPM",
         component: <AddBPM/>,
         icon: 'list',
-        close: ()=>BpmDispatcher.setChangeBpm(true)
+        close: addBPMAlert
+    },
+    "Al_Add_BPM": {
+        title: "Adding BPM",
+        component: <Message/>,
+        icon: 'list'
+    },
+    "Al_Add_Sign": {
+        title: "Adding Signature",
+        component: <Message/>,
+        icon: 'plus'
+    },
+    "Al_Rem_BPM": {
+        title: "Removing Signature",
+        component: <Message/>,
+        icon: 'trash'
+    },
+    "Al_Rem_Sign": {
+        title: "Removing Signature",
+        component: <Message/>,
+        icon: 'trash'
     }
 }
 

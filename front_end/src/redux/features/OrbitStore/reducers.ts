@@ -5,11 +5,11 @@ function setChange(state: orbitStore, action: PayloadAction<boolean>): void{
     state.change_orbit = action.payload;
 }
 
-function setSignatureList (state: orbitStore, action: PayloadAction<string>): void {
+function setSignatureListInterface (state: orbitStore, action: PayloadAction<string>): void {
     state.signatures = action.payload;
 }
 
 export default {
-    setSignatureList,
+    setSignatureListInterface,
     setChange
 }

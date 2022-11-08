@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import ChartLegend from "../../Patterns/ChartLegend";
 import { getColor } from "../../../controllers/chart";
-import { deleteBPM, formatBPMName } from "../../../controllers/bpm";
+import { deleteBPM, formatBPMName, visibleBPM } from "../../../controllers/bpm";
 import { ActiveListInterface } from "../../../assets/interfaces/bpm";
 import { StoreInterface } from "../../../redux/storage/store";
 
@@ -26,14 +26,17 @@ const ListBPM: React.FC<ActiveListInterface> = (props) => {
   function listAllBpm(): (React.ReactElement | undefined)[] {
     // Show all the selected BPMs in the legend
     return Object.entries(props.state_list).map(
-      ([name, property]: [string, boolean]) => {
-        if(property){
+      ([name, property]: [string, Array<boolean>]) => {
+        if(property[0]){
           return (
             <ChartLegend
               key={name}
+              isVisible={property[1]}
               color={getColor(name)}
               deleteAction={
-                () => deleteBPM(name, props.state_list)}>
+                () => deleteBPM(name, props.state_list)}
+              visibleAction={
+                () => visibleBPM(name, props.state_list)}>
                   <S.TextWrapper>
                     {formatBPMName(name)}
                   </S.TextWrapper>

@@ -29,8 +29,9 @@ export const colors = {
     },
     bg:{
         primary: 'linear-gradient(to bottom, #242424, #4D4D4D)',
-        primary50: '#24242477',
+        primary50: '#242424AA',
         secondary: 'linear-gradient(to bottom, #2E005B, #6400C8)',
+        secondary_inac: 'linear-gradient(to top, #2E005BAA, #6400C8AA)',
         tertiary: 'linear-gradient(to top, #001dc1, #006fc1)',
         white: '#FFFFFF',
         transparent: '#00000000'
@@ -53,7 +54,7 @@ export const properties = {
 export const fonts = {
     primary: '\'Akshar\', sans-serif',
     size: {
-        small: '13px',
+        small: '14px',
         medium: '18px',
         big: '25px'
     }

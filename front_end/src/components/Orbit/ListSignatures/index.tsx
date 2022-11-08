@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 
 import ChartLegend from "../../Patterns/ChartLegend";
 import { getColor } from "../../../controllers/chart";
-import { deleteSignature } from "../../../controllers/orbit";
-import { SignatureList } from "../../../assets/interfaces/orbit";
+import { deleteSignature, visibleSignature } from "../../../controllers/orbit";
+import { SignatureListInterface } from "../../../assets/interfaces/orbit";
 import { ArrDictArrStr } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";
 
@@ -17,11 +17,11 @@ function mapStateToProps(state: StoreInterface){
   }
 }
 
-const defaultProps: SignatureList = {
+const defaultProps: SignatureListInterface = {
   sign_list: {}
 }
 
-const ListSignatures: React.FC<SignatureList> = (props) => {
+const ListSignatures: React.FC<SignatureListInterface> = (props) => {
   // Display all the legend items of the Signatures in the Orbit Drift
 
   function listAllSignatures(): (React.ReactElement | undefined)[]{
@@ -33,8 +33,11 @@ const ListSignatures: React.FC<SignatureList> = (props) => {
           <ChartLegend
             key={name}
             color={getColor(color_label)}
+            isVisible={property[3]==='true'}
             deleteAction={
-              () => deleteSignature(name, props.sign_list)}>
+              () => deleteSignature(name, props.sign_list)}
+            visibleAction={
+              () => visibleSignature(name, props.sign_list)}>
               <S.TextWrapper>
                 {property[0]} - Kick: {property[1]}
               </S.TextWrapper>
@@ -47,7 +50,10 @@ const ListSignatures: React.FC<SignatureList> = (props) => {
     <S.Wrapper>
       <ChartLegend
         color={getColor('cod_rebuilt')}
-        deleteAction={null}>
+        isVisible={true}
+        deleteAction={null}
+        visibleAction={
+          () => visibleSignature('cod_rebuilt', props.sign_list)}>
           <S.TextWrapper>
             COD Rebuilt
           </S.TextWrapper>

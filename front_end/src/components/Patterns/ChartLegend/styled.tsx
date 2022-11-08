@@ -16,7 +16,9 @@ export const ItemWrapper = styled.div`
     padding: 5px;
     border-radius: ${properties.radius.extlight};
     color: ${colors.txt.primary};
-    background: ${colors.bg.secondary};
+    background: ${
+        (props: { isVisible: boolean; }) =>
+        props.isVisible?colors.bg.secondary:colors.bg.secondary_inac};
     align-items: center;
     justify-content: center;
     &:hover{

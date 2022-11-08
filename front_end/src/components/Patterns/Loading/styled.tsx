@@ -24,7 +24,6 @@ export const LoadingWrapper = styled.div`
   position: absolute;
   left: 50% !important;
   top: 50% !important;
-  transform: translate(-50%, -100%);
 `
 
 export const Circle = styled.div`

@@ -7,12 +7,25 @@ import * as S from './styled';
 
 const defaultProps: LegendInterface = {
   color: '#FFFFFFFF',
+  isVisible: true,
   children: null,
-  deleteAction: null
+  deleteAction: null,
+  visibleAction: ()=>null
 }
 
 const ChartLegend: React.FC<LegendInterface> = (props) => {
   // Display the legend of one axis of the chart
+
+  // Set visible Option to the Axis element
+  function showVisibleOpt(): React.ReactElement | string {
+    if(props.deleteAction !== null){
+      return (
+        <Item
+          icon='eye'
+          action={props.visibleAction}/>)
+    }
+    return ''
+  }
 
   // Set delete Option to the Axis element
   function showDeleteOpt(): React.ReactElement | string {
@@ -25,11 +38,15 @@ const ChartLegend: React.FC<LegendInterface> = (props) => {
     return ''
   }
 
-  return <S.ItemWrapper>
-      <S.Square color={props.color} />
-      {props.children}
-      {showDeleteOpt()}
+  return (
+    <S.ItemWrapper
+      isVisible={props.isVisible}>
+        <S.Square color={props.color} />
+        {props.children}
+        {showVisibleOpt()}
+        {showDeleteOpt()}
     </S.ItemWrapper>
+  );
 }
 
 ChartLegend.defaultProps = defaultProps;

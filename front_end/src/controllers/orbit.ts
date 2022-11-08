@@ -1,5 +1,6 @@
 import { OrbitDispatcher } from "../redux/dispatcher";
 import { formatBPMName } from "./bpm";
+import control from "./Modals";
 import { pos } from "../assets/constants/pos";
 import { BaseStrArrayDict } from "../assets/interfaces/patterns";
 
@@ -18,7 +19,8 @@ export function buildDatasetOrbit(dataList: any): Array<any>{
 export function setSignature(id: string, element_info: any, list: BaseStrArrayDict){
     if (id != undefined){
         list[id] = element_info;
-        OrbitDispatcher.setSignatureList(list);
+        // control.setAlert('Al_Add_Sign');
+        OrbitDispatcher.setSignatureListInterface(list);
         OrbitDispatcher.setChangeOrbit(true);
     }
 }
@@ -26,7 +28,16 @@ export function setSignature(id: string, element_info: any, list: BaseStrArrayDi
 // Remove signature from the selected signature list
 export function deleteSignature(id: string, list: BaseStrArrayDict): void {
     delete list[id];
-    OrbitDispatcher.setSignatureList(list);
+    // control.setAlert('Al_Rem_Sign');
+    OrbitDispatcher.setSignatureListInterface(list);
+    OrbitDispatcher.setChangeOrbit(true);
+}
+
+// Toggle signature visibility
+export function visibleSignature(id: string, list: BaseStrArrayDict): void {
+    let isVisible: boolean = (list[id][3] === 'true');
+    list[id][3] = (!isVisible).toString();
+    OrbitDispatcher.setSignatureListInterface(list);
     OrbitDispatcher.setChangeOrbit(true);
 }
 

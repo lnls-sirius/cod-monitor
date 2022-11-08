@@ -20,3 +20,10 @@ export const markers: Array<string> = [
 ]
 
 export const filter_txt: string = "Filter:"
+
+export const alert_messages: DictString = {
+    "Al_Add_BPM": "The selected BPMs were added",
+    "Al_Add_Sign": "The selected signature was added",
+    "Al_Rem_BPM": "The selected BPM was removed",
+    "Al_Rem_Sign": "The selected Signature was removed"
+}

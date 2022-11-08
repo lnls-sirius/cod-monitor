@@ -8,7 +8,7 @@ export interface InitLed extends BasicLed{
 }
 
 export interface ActiveListInterface {
-    state_list: DictState
+    state_list: DictBPM
 }
 
 export interface ChartDiffProperties
@@ -31,4 +31,8 @@ export interface DatasetInterface1{
 export interface ChangeBpmInterface{
     changeBpm: boolean;
     changeTime: boolean;
+}
+
+export interface DictBPM {
+    [key: string]: Array<boolean>;
 }

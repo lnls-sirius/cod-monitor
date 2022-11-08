@@ -4,7 +4,7 @@ import Led from "../../Patterns/Led";
 import { reverseAxis } from "../../../controllers/patterns";
 import { getBpmName } from "../../../controllers/bpm";
 import { DictState } from "../../../assets/interfaces/patterns";
-import { InitLed } from "../../../assets/interfaces/bpm";
+import { DictBPM, InitLed } from "../../../assets/interfaces/bpm";
 import { StoreInterface } from "../../../redux/storage/store";
 
 const defaultProps: InitLed = {
@@ -21,9 +21,9 @@ const BPMLed: React.FC<InitLed> = (props) => {
     const bpmList = useSelector((state: StoreInterface) => state.bpm.bpm_list);
 
     //Initialize one BPM led in one axis
-    function initBPMAxis(list: DictState, states: DictState, name_waxis: string, bpm_name: string): void {
+    function initBPMAxis(list: DictState, states: DictBPM, name_waxis: string, bpm_name: string): void {
         if(name_waxis in states){
-            list[bpm_name] = states[name_waxis];
+            list[bpm_name] = states[name_waxis][0];
         }else{
             list[bpm_name] = false;
         }
@@ -31,7 +31,7 @@ const BPMLed: React.FC<InitLed> = (props) => {
 
     //Initialize one BPM led in both axis
     function initStates(bpm_name: string): boolean {
-        const states: DictState = JSON.parse(bpmList);
+        const states: DictBPM = JSON.parse(bpmList);
 
         let name_waxis: string = getBpmName(
             bpm_name, props.axis);

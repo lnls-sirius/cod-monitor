@@ -76,7 +76,9 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   function dictToList(sign_list: BaseStrArrayDict): Array<Array<string>>{
     let signatures: Array<Array<string>> = [];
     Object.entries(sign_list).map(([name, elem_info]: ArrDictArrStr) => {
-      signatures.push(elem_info);
+      if(elem_info[3] === 'true'){
+        signatures.push(elem_info);
+      }
     })
     return signatures
   }

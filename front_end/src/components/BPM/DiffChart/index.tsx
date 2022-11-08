@@ -99,7 +99,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
     let datasetList: any = [];
     await Promise.all(
       Object.entries(props.state_list).map(async ([name, state]) => {
-        if(state){
+        if(state[0] && state[1]){
           const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(name, props.start, props.end, 800);
           if(archiverResult != undefined){
             const rawDataset: Array<ArchiverDataPoint> = await buildDataset(archiverResult);
