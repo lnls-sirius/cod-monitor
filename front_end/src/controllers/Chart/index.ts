@@ -6,11 +6,24 @@ import { DatasetInterface, DictString } from '../../assets/interfaces/patterns';
 import { DatasetInterface1 } from '../../assets/interfaces/bpm';
 
 class ChartObject {
-    private axisColors = {};
+    private axisColors: DictString = {};
+    private dataset: any = [];
 
     // Get the axis color list
     getAxisColors(): DictString {
         return this.axisColors;
+    }
+
+    detectNewData(name: string, changeTime: boolean): DatasetInterface|null{
+        let itemInfo: DatasetInterface|null = null;
+        if(!changeTime){
+            this.dataset.map((item: DatasetInterface) => {
+            if(item.label === name && item.data.length > 0){
+              itemInfo = item;
+            }
+          });
+        }
+        return itemInfo;
     }
 
     // Update the chart dataset
@@ -29,6 +42,7 @@ class ChartObject {
             dataset.push(state);
         });
         this.updateDataset(chart, dataset, options);
+        this.dataset = dataset;
         TimeDispatcher.setChangeTime(false);
     };
 }

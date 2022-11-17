@@ -3,14 +3,14 @@
 export const colors = {
     btns:{
         btn1: {
-            normal: '#ff622c',
-            hover: '#ff4200CC',
-            active: '#d23600CC'
+            normal: 'linear-gradient(to top, #ff561c, #ff6c3a)',
+            hover: 'linear-gradient(to top, #ff4200CC, #ff6c3aCC)',
+            active: 'linear-gradient(to top, #d23600CC, #ff6c3aCC)'
         },
         btn2: {
-            normal: '#006bfb',
-            hover: '#0053c4',
-            active: '#00357c'
+            normal: 'radial-gradient(#00b9ff, #006bfb)',
+            hover: 'radial-gradient(#006bfb, #0053c4)',
+            active: 'radial-gradient(#006bfb, #00357c)'
         }
     },
     led: {
@@ -29,12 +29,16 @@ export const colors = {
     },
     bg:{
         primary: 'linear-gradient(to bottom, #242424, #4D4D4D)',
-        primary50: '#242424AA',
+        primary50: '#242424D0',
         secondary: 'linear-gradient(to bottom, #2E005B, #6400C8)',
         secondary_inac: 'linear-gradient(to top, #2E005BAA, #6400C8AA)',
         tertiary: 'linear-gradient(to top, #001dc1, #006fc1)',
+        alert: 'linear-gradient(to top, #e27800, #e2b900)',
         white: '#FFFFFF',
         transparent: '#00000000'
+    },
+    chart: {
+        cod_rebuilt: '#000000'
     }
 }
 

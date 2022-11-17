@@ -23,8 +23,8 @@ const ModalStyles: any = {
         `,
         'content': css`
             background: ${colors.bg.white};
-            left: 50% !important;
-            top: 50% !important;
+            left: 50%;
+            top: 50%;
             transform: translate(-50%, -50%);
             min-width: 1em;
         `,
@@ -44,8 +44,8 @@ const ModalStyles: any = {
     },
     'alert': {
         'container': css`
-            right: 2em;
-            top: 5em;
+            right: 0.5em;
+            top: 1em;
             width: 15em;
             item-align: center;
         `,
@@ -59,18 +59,19 @@ const ModalStyles: any = {
         `,
         'header': css`
             width: 15em;
-            background-image: ${colors.bg.secondary_inac};
+            background: ${colors.bg.alert};
             padding: 0.25em 0em;
         `,
         'close': css`
-            top: 5.25em;
-            right: 3em;
+            top: 1.25em;
+            right: 2em;
             padding: 0.25em;
         `,
     }
 }
 
 export const ModalContainer = styled.div`
+    z-index: 1;
     position: fixed;
     ${(props: { styling: string, show: boolean})=>ModalStyles[props.styling].container};
     animation: ${(props: { styling: string, show: boolean})=>props.show?fadeIn:''} 0.3s linear;

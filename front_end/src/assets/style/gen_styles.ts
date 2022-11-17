@@ -30,11 +30,11 @@ export const AnimButton2 = css`
             props.state?
             '':
             `&:hover{
-                background-color: ${colors.btns.btn2.hover};
+                background: ${colors.btns.btn2.hover};
                 transform: translateY(-.2rem);
             }
             &:active{
-                background-color: ${colors.btns.btn2.active};
+                background: ${colors.btns.btn2.active};
             }`
     }
 `
@@ -45,14 +45,14 @@ export const AnimButton = css`
     align-items: center;
     text-align: center;
     font-family: ${fonts.primary};
-    color: ${colors.bg.white};
+    color: ${colors.txt.primary};
     border-radius: ${properties.radius.extlight};
     transition: 0.2s;
     &:hover{
-        background-color: ${colors.btns.btn1.hover};
+        background: ${colors.btns.btn1.hover};
         transform: translateY(-.2rem);
     }
     &:active{
-        background-color: ${colors.btns.btn1.active};
+        background: ${colors.btns.btn1.active};
     }
 `

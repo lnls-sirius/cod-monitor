@@ -1,13 +1,13 @@
 // File that contains the infomation for the modals and groups
 import control from "../../controllers/Modals";
 import { BaseStrArrayDict, ModalInterface } from "../interfaces/patterns"
-import { BpmDispatcher } from "../../redux/dispatcher";
 import AddBPM from "../../components/BPM/AddBPM";
 import Message from "../../components/Patterns/Message";
+import { BpmDispatcher } from "../../redux/dispatcher";
 
 function addBPMAlert(){
+    control.setAlert('Al_Add_BPM');
     BpmDispatcher.setChangeBpm(true);
-    // control.setAlert('Al_Add_BPM');
 }
 
 export const modalInfo: {[key: string]: ModalInterface} = {
@@ -18,24 +18,39 @@ export const modalInfo: {[key: string]: ModalInterface} = {
         close: addBPMAlert
     },
     "Al_Add_BPM": {
-        title: "Adding BPM",
+        title: "BPM Modification",
         component: <Message/>,
         icon: 'list'
     },
     "Al_Add_Sign": {
-        title: "Adding Signature",
+        title: "Signature Addition",
         component: <Message/>,
         icon: 'plus'
     },
     "Al_Rem_BPM": {
-        title: "Removing Signature",
+        title: "Signature Removal",
         component: <Message/>,
         icon: 'trash'
     },
     "Al_Rem_Sign": {
-        title: "Removing Signature",
+        title: "Signature Removal",
         component: <Message/>,
         icon: 'trash'
+    },
+    "Vis_BPM": {
+        title: "BPM Visibility",
+        component: <Message/>,
+        icon: 'clock'
+    },
+    "Vis_Sign": {
+        title: "Signature Visibility",
+        component: <Message/>,
+        icon: 'clock'
+    },
+    "Ch_Date": {
+        title: "Changing Date",
+        component: <Message/>,
+        icon: 'clock'
     }
 }
 

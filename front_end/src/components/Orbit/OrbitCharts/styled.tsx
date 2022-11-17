@@ -1,19 +1,10 @@
 import styled from "styled-components";
-import { properties } from "../../../assets/style/themes";
 
 export const ChartWrapper = styled.div`
-    position: relative;
-    top: 0em;
+    display: flex;
+    flex-direction: column;
     margin-left: 1em;
-    width: 140vw;
+    width: 65%;
     color: white;
     text-align: center;
-`;
-
-export const Chart = styled.canvas`
-  width: 100%;
-  height: 100%;
-  margin-top: 5px;
-  border-radius: ${properties.radius.extlight};
-  background-color: #FFFFFF;
 `;

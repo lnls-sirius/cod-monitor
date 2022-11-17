@@ -15,8 +15,8 @@ const OrbitDrift: React.FC = () => {
 
   return (
     <S.AppLayout>
-      <Modals/>
       <Loading/>
+      <Modals/>
       <Header>
         <S.VerticalWrapper>
             <S.HorizontalWrapper>

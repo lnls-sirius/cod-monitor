@@ -15,20 +15,22 @@ import * as S from './styled';
 
 
 function mapStateToProps(state: StoreInterface){
-  const {start_date, end_date} = state.time;
+  const {start_date, end_date, change_time} = state.time;
   const {signatures} = state.orbit;
 
   return {
     start: new Date(start_date),
     end: new Date(end_date),
-    sign_list: JSON.parse(signatures)
+    sign_list: JSON.parse(signatures),
+    changeTime: change_time
   }
 }
 
 const defaultProps = {
   start: new Date(),
   end: new Date(),
-  sign_list: {}
+  sign_list: {},
+  changeTime: false
 }
 
 const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
@@ -37,12 +39,12 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   const [globExp, setGlobExp] = useState<string>('*');
   const [sortState, setSortStates] = useState<[number, boolean]>([0, false]);
   const [filterState, setFilterStates] = useState<DictState>({
-    C: false, D: false, Q: false, S: false});
+    C: true, D: true, Q: true, S: true, X: true, Y: true, chart: false});
 
   // Detect change on the interval time
   useEffect(() => {
     updateComparisonList();
-  }, [props.start, props.end])
+  }, [props.changeTime])
 
   // Update the list of signatures
   async function updateComparisonList(): Promise<void> {
@@ -85,16 +87,34 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
 
   // Filter Magnets by type
   function showMagnet(readFile: string): boolean {
-    if(readFile.indexOf("C")>=0 && filterState.C){
+    if(readFile.indexOf("C")>=0 && !filterState.C){
       return false;
-    }else if(readFile.indexOf("D")>=0 && filterState.D){
+    }else if(readFile.indexOf("D")>=0 && !filterState.D){
       return false;
-    }else if(readFile.indexOf("Q")>=0 && filterState.Q){
+    }else if(readFile.indexOf("Q")>=0 && !filterState.Q){
       return false;
-    }else if(readFile.indexOf("S")>=0 && filterState.S){
+    }else if(readFile.indexOf("S")>=0 && !filterState.S){
       return false;
     }
     return true;
+  }
+
+  function showAxis(axis: string): boolean {
+    if(axis == 'X' && filterState.X){
+      return true;
+    }else if(axis == 'Y' && filterState.Y){
+      return true;
+    }
+    return false;
+  }
+
+  function showInChart(name: string): boolean {
+    if(name in props.sign_list && filterState.chart){
+      return true;
+    }else if(!filterState.chart){
+      return true;
+    }
+    return false;
   }
 
   // Add Signature to Chart
@@ -126,7 +146,8 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
           <Item
             icon='plus'
             action={()=>signToChart(
-              properties[0], properties[2], properties[1])}
+              properties[0], properties[2], properties[1][0])}
+            stateActive={false}
             isSmall={true}/>
         </S.Cell>);
     }
@@ -134,6 +155,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
       <Item
         icon='trash'
         isSmall={true}
+        stateActive={false}
         action={() => deleteSignature(
           properties[0]+properties[2], props.sign_list)}/>
     );
@@ -167,7 +189,8 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     return compList.map((properties: any) => {
       if(properties){
         if(reg_exp.test(properties[0])){
-          if(showMagnet(properties[1])){
+          if(showMagnet(properties[1]) && showAxis(properties[2]) &&
+              showInChart(properties[0]+properties[2])){
             index += 1;
             return showSignature(index, properties);
           }

@@ -14,7 +14,6 @@ export const VerticalWrapper = styled.nav`
 `;
 
 export const HorizontalWrapper = styled.nav`
-    width: 100%;
     display: flex;
     flex-direction: row;
     item-align: center;

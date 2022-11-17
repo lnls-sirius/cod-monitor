@@ -32,7 +32,7 @@ export function saveBPMList(ledProps: DictState, othAxis: DictState, axis: strin
 // Remove a BPM from the selection list
 export function deleteBPM(id: string, list: DictBPM): void {
     delete list[id];
-    // control.setAlert('Al_Rem_BPM');
+    control.setAlert('Al_Rem_BPM');
     BpmDispatcher.setBpmList(JSON.stringify(list));
     BpmDispatcher.setChangeBpm(true);
 }
@@ -40,6 +40,7 @@ export function deleteBPM(id: string, list: DictBPM): void {
 // Toggle BPM visibility
 export function visibleBPM(id: string, list: DictBPM): void {
     list[id][1] = !list[id][1];
+    control.setAlert('Vis_BPM');
     BpmDispatcher.setBpmList(JSON.stringify(list));
     BpmDispatcher.setChangeBpm(true);
 }

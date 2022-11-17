@@ -33,7 +33,8 @@ export interface IconStyle extends StateInterface {
 export interface ActionItem {
     action: ()=>void;
     icon: string;
-    stateActive?: boolean;
+    stateActive: boolean;
+    initState?: boolean;
     isSmall?: boolean;
 }
 

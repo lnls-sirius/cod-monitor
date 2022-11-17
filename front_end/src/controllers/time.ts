@@ -1,6 +1,7 @@
 import { ArchiverDataPoint } from "../data-access/interface";
 import { TimeDispatcher } from "../redux/dispatcher";
 import { getDataInArchiver, getDataInArray } from "./archiver";
+import control from "./Modals";
 import { intervals, refModes } from "../assets/constants/date";
 import { ArrDictArrStr } from "../assets/interfaces/types";
 import { DateInfoInterface } from "../assets/interfaces/date";
@@ -124,17 +125,17 @@ export function setDate(type: string, date: Date): void {
     }
   }
   TimeDispatcher.setChangeTime(true);
+  control.setAlert('Ch_Date');
 }
 
 // Change the selected time interval
 export function changeInterval(dateInfo: DateInfoInterface, time: number, unit: string, intervalMode: number): void {
   const timeMil: number = time * getTimeMilliseconds(unit);
   const dateRef: Date = getDate(dateInfo, refModes[intervalMode]);
+  TimeDispatcher.setIntervalMilliseconds(timeMil);
   setDate(
     refModes[intervalMode],
     dateRef);
-  TimeDispatcher.setIntervalMilliseconds(timeMil);
-  TimeDispatcher.setChangeTime(true);
 }
 
 // Change the interval mode
@@ -166,14 +167,13 @@ export function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: numb
 
 // Change date with a click
 export function changeDateClick(newRefDate: Date, keyPressed: string): void {
+  let date_to_change = 'Ref'
   if(keyPressed == 'Control'){
     TimeDispatcher.setTimeMode(2)
-    setDate('Start', newRefDate)
+    date_to_change = 'Start'
   }else if(keyPressed == 'Shift'){
     TimeDispatcher.setTimeMode(2)
-    setDate('End', newRefDate)
-  }else{
-    TimeDispatcher.setRefDate(newRefDate);
+    date_to_change = 'End'
   }
-  TimeDispatcher.setChangeTime(true);
+  setDate(date_to_change, newRefDate);
 }

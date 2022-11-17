@@ -19,11 +19,18 @@ export const markers: Array<string> = [
     'Marker-2'
 ]
 
-export const filter_txt: string = "Filter:"
+export const filter_txt: DictString = {
+    main: "Filters",
+    magnet: "Magnets:",
+    axis: "Axis:"
+}
 
 export const alert_messages: DictString = {
     "Al_Add_BPM": "The selected BPMs were added",
     "Al_Add_Sign": "The selected signature was added",
     "Al_Rem_BPM": "The selected BPM was removed",
-    "Al_Rem_Sign": "The selected Signature was removed"
+    "Al_Rem_Sign": "The selected Signature was removed",
+    "Vis_BPM": "The selected BPM changed its visibility",
+    "Vis_Sign": "The selected Signature changed its visibility",
+    "Ch_Date": "The Date was changed"
 }

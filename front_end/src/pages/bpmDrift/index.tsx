@@ -18,8 +18,8 @@ const BpmDrift: React.FC = () => {
 
   return (
     <S.AppLayout>
-      <Modals/>
       <Loading/>
+      <Modals/>
       <Header>
         <S.VerticalWrapper>
           <S.HorizontalWrapper>
@@ -28,6 +28,7 @@ const BpmDrift: React.FC = () => {
           <S.HorizontalWrapper>
             <Item
               icon={modalInfo['BPM'].icon}
+              stateActive={false}
               action={()=>control.setActionModal('BPM')}/>
             <DateInterval timeRef={true}/>
           </S.HorizontalWrapper>

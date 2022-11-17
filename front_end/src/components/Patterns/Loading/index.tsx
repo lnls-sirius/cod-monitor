@@ -27,10 +27,6 @@ const Loading: React.FC<ChangeInterface> = (props) => {
   // Display Loading Animation
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    setLoading(true);
-  }, [])
-
   // Set animation if any change flag is detected as true
   useEffect(() => {
     setLoading(props.changeBpm || props.changeTime || props.changeOrbit);

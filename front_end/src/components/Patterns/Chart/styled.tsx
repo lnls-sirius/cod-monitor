@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import { properties } from "../../../assets/style/themes";
+import { colors, properties } from "../../../assets/style/themes";
 
 export const Chart = styled.canvas`
-  width: 100%;
-  height: 100%;
-  margin-top: 5px;
+  margin: 0.5em 0em;
   border-radius: ${properties.radius.extlight};
-  background-color: #FFFFFF;
+  background-color: ${colors.bg.white};
 `;

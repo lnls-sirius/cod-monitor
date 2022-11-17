@@ -18,13 +18,3 @@ export const PageLink = styled(Link)`
     padding: 0.5em;
     margin: 0.25em;
 `
-
-export const PageAct = styled.span`
-    color: ${colors.txt.primary};
-    text-decoration: none;
-    text-align: center;
-    padding: 5px;
-    margin: 5px;
-    border-radius: ${properties.radius.medium};
-    background-color: ${colors.btns.btn1.normal};
-`

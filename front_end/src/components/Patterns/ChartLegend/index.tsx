@@ -1,12 +1,12 @@
 import React from "react";
 
 import Item from "../Item";
-
+import { colors } from "../../../assets/style/themes";
 import { LegendInterface } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
 const defaultProps: LegendInterface = {
-  color: '#FFFFFFFF',
+  color: colors.bg.transparent,
   isVisible: true,
   children: null,
   deleteAction: null,
@@ -22,6 +22,7 @@ const ChartLegend: React.FC<LegendInterface> = (props) => {
       return (
         <Item
           icon='eye'
+          stateActive={false}
           action={props.visibleAction}/>)
     }
     return ''
@@ -33,6 +34,7 @@ const ChartLegend: React.FC<LegendInterface> = (props) => {
       return (
         <Item
           icon='trash'
+          stateActive={false}
           action={props.deleteAction}/>)
     }
     return ''

@@ -18,7 +18,7 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
   const [nameFilter, setNameFilter] = useState<string>('');
 
   // Set Filter for the magnets types
-  function filterMagnet(magnet: string): void {
+  function filterItem(magnet: string): void {
     let magnetStates: DictState = {...props.filterState};
     magnetStates[magnet] = !props.filterState[magnet];
     props.setFilterStates(magnetStates);
@@ -36,21 +36,43 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
     return magnet_types.map((mag_type: string) => {
       return <Item
         icon={mag_type}
-        action={()=>filterMagnet(mag_type)}
-        stateActive={true}/>
+        action={()=>filterItem(mag_type)}
+        stateActive={true}
+        initState={true}/>
+    })
+  }
+
+  function filterAxisBtn(): React.ReactElement[]{
+    return ['X', 'Y'].map((axis: string) => {
+      return <Item
+        icon={axis}
+        action={()=>filterItem(axis)}
+        stateActive={true}
+        initState={true}/>
     })
   }
 
   return(
-    <S.Filter>
-      {filter_txt}
+    <S.FilterWrapper>
+      <S.FilterRow>
+        {filter_txt['main']}
         <S.NameFilter type='text'
           value={nameFilter}
           onChange={(event)=>setNameFilter(
             event.target.value)}
           onKeyDown={submitHandler}/>
-      {filterMagnetBtns()}
-    </S.Filter>
+      </S.FilterRow>
+      <S.FilterRow>
+        {filter_txt['magnet']}
+        {filterMagnetBtns()}
+        <Item
+          icon='chart'
+          action={()=>filterItem('chart')}
+          stateActive={true}/>
+        {filter_txt['axis']}
+        {filterAxisBtn()}
+      </S.FilterRow>
+    </S.FilterWrapper>
   );
 };
 

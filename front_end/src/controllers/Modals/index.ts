@@ -1,11 +1,12 @@
 import React from 'react';
-import { BpmDispatcher } from '../../redux/dispatcher';
+import { DispatchBool } from '../../assets/interfaces/types';
 
 class ModalObject {
     private state: boolean = false;
     private timeout: boolean = false;
     private id: string = 'BPM';
     private styling: string = 'normal';
+    private flagSetter: DispatchBool | undefined;
 
     getModalState(): boolean {
         return this.state;
@@ -25,7 +26,7 @@ class ModalObject {
 
     setModalState(newState: boolean): void {
         this.state = newState;
-        BpmDispatcher.setChangeBpm(true);
+        this.signalFlag();
     }
 
     setModalId(newId: string): void {
@@ -38,6 +39,16 @@ class ModalObject {
 
     setModalTimeout(timeout: boolean): void {
         this.timeout = timeout;
+    }
+
+    setFlagSetter(setFlag: DispatchBool): void {
+        this.flagSetter = setFlag
+    }
+
+    signalFlag(): void {
+        if(this.flagSetter!=undefined){
+            this.flagSetter(true);
+        }
     }
 
     setActionModal(id: string){

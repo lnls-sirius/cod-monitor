@@ -28,7 +28,7 @@ const ListSignatures: React.FC<SignatureListInterface> = (props) => {
     // Show all the selected Signatures in the legend
     return Object.entries(props.sign_list).map(([name, property]: ArrDictArrStr) => {
       if(property){
-        const color_label = property[0]+"-Kick "+property[1]
+        const color_label = property[0] + '- Kick:' + property[1]
         return (
           <ChartLegend
             key={name}
@@ -39,7 +39,7 @@ const ListSignatures: React.FC<SignatureListInterface> = (props) => {
             visibleAction={
               () => visibleSignature(name, props.sign_list)}>
               <S.TextWrapper>
-                {property[0]} - Kick: {property[1]}
+                {color_label}
               </S.TextWrapper>
           </ChartLegend>);
       }

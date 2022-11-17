@@ -21,9 +21,10 @@ const BounceAnimation = keyframes`
 export const LoadingWrapper = styled.div`
   display: flex;
   height: 3rem;
+  z-index: 2;
   position: absolute;
-  left: 50% !important;
-  top: 50% !important;
+  left: 50%;
+  top: 50%;
 `
 
 export const Circle = styled.div`

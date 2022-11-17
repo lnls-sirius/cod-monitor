@@ -24,9 +24,9 @@ export const Icon = styled(FontAwesomeIcon)`
     padding:  ${(
         (props: IconStyle)=>
             props.small?'0.1em 0.25em':'0.2em 0.25em')};
-    color: ${colors.bg.white};
+    color: ${colors.txt.primary};
     border-radius: ${properties.radius.extlight};
-    background-color: ${(
+    background: ${(
         (props: IconStyle)=>
             props.state?
                 colors.bg.transparent:

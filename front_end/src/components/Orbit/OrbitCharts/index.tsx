@@ -92,9 +92,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
     await Promise.all(
       Object.entries(dictSign).map(async ([name, sign_orbit]: any) => {
         if(name!='cod_rebuilt'){
-          const last_char: number = name.length-1
-          name = name.substring(0, last_char) +
-            '-Kick '+name.slice(-1)
+          name = name.slice(0, -1) + '- Kick:' + name.slice(-1)
         }
         datasetListX = saveDataset(
           name, sign_orbit[0], datasetListX);

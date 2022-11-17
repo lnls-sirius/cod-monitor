@@ -76,6 +76,7 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
       {inputReference()}
       <Item
         icon='clock'
+        stateActive={false}
         action={()=>countIntervalMode(props.intervalMode)}/>
     </S.TextWrapper>
   );

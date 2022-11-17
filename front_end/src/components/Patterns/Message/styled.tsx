@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { colors, fonts } from "../../../assets/style/themes";
 
 export const Text = styled.div`
-    color: ${colors.bg.white};
+    color: ${colors.txt.primary};
     text-align: center;
     font-family: ${fonts.primary};
     font-size: ${fonts.size.small};

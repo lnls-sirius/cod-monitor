@@ -10,7 +10,7 @@ import { differentiateData, unsetBPMChange } from "../../../controllers/bpm";
 import { changeDateClick } from "../../../controllers/time";
 
 import { optionsDiff } from "./config";
-import { DatePointInterface } from "../../../assets/interfaces/patterns";
+import { DatasetInterface, DatePointInterface } from "../../../assets/interfaces/patterns";
 import { ChartDiffProperties } from "../../../assets/interfaces/bpm";
 import { ArchiverDataPoint } from "../../../data-access/interface";
 import { StoreInterface } from "../../../redux/storage/store";
@@ -100,17 +100,22 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
     await Promise.all(
       Object.entries(props.state_list).map(async ([name, state]) => {
         if(state[0] && state[1]){
-          const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(name, props.start, props.end, 800);
-          if(archiverResult != undefined){
-            const rawDataset: Array<ArchiverDataPoint> = await buildDataset(archiverResult);
-            const finalDataset: Array<DatePointInterface> = await differentiateData(
-              rawDataset, name, [props.start, props.end, props.refDate]);
-            const datasetTemp: any = {
-              data: finalDataset,
-              xID: 'x',
-              label: name
+          let datasetCreated: DatasetInterface|null = control.detectNewData(name, props.changeTime);
+          if(datasetCreated == null){
+            const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(name, props.start, props.end, 800);
+            if(archiverResult != undefined){
+              const rawDataset: Array<ArchiverDataPoint> = await buildDataset(archiverResult);
+              const finalDataset: Array<DatePointInterface> = await differentiateData(
+                rawDataset, name, [props.start, props.end, props.refDate]);
+              const datasetTemp: any = {
+                data: finalDataset,
+                xID: 'x',
+                label: name
+              }
+              datasetList.push(datasetTemp);
             }
-            datasetList.push(datasetTemp);
+          }else{
+            datasetList.push(datasetCreated);
           }
         }
       })

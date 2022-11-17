@@ -2,14 +2,15 @@ import React, { Component, createRef } from "react";
 import { Chart } from 'chart.js';
 import 'chartjs-adapter-moment';
 
+import { colors } from "../../../assets/style/themes";
 import * as S from './styled';
 
 export const initData = {
   datasets: [{
       data: [],
       label: '',
-      borderColor: '#000000',
-      backgroundColor: '#000000'
+      borderColor: colors.bg.transparent,
+      backgroundColor: colors.bg.transparent
   }]
 }
 

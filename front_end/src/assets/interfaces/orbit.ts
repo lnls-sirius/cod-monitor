@@ -18,6 +18,7 @@ export interface SignatureListInterface {
 
 export interface OrbitChartInterface
     extends BaseDateInterface, SignatureListInterface{
+        changeTime: boolean
 }
 
 export interface ChangeOrbitInterface{
