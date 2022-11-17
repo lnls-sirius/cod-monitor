@@ -2,6 +2,7 @@ import styled from "styled-components";
 import {colors, fonts} from '../../assets/style/themes';
 
 export const AppLayout = styled.div`
+    height: 100%;
     font-family: ${fonts.primary};
     background: ${colors.bg.primary};
 `;

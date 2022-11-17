@@ -2,6 +2,7 @@ import React, { createRef, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Chart, ChartArea, registerables } from 'chart.js';
 
+import ListBPM from "../ListBPM";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { getArchiver } from "../../../controllers/archiver";
@@ -14,6 +15,7 @@ import { DatasetInterface, DatePointInterface } from "../../../assets/interfaces
 import { ChartDiffProperties } from "../../../assets/interfaces/bpm";
 import { ArchiverDataPoint } from "../../../data-access/interface";
 import { StoreInterface } from "../../../redux/storage/store";
+import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date, ref_date, change_time} = state.time;
@@ -124,13 +126,14 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   };
 
   return(
-    <div
+    <S.ChartWrapper
       onClick={handleCanvasClick}>
       <BaseChart
         id={0}
         options={optionsDiff}
         ref={chartRef}/>
-    </div>
+      <ListBPM />
+    </S.ChartWrapper>
   );
 };
 

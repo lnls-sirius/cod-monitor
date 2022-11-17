@@ -2,7 +2,18 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: repeat(5, 20%);
+    @media (min-width: 1500px) {
+        grid-template-columns: repeat(4, 24%);
+    }
+    @media (min-width: 1250px) and (max-width: 1499px) {
+        grid-template-columns: repeat(2, 49%);
+    }
+    @media (min-width: 1050px) and (max-width: 1249px) {
+        grid-template-columns: repeat(4, 24%);
+    }
+    @media (max-width: 1049px) {
+        grid-template-columns: repeat(2, 49%);
+    }
     align-items: center;
     justify-content: center;
 `;

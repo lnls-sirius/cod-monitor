@@ -6,8 +6,8 @@ export const SignatureWrapper = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 50%;
-    margin: 1em 0em;
+    width: 100%;
+    margin: 1em 1em;
     align-items: center;
     justify-content: flex-start;
 `;
@@ -15,7 +15,7 @@ export const SignatureWrapper = styled.div`
 export const TableWrapper = styled.div`
     display: flex;
     width: 95%;
-    max-height: 90vh;
+    max-height: 150vh;
     overflow-y: scroll;
     border-radius: ${properties.radius.medium};
     background-image: ${colors.bg.tertiary};
@@ -26,6 +26,7 @@ export const Table = styled.table`
     padding: 1em 0.5em;
     border-spacing: 0em 0.25em;
     text-align: center;
+    justify-content: center;
     color: ${colors.txt.primary};
     font-family: ${fonts.primary};
 `;

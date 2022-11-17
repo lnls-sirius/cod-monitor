@@ -2,9 +2,12 @@ import styled from "styled-components";
 import { colors, properties } from "../../../assets/style/themes";
 
 export const LogoWrapper = styled.div`
+  @media (max-width: 925px) {
+    display: none;
+  }
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 1em;
 `;
 
 export const ImageWrapper = styled.img`

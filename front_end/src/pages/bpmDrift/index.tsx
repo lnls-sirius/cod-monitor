@@ -7,7 +7,6 @@ import Item from "../../components/Patterns/Item";
 import Footer from "../../components/Structure/Footer";
 import Interval from "../../components/Date/Interval";
 import Modals from "../../components/Patterns/Modals";
-import ListBPM from "../../components/BPM/ListBPM";
 import Loading from "../../components/Patterns/Loading";
 import control from "../../controllers/Modals";
 import { modalInfo } from "../../assets/constants/patterns";
@@ -35,7 +34,6 @@ const BpmDrift: React.FC = () => {
         </S.VerticalWrapper>
       </Header>
       <DiffChart/>
-      <ListBPM />
       <Footer />
     </S.AppLayout>
   );

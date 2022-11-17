@@ -203,7 +203,7 @@ def signComp():
             'Q_kick', 'S_kick'
     ]
 
-    read_json = True#not app.SIGNATURES
+    read_json = not app.SIGNATURES
     cod_rebuilt = calc_cod_rebuilt()
     corr = calc_correlation(
         cod_rebuilt, signature_files, read_json)
@@ -216,7 +216,7 @@ def signComp():
 def signOrbit():
     sign_orbit = dict()
 
-    read_json = True #not app.SIGNATURES
+    read_json = not app.SIGNATURES
     data = request.args.get("data")
     data = data.split(',')
     cod_rebuilt = calc_cod_rebuilt()

@@ -13,6 +13,15 @@ export const VerticalWrapper = styled.nav`
     justify-content: center;
 `;
 
+export const GridWrapper = styled.div`
+    width: 100%;
+    display: grid;
+    grid-template-columns: 65% 34%;
+    @media (max-width: 1250px) {
+        grid-template-columns: 100%;
+    }
+`
+
 export const HorizontalWrapper = styled.nav`
     display: flex;
     flex-direction: row;

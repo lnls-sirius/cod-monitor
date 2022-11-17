@@ -3,7 +3,6 @@ import { AnimButton, AnimButton2 } from "../../../assets/style/gen_styles";
 import { colors } from "../../../assets/style/themes";
 
 export const Table = styled.table`
-    width: 100%;
 `;
 
 export const Select = styled.button`

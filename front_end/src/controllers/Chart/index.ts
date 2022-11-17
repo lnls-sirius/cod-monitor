@@ -13,7 +13,7 @@ class ChartObject {
     getAxisColors(): DictString {
         return this.axisColors;
     }
-
+    
     detectNewData(name: string, changeTime: boolean): DatasetInterface|null{
         let itemInfo: DatasetInterface|null = null;
         if(!changeTime){

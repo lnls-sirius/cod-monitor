@@ -8,11 +8,12 @@ import { fetchSignatureOrbit } from "../../../controllers/simulation";
 import { buildDatasetOrbit, unsetOrbitChange } from "../../../controllers/orbit";
 
 import { optionsOrbit } from "./config";
-import { BaseStrArrayDict } from "../../../assets/interfaces/patterns";
+import { BaseStrArrayDict, DatasetInterface } from "../../../assets/interfaces/patterns";
 import { ChartOrbitInterface, SimulationData } from "../../../assets/interfaces/orbit";
 import { ArrDictArrStr } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
+import ListSignatures from "../ListSignatures";
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date, change_time} = state.time;
@@ -48,8 +49,8 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   // Update CODX and CODY Chart
   async function updateChartOrbit(): Promise<void>{
     if(chartRef[0].current && chartRef[1].current){
-      const chartX: Chart = chartRef[0].current.chart[1];
-      const chartY: Chart = chartRef[1].current.chart[2];
+      const chartX: Chart = chartRef[0].current.chart[0];
+      const chartY: Chart = chartRef[1].current.chart[1];
       if(chartX != null && chartY != null){
         const datasetList: any = await buildChartOrbit();
         await control.buildChartDatasets(
@@ -75,20 +76,30 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   // Transform Dictionary object to array
   function dictToList(sign_list: BaseStrArrayDict): Array<Array<string>>{
     let signatures: Array<Array<string>> = [];
+    let datasets: Array<any> = [];
+
     Object.entries(sign_list).map(([name, elem_info]: ArrDictArrStr) => {
       if(elem_info[3] === 'true'){
-        signatures.push(elem_info);
+        let datasetCreated: DatasetInterface|null = control.detectNewData(
+          name.slice(0, -1) + '- Kick:' + name.slice(-1), props.changeTime);
+        console.log(datasetCreated)
+        if(datasetCreated == null){
+          signatures.push(elem_info);
+        }else{
+          datasets.push(datasetCreated)
+        }
       }
     })
-    return signatures
+    return [datasets, signatures]
   }
 
   // Build CODX and CODY Chart
   async function buildChartOrbit(): Promise<Array<any>>{
     let datasetListX: any = []
     let datasetListY: any = []
+    const [datasets, signatures_to_read] = dictToList(props.sign_list)
     const dictSign: SimulationData = await fetchSignatureOrbit(
-      dictToList(props.sign_list), props.start, props.end);
+      signatures_to_read, props.start, props.end);
     await Promise.all(
       Object.entries(dictSign).map(async ([name, sign_orbit]: any) => {
         if(name!='cod_rebuilt'){
@@ -108,14 +119,15 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
     <S.ChartWrapper>
       COD X
       <BaseChart
-        id={1}
+        id={0}
         options={optionsOrbit}
         ref={chartRef[0]}/>
       COD Y
       <BaseChart
-        id={2}
+        id={1}
         options={optionsOrbit}
         ref={chartRef[1]}/>
+      <ListSignatures />
     </S.ChartWrapper>
   );
 };

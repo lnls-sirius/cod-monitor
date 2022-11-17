@@ -1,7 +1,6 @@
 import React from "react";
 import DateInterval from "../../components/Date/DateInterval";
 import Interval from "../../components/Date/Interval";
-import ListSignatures from "../../components/Orbit/ListSignatures";
 import OrbitCharts from "../../components/Orbit/OrbitCharts";
 import SignatureComp from "../../components/Orbit/SignatureComp";
 import Loading from "../../components/Patterns/Loading";
@@ -27,13 +26,10 @@ const OrbitDrift: React.FC = () => {
             </S.HorizontalWrapper>
           </S.VerticalWrapper>
       </Header>
-      <S.VerticalWrapper>
-        <S.HorizontalWrapper>
-          <OrbitCharts />
-          <SignatureComp />
-        </S.HorizontalWrapper>
-        <ListSignatures />
-      </S.VerticalWrapper>
+      <S.GridWrapper>
+        <OrbitCharts />
+        <SignatureComp />
+      </S.GridWrapper>
       <Footer />
     </S.AppLayout>
   );
