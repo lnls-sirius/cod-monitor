@@ -1,11 +1,10 @@
 import styled from "styled-components";
+import { CenterAlignment, componentFill } from "../../../assets/style/gen_styles";
 
 export const ChartWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 1em;
-    width: 100%;
-    height: 100%;
+    ${componentFill}
     color: white;
-    text-align: center;
+    ${CenterAlignment}
 `;

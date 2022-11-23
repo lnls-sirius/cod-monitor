@@ -38,16 +38,17 @@ export async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, en
   jsonurl = `${GET_DATA_URL}?start=${start.toJSON()}&stop=${end.toJSON()}`;
 
   jsonurl += `&data=`
-  if(sign_list.length == 0){
-    jsonurl += 'cod_rebuilt'
-  }else{
-    sign_list.map((elem_data: Array<any>)=>{
-      if(elem_data!=sign_list[0]){
-        jsonurl += `,`
-      }
+
+  sign_list.map((elem_data: Array<any>)=>{
+    if(elem_data!=sign_list[0]){
+      jsonurl += `,`
+    }
+    if(elem_data[0] == 'cod_rebuilt'){
+      jsonurl += elem_data[0]
+    }else{
       jsonurl += elem_data[0] + '_' + elem_data[1] + '_' + elem_data[2];
-    })
-  }
+    }
+  })
 
   const res: Promise<SimulationData> = httpRequest(jsonurl);
   return res

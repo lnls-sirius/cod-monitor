@@ -90,7 +90,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
       if(chart != null){
         const datasetList: any = await buildChartDiff();
         await control.buildChartDatasets(
-          chart, datasetList, optionsDiff);
+          chart, datasetList, optionsDiff, 'A');
         unsetBPMChange();
       }
     }
@@ -102,9 +102,11 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
     await Promise.all(
       Object.entries(props.state_list).map(async ([name, state]) => {
         if(state[0] && state[1]){
-          let datasetCreated: DatasetInterface|null = control.detectNewData(name, props.changeTime);
+          let datasetCreated: DatasetInterface|null = control.detectNewData(
+            name, props.changeTime, 'A');
           if(datasetCreated == null){
-            const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(name, props.start, props.end, 800);
+            const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(
+              name, props.start, props.end, 800);
             if(archiverResult != undefined){
               const rawDataset: Array<ArchiverDataPoint> = await buildDataset(archiverResult);
               const finalDataset: Array<DatePointInterface> = await differentiateData(

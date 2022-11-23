@@ -1,7 +1,7 @@
 import styled, { keyframes, css } from "styled-components";
 import {colors, properties, fonts} from "../../../assets/style/themes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AnimButton } from "../../../assets/style/gen_styles";
+import { AnimButton, CenterAlignment, componentFill } from "../../../assets/style/gen_styles";
 
 const fadeIn = keyframes`
     from {
@@ -17,8 +17,7 @@ const ModalStyles: any = {
         'container': css`
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
+            ${componentFill}
             background: ${colors.bg.primary50};
         `,
         'content': css`
@@ -88,8 +87,7 @@ export const Header = styled.div`
     ${(props: { styling: string; }) =>
         ModalStyles[props.styling].header};
     color: ${colors.txt.primary};
-    text-align: center;
-    justify-content: center;
+    ${CenterAlignment}
     font-family: ${fonts.primary};
     font-weight: 900;
     border-radius: ${properties.radius.medium} ${properties.radius.medium} 0px 0px;
@@ -98,9 +96,7 @@ export const Header = styled.div`
 export const Body = styled.div`
     ${(props: { styling: string; }) =>
         ModalStyles[props.styling].close};
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    ${CenterAlignment}
 `;
 
 export const Close = styled(FontAwesomeIcon)`

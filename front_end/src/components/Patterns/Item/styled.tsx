@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { AnimButton } from "../../../assets/style/gen_styles";
+import { AnimButton, CenterAlignment } from "../../../assets/style/gen_styles";
 import { colors, fonts, properties } from "../../../assets/style/themes";
 import { IconStyle } from "../../../assets/interfaces/patterns";
 
 export const ItemWrapper = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
+    ${CenterAlignment}
     padding: 0.25em;
     font-family: ${fonts.primary};
 `;

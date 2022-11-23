@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CenterAlignment } from "../../assets/style/gen_styles";
 import {colors, fonts} from '../../assets/style/themes';
 
 export const AppLayout = styled.div`
@@ -11,13 +12,12 @@ export const VerticalWrapper = styled.nav`
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    ${CenterAlignment}
 `;
 
 export const HorizontalWrapper = styled.nav`
     width: 100%;
     display: flex;
     flex-direction: row;
-    item-align: center;
-    justify-content: center;
+    ${CenterAlignment}
 `;

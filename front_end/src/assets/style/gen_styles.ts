@@ -12,6 +12,11 @@ export const DateTheme = css`
     border-radius: ${properties.radius.light};
 `;
 
+export const CenterAlignment = css`
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+`
 
 export const AnimButton2 = css`
     border: none;
@@ -41,9 +46,7 @@ export const AnimButton2 = css`
 
 export const AnimButton = css`
     border: none;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    ${CenterAlignment}
     font-family: ${fonts.primary};
     color: ${colors.txt.primary};
     border-radius: ${properties.radius.extlight};
@@ -55,4 +58,9 @@ export const AnimButton = css`
     &:active{
         background: ${colors.btns.btn1.active};
     }
+`
+
+export const componentFill = css`
+    width: 100%;
+    height: 100%;
 `

@@ -57,16 +57,9 @@ def read_archiver(pvnames, time_ref):
     data = dict()
     for pvname in pvnames:
         interval = 10
-        while interval < 1500:
-            update_time_stamp(pvds, time_ref, interval)
-            tstmp = np.array(pvds[pvname].timestamp)
-            value = np.array(pvds[pvname].value)
-            if value is None or not (tstmp[0] <= time_ref.timestamp() <= tstmp[-1]):
-                # print('Could not find data at reference time at '+time_ref.strftime("%m/%d/%Y, %H:%M:%S")+' within '+str(interval)+'s window!')
-                interval *= 2
-                time_ref -= 3*interval/2
-            else:
-                break
+        update_time_stamp(pvds, time_ref, interval)
+        tstmp = np.array(pvds[pvname].timestamp)
+        value = np.array(pvds[pvname].value)
         if len(value) > 2:
             func = interp1d(tstmp, value, axis=0, fill_value='extrapolate')
             value_fit = func(time_ref.timestamp())
@@ -157,11 +150,10 @@ def get_time():
 def calc_cod_rebuilt():
     time_start, time_stop = get_time()
     kick_rf, cod = read_data_from_archiver(time_start, time_stop)
-    # read respmat from configdb
+    #read respmat from configdb
     sofb_mat = read_respmat()
-    # reconstruct orbit distortion from archived kicks difference
+    #reconstruct orbit distortion from archived kicks difference
     cod_rebuilt = cod - np.dot(sofb_mat, kick_rf)
-
     return cod_rebuilt
 
 
@@ -203,7 +195,7 @@ def signComp():
             'Q_kick', 'S_kick'
     ]
 
-    read_json = not app.SIGNATURES
+    read_json = True#not app.SIGNATURES
     cod_rebuilt = calc_cod_rebuilt()
     corr = calc_correlation(
         cod_rebuilt, signature_files, read_json)
@@ -215,30 +207,30 @@ def signComp():
 @app.route("/sign_orbit", methods=["GET"])
 def signOrbit():
     sign_orbit = dict()
-
-    read_json = not app.SIGNATURES
+    read_json = True#not app.SIGNATURES
     data = request.args.get("data")
     data = data.split(',')
-    cod_rebuilt = calc_cod_rebuilt()
 
-    sign_orbit['cod_rebuilt'] = [
-        normalized_array(cod_rebuilt[:160]).tolist(),
-        normalized_array(cod_rebuilt[160:]).tolist()]
+    for name in data:
 
-    if 'cod_rebuilt' not in data:
-        for name in data:
+        if name == 'cod_rebuilt':
+            cod_rebuilt = calc_cod_rebuilt()
+
+            sign_orbit['cod_rebuilt'] = [
+                normalized_array(cod_rebuilt[:160]).tolist(),
+                normalized_array(cod_rebuilt[160:]).tolist()]
+        else:
             elem_data = name.split("_")
             elem_name = elem_data[0] + elem_data[1]
 
             sign_orbit[elem_name] = read_signatures(
                 elem_data, read_json)
-
     return sign_orbit
 
 
 def run_job():
     print("Initializing!")
-    app.SIGNATURES = calc_signatures.calc_sign()
+    # app.SIGNATURES = calc_signatures.calc_sign()
 
 
 @app.before_first_request

@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
-import {colors, properties} from '../../../assets/style/themes';
-import { AnimButton2 } from "../../../assets/style/gen_styles";
+import { properties } from '../../../assets/style/themes';
+import { AnimButton2, CenterAlignment } from "../../../assets/style/gen_styles";
 
 
 export const NavWrapper = styled.nav`
     display: flex;
     width: 30%;
-    justify-content: center;
-    align-items: center;
+    ${CenterAlignment}
 `;
 
 export const PageLink = styled(Link)`

@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { AnimButton } from "../../../assets/style/gen_styles";
+import { AnimButton, CenterAlignment, componentFill } from "../../../assets/style/gen_styles";
 import { colors, fonts, properties } from "../../../assets/style/themes";
 
 export const SignatureWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
-    margin: 1em 1em;
+    ${componentFill}
+    margin: 1em 0em;
     align-items: center;
     justify-content: flex-start;
 `;
@@ -25,8 +24,7 @@ export const Table = styled.table`
     width: 100%;
     padding: 1em 0.5em;
     border-spacing: 0em 0.25em;
-    text-align: center;
-    justify-content: center;
+    ${CenterAlignment}
     color: ${colors.txt.primary};
     font-family: ${fonts.primary};
 `;

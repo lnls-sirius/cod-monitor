@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CenterAlignment } from "../../../assets/style/gen_styles";
 import { colors, properties } from "../../../assets/style/themes";
 
 export const Square = styled.div`
@@ -11,7 +12,7 @@ export const Square = styled.div`
 
 export const ItemWrapper = styled.div`
     display: flex;
-    min-height: 2.75em;
+    min-height: 70%;
     margin: 0.25em;
     padding: 0.5em;
     border-radius: ${properties.radius.extlight};
@@ -19,8 +20,7 @@ export const ItemWrapper = styled.div`
     background: ${
         (props: { isVisible: boolean; }) =>
         props.isVisible?colors.bg.secondary:colors.bg.secondary_inac};
-    align-items: center;
-    justify-content: center;
+    ${CenterAlignment}
     &:hover{
         background: ${colors.bg.tertiary};
     }

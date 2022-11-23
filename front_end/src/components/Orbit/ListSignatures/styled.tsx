@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CenterAlignment } from "../../../assets/style/gen_styles";
 
 export const Wrapper = styled.div`
     display: grid;
@@ -14,8 +15,7 @@ export const Wrapper = styled.div`
     @media (max-width: 1049px) {
         grid-template-columns: repeat(2, 49%);
     }
-    align-items: center;
-    justify-content: center;
+    ${CenterAlignment}
 `;
 
 export const TextWrapper = styled.span`
