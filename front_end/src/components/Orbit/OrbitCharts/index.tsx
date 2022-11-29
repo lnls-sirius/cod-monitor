@@ -50,7 +50,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   async function updateChartOrbit(): Promise<void>{
     if(chartRef[0].current && chartRef[1].current){
       const chartX: Chart = chartRef[0].current.chart[0];
-      const chartY: Chart = chartRef[1].current.chart[1];
+      const chartY: Chart = chartRef[1].current.chart[0];
       if(chartX != null && chartY != null){
         const datasetList: any = await buildChartOrbit();
         await control.buildChartDatasets(
@@ -84,7 +84,8 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
       'cod_rebuilt', props.changeTime, 'X');
     let datasetY: DatasetInterface|null = control.detectNewData(
       'cod_rebuilt', props.changeTime, 'Y');
-    if(datasetX == null || datasetY == null){
+    if(datasetX == null || datasetY == null ||
+        datasetX == undefined || datasetY == undefined){
       signatures.push(['cod_rebuilt']);
     }else{
       datasets.push([datasetX, datasetY])
@@ -116,6 +117,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
     if(signatures_to_read.length > 0){
       const dictSign: SimulationData = await fetchSignatureOrbit(
         signatures_to_read, props.start, props.end);
+      console.log(dictSign)
       Object.entries(dictSign).map(([name, sign_orbit]: any) => {
         if(name!='cod_rebuilt'){
           name = name.slice(0, -1) + '- Kick:' + name.slice(-1)

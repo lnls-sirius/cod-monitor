@@ -4,7 +4,7 @@ const current = new Date();
 const ref = current.getTime() - 5000;
 
 export interface timeStore{
-    time_mode: number,
+    time_mode: string,
     start_date: string,
     end_date: string,
     ref_date: string,
@@ -13,7 +13,7 @@ export interface timeStore{
 }
 
 const initialState: timeStore = {
-    time_mode: 0,
+    time_mode: 'End',
     start_date: current.toString(),
     end_date: current.toString(),
     ref_date: (new Date(ref)).toString(),

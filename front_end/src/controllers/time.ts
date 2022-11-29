@@ -2,7 +2,7 @@ import { ArchiverDataPoint } from "../data-access/interface";
 import { TimeDispatcher } from "../redux/dispatcher";
 import { getDataInArchiver, getDataInArray } from "./archiver";
 import control from "./Modals";
-import { intervals, refModes } from "../assets/constants/date";
+import { intervals } from "../assets/constants/date";
 import { ArrDictArrStr } from "../assets/interfaces/types";
 import { DateInfoInterface } from "../assets/interfaces/date";
 
@@ -129,28 +129,24 @@ export function setDate(type: string, date: Date): void {
 }
 
 // Change the selected time interval
-export function changeInterval(dateInfo: DateInfoInterface, time: number, unit: string, intervalMode: number): void {
+export function changeInterval(dateInfo: DateInfoInterface, time: number, unit: string, intervalMode: string): void {
   const timeMil: number = time * getTimeMilliseconds(unit);
-  const dateRef: Date = getDate(dateInfo, refModes[intervalMode]);
+  const dateRef: Date = getDate(dateInfo, intervalMode);
   TimeDispatcher.setIntervalMilliseconds(timeMil);
   setDate(
-    refModes[intervalMode],
+    intervalMode,
     dateRef);
 }
 
 // Change the interval mode
-export function countIntervalMode(intervalMode: number): void {
-  if(intervalMode != 2){
-    TimeDispatcher.setTimeMode(intervalMode + 1);
-  }else{
-    TimeDispatcher.setTimeMode(0);
-  }
+export function setIntervalMode(intervalMode: string): void {
+  TimeDispatcher.setTimeMode(intervalMode);
   TimeDispatcher.setChangeTime(true);
 }
 
 // Get a date from the time interval
-export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: number): Date{
-  if(intervalMode == 0){
+export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: string): Date{
+  if(intervalMode === 'End'){
     time = -time;
   }
   return new Date(dateRef.getTime() + time);
@@ -158,7 +154,7 @@ export function getNewTimeInterval(time: number, dateRef: Date, intervalMode: nu
 
 // Update the static date(start or end) from the selected time interval
 // and the configurable date(end or start)
-export function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: number): Date{
+export function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: string): Date{
   let newDate: Date = new Date();
   newDate = getNewTimeInterval(
     timeMil, dateRef, intervalMode);
@@ -171,10 +167,10 @@ export function changeDateClick(newRefDate: Date, keyPressed: string): void {
   if(keyPressed == 'd'){
     date_to_change = 'Ref'
   }else if(keyPressed == 'Control'){
-    TimeDispatcher.setTimeMode(2)
+    TimeDispatcher.setTimeMode('None')
     date_to_change = 'Start'
   }else if(keyPressed == 'Shift'){
-    TimeDispatcher.setTimeMode(2)
+    TimeDispatcher.setTimeMode('None')
     date_to_change = 'End'
   }
   if(date_to_change!=null){

@@ -18,7 +18,7 @@ function mapStateToProps(state: StoreInterface){
 }
 
 const defaultProps: IntervalBtnsInterface = {
-  intervalMode: 0,
+  intervalMode: 'End',
   start: new Date(),
   end: new Date(),
   intervalMil: getTimeMilliseconds("Hour")
@@ -53,7 +53,7 @@ const Interval: React.FC<IntervalBtnsInterface> = (props): React.ReactElement =>
 
   // Displays all the interval buttons
   function timeInterval(): React.ReactElement[] | string{
-    if(props.intervalMode != 2){
+    if(props.intervalMode !== 'None'){
       return Object.entries(intervals).reverse().map(([name, data]: [key: string, value: Array<string>]) => {
         let stateBtn: boolean = false;
         if(selIntBtn == name){

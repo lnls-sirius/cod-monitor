@@ -3,6 +3,7 @@ import { CenterAlignment } from "../../../assets/style/gen_styles";
 
 export const Wrapper = styled.div`
     display: grid;
+    width: 100%;
     @media (min-width: 1500px) {
         grid-template-columns: repeat(4, 24%);
     }

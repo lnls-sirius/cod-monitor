@@ -3,19 +3,19 @@ import { BaseStrArrayDict } from '../interfaces/patterns';
 import { IntervalModeInterface } from '../interfaces/date';
 
 export const intervalDict: IntervalModeInterface = {
-    'Start': {
-      0: false,
-      1: true,
-      2: true
-    },
-    'End': {
-      0: true,
-      1: false,
-      2: true
-    }
+  'Start': {
+    'Start': true,
+    'End': false
+  },
+  'End': {
+    'Start': false,
+    'End': true
+  },
+  'None': {
+    'Start': true,
+    'End': true
+  }
 }
-
-export const refModes = ['End', 'Start'];
 
 export const intervals: BaseStrArrayDict = {
     "30s": ["30", "Second"],

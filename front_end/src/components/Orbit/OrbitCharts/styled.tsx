@@ -6,5 +6,5 @@ export const ChartWrapper = styled.div`
     flex-direction: column;
     ${componentFill}
     color: white;
-    ${CenterAlignment}
+    align-items: center;
 `;

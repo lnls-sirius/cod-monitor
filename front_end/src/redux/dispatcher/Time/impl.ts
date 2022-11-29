@@ -15,7 +15,7 @@ class TimeDispatcherImpl implements TimeDispatcherInterface{
         store.dispatch(actionsTime.setRef(date.toString()));
     }
 
-    setTimeMode(timeMode: number): void {
+    setTimeMode(timeMode: string): void {
         store.dispatch(actionsTime.setTimeMode(timeMode));
     }
 

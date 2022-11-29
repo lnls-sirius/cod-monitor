@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 
 import DateInput from "../DateInput";
 import DateShow from "../../Date/DateShow";
-import Item from "../../Patterns/Item";
 
-import { countIntervalMode, getDate, setDate } from "../../../controllers/time";
+import { getDate, setDate, setIntervalMode } from "../../../controllers/time";
 import { markers } from "../../../assets/constants/text";
 import { intervalDict } from "../../../assets/constants/date";
 import { StoreInterface } from "../../../redux/storage/store";
@@ -24,7 +23,7 @@ function mapStateToProps(state: StoreInterface){
 }
 
 const defaultProps: DateIntervalInterface = {
-  intervalMode: 0,
+  intervalMode: 'Start',
   start: new Date(),
   end: new Date(),
   refDate: new Date(),
@@ -36,7 +35,7 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
 
   function dateMode(type: string): React.ReactElement {
     // Changes the type of the component
-    let mode: boolean = intervalDict[type][props.intervalMode];
+    let mode: boolean = intervalDict[props.intervalMode][type];
     if(mode){
       return <DateInput
         type={type}
@@ -74,10 +73,13 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
           {dateMode('End')}
       </S.TextWrapper>
       {inputReference()}
-      <Item
-        icon='clock'
-        stateActive={false}
-        action={()=>countIntervalMode(props.intervalMode)}/>
+      <S.SelectTime
+        value={props.intervalMode}
+        onChange={(selec: any)=>setIntervalMode(selec.target.value)}>
+          <option value='Start' label='Start'/>
+          <option value='End' label='End'/>
+          <option value='None' label='None'/>
+      </S.SelectTime>
     </S.TextWrapper>
   );
 };

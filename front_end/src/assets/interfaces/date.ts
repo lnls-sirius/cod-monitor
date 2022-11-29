@@ -23,13 +23,13 @@ export interface DateInfoInterface
 
 export interface IntervalBtnsInterface
     extends BaseDateInterface {
-        intervalMode: number
+        intervalMode: string
         intervalMil: number
 }
 
 export interface DateIntervalInterface
     extends BaseDateInterface, RefInterface {
-        intervalMode: number
+        intervalMode: string
 }
 
 export interface TimeInformation
@@ -45,6 +45,6 @@ export interface IntervalEditInterface
 
 export interface IntervalModeInterface {
     [key: string]: {
-        [key: number]: boolean
+        [key: string]: boolean
     }
 }

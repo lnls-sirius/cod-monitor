@@ -32,11 +32,20 @@ class BaseChart extends Component<any>{
 
   // Create and configure chart component
   componentDidMount(): void {
-    if(this.chartRef.current != null){
-      const options = this.options;
-      this.chart[this.id] = new Chart(
-        this.chartRef.current,
-        { type: "line", data: initData, options });
+    if(this.id == 0){
+      if(this.chartRef.current != null){
+        const options = this.options;
+        this.chart[0] = new Chart(
+          this.chartRef.current,
+          { type: "line", data: initData, options });
+      }
+    }else{
+      if(this.chartRef.current != null){
+        const options = this.options;
+        this.chart[0] = new Chart(
+          this.chartRef.current,
+          { type: "line", data: initData, options });
+      }
     }
   }
 

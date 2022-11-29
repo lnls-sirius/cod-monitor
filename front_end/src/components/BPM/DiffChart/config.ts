@@ -11,11 +11,6 @@ export const optionsDiff: any = {
         point: {
           hoverRadius: 0,
         }
-        // line: {
-        //   cubicInterpolationMode: "monotone",
-        //   stepped: true,
-        //   tension: 0
-        // },
       },
     hover: {
         mode: "nearest",
