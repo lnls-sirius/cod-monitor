@@ -229,4 +229,4 @@ def calc_sign(write_json=False):
         return codData
 
 if __name__ == '__main__':
-    calc_sign()
+    calc_sign(True)
