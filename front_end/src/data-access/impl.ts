@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { DictNumber } from '../assets/interfaces/patterns';
-import { DataAccess, ArchiverData, ArchiverDataPoint, ArchiverListRaw} from "./interface";
+import { DataAccess, ArchiverData, ArchiverDataPoint, ArchiverListRaw, ArchiverRawArray} from "./interface";
 
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
 export const defaultHost = "10.0.38.42";
@@ -43,7 +43,7 @@ export class ArchiverDataAccess implements DataAccess{
   // Parse a list from the values read in Archiver
   private parseDataList(data: ArchiverListRaw): DictNumber {
     const outData: DictNumber = {};
-    Object.entries(data).map(([name, info]: any) => {
+    Object.entries(data).map(([name, info]: ArchiverRawArray) => {
       outData[name] = info.val;
     })
     return outData;
@@ -123,7 +123,7 @@ export class ArchiverDataAccess implements DataAccess{
       this.host = window.location.host.indexOf(":") !== -1 ? window.location.host.split(":")[0] : window.location.host;
     }
 
-    if (window.location.host === "localhost:3000" || window.location.host === "127.0.0.1:3000") {
+    if (window.location.host === "127.0.0.1:3000" || window.location.host === "10.20.21.52:3000") {
       this.host = defaultHost;
       console.log(`DEBUG SERVER. Setting host to ${this.host}`);
     }

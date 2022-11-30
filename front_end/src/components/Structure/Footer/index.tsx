@@ -1,6 +1,6 @@
 import React from "react";
 
-import { footer } from "../../../assets/constants/text";
+import { version } from "../../../assets/constants/text";
 import * as S from './styled';
 
 const Menu: React.FC = (): React.ReactElement => {
@@ -8,9 +8,9 @@ const Menu: React.FC = (): React.ReactElement => {
 
   return (
     <S.FooterWrapper>
-      {footer.text}
+      For further information, contact FAC.
       <br/>
-      {footer.verInfo}
+      {version}
     </S.FooterWrapper>
   );
 };

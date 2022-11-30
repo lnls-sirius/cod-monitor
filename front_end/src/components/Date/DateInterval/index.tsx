@@ -5,7 +5,6 @@ import DateInput from "../DateInput";
 import DateShow from "../../Date/DateShow";
 
 import { getDate, setDate, setIntervalMode } from "../../../controllers/time";
-import { markers } from "../../../assets/constants/text";
 import { intervalDict } from "../../../assets/constants/date";
 import { StoreInterface } from "../../../redux/storage/store";
 import { DateIntervalInterface } from "../../../assets/interfaces/date";
@@ -65,14 +64,13 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
   return(
     <S.TextWrapper>
       <S.TextWrapper>
-        {markers[0]}
+        Marker-1
           {dateMode('Start')}
       </S.TextWrapper>
       <S.TextWrapper>
-        {markers[1]}
+        Marker-2
           {dateMode('End')}
       </S.TextWrapper>
-      {inputReference()}
       <S.SelectTime
         value={props.intervalMode}
         onChange={(selec: any)=>setIntervalMode(selec.target.value)}>
@@ -80,6 +78,7 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
           <option value='End' label='End'/>
           <option value='None' label='None'/>
       </S.SelectTime>
+      {inputReference()}
     </S.TextWrapper>
   );
 };

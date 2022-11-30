@@ -2,7 +2,7 @@
 import { BaseStrArrayDict } from '../interfaces/patterns';
 import { IntervalModeInterface } from '../interfaces/date';
 
-export const intervalDict: IntervalModeInterface = {
+const intervalDict: IntervalModeInterface = {
   'Start': {
     'Start': true,
     'End': false
@@ -17,7 +17,7 @@ export const intervalDict: IntervalModeInterface = {
   }
 }
 
-export const intervals: BaseStrArrayDict = {
+const intervals: BaseStrArrayDict = {
     "30s": ["30", "Second"],
     "1m": ["1", "Minute"],
     "5m": ["5", "Minute"],
@@ -36,4 +36,9 @@ export const intervals: BaseStrArrayDict = {
     "6M": ["6", "Month"],
     "9M": ["9", "Month"],
     "1Y": ["1", "Year"]
+}
+
+export {
+  intervalDict,
+  intervals
 }

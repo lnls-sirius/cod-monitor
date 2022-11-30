@@ -1,9 +1,19 @@
 import { DictState } from "./patterns";
 
-export type DispatchBool = React.Dispatch<React.SetStateAction<boolean>>;
-export type DispatchString = React.Dispatch<React.SetStateAction<string>>;
-export type DispatchDictState = React.Dispatch<React.SetStateAction<DictState>>;
-export type ArrDictState = [string, boolean];
-export type ArrDictArrStr = [string, Array<string>];
-export type DictOrbitData = [string, string, number, number];
-export type OrbitData = [string, string, string, number, number];
+type DispatchBool = React.Dispatch<React.SetStateAction<boolean>>;
+type DispatchString = React.Dispatch<React.SetStateAction<string>>;
+type DispatchDictState = React.Dispatch<React.SetStateAction<DictState>>;
+type ArrDictState = [string, boolean];
+type ArrDictArrStr = [string, Array<string>];
+type DictOrbitData = [string, string, number, number];
+type OrbitData = [string, string, string, number, number];
+
+export type {
+    DispatchBool,
+    DispatchString,
+    DispatchDictState,
+    ArrDictState,
+    ArrDictArrStr,
+    DictOrbitData,
+    OrbitData
+}

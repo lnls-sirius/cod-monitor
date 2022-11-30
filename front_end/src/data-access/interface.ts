@@ -5,6 +5,12 @@ export interface ArchiverDataPoint {
   // status: number;
 }
 
+export type ArchiverRawArray = [string, {
+  severity: number,
+  val: number,
+  nanos: number
+}]
+
 export interface ArchiverListRaw {
   [key: string]:
     {

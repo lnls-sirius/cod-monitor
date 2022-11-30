@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import Item from "../../Patterns/Item";
 import { magnet_types } from "../../../assets/constants/patterns";
-import { filter_txt } from "../../../assets/constants/text";
 import { DictState } from "../../../assets/interfaces/patterns";
 import { FilterInterface } from "../../../assets/interfaces/orbit";
 import * as S from './styled';
@@ -55,7 +54,7 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
   return(
     <S.FilterWrapper>
       <S.FilterRow>
-        {filter_txt['main']}
+        Filters
         <S.NameFilter type='text'
           value={nameFilter}
           onChange={(event)=>setNameFilter(
@@ -63,13 +62,13 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
           onKeyDown={submitHandler}/>
       </S.FilterRow>
       <S.FilterRow>
-        {filter_txt['magnet']}
+        Magnets:
         {filterMagnetBtns()}
         <Item
           icon='chart'
           action={()=>filterItem('chart')}
           stateActive={true}/>
-        {filter_txt['axis']}
+        Axis:
         {filterAxisBtn()}
       </S.FilterRow>
     </S.FilterWrapper>

@@ -10,7 +10,7 @@ function addBPMAlert(){
     BpmDispatcher.setChangeBpm(true);
 }
 
-export const modalInfo: {[key: string]: ModalInterface} = {
+const modalInfo: {[key: string]: ModalInterface} = {
     "BPM": {
         title: "Add BPM",
         component: <AddBPM/>,
@@ -51,10 +51,15 @@ export const modalInfo: {[key: string]: ModalInterface} = {
         title: "Changing Date",
         component: <Message/>,
         icon: 'clock'
+    },
+    "Err_Server": {
+        title: "Server Error",
+        component: <Message/>,
+        icon: 'error'
     }
 }
 
-export const bpmGroups: BaseStrArrayDict = {
+const bpmGroups: BaseStrArrayDict = {
     bpmNumber: [
         '01', '02', '03', '04', '05',
         '06', '07', '08', '09', '10',
@@ -70,6 +75,12 @@ export const bpmGroups: BaseStrArrayDict = {
     ]
 }
 
-export const magnet_types: Array<string> = [
+const magnet_types: Array<string> = [
     'C', 'D', 'Q', 'S'
 ]
+
+export {
+    modalInfo,
+    bpmGroups,
+    magnet_types
+}

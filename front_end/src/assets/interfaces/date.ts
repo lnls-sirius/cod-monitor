@@ -1,50 +1,63 @@
-export interface GetDateInterface {
+interface GetDateInterface {
     date: Date
 }
 
-export interface SetDateInterface extends GetDateInterface {
+interface SetDateInterface extends GetDateInterface {
     type: string
     setDate: (type: string, date: Date, id?: string)=>void
 }
 
-export interface BaseDateInterface {
+interface BaseDateInterface {
     start: Date
     end: Date
 }
 
-export interface RefInterface {
+interface RefInterface {
     refDate: Date
     timeRef?: boolean
 }
 
-export interface DateInfoInterface
+interface DateInfoInterface
     extends BaseDateInterface, RefInterface{
 }
 
-export interface IntervalBtnsInterface
+interface IntervalBtnsInterface
     extends BaseDateInterface {
         intervalMode: string
         intervalMil: number
 }
 
-export interface DateIntervalInterface
+interface DateIntervalInterface
     extends BaseDateInterface, RefInterface {
         intervalMode: string
 }
 
-export interface TimeInformation
+interface TimeInformation
     extends BaseDateInterface{
         refDate: Date
         changeTime: boolean
 }
 
-export interface IntervalEditInterface
+interface IntervalEditInterface
     extends BaseDateInterface{
         id: string
 }
 
-export interface IntervalModeInterface {
+interface IntervalModeInterface {
     [key: string]: {
         [key: string]: boolean
     }
+}
+
+export type {
+    GetDateInterface,
+    SetDateInterface,
+    BaseDateInterface,
+    RefInterface,
+    DateInfoInterface,
+    IntervalBtnsInterface,
+    DateIntervalInterface,
+    TimeInformation,
+    IntervalEditInterface,
+    IntervalModeInterface
 }

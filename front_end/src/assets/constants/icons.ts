@@ -1,13 +1,13 @@
 // File that import all the icons used
-import { iconListInterface } from "../interfaces/patterns";
+import { IconListInterface } from "../interfaces/patterns";
 
 import {
     faClock, faPencilAlt, faPlus,
     faC, faD, faQ, faS, faTrashCan, faY, faX,
-    faListCheck, faEye, faXmark, faLineChart
+    faListCheck, faEye, faXmark, faLineChart, faExclamationCircle
 } from "@fortawesome/free-solid-svg-icons";
 
-export const iconList: iconListInterface = {
+export const iconList: IconListInterface = {
     'clock': faClock,
     'pencil': faPencilAlt,
     'plus': faPlus,
@@ -21,5 +21,6 @@ export const iconList: iconListInterface = {
     'trash': faTrashCan,
     'list': faListCheck,
     'eye': faEye,
-    'chart': faLineChart
+    'chart': faLineChart,
+    'error': faExclamationCircle
 }

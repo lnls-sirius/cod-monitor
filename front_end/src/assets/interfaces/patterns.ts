@@ -4,33 +4,33 @@ import { ChangeBpmInterface } from "./bpm";
 import { ChangeOrbitInterface } from "./orbit";
 import { DispatchBool } from "./types";
 
-export interface BasicLed{
+interface BasicLed{
     id: string;
     mountData: (setFunction: DispatchBool, id: string)=>void;
     updateData: (state: boolean, id: string)=>void;
 }
 
-export interface OnMount
+interface OnMount
     extends BasicLed, StateInterface{
 }
 
-export interface SetterDictState {
+interface SetterDictState {
     [key: string]: DispatchBool;
 }
 
-export interface StateInterface {
+interface StateInterface {
     state: boolean;
 }
 
-export interface iconListInterface{
+interface IconListInterface{
     [key: string]: IconDefinition
 }
 
-export interface IconStyle extends StateInterface {
+interface IconStyle extends StateInterface {
     small: boolean | undefined;
 }
 
-export interface ActionItem {
+interface ActionItem {
     action: ()=>void;
     icon: string;
     stateActive: boolean;
@@ -38,19 +38,19 @@ export interface ActionItem {
     isSmall?: boolean;
 }
 
-export interface ModalInterface {
+interface ModalInterface {
     title: string;
     component: React.ReactElement;
     icon: string;
     close?: () => void;
 }
 
-export interface DatePointInterface {
+interface DatePointInterface {
     x: Date;
     y: number;
 }
 
-export interface DatasetInterface{
+interface DatasetInterface{
     data: DatePointInterface[];
     xAxisID: string;
     label: string;
@@ -58,33 +58,53 @@ export interface DatasetInterface{
     backgroundColor?: string;
 }
 
-export interface ChildrenInterface{
+interface ChildrenInterface{
     children: React.ReactNode;
 }
 
-export interface LegendInterface extends ChildrenInterface{
+interface LegendInterface extends ChildrenInterface{
     color: string;
     isVisible: boolean;
     deleteAction: null | (() => void);
     visibleAction: () => void;
 }
 
-export interface ChangeInterface
+interface ChangeInterface
     extends ChangeBpmInterface, ChangeOrbitInterface{
 }
 
-export interface DictState {
+interface DictState {
     [key: string]: boolean;
 }
 
-export interface DictString {
+interface DictString {
     [key: string]: string;
 }
 
-export interface DictNumber {
+interface DictNumber {
     [key: string]: number;
 }
 
-export interface BaseStrArrayDict {
+interface BaseStrArrayDict {
     [key: string]: Array<string>
+}
+
+export type {
+    BasicLed,
+    OnMount,
+    SetterDictState,
+    StateInterface,
+    IconListInterface,
+    IconStyle,
+    ActionItem,
+    ModalInterface,
+    DatePointInterface,
+    DatasetInterface,
+    ChildrenInterface,
+    LegendInterface,
+    ChangeInterface,
+    DictState,
+    DictString,
+    DictNumber,
+    BaseStrArrayDict
 }

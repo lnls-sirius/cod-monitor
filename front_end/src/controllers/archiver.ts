@@ -2,6 +2,8 @@ import { SimulationData } from "../assets/interfaces/orbit";
 import { ArchiverDataPoint } from "../data-access/interface";
 import { fetchSimulationData } from "./simulation";
 import archInterface from "../data-access";
+import { BpmDispatcher, OrbitDispatcher, TimeDispatcher } from "../redux/dispatcher";
+import control from "./Modals";
 
 // Get the closest value of the position difference from a data point array,
 // based on a reference date
@@ -52,5 +54,9 @@ export async function compSignatures(start: Date, end: Date): Promise<undefined|
     return data;
   } catch (e) {
     console.log("Something went wrong!!" + e);
+    control.setAlert("Err_Server");
+    TimeDispatcher.setChangeTime(false);
+    BpmDispatcher.setChangeBpm(false);
+    OrbitDispatcher.setChangeOrbit(false);
   }
 }
