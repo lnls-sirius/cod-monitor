@@ -4,7 +4,7 @@ import numpy as np
 from scipy.interpolate import interp1d
 from siriuspy.clientarch import PVDataSet, Time
 from siriuspy.clientconfigdb import ConfigDBDocument
-import calc_signatures
+# import calc_signatures
 
 # Dictionary of families
 family_dict = {

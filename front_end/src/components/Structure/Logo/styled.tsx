@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { colors, properties } from "../../../assets/style/themes";
 
 export const LogoWrapper = styled.div`
-  @media (max-width: 925px) {
+  @media (max-width: 1000px) {
     display: none;
   }
   display: flex;

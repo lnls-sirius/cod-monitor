@@ -11,6 +11,10 @@ export const colors = {
             normal: 'radial-gradient(#00b9ff, #006bfb)',
             hover: 'radial-gradient(#006bfb, #0053c4)',
             active: 'radial-gradient(#006bfb, #00357c)'
+        },
+        btn_plain: {
+            normal: '#006fc1',
+            hover: '#001dc1'
         }
     },
     led: {

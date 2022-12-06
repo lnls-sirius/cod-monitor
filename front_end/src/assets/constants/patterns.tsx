@@ -1,7 +1,8 @@
 // File that contains the infomation for the modals and groups
 import control from "../../controllers/Modals";
-import { BaseStrArrayDict, ModalInterface } from "../interfaces/patterns"
+import { BaseStrArrayDict, DictString, ModalInterface } from "../interfaces/patterns"
 import AddBPM from "../../components/BPM/AddBPM";
+import Info from "../../components/Structure/Info";
 import Message from "../../components/Patterns/Message";
 import { BpmDispatcher } from "../../redux/dispatcher";
 
@@ -16,6 +17,16 @@ const modalInfo: {[key: string]: ModalInterface} = {
         component: <AddBPM/>,
         icon: 'list',
         close: addBPMAlert
+    },
+    "Info_BPM": {
+        title: "BPM Drift Page Information",
+        component: <Info type="BPM"/>,
+        icon: 'info'
+    },
+    "Info_Orbit": {
+        title: "Orbit Drift Page Information",
+        component: <Info type="Orbit"/>,
+        icon: 'info'
     },
     "Al_Add_BPM": {
         title: "BPM Modification",
@@ -71,7 +82,7 @@ const bpmGroups: BaseStrArrayDict = {
         'C2', 'C3-1', 'C3-2', 'C4'
     ],
     axis: [
-        'X', 'Y', 'Couple'
+        'X', 'Y', 'X & Y'
     ]
 }
 
@@ -79,8 +90,16 @@ const magnet_types: Array<string> = [
     'C', 'D', 'Q', 'S'
 ]
 
+const magnet_names: DictString = {
+    'C': "Corrector", 
+    'D': "Dipole",
+    'Q': "Quadrupole", 
+    'S': "Sextupole"
+}
+
 export {
     modalInfo,
     bpmGroups,
-    magnet_types
+    magnet_types,
+    magnet_names
 }

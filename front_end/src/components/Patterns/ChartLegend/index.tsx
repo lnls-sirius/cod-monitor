@@ -23,7 +23,9 @@ const ChartLegend: React.FC<LegendInterface> = (props) => {
         <Item
           icon='eye'
           stateActive={false}
-          action={props.visibleAction}/>)
+          action={props.visibleAction}
+          tooltip={
+            "Toggle element's chart visibility"}/>)
     }
     return ''
   }
@@ -35,7 +37,9 @@ const ChartLegend: React.FC<LegendInterface> = (props) => {
         <Item
           icon='trash'
           stateActive={false}
-          action={props.deleteAction}/>)
+          action={props.deleteAction}
+          tooltip={
+            "Remove element from the chart"}/>)
     }
     return ''
   }

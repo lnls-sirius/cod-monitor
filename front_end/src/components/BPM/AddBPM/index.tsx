@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import BPMLed from "../BPMLed";
+import Tooltip from "../../Patterns/Tooltip";
 import { changeStates } from "../../../controllers/patterns";
 import { saveBPMList } from "../../../controllers/bpm";
 import { bpmGroups } from "../../../assets/constants/patterns";
@@ -95,10 +96,13 @@ const AddBPM: React.FC = () => {
     return bpmGroups.bpmNumber.map((number: string)=>{
       return(
         <td>
-          <S.Header
-            onClick={() => groupSelect(number)}>
-              {number}
-          </S.Header>
+          <Tooltip
+              text={"Select all the BPMs in the section "+number}>
+            <S.Header
+              onClick={() => groupSelect(number)}>
+                {number}
+            </S.Header>
+          </Tooltip>
         </td>
       )
     })
@@ -114,14 +118,19 @@ const AddBPM: React.FC = () => {
       bpmName = "SI-"+number+name+":DI-BPM";
     }
 
-    return <BPMLed
-      key={bpmName}
-      id={bpmName}
-      axis={axis}
-      ledProps={ledProps}
-      othAxis={othAxis}
-      mountData={onChildMount}
-      updateData={onChildUpdate}/>;
+    return (
+      <Tooltip
+         text={bpmName}>
+        <BPMLed
+          key={bpmName}
+          id={bpmName}
+          axis={axis}
+          ledProps={ledProps}
+          othAxis={othAxis}
+          mountData={onChildMount}
+          updateData={onChildUpdate}/>
+      </Tooltip>
+    );
   }
 
   // Build the BPM table with all the headers and leds

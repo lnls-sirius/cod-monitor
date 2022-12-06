@@ -25,10 +25,8 @@ const ModalStyles: any = {
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            min-width: 1em;
         `,
         'body': css`
-            min-width: 58em;
             padding: 1.5em;
         `,
         'header': css`
@@ -70,7 +68,7 @@ const ModalStyles: any = {
 }
 
 export const ModalContainer = styled.div`
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     ${(props: { styling: string, show: boolean})=>ModalStyles[props.styling].container};
     animation: ${(props: { styling: string, show: boolean})=>props.show?fadeIn:''} 0.3s linear;

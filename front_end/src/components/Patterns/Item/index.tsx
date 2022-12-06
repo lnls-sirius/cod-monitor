@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Tooltip from "../Tooltip";
 import { iconList } from "../../../assets/constants/icons";
 import { ActionItem} from "../../../assets/interfaces/patterns";
 import * as S from './styled';
@@ -9,7 +9,8 @@ const defaultProps: ActionItem = {
   icon: 'plus',
   stateActive: false,
   initState: false,
-  isSmall: false
+  isSmall: false,
+  tooltip: ''
 }
 
 const Item: React.FC<ActionItem> = (props): React.ReactElement => {
@@ -32,11 +33,14 @@ const Item: React.FC<ActionItem> = (props): React.ReactElement => {
 
   return (
     <S.ItemWrapper>
-      <S.Icon
-        icon={iconList[props.icon]}
-        onClick={() =>{clickHandler()}}
-        state={state}
-        small={props.isSmall}/>
+      <Tooltip
+          text={props.tooltip}>
+        <S.Icon
+          icon={iconList[props.icon]}
+          onClick={() =>{clickHandler()}}
+          state={state}
+          small={props.isSmall}/>
+      </Tooltip>
     </S.ItemWrapper>
   );
 };

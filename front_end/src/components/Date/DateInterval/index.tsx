@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 
 import DateInput from "../DateInput";
 import DateShow from "../../Date/DateShow";
-
+import Tooltip from "../../Patterns/Tooltip";
 import { getDate, setDate, setIntervalMode } from "../../../controllers/time";
 import { intervalDict } from "../../../assets/constants/date";
 import { StoreInterface } from "../../../redux/storage/store";
 import { DateIntervalInterface } from "../../../assets/interfaces/date";
-
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
@@ -62,24 +61,31 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
   }
 
   return(
-    <S.TextWrapper>
-      <S.TextWrapper>
-        Marker-1
-          {dateMode('Start')}
-      </S.TextWrapper>
-      <S.TextWrapper>
-        Marker-2
-          {dateMode('End')}
-      </S.TextWrapper>
-      <S.SelectTime
-        value={props.intervalMode}
-        onChange={(selec: any)=>setIntervalMode(selec.target.value)}>
-          <option value='Start' label='Start'/>
-          <option value='End' label='End'/>
-          <option value='None' label='None'/>
-      </S.SelectTime>
-      {inputReference()}
-    </S.TextWrapper>
+    <S.MenuWrapper>
+      <S.DateWrapper>
+        <S.TextWrapper>
+          Marker-1
+            {dateMode('Start')}
+        </S.TextWrapper>
+        <S.TextWrapper>
+          Marker-2
+            {dateMode('End')}
+        </S.TextWrapper>
+        <Tooltip
+            text="Change the date reference of the interval buttons">
+          <S.SelectTime
+            value={props.intervalMode}
+            onChange={(selec: any)=>setIntervalMode(selec.target.value)}>
+              <S.Option value='Start' label='Start'/>
+              <S.Option value='End' label='End'/>
+              <S.Option value='None' label='None'/>
+          </S.SelectTime>
+        </Tooltip>
+      </S.DateWrapper>
+      <S.DateWrapper>
+        {inputReference()}
+      </S.DateWrapper>
+    </S.MenuWrapper>
   );
 };
 

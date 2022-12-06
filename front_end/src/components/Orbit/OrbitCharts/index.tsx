@@ -2,6 +2,7 @@ import React, { createRef, RefObject, useEffect } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
 
+import ListSignatures from "../ListSignatures";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { fetchSignatureOrbit } from "../../../controllers/simulation";
@@ -13,7 +14,6 @@ import { ChartOrbitInterface, SimulationData } from "../../../assets/interfaces/
 import { ArrDictArrStr } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
-import ListSignatures from "../ListSignatures";
 
 function mapStateToProps(state: StoreInterface){
   const {start_date, end_date, change_time} = state.time;

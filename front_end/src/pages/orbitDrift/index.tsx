@@ -3,10 +3,13 @@ import DateInterval from "../../components/Date/DateInterval";
 import Interval from "../../components/Date/Interval";
 import OrbitCharts from "../../components/Orbit/OrbitCharts";
 import SignatureComp from "../../components/Orbit/SignatureComp";
+import Item from "../../components/Patterns/Item";
 import Loading from "../../components/Patterns/Loading";
 import Modals from "../../components/Patterns/Modals";
 import Footer from "../../components/Structure/Footer";
 import Header from "../../components/Structure/Header";
+import control from "../../controllers/Modals";
+import { modalInfo } from "../../assets/constants/patterns";
 import * as S from './styled';
 
 const OrbitDrift: React.FC = () => {
@@ -22,6 +25,12 @@ const OrbitDrift: React.FC = () => {
               <Interval />
             </S.HorizontalWrapper>
             <S.HorizontalWrapper>
+              <Item 
+                icon={modalInfo['Info_Orbit'].icon} 
+                stateActive={false}
+                action={()=>control.setActionModal('Info_Orbit')}
+                tooltip={
+                  "Show a tutorial about BPM Drift Interface"}/>  
               <DateInterval/>
             </S.HorizontalWrapper>
           </S.VerticalWrapper>

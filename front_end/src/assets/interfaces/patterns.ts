@@ -34,6 +34,7 @@ interface ActionItem {
     action: ()=>void;
     icon: string;
     stateActive: boolean;
+    tooltip: string;
     initState?: boolean;
     isSmall?: boolean;
 }
@@ -62,6 +63,16 @@ interface ChildrenInterface{
     children: React.ReactNode;
 }
 
+interface HeaderInterface 
+    extends ChildrenInterface{
+        timeRef: boolean    
+}
+
+interface TooltipInterface 
+    extends ChildrenInterface{
+        text: string    
+}
+
 interface LegendInterface extends ChildrenInterface{
     color: string;
     isVisible: boolean;
@@ -71,6 +82,10 @@ interface LegendInterface extends ChildrenInterface{
 
 interface ChangeInterface
     extends ChangeBpmInterface, ChangeOrbitInterface{
+}
+
+interface InfoTypeInterface {
+    type: string;
 }
 
 interface DictState {
@@ -100,9 +115,12 @@ export type {
     ModalInterface,
     DatePointInterface,
     DatasetInterface,
+    HeaderInterface,
     ChildrenInterface,
     LegendInterface,
+    TooltipInterface,
     ChangeInterface,
+    InfoTypeInterface,
     DictState,
     DictString,
     DictNumber,

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { AnimButton2 } from "../../../assets/style/gen_styles";
 
 export const ItemWrapper = styled.div`
-    @media (max-width: 925px) {
+    @media (max-width: 1000px) {
         display: none;
     }
     display: flex;

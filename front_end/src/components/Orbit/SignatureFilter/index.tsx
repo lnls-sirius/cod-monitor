@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Item from "../../Patterns/Item";
-import { magnet_types } from "../../../assets/constants/patterns";
+import { magnet_names, magnet_types } from "../../../assets/constants/patterns";
 import { DictState } from "../../../assets/interfaces/patterns";
 import { FilterInterface } from "../../../assets/interfaces/orbit";
 import * as S from './styled';
@@ -37,7 +37,10 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
         icon={mag_type}
         action={()=>filterItem(mag_type)}
         stateActive={true}
-        initState={true}/>
+        initState={true}
+        tooltip={
+          "Toggle the visibility of the signatures of the "+
+          magnet_names[mag_type]+" Magnets"}/>
     })
   }
 
@@ -47,7 +50,10 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
         icon={axis}
         action={()=>filterItem(axis)}
         stateActive={true}
-        initState={true}/>
+        initState={true}
+        tooltip={
+          "Toggle the visibility of signatures with kick on the "+
+          axis+" axis"}/>
     })
   }
 
@@ -67,7 +73,9 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
         <Item
           icon='chart'
           action={()=>filterItem('chart')}
-          stateActive={true}/>
+          stateActive={true}
+          tooltip={
+            "Show only selected signatures"}/>
         Axis:
         {filterAxisBtn()}
       </S.FilterRow>

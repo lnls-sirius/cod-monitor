@@ -19,16 +19,26 @@ const BpmDrift: React.FC = () => {
     <S.AppLayout>
       <Loading/>
       <Modals/>
-      <Header>
+      <Header>      
         <S.VerticalWrapper>
           <S.HorizontalWrapper>
             <Interval/>
           </S.HorizontalWrapper>
           <S.HorizontalWrapper>
+            <S.MenuWrapper>
+              <Item 
+                icon={modalInfo['Info_BPM'].icon} 
+                stateActive={false}
+                action={()=>control.setActionModal('Info_BPM')}
+                tooltip={
+                  "Show a tutorial about BPM Drift Interface"}/>  
+            </S.MenuWrapper>
             <Item
-              icon={modalInfo['BPM'].icon}
-              stateActive={false}
-              action={()=>control.setActionModal('BPM')}/>
+                icon={modalInfo['BPM'].icon}
+                stateActive={false}
+                action={()=>control.setActionModal('BPM')}
+                tooltip={
+                  "Open a window for the selection of BPMs"}/>
             <DateInterval timeRef={true}/>
           </S.HorizontalWrapper>
         </S.VerticalWrapper>

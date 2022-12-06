@@ -4,7 +4,8 @@ import { IconListInterface } from "../interfaces/patterns";
 import {
     faClock, faPencilAlt, faPlus,
     faC, faD, faQ, faS, faTrashCan, faY, faX,
-    faListCheck, faEye, faXmark, faLineChart, faExclamationCircle
+    faListCheck, faEye, faXmark, faLineChart, 
+    faExclamationCircle, faInfo
 } from "@fortawesome/free-solid-svg-icons";
 
 export const iconList: IconListInterface = {
@@ -22,5 +23,6 @@ export const iconList: IconListInterface = {
     'list': faListCheck,
     'eye': faEye,
     'chart': faLineChart,
-    'error': faExclamationCircle
+    'error': faExclamationCircle,
+    'info': faInfo
 }

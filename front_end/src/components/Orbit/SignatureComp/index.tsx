@@ -148,7 +148,9 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
             action={()=>signToChart(
               properties[0], properties[2], properties[1][0])}
             stateActive={false}
-            isSmall={true}/>
+            isSmall={true}
+            tooltip={
+              "Add Signature "+properties[0]+" to Chart"}/>
         </S.Cell>);
     }
     return (
@@ -157,7 +159,9 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
         isSmall={true}
         stateActive={false}
         action={() => deleteSignature(
-          properties[0]+properties[2], props.sign_list)}/>
+          properties[0]+properties[2], props.sign_list)}
+        tooltip={
+          "Remove Signature "+properties[0]+" from Chart"}/>
     );
   }
 
