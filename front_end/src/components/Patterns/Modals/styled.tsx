@@ -67,21 +67,21 @@ const ModalStyles: any = {
     }
 }
 
-export const ModalContainer = styled.div`
+const ModalContainer = styled.div`
     z-index: 2;
     position: fixed;
     ${(props: { styling: string, show: boolean})=>ModalStyles[props.styling].container};
     animation: ${(props: { styling: string, show: boolean})=>props.show?fadeIn:''} 0.3s linear;
 `
 
-export const Content = styled.div`
+const Content = styled.div`
     position: fixed;
     border-radius: ${properties.radius.medium};
     ${(props: { styling: string; }) =>
         ModalStyles[props.styling].content}
 `
 
-export const Header = styled.div`
+const Header = styled.div`
     ${(props: { styling: string; }) =>
         ModalStyles[props.styling].header};
     color: ${colors.txt.primary};
@@ -91,15 +91,23 @@ export const Header = styled.div`
     border-radius: ${properties.radius.medium} ${properties.radius.medium} 0px 0px;
 `;
 
-export const Body = styled.div`
+const Body = styled.div`
     ${(props: { styling: string; }) =>
         ModalStyles[props.styling].close};
     ${CenterAlignment}
 `;
 
-export const Close = styled(FontAwesomeIcon)`
+const Close = styled(FontAwesomeIcon)`
     position: fixed;
     ${(props: { styling: string; }) =>
         ModalStyles[props.styling].close};
     ${AnimButton}
 `
+
+export {
+    ModalContainer,
+    Content,
+    Header,
+    Body,
+    Close
+}

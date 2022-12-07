@@ -1,4 +1,4 @@
-import { DataAccessFactory } from "./interface";
+import { DataAccessFactory } from "../assets/interfaces/data_access";
 import { ArchiverDataAccess } from "./impl";
 
 const ArchiverDataAccessFactory: DataAccessFactory = () => {

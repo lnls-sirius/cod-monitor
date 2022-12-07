@@ -1,5 +1,5 @@
 // General styling used
-import styled, { css } from "styled-components";
+import { css } from "styled-components";
 import { StateInterface, IconStyle } from "../interfaces/patterns";
 import { colors, fonts, properties } from "./themes";
 
@@ -86,11 +86,27 @@ const IconPattern = css`
                 colors.btns.btn1.normal)};
 `;
 
+const VerticalOrient = css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    ${CenterAlignment}
+`
+
+const HorizontalOrient = css`
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    ${CenterAlignment}
+`
+
 export {
     DateTheme,
     CenterAlignment,
     AnimButton,
     AnimButton2,
     componentFill,
-    IconPattern
+    IconPattern,
+    VerticalOrient,
+    HorizontalOrient
 }

@@ -4,14 +4,19 @@ import { AnimButton, IconPattern, CenterAlignment } from "../../../assets/style/
 import { fonts } from "../../../assets/style/themes";
 
 
-export const ItemWrapper = styled.div`
+const ItemWrapper = styled.div`
     display: flex;
     ${CenterAlignment}
     padding: 0.25em;
     font-family: ${fonts.primary};
 `;
 
-export const Icon = styled(FontAwesomeIcon)`
+const Icon = styled(FontAwesomeIcon)`
     ${IconPattern}
     ${AnimButton}
 `;
+
+export {
+    ItemWrapper,
+    Icon
+}

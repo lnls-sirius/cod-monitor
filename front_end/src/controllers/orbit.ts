@@ -6,7 +6,7 @@ import { BaseStrArrayDict } from "../assets/interfaces/patterns";
 
 
 // Build the dataset for the orbit charts
-export function buildDatasetOrbit(dataList: any): Array<any>{
+function buildDatasetOrbit(dataList: any): Array<any>{
     return dataList.map((sign_data: any, idx: number) => {
         return {
         x: formatBPMName(pos[idx]),
@@ -16,7 +16,7 @@ export function buildDatasetOrbit(dataList: any): Array<any>{
 }
 
 // Add signature to the selected signature list
-export function setSignature(id: string, element_info: any, list: BaseStrArrayDict){
+function setSignature(id: string, element_info: any, list: BaseStrArrayDict){
     if (id != undefined){
         list[id] = element_info;
         control.setAlert('Al_Add_Sign');
@@ -26,7 +26,7 @@ export function setSignature(id: string, element_info: any, list: BaseStrArrayDi
 }
 
 // Remove signature from the selected signature list
-export function deleteSignature(id: string, list: BaseStrArrayDict): void {
+function deleteSignature(id: string, list: BaseStrArrayDict): void {
     delete list[id];
     control.setAlert('Al_Rem_Sign');
     OrbitDispatcher.setSignatureListInterface(list);
@@ -34,7 +34,7 @@ export function deleteSignature(id: string, list: BaseStrArrayDict): void {
 }
 
 // Toggle signature visibility
-export function visibleSignature(id: string, list: BaseStrArrayDict): void {
+function visibleSignature(id: string, list: BaseStrArrayDict): void {
     let isVisible: boolean = (list[id][3] === 'true');
     list[id][3] = (!isVisible).toString();
     control.setAlert('Vis_Sign');
@@ -43,7 +43,14 @@ export function visibleSignature(id: string, list: BaseStrArrayDict): void {
 }
 
 // Remove change flag of Orbit
-export function unsetOrbitChange(): void {
+function unsetOrbitChange(): void {
   OrbitDispatcher.setChangeOrbit(false);
 }
 
+export {
+    buildDatasetOrbit,
+    setSignature,
+    deleteSignature,
+    visibleSignature,
+    unsetOrbitChange
+}

@@ -18,7 +18,7 @@ const BounceAnimation = keyframes`
   }
 `
 
-export const LoadingWrapper = styled.div`
+const LoadingWrapper = styled.div`
   display: flex;
   height: 3rem;
   z-index: 2;
@@ -27,7 +27,7 @@ export const LoadingWrapper = styled.div`
   top: 50%;
 `
 
-export const Circle = styled.div`
+const Circle = styled.div`
   margin: 5px;
   width: 1rem;
   height: 1rem;
@@ -36,3 +36,8 @@ export const Circle = styled.div`
   animation: ${BounceAnimation} 1.5s linear infinite;
   animation-delay: ${(props: { delay: string; }) => props.delay};
 `
+
+export {
+  LoadingWrapper,
+  Circle
+}

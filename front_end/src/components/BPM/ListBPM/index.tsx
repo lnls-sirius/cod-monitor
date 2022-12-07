@@ -46,9 +46,9 @@ const ListBPM: React.FC<ActiveListInterface> = (props) => {
   }
 
   return(
-    <S.Wrapper>
+    <S.ListWrapper>
       {listAllBpm()}
-    </S.Wrapper>
+    </S.ListWrapper>
   );
 };
 

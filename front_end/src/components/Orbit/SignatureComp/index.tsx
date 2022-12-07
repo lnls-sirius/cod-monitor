@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import Item from "../../Patterns/Item";
 import SignatureFilter from "../SignatureFilter";
-import { compSignatures } from "../../../controllers/archiver";
+import { getSignatures } from "../../../controllers/archiver";
 import { deleteSignature, setSignature } from "../../../controllers/orbit";
 import { sortList } from "../../../controllers/patterns";
 import { DictState } from "../../../assets/interfaces/patterns";
@@ -48,7 +48,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
 
   // Update the list of signatures
   async function updateComparisonList(): Promise<void> {
-    const simulationResult: SimulationData|undefined = await compSignatures(props.start, props.end);
+    const simulationResult: SimulationData|undefined = await getSignatures(props.start, props.end);
     if(simulationResult != undefined){
       let sortedList: Array<OrbitData> = [];
       Object.entries(simulationResult).map(
@@ -142,7 +142,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   function showAddToChart(properties: OrbitData, inChart: boolean): React.ReactElement{
     if(!inChart){
       return(
-        <S.Cell>
+        <td>
           <Item
             icon='plus'
             action={()=>signToChart(
@@ -151,7 +151,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
             isSmall={true}
             tooltip={
               "Add Signature "+properties[0]+" to Chart"}/>
-        </S.Cell>);
+        </td>);
     }
     return (
       <Item
@@ -174,12 +174,12 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     }
     return (
       <S.Row key={id_name} inChart={inChart}>
-        <S.Cell>{index}</S.Cell>
-        <S.Cell>{properties[0]}</S.Cell>
-        <S.Cell>{properties[1]}</S.Cell>
-        <S.Cell>{properties[2]}</S.Cell>
-        <S.Cell>{properties[3].toFixed(4)}</S.Cell>
-        <S.Cell>{properties[4].toFixed(4)}</S.Cell>
+        <td>{index}</td>
+        <td>{properties[0]}</td>
+        <td>{properties[1]}</td>
+        <td>{properties[2]}</td>
+        <td>{properties[3].toFixed(4)}</td>
+        <td>{properties[4].toFixed(4)}</td>
         {showAddToChart(properties, inChart)}
       </S.Row>
     );

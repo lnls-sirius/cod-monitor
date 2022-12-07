@@ -13,7 +13,7 @@ import { changeDateClick } from "../../../controllers/time";
 import { optionsDiff } from "./config";
 import { DatasetInterface, DatePointInterface } from "../../../assets/interfaces/patterns";
 import { ChartDiffProperties } from "../../../assets/interfaces/bpm";
-import { ArchiverDataPoint } from "../../../data-access/interface";
+import { ArchiverDataPoint } from "../../../assets/interfaces/data_access";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
 

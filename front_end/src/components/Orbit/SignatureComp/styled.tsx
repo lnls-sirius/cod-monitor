@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { AnimButton, CenterAlignment, componentFill } from "../../../assets/style/gen_styles";
 import { colors, fonts, properties } from "../../../assets/style/themes";
 
-export const SignatureWrapper = styled.div`
+const SignatureWrapper = styled.div`
     display: flex;
     flex-direction: column;
     ${componentFill}
@@ -11,7 +11,7 @@ export const SignatureWrapper = styled.div`
     justify-content: flex-start;
 `;
 
-export const TableWrapper = styled.div`
+const TableWrapper = styled.div`
     display: flex;
     width: 95%;
     max-height: 150vh;
@@ -20,7 +20,7 @@ export const TableWrapper = styled.div`
     background-image: ${colors.bg.tertiary};
 `;
 
-export const Table = styled.table`
+const Table = styled.table`
     width: 100%;
     padding: 1em 0.5em;
     border-spacing: 0em 0.25em;
@@ -29,7 +29,7 @@ export const Table = styled.table`
     font-family: ${fonts.primary};
 `;
 
-export const Row = styled.tr`
+const Row = styled.tr`
     background-image: ${
         (props: { inChart: boolean; }) =>
         props.inChart?colors.bg.secondary_inac:colors.bg.transparent};
@@ -38,12 +38,17 @@ export const Row = styled.tr`
     }
 `;
 
-export const Cell = styled.td`
-`;
-
-export const Header = styled.button`
+const Header = styled.button`
     background: ${colors.btns.btn1.normal};
     padding: .08rem .8rem;
     margin: 0.5em 0em;
     ${AnimButton}
 `;
+
+export {
+    SignatureWrapper,
+    TableWrapper,
+    Table,
+    Row,
+    Header
+}

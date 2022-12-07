@@ -14,14 +14,16 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
     return (
       <S.GroupWrapper>
         <S.GroupWrapper>
-          This web interface is used for the visualization of the 
+          <S.Tab/>This web interface is used for the visualization of the 
           variation of the position of a BPM relative to a selected date,
           this variation which is called Difference function.
         </S.GroupWrapper>
         <S.GroupWrapper>
-          Difference Function (diff(x))
           <ul>
-            diff(x) = f(x) - f(k)
+            <S.Highlight>
+              diff(x) = f(x) - f(k)
+            </S.Highlight>
+            <li>diff(x): Difference Function</li>
             <li>f(x): Values obtained of the PV from the Archiver</li>
             <li>x: Date (Varying from the Start date to the End date)</li>
             <li>k: Reference date</li>  
@@ -34,16 +36,11 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
     return (
       <S.GroupWrapper>
         <S.GroupWrapper>
-          This web interface is used for the visualization of the
+          <S.Tab/>This web interface is used for the visualization of the
           disturbed closed orbits (COD) in the axis X and Y 
-          between two dates chosen by the user and compare 
+          between two dates chosen by the user and compare, by Inner Product, 
           several simulated signatures with the
           COD rebuilt from the Storage Ring.
-        </S.GroupWrapper>
-        <S.GroupWrapper>
-          Signatures are simulated applying a kick to the X or the Y
-          axis of Correctors, Dipoles, Quadrupoles and Sextupoles,
-          obtaining at the end of the simulation a CODX and a CODY.
         </S.GroupWrapper>
       </S.GroupWrapper>);
   }
@@ -57,7 +54,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             onClick={()=>null}
             state={false}
             small={true}/>
-          <S.TitleText>Date Modification</S.TitleText>
+          <S.Tab/>Date Modification
         </S.Title>
         <ul>
           <li>Marker-1: {props.type=='BPM'?
@@ -74,11 +71,13 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             <ul>
               <li>
                 Start: Date modification allowed on the Marker-1 date. 
-                Marker-2 date is the interval period selected after the Marker-1 date.   
+                Marker-2 date is automatically set based on the interval 
+                period selected after the Marker-1 date.   
               </li>
               <li>
                 End: Date modification allowed on the Marker-2 date. 
-                Marker-1 date is the interval period selected before the Marker-2 date.   
+                Marker-1 date is automatically set based on the interval 
+                period selected before the Marker-2 date.   
               </li>
               <li>
                 None: Date modification allowed on the Marker-1 and Marker-2 date. 
@@ -111,7 +110,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             onClick={()=>null}
             state={false}
             small={true}/>
-          <S.TitleText>BPM Modification</S.TitleText>
+          <S.Tab/>BPM Modification
         </S.Title>
         <ul>
           <li>
@@ -122,10 +121,18 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             </ul> 
           </li>
           <li>
-            Header Buttons:
+            Header Buttons
             <ul>
               <li>Top: Select all the BPMs of a section.</li>
               <li>Left: Select all the BPM with the same identification in all the sections.</li>              
+            </ul> 
+          </li>
+          <li>
+            Axis Selection
+            <ul>
+              <li>X: The selection is being made only in the X axis.</li>
+              <li>Y: The selection is being made only in the Y axis</li>
+              <li>X & Y: The selected BPMs are selected in both axis</li>              
             </ul> 
           </li>
         </ul> 
@@ -133,7 +140,59 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
   }
 
   function basicSignatureInfo(): React.ReactElement {
-    return <div/>
+    return (
+      <S.GroupWrapper>
+        <S.Title>   
+          Signature Information
+        </S.Title>  
+        <S.GroupWrapper>
+          <S.Tab/>Element signatures are simulated applying a kick to the X or the Y
+          axis of Correctors, Dipoles, Quadrupoles and Sextupoles Magnets,
+          obtaining at the end of the simulation a CODX and a CODY.
+          <br/>
+          <S.Tab/>Family signatures are simulated applying an equal kick to every 
+          magnet with the same power source. 
+        </S.GroupWrapper>
+        <S.GroupWrapper>
+          <S.Tab/>Header Buttons: Order the list by crescent or decrescent order
+          based on the element represented by the chosen header.
+        </S.GroupWrapper>
+        <ul>
+          <li>
+            Filter Options
+            <ul>
+              <li>Name Filter: Uses Glob pattern (The linux bash standart feature 
+                for file matching and content search) to filter the 
+                names. More about the Glob pattern in:
+                <a href="https://linuxhint.com/bash_globbing_tutorial/">
+                  https://linuxhint.com/bash_globbing_tutorial/</a>.
+              </li>
+              <li>Magnets: 
+                <ul>
+                  <li>C: Toggles the visibility of all the signatures 
+                    made with Correctors.</li>
+                  <li>D: Toggles the visibility of all the signatures 
+                    made with Dipoles.</li>
+                  <li>Q: Toggles the visibility of all the signatures 
+                    made with Quadrupoles.</li>
+                  <li>S: Toggles the visibility of all the signatures 
+                    made with Sextupoles.</li>              
+                </ul>
+              </li>
+              <li>Chart: Toggles the visibility of all the signatures 
+                already selected by the user.</li>
+              <li>Axis: 
+                <ul>
+                  <li>X: Toggles the visibility of all the signatures 
+                that have the kick on the X axis.</li>
+                  <li>Y: Toggles the visibility of all the signatures 
+                that have the kick on the Y axis.</li>              
+                </ul> 
+              </li>              
+            </ul> 
+          </li>
+        </ul> 
+      </S.GroupWrapper>);  
   }
 
   return (

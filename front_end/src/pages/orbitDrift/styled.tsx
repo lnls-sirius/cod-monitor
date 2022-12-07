@@ -1,20 +1,21 @@
 import styled from "styled-components";
-import { CenterAlignment } from "../../assets/style/gen_styles";
+import { HorizontalOrient, VerticalOrient } from "../../assets/style/gen_styles";
 import {colors, fonts} from '../../assets/style/themes';
 
-export const AppLayout = styled.div`
+const AppLayout = styled.div`
     font-family: ${fonts.primary};
     background: ${colors.bg.primary};
 `;
 
-export const VerticalWrapper = styled.nav`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    ${CenterAlignment}
+const HorizontalWrapper = styled.div`
+    ${HorizontalOrient}
 `;
 
-export const GridWrapper = styled.div`
+const VerticalWrapper = styled.div`
+    ${VerticalOrient}
+`;
+
+const GridWrapper = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 65% 34%;
@@ -23,8 +24,9 @@ export const GridWrapper = styled.div`
     }
 `
 
-export const HorizontalWrapper = styled.nav`
-    display: flex;
-    flex-direction: row;
-    ${CenterAlignment}
-`;
+export {
+    AppLayout,
+    HorizontalWrapper,
+    VerticalWrapper,
+    GridWrapper
+}

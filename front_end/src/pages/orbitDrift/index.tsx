@@ -30,7 +30,7 @@ const OrbitDrift: React.FC = () => {
                 stateActive={false}
                 action={()=>control.setActionModal('Info_Orbit')}
                 tooltip={
-                  "Show a tutorial about BPM Drift Interface"}/>  
+                  "Show a tutorial about Orbit Drift Interface"}/>  
               <DateInterval/>
             </S.HorizontalWrapper>
           </S.VerticalWrapper>

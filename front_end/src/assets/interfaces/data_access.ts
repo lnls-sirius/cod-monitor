@@ -1,26 +1,10 @@
-export interface ArchiverDataPoint {
-  x: Date;
-  y: number;
-  // severity: number;
-  // status: number;
-}
-
-export type ArchiverRawArray = [string, {
+type ArchiverRawArray = [string, {
   severity: number,
   val: number,
   nanos: number
 }]
 
-export interface ArchiverListRaw {
-  [key: string]:
-    {
-      severity: number,
-      val: number,
-      nanos: number
-    }
-}
-
-export type DBRType =
+type DBRType =
   | "DBR_SCALAR_BYTE"
   | "DBR_SCALAR_DOUBLE"
   | "DBR_SCALAR_ENUM"
@@ -37,7 +21,23 @@ export type DBRType =
   | "DBR_WAVEFORM_SHORT"
   | "DBR_WAVEFORM_STRING";
 
-export interface ArchiverMetadata {
+interface ArchiverDataPoint {
+  x: Date;
+  y: number;
+  // severity: number;
+  // status: number;
+}
+
+interface ArchiverListRaw {
+  [key: string]:
+    {
+      severity: number,
+      val: number,
+      nanos: number
+    }
+}
+
+interface ArchiverMetadata {
   hostName: string;
   paused: boolean;
   computedEventRate: number;
@@ -52,16 +52,26 @@ export interface ArchiverMetadata {
   DBRType: DBRType;
 }
 
-export interface ArchiverData {
+interface ArchiverData {
   meta: { name: string; PREC: string };
   data: ArchiverDataPoint[];
 }
 
-export interface DataAccess {
+interface DataAccess {
   fetchSeveralPV(pv: Array<string>, date: Date): Promise<any>;
   fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData>;
 }
 
-export interface DataAccessFactory {
+interface DataAccessFactory {
   (): DataAccess;
+}
+
+export type {
+  ArchiverRawArray,
+  ArchiverDataPoint,
+  ArchiverListRaw,
+  ArchiverMetadata,
+  ArchiverData,
+  DataAccess,
+  DataAccessFactory
 }

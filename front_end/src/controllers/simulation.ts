@@ -23,7 +23,7 @@ async function httpRequest(jsonurl: string): Promise<SimulationData>{
 
 
 // Fetch the list with the information of the signatures
-export async function fetchSimulationData(start: Date, end: Date): Promise<SimulationData> {
+async function fetchSimulationData(start: Date, end: Date): Promise<SimulationData> {
     let jsonurl: string = '';
     const GET_DATA_URL = `${window.location.protocol}//127.0.0.1:8080/sign_comp`;
     jsonurl = `${GET_DATA_URL}?start=${start.toJSON()}&stop=${end.toJSON()}`;
@@ -33,7 +33,7 @@ export async function fetchSimulationData(start: Date, end: Date): Promise<Simul
 
 
 // Fetch the dictionary with the information of the CODX and CODY of the signatures
-export async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date): Promise<SimulationData> {
+async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date): Promise<SimulationData> {
   let jsonurl: string = '';
   const GET_DATA_URL = `${window.location.protocol}//127.0.0.1:8080/sign_orbit`;
 
@@ -54,4 +54,9 @@ export async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, en
 
   const res: Promise<SimulationData> = httpRequest(jsonurl);
   return res
+}
+
+export {
+  fetchSimulationData,
+  fetchSignatureOrbit
 }

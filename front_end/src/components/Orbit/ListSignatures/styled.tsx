@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { CenterAlignment } from "../../../assets/style/gen_styles";
 
-export const Wrapper = styled.div`
+const ListWrapper = styled.div`
     display: grid;
     width: 100%;
     @media (min-width: 1500px) {
@@ -19,6 +19,11 @@ export const Wrapper = styled.div`
     ${CenterAlignment}
 `;
 
-export const TextWrapper = styled.span`
+const TextWrapper = styled.span`
     padding: 0.25em 1.25em;
 `
+
+export {
+    ListWrapper, 
+    TextWrapper
+}

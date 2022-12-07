@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CenterAlignment, componentFill } from "../../../assets/style/gen_styles";
+import { componentFill } from "../../../assets/style/gen_styles";
 
 export const ChartWrapper = styled.div`
     display: flex;

@@ -1,7 +1,7 @@
 import control from "./Chart";
 import { colors } from "../assets/style/themes";
 import { DatasetInterface, DatePointInterface, DictString } from "../assets/interfaces/patterns";
-import { ArchiverDataPoint } from "../data-access/interface";
+import { ArchiverDataPoint } from "../assets/interfaces/data_access";
 
 // Generate a random color
 function getRandomColor(): string {
@@ -14,7 +14,7 @@ function getRandomColor(): string {
 }
 
 // Get axis color, or create it if it doesn't exist
-export function getColor(name: string): string {
+function getColor(name: string): string {
     const axisColors: DictString = control.getAxisColors();
     if(!(name in axisColors) && name != undefined){
       if (name == 'cod_rebuilt'){
@@ -27,7 +27,7 @@ export function getColor(name: string): string {
 }
 
 // Set the axis color on the chart
-export function setAxisColor(name: string, state: DatasetInterface): DatasetInterface{
+function setAxisColor(name: string, state: DatasetInterface): DatasetInterface{
     let color: string = getColor(name);
     state.backgroundColor = color;
     state.borderColor = color;
@@ -35,11 +35,18 @@ export function setAxisColor(name: string, state: DatasetInterface): DatasetInte
 }
 
 // Build a list of data points from a list from Archiver
-export function buildDataset(dataList: ArchiverDataPoint[]): DatePointInterface[]{
+function buildDataset(dataList: ArchiverDataPoint[]): DatePointInterface[]{
   return dataList.map((data: ArchiverDataPoint) => {
     return {
       x: data.x,
       y: data.y
     };
   });
+}
+
+export {
+  getRandomColor,
+  getColor,
+  setAxisColor,
+  buildDataset
 }

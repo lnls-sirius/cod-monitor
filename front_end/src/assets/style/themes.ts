@@ -1,6 +1,6 @@
 // File that contain the themes used in the component's styling
 
-export const colors = {
+const colors = {
     btns:{
         btn1: {
             normal: 'linear-gradient(to top, #ff561c, #ff6c3a)',
@@ -46,7 +46,7 @@ export const colors = {
     }
 }
 
-export const properties = {
+const properties = {
     radius: {
         extlight: '5px',
         light: '15px',
@@ -59,11 +59,17 @@ export const properties = {
     }
 }
 
-export const fonts = {
+const fonts = {
     primary: '\'Akshar\', sans-serif',
     size: {
         small: '14px',
         medium: '18px',
         big: '25px'
     }
+}
+
+export {
+    colors,
+    fonts, 
+    properties
 }

@@ -60,7 +60,7 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
   return(
     <S.FilterWrapper>
       <S.FilterRow>
-        Filters
+        Name Filter:
         <S.NameFilter type='text'
           value={nameFilter}
           onChange={(event)=>setNameFilter(

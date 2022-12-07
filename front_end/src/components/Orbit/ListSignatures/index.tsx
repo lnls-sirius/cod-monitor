@@ -47,7 +47,7 @@ const ListSignatures: React.FC<SignatureListInterface> = (props) => {
   }
 
   return(
-    <S.Wrapper>
+    <S.ListWrapper>
       <ChartLegend
         color={getColor('cod_rebuilt')}
         isVisible={true}
@@ -59,7 +59,7 @@ const ListSignatures: React.FC<SignatureListInterface> = (props) => {
           </S.TextWrapper>
       </ChartLegend>
       {listAllSignatures()}
-    </S.Wrapper>
+    </S.ListWrapper>
   );
 };
 

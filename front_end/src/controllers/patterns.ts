@@ -1,7 +1,7 @@
 import { OrbitData } from "../assets/interfaces/types";
 
 // Switch states
-export function changeStates(state1: any, state2: any): Array<any>{
+function changeStates(state1: any, state2: any): Array<any>{
     let stateTemp = state2;
     state2 = state1;
     state1 = stateTemp;
@@ -9,7 +9,7 @@ export function changeStates(state1: any, state2: any): Array<any>{
 }
 
 // Return the other BPM Axis
-export function reverseAxis(axis: string): string {
+function reverseAxis(axis: string): string {
     if(axis == 'X'){
         return 'Y';
     }else{
@@ -18,7 +18,7 @@ export function reverseAxis(axis: string): string {
 }
 
 // Generate a random id
-export function randomIdGen(list: {[key: string]: any}): string {
+function randomIdGen(list: {[key: string]: any}): string {
     let letters: string = 'AJRTFGSN46283';
     let randomId: string = '';
     for (let i = 0; i < 5; i++) {
@@ -28,7 +28,7 @@ export function randomIdGen(list: {[key: string]: any}): string {
 }
 
 // Sort a string or number list
-export function sortList(listToSort: Array<OrbitData>, elem: number): Array<OrbitData>{
+function sortList(listToSort: Array<OrbitData>, elem: number): Array<OrbitData>{
     if(typeof listToSort[0][elem] === "string"){
         return listToSort.sort(
             (first: OrbitData, second: OrbitData) => {
@@ -43,4 +43,11 @@ export function sortList(listToSort: Array<OrbitData>, elem: number): Array<Orbi
         );
     }
     return listToSort;
+}
+
+export {
+    changeStates,
+    reverseAxis,
+    randomIdGen,
+    sortList
 }

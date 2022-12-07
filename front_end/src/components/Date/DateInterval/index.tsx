@@ -76,9 +76,9 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
           <S.SelectTime
             value={props.intervalMode}
             onChange={(selec: any)=>setIntervalMode(selec.target.value)}>
-              <S.Option value='Start' label='Start'/>
-              <S.Option value='End' label='End'/>
-              <S.Option value='None' label='None'/>
+              <option value='Start' label='Start'/>
+              <option value='End' label='End'/>
+              <option value='None' label='None'/>
           </S.SelectTime>
         </Tooltip>
       </S.DateWrapper>

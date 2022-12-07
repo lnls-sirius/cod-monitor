@@ -1,4 +1,4 @@
-import { DataAccess } from "./interface";
+import { DataAccess } from "../assets/interfaces/data_access";
 import ArchiverDataAccessFactory from "./factory";
 
 const archInterface: DataAccess = ArchiverDataAccessFactory();

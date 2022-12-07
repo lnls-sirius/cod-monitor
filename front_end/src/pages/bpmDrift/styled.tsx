@@ -1,29 +1,29 @@
 import styled from "styled-components";
-import { CenterAlignment } from "../../assets/style/gen_styles";
+import { HorizontalOrient, VerticalOrient } from "../../assets/style/gen_styles";
 import {colors, fonts} from '../../assets/style/themes';
 
-export const AppLayout = styled.div`
-    height: 100%;
+const AppLayout = styled.div`
     font-family: ${fonts.primary};
     background: ${colors.bg.primary};
 `;
 
-export const VerticalWrapper = styled.nav`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    ${CenterAlignment}
+const VerticalWrapper = styled.div`
+    ${VerticalOrient}
 `;
 
-export const HorizontalWrapper = styled.nav`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    ${CenterAlignment}
+const HorizontalWrapper = styled.div`
+    ${HorizontalOrient}
 `;
 
-export const MenuWrapper = styled.div`
+const MenuWrapper = styled.div`
     @media (max-width: 1000px) {
         display: none;
     }
 `
+
+export {
+    AppLayout,
+    VerticalWrapper,
+    HorizontalWrapper,
+    MenuWrapper
+}

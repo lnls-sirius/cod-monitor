@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CenterAlignment } from "../../../assets/style/gen_styles";
 import { colors, properties } from "../../../assets/style/themes";
 
-export const Square = styled.div`
+const Circle = styled.div`
     height: 1.5em;
     min-width: 1.5em;
     border: 1px solid ${colors.bg.white};
@@ -10,7 +10,7 @@ export const Square = styled.div`
     background-color: ${(props: { color: string; }) => props.color};
 `
 
-export const ItemWrapper = styled.div`
+const ItemWrapper = styled.div`
     display: flex;
     min-height: 70%;
     margin: 0.25em;
@@ -25,3 +25,8 @@ export const ItemWrapper = styled.div`
         background: ${colors.bg.tertiary};
     }
 `
+
+export {
+    Circle,
+    ItemWrapper
+}

@@ -16,16 +16,17 @@ const Message: React.FC = () => {
   }
 
   return(
-    <S.Text>
+    <S.TextWrapper>
       {alert_messages[control.getModalId()]}
       <br/>
       {chartUpdateText()}
       <br/>
-      Action: <S.Icon
-        icon={
-          iconList[
-            modalInfo[control.getModalId()].icon]}/>
-    </S.Text>
+      Action: 
+        <S.Icon
+          icon={
+            iconList[
+              modalInfo[control.getModalId()].icon]}/>
+    </S.TextWrapper>
   );
 };
 
