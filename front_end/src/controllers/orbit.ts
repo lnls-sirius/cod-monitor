@@ -3,14 +3,15 @@ import { formatBPMName } from "./bpm";
 import control from "./Modals";
 import { pos } from "../assets/constants/pos";
 import { BaseStrArrayDict } from "../assets/interfaces/patterns";
+import { BpmPointInterface } from "../assets/interfaces/bpm";
 
 
 // Build the dataset for the orbit charts
-function buildDatasetOrbit(dataList: any): Array<any>{
-    return dataList.map((sign_data: any, idx: number) => {
+function buildDatasetOrbit(dataList: Array<number>): Array<BpmPointInterface>{
+    return dataList.map((sign_data: number, idx: number) => {
         return {
-        x: formatBPMName(pos[idx]),
-        y: sign_data
+            x: formatBPMName(pos[idx]),
+            y: sign_data
         }
     });
 }

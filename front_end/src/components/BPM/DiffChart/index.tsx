@@ -14,6 +14,7 @@ import { changeDateClick } from "../../../controllers/time";
 import { optionsDiff } from "./config";
 import { DatasetInterface, DatePointInterface } from "../../../assets/interfaces/patterns";
 import { ChartDiffProperties } from "../../../assets/interfaces/bpm";
+import { DatasetList } from "../../../assets/interfaces/types";
 import { ArchiverDataPoint } from "../../../assets/interfaces/data_access";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
@@ -44,6 +45,7 @@ const defaultProps: ChartDiffProperties = {
 const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   // Display the chart of the BPM Drift
   const [keyPressed, onKeyPressed] = useState<string>('');
+  const [optimization, setOptimize] = useState<number>(800);
   const chartRef: React.RefObject<BaseChart> = createRef();
   Chart.register(...registerables);
   Chart.register(zoomPlugin);
@@ -90,7 +92,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
     if(chartRef.current){
       const chart: Chart = chartRef.current.chart[0];
       if(chart != null){
-        const datasetList: any = await buildChartDiff();
+        const datasetList: DatasetList = await buildChartDiff();
         await control.buildChartDatasets(
           chart, datasetList, optionsDiff, 'A');
         unsetBPMChange();
@@ -99,8 +101,8 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   }
 
   // Build difference Chart
-  async function buildChartDiff(){
-    let datasetList: any = [];
+  async function buildChartDiff(): Promise<DatasetList> {
+    let datasetList: DatasetList = [];
     await Promise.all(
       Object.entries(props.state_list).map(async ([name, state]) => {
         if(state[0] && state[1]){
@@ -108,14 +110,14 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
             name, props.changeTime, 'A');
           if(datasetCreated == null){
             const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(
-              name, props.start, props.end, 800);
+              name, props.start, props.end, optimization);
             if(archiverResult != undefined){
               const rawDataset: Array<ArchiverDataPoint> = await buildDataset(archiverResult);
               const finalDataset: Array<DatePointInterface> = await differentiateData(
                 rawDataset, name, [props.start, props.end, props.refDate]);
-              const datasetTemp: any = {
+              const datasetTemp: DatasetInterface = {
                 data: finalDataset,
-                xID: 'x',
+                xAxisID: 'x',
                 label: name
               }
               datasetList.push(datasetTemp);
@@ -137,6 +139,15 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
         options={optionsDiff}
         ref={chartRef}/>
       <ListBPM />
+      <S.TextWrapper>
+        Optimization: <input 
+          type='number' 
+          value={optimization} 
+          onChange={
+            (event)=>
+              setOptimize(parseInt(event.target.value))}
+          max={1500}/>
+      </S.TextWrapper>
     </S.ChartWrapper>
   );
 };

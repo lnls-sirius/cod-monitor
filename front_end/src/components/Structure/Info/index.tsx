@@ -10,7 +10,7 @@ const defaultProps: InfoTypeInterface = {
 const Info: React.FC<InfoTypeInterface> = (props) => {
   // Display the Page Documentation
   
-  function basicBPMPageInfo(): React.ReactElement {
+  function bpmPageInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
         <S.GroupWrapper>
@@ -32,7 +32,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);
   }
   
-  function basicOrbitPageInfo(): React.ReactElement {
+  function orbitPageInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
         <S.GroupWrapper>
@@ -45,7 +45,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);
   }
 
-  function basicIntervalInfo(): React.ReactElement {
+  function IntervalInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
         <S.Title>  
@@ -101,7 +101,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);
   }
   
-  function basicBPMInfo(): React.ReactElement {
+  function bpmInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
         <S.Title>  
@@ -139,7 +139,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);  
   }
 
-  function basicSignatureInfo(): React.ReactElement {
+  function signatureInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
         <S.Title>   
@@ -195,13 +195,39 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);  
   }
 
+  function chartInfo(): React.ReactElement {
+    return (
+      <S.GroupWrapper>
+        <S.Title>  
+          <S.Icon
+            icon={iconList['chart']}
+            onClick={()=>null}
+            state={false}
+            small={true}/>
+          <S.Tab/> Chart Interaction
+        </S.Title>
+        <S.GroupWrapper>
+          <S.Tab/>A Button: Reset the zoom and drag interactions and 
+            rescale the graph to fit the entirety of the data.
+        </S.GroupWrapper>
+        Shortcuts
+          <ul>
+            <li>CTRL + DRAG (To a desired location): Drag the 
+              chart on the X or Y direction</li>
+            <li>SHIFT + DRAG (Forming a desired area): Zoom the 
+              chart on the selected dragged area</li>
+          </ul> 
+      </S.GroupWrapper>);
+  }
+  
   return (
     <S.InfoWrapper>
       {props.type=='BPM'?
-        basicBPMPageInfo(): basicOrbitPageInfo()}
-      {basicIntervalInfo()}
+        bpmPageInfo(): orbitPageInfo()}
+      {IntervalInfo()}
       {props.type=='BPM'?
-        basicBPMInfo():basicSignatureInfo()}
+        bpmInfo():signatureInfo()}
+      {chartInfo()}
     </S.InfoWrapper>
   );
 };

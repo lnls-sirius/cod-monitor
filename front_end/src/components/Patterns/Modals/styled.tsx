@@ -2,6 +2,7 @@ import styled, { keyframes, css } from "styled-components";
 import {colors, properties, fonts} from "../../../assets/style/themes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimButton, CenterAlignment, componentFill } from "../../../assets/style/gen_styles";
+import { DictString } from "../../../assets/interfaces/patterns";
 
 const fadeIn = keyframes`
     from {

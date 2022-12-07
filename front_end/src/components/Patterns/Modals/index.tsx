@@ -4,7 +4,7 @@ import control from "../../../controllers/Modals";
 import { iconList } from "../../../assets/constants/icons";
 import { StoreInterface } from "../../../redux/storage/store";
 import { modalInfo } from "../../../assets/constants/patterns";
-import { ChangeInterface } from "../../../assets/interfaces/patterns";
+import { ChangeInterface, ModalInterface } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
@@ -31,10 +31,10 @@ const Modals: React.FC<ChangeInterface> = (props) => {
   let timer: NodeJS.Timeout;
 
   function closeModal(): void {
-    const modal: any = modalInfo[control.getModalId()];
+    const modal: ModalInterface = modalInfo[control.getModalId()];
     control.setModalState(false);
     control.setModalTimeout(false);
-    if(modal !== undefined && Object.keys(modal).includes("close")) {
+    if(Object.keys(modal).includes("close")) {
       modal.close();
     }
     setChange(true);

@@ -1,4 +1,4 @@
-import store from "../../storage/store";
+import { store } from "../../storage/store";
 import { actions as actionsOrbit } from "../../features/OrbitStore";
 import OrbitDispatcherInterface from "./interface";
 import { BaseStrArrayDict } from "../../../assets/interfaces/patterns";

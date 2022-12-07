@@ -33,7 +33,8 @@ const DateInput: React.FC<SetDateInterface> = (props) => {
 
   return(
     <Tooltip
-        text={buildTooltipText()}>
+        text={buildTooltipText()}
+        movable={false}>
       <S.InputTime
         showTimeSelect
         selected={props.date}

@@ -2,7 +2,11 @@ import { BaseDateInterface } from "./date"
 import { BaseStrArrayDict, DictState } from "./patterns"
 import { DispatchDictState, DispatchString, DictOrbitData } from "./types"
 
-interface SimulationData {
+interface SignChartData {
+    [key: string]: Array<Array<number>>
+}
+
+interface SignData {
     [key: string]: DictOrbitData
 }
 
@@ -31,7 +35,8 @@ interface ChartOrbitInterface
 }
 
 export type {
-    SimulationData,
+    SignChartData,
+    SignData,
     FilterInterface,
     SignatureListInterface,
     OrbitChartInterface,

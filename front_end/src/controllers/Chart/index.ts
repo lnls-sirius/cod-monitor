@@ -3,7 +3,7 @@ import { Chart } from "chart.js";
 import { TimeDispatcher } from '../../redux/dispatcher';
 import { setAxisColor } from '../chart';
 import { DatasetInterface, DictString } from '../../assets/interfaces/patterns';
-import { DatasetInterface1 } from '../../assets/interfaces/bpm';
+import { DatasetList } from '../../assets/interfaces/types';
 
 class ChartObject {
     private axisColors: DictString = {};
@@ -15,7 +15,7 @@ class ChartObject {
         return this.axisColors;
     }
 
-    setDataset(newData: DatasetInterface1|DatasetInterface, axis?: string): void{
+    setDataset(newData: DatasetList, axis?: string): void{
         if (axis == 'A' || axis == 'X'){
             this.dataset = newData;
         }else{
@@ -40,7 +40,7 @@ class ChartObject {
     }
 
     // Update the chart dataset
-    updateDataset(chart: any, newData: DatasetInterface, options: any){
+    updateDataset(chart: any, newData: DatasetList, options: any){
         chart.options = options;
         chart.data.datasets = newData;
         chart.data.labels= [];
@@ -48,9 +48,10 @@ class ChartObject {
     }
 
      // Build the new chart dataset
-    async buildChartDatasets(chart: any, newData: DatasetInterface1|DatasetInterface, options: any, axis?: string): Promise<any> {
-        let dataset: any = [];
-        await Object.entries(newData).map(([name, state]) => {
+    async buildChartDatasets(chart: any, newData: DatasetList, options: any, axis?: string): Promise<any> {
+        let dataset: DatasetList = [];
+        
+        await newData.map((state) => {
             state = setAxisColor(state.label, state);
             dataset.push(state);
         });

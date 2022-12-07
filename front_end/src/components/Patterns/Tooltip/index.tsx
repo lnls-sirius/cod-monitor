@@ -4,15 +4,17 @@ import * as S from './styled';
 
 const defaultProps: TooltipInterface = {
   children: null,
-  text: ''
+  text: '',
+  movable: false
 }
 
 const Tooltip: React.FC<TooltipInterface> = (props) => {
   return (
     <S.TooltipWrapper>
       {props.children}
-      <S.TooltipText>
-        {props.text}
+      <S.TooltipText
+        state={props.movable}>
+          {props.text}
       </S.TooltipText>
     </S.TooltipWrapper>
   )

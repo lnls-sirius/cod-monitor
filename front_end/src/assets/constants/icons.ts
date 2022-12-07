@@ -5,7 +5,7 @@ import {
     faClock, faPencilAlt, faPlus,
     faC, faD, faQ, faS, faTrashCan, faY, faX,
     faListCheck, faEye, faXmark, faLineChart, 
-    faExclamationCircle, faInfo
+    faExclamationCircle, faInfo, faLink
 } from "@fortawesome/free-solid-svg-icons";
 
 export const iconList: IconListInterface = {
@@ -24,5 +24,6 @@ export const iconList: IconListInterface = {
     'eye': faEye,
     'chart': faLineChart,
     'error': faExclamationCircle,
-    'info': faInfo
+    'info': faInfo,
+    'link': faLink
 }

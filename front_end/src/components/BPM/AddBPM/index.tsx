@@ -97,7 +97,8 @@ const AddBPM: React.FC = () => {
       return(
         <td>
           <Tooltip
-              text={"Select all the BPMs in the section "+number}>
+              text={"Select all the BPMs in the section "+number}
+              movable={true}>
             <S.Header
               onClick={() => groupSelect(number)}>
                 {number}
@@ -120,7 +121,8 @@ const AddBPM: React.FC = () => {
 
     return (
       <Tooltip
-         text={bpmName}>
+          text={bpmName}
+          movable={true}>
         <BPMLed
           key={bpmName}
           id={bpmName}
@@ -138,10 +140,14 @@ const AddBPM: React.FC = () => {
     return bpmGroups.bpmName.map((name: string)=>{
       return(
         <tr>
-          <S.Header
-            onClick={() => groupSelect(name)}>
-              {name}
-          </S.Header>
+          <Tooltip
+              text={"Select the BPM "+name+" in all sections"}
+              movable={true}>
+            <S.Header
+              onClick={() => groupSelect(name)}>
+                {name}
+            </S.Header>
+          </Tooltip>
           {
             bpmGroups.bpmNumber.map((number: string)=>{
               if((number=='01') && name=='M1'){
@@ -162,10 +168,15 @@ const AddBPM: React.FC = () => {
     const number = bpmGroups.bpmNumber[0];
     return(
       <tr>
-        <S.Header
-          onClick={() => groupSelect(name)}>
-            {name}
-        </S.Header>
+        
+        <Tooltip
+            text={"Select the BPM "+name+" in all sections"}
+            movable={true}>
+          <S.Header
+            onClick={() => groupSelect(name)}>
+              {name}
+          </S.Header>
+        </Tooltip>
         <td>
           {findBPM(number, name)}
         </td>

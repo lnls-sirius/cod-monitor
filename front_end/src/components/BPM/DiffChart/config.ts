@@ -46,8 +46,7 @@ export const optionsDiff: any = {
         zoom: {
             pan: {
                 enabled: true,
-                modifierKey: 'ctrl',
-                mode: 'xy'
+                modifierKey: 'ctrl'
             },
             zoom: {
                 drag: {

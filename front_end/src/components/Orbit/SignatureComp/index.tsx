@@ -8,7 +8,7 @@ import { getSignatures } from "../../../controllers/archiver";
 import { deleteSignature, setSignature } from "../../../controllers/orbit";
 import { sortList } from "../../../controllers/patterns";
 import { DictState } from "../../../assets/interfaces/patterns";
-import { OrbitChartInterface, SimulationData } from "../../../assets/interfaces/orbit";
+import { OrbitChartInterface, SignData } from "../../../assets/interfaces/orbit";
 import { DictOrbitData, OrbitData } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
@@ -48,7 +48,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
 
   // Update the list of signatures
   async function updateComparisonList(): Promise<void> {
-    const simulationResult: SimulationData|undefined = await getSignatures(props.start, props.end);
+    const simulationResult: SignData|undefined = await getSignatures(props.start, props.end);
     if(simulationResult != undefined){
       let sortedList: Array<OrbitData> = [];
       Object.entries(simulationResult).map(

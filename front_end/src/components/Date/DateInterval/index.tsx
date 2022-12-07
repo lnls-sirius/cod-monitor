@@ -8,6 +8,7 @@ import { getDate, setDate, setIntervalMode } from "../../../controllers/time";
 import { intervalDict } from "../../../assets/constants/date";
 import { StoreInterface } from "../../../redux/storage/store";
 import { DateIntervalInterface } from "../../../assets/interfaces/date";
+import { SelectChange } from "../../../assets/interfaces/types";
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
@@ -72,10 +73,11 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
             {dateMode('End')}
         </S.TextWrapper>
         <Tooltip
-            text="Change the date reference of the interval buttons">
+            text="Change the date reference of the interval buttons"
+            movable={false}>
           <S.SelectTime
             value={props.intervalMode}
-            onChange={(selec: any)=>setIntervalMode(selec.target.value)}>
+            onChange={(selec: SelectChange)=>setIntervalMode(selec.target.value)}>
               <option value='Start' label='Start'/>
               <option value='End' label='End'/>
               <option value='None' label='None'/>

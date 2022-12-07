@@ -20,14 +20,6 @@ interface BpmPointInterface {
     y: number
 }
 
-interface DatasetInterface1{
-    data: BpmPointInterface[];
-    xAxisID: string;
-    label: string;
-    borderColor?: string;
-    backgroundColor?: string;
-}
-
 interface ChangeBpmInterface{
     changeBpm: boolean;
     changeTime: boolean;
@@ -42,7 +34,6 @@ export type {
     ActiveListInterface,
     ChartDiffProperties,
     BpmPointInterface,
-    DatasetInterface1,
     ChangeBpmInterface,
     DictBPM
 }

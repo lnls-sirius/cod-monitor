@@ -1,6 +1,6 @@
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { ChangeBpmInterface } from "./bpm";
+import { BpmPointInterface, ChangeBpmInterface } from "./bpm";
 import { ChangeOrbitInterface } from "./orbit";
 import { DispatchBool } from "./types";
 
@@ -43,7 +43,7 @@ interface ModalInterface {
     title: string;
     component: React.ReactElement;
     icon: string;
-    close?: () => void;
+    close: () => void;
 }
 
 interface DatePointInterface {
@@ -51,29 +51,35 @@ interface DatePointInterface {
     y: number;
 }
 
-interface DatasetInterface{
-    data: DatePointInterface[];
+interface DatasetInterface {
+    data: Array<DatePointInterface|BpmPointInterface>;
     xAxisID: string;
     label: string;
     borderColor?: string;
     backgroundColor?: string;
 }
 
-interface ChildrenInterface{
+interface BaseChartInterface {
+    id: number,
+    options: any
+}
+
+interface ChildrenInterface {
     children: React.ReactNode;
 }
 
 interface HeaderInterface 
-    extends ChildrenInterface{
+    extends ChildrenInterface {
         timeRef: boolean    
 }
 
 interface TooltipInterface 
-    extends ChildrenInterface{
-        text: string    
+    extends ChildrenInterface {
+        text: string,
+        movable: boolean
 }
 
-interface LegendInterface extends ChildrenInterface{
+interface LegendInterface extends ChildrenInterface {
     color: string;
     isVisible: boolean;
     deleteAction: null | (() => void);
@@ -81,7 +87,7 @@ interface LegendInterface extends ChildrenInterface{
 }
 
 interface ChangeInterface
-    extends ChangeBpmInterface, ChangeOrbitInterface{
+    extends ChangeBpmInterface, ChangeOrbitInterface {
 }
 
 interface InfoTypeInterface {
@@ -114,6 +120,7 @@ export type {
     ActionItem,
     ModalInterface,
     DatePointInterface,
+    BaseChartInterface,
     DatasetInterface,
     HeaderInterface,
     ChildrenInterface,

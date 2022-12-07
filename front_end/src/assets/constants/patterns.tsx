@@ -21,52 +21,62 @@ const modalInfo: {[key: string]: ModalInterface} = {
     "Info_BPM": {
         title: "BPM Drift Page Information",
         component: <Info type="BPM"/>,
-        icon: 'info'
+        icon: 'info',
+        close: ()=>null
     },
     "Info_Orbit": {
         title: "Orbit Drift Page Information",
         component: <Info type="Orbit"/>,
-        icon: 'info'
+        icon: 'info',
+        close: ()=>null
     },
     "Al_Add_BPM": {
         title: "BPM Modification",
         component: <Message/>,
-        icon: 'list'
+        icon: 'list',
+        close: ()=>null
     },
     "Al_Add_Sign": {
         title: "Signature Addition",
         component: <Message/>,
-        icon: 'plus'
+        icon: 'plus',
+        close: ()=>null
     },
     "Al_Rem_BPM": {
         title: "Signature Removal",
         component: <Message/>,
-        icon: 'trash'
+        icon: 'trash',
+        close: ()=>null
     },
     "Al_Rem_Sign": {
         title: "Signature Removal",
         component: <Message/>,
-        icon: 'trash'
+        icon: 'trash',
+        close: ()=>null
     },
     "Vis_BPM": {
         title: "BPM Visibility",
         component: <Message/>,
-        icon: 'clock'
+        icon: 'clock',
+        close: ()=>null
     },
     "Vis_Sign": {
         title: "Signature Visibility",
         component: <Message/>,
-        icon: 'clock'
+        icon: 'clock',
+        close: ()=>null
     },
     "Ch_Date": {
         title: "Changing Date",
         component: <Message/>,
-        icon: 'clock'
+        icon: 'clock',
+        close: ()=>null
     },
     "Err_Server": {
         title: "Server Error",
         component: <Message/>,
-        icon: 'error'
+        icon: 'error',
+        close: ()=>null
     }
 }
 

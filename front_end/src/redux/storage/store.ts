@@ -1,4 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
+
 import {reducer as timeReducer} from '../features/TimeStore'
 import {reducer as bpmReducer} from '../features/BpmStore'
 import {reducer as orbitReducer} from '../features/OrbitStore'
@@ -12,12 +16,22 @@ export interface StoreInterface {
   orbit: orbitStore
 }
 
-const store = configureStore({
-  reducer: {
-    time: timeReducer,
-    bpm: bpmReducer,
-    orbit: orbitReducer
-  }
-})
+const persistConfig = {
+  key: 'root',
+  storage
+}
 
-export default store;
+const persistedTimeReducer = persistReducer(persistConfig, timeReducer)
+const persistedBpmReducer = persistReducer(persistConfig, bpmReducer)
+const persistedOrbitReducer = persistReducer(persistConfig, orbitReducer)
+
+export const store = configureStore({
+  reducer: {
+    time: persistedTimeReducer,
+    bpm: persistedBpmReducer,
+    orbit: persistedOrbitReducer  
+  },
+  middleware: [thunk]
+});
+
+export const persistor = persistStore(store);

@@ -16,11 +16,17 @@ const Button = styled.button`
 `
 
 const Chart = styled.canvas`
+  width: 100%;
   border-radius: ${properties.radius.extlight};
   background-color: ${colors.bg.white};
 `;
 
+const ChartWrapper = styled.div`
+  width: 100%;
+`
+
 export {
   Chart,
+  ChartWrapper,
   Button
 }

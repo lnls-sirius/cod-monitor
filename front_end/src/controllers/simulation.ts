@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { SimulationData } from '../assets/interfaces/orbit';
+import { SignChartData, SignData } from '../assets/interfaces/orbit';
 
 // Send a request to the backend
-async function httpRequest(jsonurl: string): Promise<SimulationData>{
+async function httpRequest(jsonurl: string): Promise<any>{
   return await axios
   .get(jsonurl, {
       timeout: 5000,
@@ -13,27 +13,23 @@ async function httpRequest(jsonurl: string): Promise<SimulationData>{
       },
   })
   .then((res) => {
-    console.log("Worked")
     return res.data;
-  })
-  .catch(error => {
-    console.log(error);
   })
 }
 
 
 // Fetch the list with the information of the signatures
-async function fetchSimulationData(start: Date, end: Date): Promise<SimulationData> {
+async function fetchSimulationData(start: Date, end: Date): Promise<SignData> {
     let jsonurl: string = '';
     const GET_DATA_URL = `${window.location.protocol}//127.0.0.1:8080/sign_comp`;
     jsonurl = `${GET_DATA_URL}?start=${start.toJSON()}&stop=${end.toJSON()}`;
-    const res: Promise<SimulationData> = httpRequest(jsonurl);
+    const res: Promise<SignData> = httpRequest(jsonurl);
     return res
 }
 
 
 // Fetch the dictionary with the information of the CODX and CODY of the signatures
-async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date): Promise<SimulationData> {
+async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date): Promise<SignChartData> {
   let jsonurl: string = '';
   const GET_DATA_URL = `${window.location.protocol}//127.0.0.1:8080/sign_orbit`;
 
@@ -52,7 +48,7 @@ async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date
     }
   })
 
-  const res: Promise<SimulationData> = httpRequest(jsonurl);
+  const res: Promise<SignChartData> = httpRequest(jsonurl);
   return res
 }
 

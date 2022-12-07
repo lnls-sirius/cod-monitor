@@ -10,8 +10,8 @@ import { buildDatasetOrbit, unsetOrbitChange } from "../../../controllers/orbit"
 
 import { optionsOrbit } from "./config";
 import { BaseStrArrayDict, DatasetInterface } from "../../../assets/interfaces/patterns";
-import { ChartOrbitInterface, SimulationData } from "../../../assets/interfaces/orbit";
-import { ArrDictArrStr } from "../../../assets/interfaces/types";
+import { ChartOrbitInterface, SignChartData } from "../../../assets/interfaces/orbit";
+import { ArrDictArrStr, DatasetList, DictOrbitData } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
 
@@ -52,7 +52,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
       const chartX: Chart = chartRef[0].current.chart[0];
       const chartY: Chart = chartRef[1].current.chart[0];
       if(chartX != null && chartY != null){
-        const datasetList: any = await buildChartOrbit();
+        const datasetList: Array<DatasetList> = await buildChartOrbit();
         await control.buildChartDatasets(
           chartX, datasetList[0], optionsOrbit, 'X');
         control.setDataset(datasetList[0], 'X')
@@ -65,10 +65,12 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   }
 
   // Save dataset Orbit
-  function saveDataset(name: string, sign_orbit: Array<number>, datasetList: any): any{
-    const datasetTemp: any = {
+  function saveDataset(
+      name: string, sign_orbit: Array<number>, 
+      datasetList: DatasetList): DatasetList{
+    const datasetTemp: DatasetInterface = {
       data: buildDatasetOrbit(sign_orbit),
-      xID: 'x',
+      xAxisID: 'x',
       label: name
     }
     datasetList.push(datasetTemp);
@@ -109,16 +111,15 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   }
 
   // Build CODX and CODY Chart
-  async function buildChartOrbit(): Promise<Array<any>>{
-    let datasetListX: any = []
-    let datasetListY: any = []
+  async function buildChartOrbit(): Promise<Array<DatasetList>>{
+    let datasetListX: DatasetList = []
+    let datasetListY: DatasetList = []
 
     const [signatures_created, signatures_to_read] = dictToList(props.sign_list)
     if(signatures_to_read.length > 0){
-      const dictSign: SimulationData = await fetchSignatureOrbit(
+      const dictSign: SignChartData = await fetchSignatureOrbit(
         signatures_to_read, props.start, props.end);
-      console.log(dictSign)
-      Object.entries(dictSign).map(([name, sign_orbit]: any) => {
+      Object.entries(dictSign).map(([name, sign_orbit]: [string, Array<Array<number>>]) => {
         if(name!='cod_rebuilt'){
           name = name.slice(0, -1) + '- Kick:' + name.slice(-1)
         }

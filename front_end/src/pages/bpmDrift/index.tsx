@@ -9,6 +9,7 @@ import Interval from "../../components/Date/Interval";
 import Modals from "../../components/Patterns/Modals";
 import Loading from "../../components/Patterns/Loading";
 import control from "../../controllers/Modals";
+// import archViewer from "../../controllers/ArchiverViewer";
 import { modalInfo } from "../../assets/constants/patterns";
 import * as S from './styled';
 
@@ -31,7 +32,13 @@ const BpmDrift: React.FC = () => {
                 stateActive={false}
                 action={()=>control.setActionModal('Info_BPM')}
                 tooltip={
-                  "Show a tutorial about BPM Drift Interface"}/>  
+                  "Show a tutorial about BPM Drift Interface"}/>
+              {/* <Item
+                  icon='link'
+                  stateActive={false}
+                  action={()=>archview.goToArchiver()}
+                  tooltip={
+                    "Open data in Archiver Viewer"}/> */}
             </S.MenuWrapper>
             <Item
                 icon={modalInfo['BPM'].icon}

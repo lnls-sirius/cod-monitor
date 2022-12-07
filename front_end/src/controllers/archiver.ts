@@ -1,5 +1,6 @@
-import { SimulationData } from "../assets/interfaces/orbit";
+import { SignData } from "../assets/interfaces/orbit";
 import { ArchiverDataPoint } from "../assets/interfaces/data_access";
+import { DictNumber } from "../assets/interfaces/patterns";
 import { fetchSimulationData } from "./simulation";
 import archInterface from "../data-access";
 import { BpmDispatcher, OrbitDispatcher, TimeDispatcher } from "../redux/dispatcher";
@@ -26,12 +27,13 @@ function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[]): num
 
 // Get the closest value of the position difference from Archiver,
 // based on a reference date
-async function getDataInArchiver(pv: Array<string>, refDate: Date): Promise<any> {
-  let archiverInterval: any = await archInterface.fetchSeveralPV(pv, refDate);
-  if(Object.keys(archiverInterval).length == 1){
-    return archiverInterval[pv[0]]
+async function getDataInArchiver(pv: Array<string>, refDate: Date): Promise<undefined|DictNumber> {
+  try {
+    let archiverInterval: DictNumber = await archInterface.fetchSeveralPV(pv, refDate);
+    return archiverInterval;
+  } catch (e) {
+    errorMsg();
   }
-  return archiverInterval;
 }
 
 // Get an interval from Archiver
@@ -43,22 +45,25 @@ async function getArchiver(name: string, start: Date, end: Date, optimization: n
     data.shift();
     return data;
   } catch (e) {
-    console.log("Something went wrong!!" + e);
+    errorMsg();
   }
 }
 
 // Get data from the backend simulations
-async function getSignatures(start: Date, end: Date): Promise<undefined|SimulationData>{
+async function getSignatures(start: Date, end: Date): Promise<undefined|SignData>{
   try {
     const data = await fetchSimulationData(start, end);
     return data;
   } catch (e) {
-    console.log("Something went wrong!!" + e);
-    control.setAlert("Err_Server");
-    TimeDispatcher.setChangeTime(false);
-    BpmDispatcher.setChangeBpm(false);
-    OrbitDispatcher.setChangeOrbit(false);
+    errorMsg();
   }
+}
+
+function errorMsg(): void {
+  control.setAlert("Err_Server");
+  TimeDispatcher.setChangeTime(false);
+  BpmDispatcher.setChangeBpm(false);
+  OrbitDispatcher.setChangeOrbit(false);
 }
 
 export {

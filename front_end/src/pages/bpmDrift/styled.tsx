@@ -19,6 +19,7 @@ const MenuWrapper = styled.div`
     @media (max-width: 1000px) {
         display: none;
     }
+    ${HorizontalOrient}
 `
 
 export {

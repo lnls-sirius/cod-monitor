@@ -1,8 +1,8 @@
 import React, { Component, createRef } from "react";
 import { Chart } from 'chart.js';
 import 'chartjs-adapter-moment';
-
 import { colors } from "../../../assets/style/themes";
+import { BaseChartInterface } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
 export const initData = {
@@ -14,7 +14,7 @@ export const initData = {
   }]
 }
 
-class BaseChart extends Component<any>{
+class BaseChart extends Component<BaseChartInterface>{
   // Create a Basic Chart Element
   private id: number;
   private options: any;
@@ -22,7 +22,7 @@ class BaseChart extends Component<any>{
   public chart: Array<Chart>;
 
   // Initialize chart variables
-  constructor(props: any){
+  constructor(props: BaseChartInterface){
     super(props);
     this.chartRef = createRef();
     this.options = props.options;
@@ -50,15 +50,15 @@ class BaseChart extends Component<any>{
 
   render() {
     return (
-      <div>
+      <S.ChartWrapper>
         <S.Chart
-          id={"canvas"+this.id}
-          ref={this.chartRef}/>
-        <S.Button onClick={
-            ()=>this.chart[0].resetZoom()}>
-          A
-        </S.Button>
-      </div>
+            id={"canvas"+this.id}
+            ref={this.chartRef}/>
+          <S.Button onClick={
+              ()=>this.chart[0].resetZoom()}>
+            A
+          </S.Button>
+      </S.ChartWrapper>
     )
   }
 }

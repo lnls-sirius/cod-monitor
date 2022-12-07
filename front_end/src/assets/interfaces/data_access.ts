@@ -1,3 +1,5 @@
+import { DictNumber } from "./patterns";
+
 type ArchiverRawArray = [string, {
   severity: number,
   val: number,
@@ -58,7 +60,7 @@ interface ArchiverData {
 }
 
 interface DataAccess {
-  fetchSeveralPV(pv: Array<string>, date: Date): Promise<any>;
+  fetchSeveralPV(pv: Array<string>, date: Date): Promise<DictNumber>;
   fetchData(pv: string, from: Date, to: Date, optimization: number): Promise<ArchiverData>;
 }
 

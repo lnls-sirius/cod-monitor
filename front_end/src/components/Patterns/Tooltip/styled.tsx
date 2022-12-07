@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StateInterface } from "../../../assets/interfaces/patterns";
 import {colors, properties} from "../../../assets/style/themes";
 
 const TooltipText = styled.div`
@@ -12,7 +13,9 @@ const TooltipText = styled.div`
     text-align: center;
     padding: 0.25em;
     border-radius: ${properties.radius.light};
-    transform: translateY(-0.75em);
+    ${(props: StateInterface) => 
+        props.state?
+        'transform: translateY(-0.5em)':''} 
 `
 
 const TooltipWrapper = styled.div`

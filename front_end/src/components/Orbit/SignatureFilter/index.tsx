@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
 import Item from "../../Patterns/Item";
+import Tooltip from "../../Patterns/Tooltip";
 import { magnet_names, magnet_types } from "../../../assets/constants/patterns";
 import { DictState } from "../../../assets/interfaces/patterns";
 import { FilterInterface } from "../../../assets/interfaces/orbit";
+import { InputChange } from "../../../assets/interfaces/types";
 import * as S from './styled';
 
 const defaultProps: FilterInterface = {
@@ -61,11 +63,15 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
     <S.FilterWrapper>
       <S.FilterRow>
         Name Filter:
-        <S.NameFilter type='text'
-          value={nameFilter}
-          onChange={(event)=>setNameFilter(
-            event.target.value)}
-          onKeyDown={submitHandler}/>
+        <Tooltip
+            text={"Filter signatueres with Glob Pattern"}
+            movable={false}>
+          <S.NameFilter type='text'
+            value={nameFilter}
+            onChange={(event: InputChange)=>setNameFilter(
+              event.target.value)}
+            onKeyDown={submitHandler}/>
+        </Tooltip>
       </S.FilterRow>
       <S.FilterRow>
         Magnets:

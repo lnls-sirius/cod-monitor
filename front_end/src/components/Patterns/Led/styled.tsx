@@ -7,9 +7,9 @@ export const LedWrapper = styled.button`
         colors.led.on.normal:colors.led.off.normal};
     border-radius: ${properties.radius.high};
     border: none;
-    width: 25px;
-    height: 25px;
-    margin: 5px;
+    width: 2em;
+    height: 2em;
+    margin: 0.25em;
     &:hover{
         background: ${(props: StateInterface) => props.state?
             colors.led.on.hover:colors.led.off.hover};

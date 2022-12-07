@@ -34,7 +34,8 @@ const Item: React.FC<ActionItem> = (props): React.ReactElement => {
   return (
     <S.ItemWrapper>
       <Tooltip
-          text={props.tooltip}>
+          text={props.tooltip}
+          movable={true}>
         <S.Icon
           icon={iconList[props.icon]}
           onClick={() =>{clickHandler()}}

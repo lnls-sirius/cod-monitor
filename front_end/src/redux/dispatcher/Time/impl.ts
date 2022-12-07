@@ -1,4 +1,4 @@
-import store from "../../storage/store";
+import { store } from "../../storage/store";
 import { actions as actionsTime } from "../../features/TimeStore";
 import TimeDispatcherInterface from "./interface";
 
