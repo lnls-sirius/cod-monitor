@@ -164,12 +164,13 @@ function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: string): Da
 // Change date with a click
 function changeDateClick(newRefDate: Date, keyPressed: string): void {
   let date_to_change = null
+  keyPressed = keyPressed.toLowerCase()
   if(keyPressed == 'd'){
     date_to_change = 'Ref'
-  }else if(keyPressed == 'Control'){
+  }else if(keyPressed == 's'){
     TimeDispatcher.setTimeMode('None')
     date_to_change = 'Start'
-  }else if(keyPressed == 'Shift'){
+  }else if(keyPressed == 'e'){
     TimeDispatcher.setTimeMode('None')
     date_to_change = 'End'
   }

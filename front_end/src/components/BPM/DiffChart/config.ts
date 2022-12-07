@@ -43,6 +43,21 @@ export const optionsDiff: any = {
         }
     },
     plugins:{
+        zoom: {
+            pan: {
+                enabled: true,
+                modifierKey: 'ctrl',
+                mode: 'xy'
+            },
+            zoom: {
+                drag: {
+                    enabled: true,
+                    threshold: 100,
+                    modifierKey:'shift'
+                },
+                mode: 'xy'
+            }
+        },
         legend: {
             display: false
         }

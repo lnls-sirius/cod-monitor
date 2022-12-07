@@ -38,7 +38,7 @@ const colors = {
         secondary_inac: 'linear-gradient(to top, #2E005BAA, #6400C8AA)',
         tertiary: 'linear-gradient(to top, #001dc1, #006fc1)',
         alert: 'linear-gradient(to top, #e27800, #e2b900)',
-        white: '#FFFFFF',
+        white: '#FFFFFFEE',
         transparent: '#00000000'
     },
     chart: {

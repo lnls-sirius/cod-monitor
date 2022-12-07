@@ -32,17 +32,16 @@ class BaseChart extends Component<any>{
 
   // Create and configure chart component
   componentDidMount(): void {
+    const options = this.options;
     if(this.id == 0){
       if(this.chartRef.current != null){
-        const options = this.options;
         this.chart[0] = new Chart(
           this.chartRef.current,
           { type: "line", data: initData, options });
       }
     }else{
       if(this.chartRef.current != null){
-        const options = this.options;
-        this.chart[0] = new Chart(
+        this.chart[1] = new Chart(
           this.chartRef.current,
           { type: "line", data: initData, options });
       }
@@ -51,9 +50,15 @@ class BaseChart extends Component<any>{
 
   render() {
     return (
-      <S.Chart
-        id={"canvas"+this.id}
-        ref={this.chartRef}/>
+      <div>
+        <S.Chart
+          id={"canvas"+this.id}
+          ref={this.chartRef}/>
+        <S.Button onClick={
+            ()=>this.chart[0].resetZoom()}>
+          A
+        </S.Button>
+      </div>
     )
   }
 }

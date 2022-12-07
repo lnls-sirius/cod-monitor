@@ -1,6 +1,7 @@
 import React, { createRef, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Chart, ChartArea, registerables } from 'chart.js';
+import zoomPlugin from 'chartjs-plugin-zoom';
 
 import ListBPM from "../ListBPM";
 import BaseChart from "../../Patterns/Chart";
@@ -45,6 +46,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   const [keyPressed, onKeyPressed] = useState<string>('');
   const chartRef: React.RefObject<BaseChart> = createRef();
   Chart.register(...registerables);
+  Chart.register(zoomPlugin);
 
   // Detect and register key pressed
   window.addEventListener('keydown', (event) => {

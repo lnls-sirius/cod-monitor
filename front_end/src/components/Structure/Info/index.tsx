@@ -91,8 +91,8 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             <li>
               Shortcuts
               <ul>
-                <li>CONTROL + CLICK (On the desired date): Select a new Start date</li>
-                <li>SHIFT + CLICK (On the desired date): Select a new End date</li>
+                <li>S + CLICK (On the desired date): Select a new Start date</li>
+                <li>E + CLICK (On the desired date): Select a new End date</li>
                 <li>D + CLICK (On the desired date): Select a new Reference date</li>
               </ul>
             </li>:''

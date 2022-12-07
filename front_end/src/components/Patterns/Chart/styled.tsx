@@ -1,8 +1,26 @@
 import styled from "styled-components";
+import { AnimButton } from "../../../assets/style/gen_styles";
 import { colors, properties } from "../../../assets/style/themes";
 
-export const Chart = styled.canvas`
-  margin: 0.5em 0em;
+const Button = styled.button`
+  position: relative;
+  bottom: 2em;
+  z-index: 1;
+  visibility: visible;
+  min-width: 2em;
+  background: ${colors.btns.btn1.normal};
+  color: ${colors.txt.primary};
+  text-align: center;
+  margin: 0.25em 0.5em;
+  ${AnimButton};
+`
+
+const Chart = styled.canvas`
   border-radius: ${properties.radius.extlight};
   background-color: ${colors.bg.white};
 `;
+
+export {
+  Chart,
+  Button
+}
