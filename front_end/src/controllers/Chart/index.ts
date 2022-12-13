@@ -14,6 +14,7 @@ class ChartObject {
         return this.axisColors;
     }
 
+    // Save chart datasets
     setDataset(newData: DatasetList, axis?: string): void{
         if (axis == 'A' || axis == 'X'){
             this.dataset = newData;
@@ -22,18 +23,12 @@ class ChartObject {
         }
     }
 
-    getDatasetByIdx(index: number): any {
-        if (index == 0){
-            return this.dataset;
-        }else{
-            return this.datasetExt;
-        }
-    }
-
+    // Save chart labels
     setLabels(labels: Array<string>): void{
         this.labels = labels;
     }
 
+    // Detect if the data is already on the chart
     detectNewData(name: string, changeTime: boolean, axis?: string): DatasetInterface|null{
         let itemInfo: DatasetInterface|null = null;
         let dataset: any = this.dataset;

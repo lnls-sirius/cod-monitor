@@ -22,6 +22,7 @@ class BaseChart extends Component<any>{
     this.chart = null;
   }
 
+  // Create a new chart object
   createChart(reference: any): Chart{
     const options = this.options;
     return new Chart(
@@ -29,6 +30,7 @@ class BaseChart extends Component<any>{
       { type: "line", data: this.data, options });
   }
 
+  // Reset Zoom
   resetZoom(): void {
     if (this.chart) {
       this.chart.resetZoom();

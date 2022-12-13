@@ -30,6 +30,7 @@ const Modals: React.FC<ChangeInterface> = (props) => {
   const [change, setChange] = useState<boolean>(false);
   let timer: NodeJS.Timeout;
 
+  // Operations made after the modal is closed
   function closeModal(): void {
     const modal: ModalInterface = modalInfo[control.getModalId()];
     control.setModalState(false);
@@ -40,16 +41,19 @@ const Modals: React.FC<ChangeInterface> = (props) => {
     setChange(true);
   }
 
+  // Timeout counter for alerts
   const createTimeout = () => setTimeout(() => {
     if(control.getModalTimeout()){
       closeModal();
     }
   }, 5000)
 
+  // Set modal state
   useEffect(() => {
     control.setFlagSetter(setChange);
   }, [])
 
+  // Detect if there is a change and activate the alert message
   useEffect(() => {
     setChange(false);
     clearTimeout(timer);
@@ -63,6 +67,7 @@ const Modals: React.FC<ChangeInterface> = (props) => {
       props.changeOrbit,
       change]);
 
+  // Show the modal component
   function showModal(): React.ReactElement {
     if(control.getModalState()){
       return(

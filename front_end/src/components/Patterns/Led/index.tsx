@@ -24,6 +24,7 @@ const Led: React.FC<OnMount> = (props) => {
     props.updateData(state, props.id);
   }, [props.updateData, state]);
 
+  // Set BPM selection state
   function setBPM(): void {
     setState(!state);
   }

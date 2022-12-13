@@ -12,10 +12,12 @@ const defaultProps: SetDateInterface = {
 const DateInput: React.FC<SetDateInterface> = (props) => {
   // Component that shows an input of the type date
 
+  // Set date function
   function setDateImp(time: Date): void {
     props.setDate(props.type, time);
   }
 
+  // Build tooltip for all date types
   function buildTooltipText(): string {
     let text: string = "Set the "
     if(props.type == 'Ref'){
@@ -26,7 +28,7 @@ const DateInput: React.FC<SetDateInterface> = (props) => {
     if(window.location.pathname == "/orbitDrift"){
       text += " interval"
     }else{
-      text += " date on the chart" 
+      text += " date on the chart"
     }
     return text
   }

@@ -25,10 +25,13 @@ The main folders are:
         -> Item: Build an alternate button with icons
         -> Led: Show a Led button with its state
         -> Loading: Show a loading animation
+        -> Message: Show an alert message
         -> Modals: Show a Modal structure
+        -> Tooltip: Show a Tooltip for interactive components
 
     - Structure: Contain the basic structural components
         -> Footer: All the footer information
         -> Header: Container for the header
+        -> Info: Show information about the webpage for the user
         -> Logo: Show the two Logos of the LNLS and the CNPEM
         -> Navigator: Allows the navigation between the two pages

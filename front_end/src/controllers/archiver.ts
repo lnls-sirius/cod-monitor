@@ -59,6 +59,7 @@ async function getSignatures(start: Date, end: Date): Promise<undefined|SignData
   }
 }
 
+// Show Error Message
 function errorMsg(): void {
   control.setAlert("Err_Server");
   TimeDispatcher.setChangeTime(false);

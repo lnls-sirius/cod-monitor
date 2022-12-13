@@ -8,6 +8,7 @@ import * as S from './styled';
 
 const Message: React.FC = () => {
 
+  // Handle error message
   function chartUpdateText(): string {
     if(control.getModalId() != "Err_Server"){
       return "and the chart is being updated!"
@@ -21,7 +22,7 @@ const Message: React.FC = () => {
       <br/>
       {chartUpdateText()}
       <br/>
-      Action: 
+      Action:
         <S.Icon
           icon={
             iconList[

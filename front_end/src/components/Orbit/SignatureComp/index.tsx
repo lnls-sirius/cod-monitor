@@ -99,6 +99,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     return true;
   }
 
+  // Filter Magnets by kick axis
   function showAxis(axis: string): boolean {
     if(axis == 'X' && filterState.X){
       return true;
@@ -108,6 +109,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     return false;
   }
 
+  // Filter Magnets if it is selected
   function showInChart(name: string): boolean {
     if(name in props.sign_list && filterState.chart){
       return true;

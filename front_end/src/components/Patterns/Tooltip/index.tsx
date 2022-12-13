@@ -9,6 +9,7 @@ const defaultProps: TooltipInterface = {
 }
 
 const Tooltip: React.FC<TooltipInterface> = (props) => {
+  // Display a tooltip for the interactive components
   return (
     <S.TooltipWrapper>
       {props.children}

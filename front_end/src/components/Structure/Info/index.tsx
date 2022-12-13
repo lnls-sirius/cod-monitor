@@ -10,6 +10,7 @@ const defaultProps: InfoTypeInterface = {
 const Info: React.FC<InfoTypeInterface> = (props) => {
   // Display the Page Documentation
 
+  // Display general information about the BPM Drift page
   function bpmPageInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
@@ -32,6 +33,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);
   }
 
+  // Display general information about the Orbit Drift page
   function orbitPageInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
@@ -45,6 +47,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);
   }
 
+  // Display information about the date modification
   function IntervalInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
@@ -101,6 +104,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);
   }
 
+  // Display information about the BPM selection
   function bpmInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
@@ -110,7 +114,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             onClick={()=>null}
             state={false}
             small={true}/>
-          <S.Tab/>BPM Modification
+          <S.Tab/>BPM Selection
         </S.Title>
         <ul>
           <li>
@@ -139,6 +143,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);
   }
 
+  // Display information about the signatures and how to filter them
   function signatureInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
@@ -195,6 +200,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
       </S.GroupWrapper>);
   }
 
+  // Display information about the chart interaction
   function chartInfo(): React.ReactElement {
     return (
       <S.GroupWrapper>
