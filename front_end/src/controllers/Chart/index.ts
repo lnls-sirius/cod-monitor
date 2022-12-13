@@ -28,6 +28,15 @@ class ChartObject {
         this.labels = labels;
     }
 
+    // Get dataset information by index
+    getDatasetByIdx(index: number): any {
+        if (index == 0){
+            return this.dataset;
+        }else{
+            return this.datasetExt;
+        }
+    }
+
     // Detect if the data is already on the chart
     detectNewData(name: string, changeTime: boolean, axis?: string): DatasetInterface|null{
         let itemInfo: DatasetInterface|null = null;
