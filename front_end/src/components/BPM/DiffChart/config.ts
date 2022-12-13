@@ -46,6 +46,10 @@ export const optionsDiff: any = {
                 modifierKey: 'ctrl'
             },
             zoom: {
+                wheel: {
+                    enabled: true,
+                    modifierKey:'shift'
+                },
                 drag: {
                     enabled: true,
                     threshold: 100,

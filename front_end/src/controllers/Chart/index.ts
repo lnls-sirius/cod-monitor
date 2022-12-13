@@ -22,6 +22,14 @@ class ChartObject {
         }
     }
 
+    getDatasetByIdx(index: number): any {
+        if (index == 0){
+            return this.dataset;
+        }else{
+            return this.datasetExt;
+        }
+    }
+
     setLabels(labels: Array<string>): void{
         this.labels = labels;
     }
@@ -41,9 +49,12 @@ class ChartObject {
         }
         return itemInfo;
     }
+
     // Update the chart dataset
-    updateDataset(chart: any, newData: DatasetList, options: any): void {
-        chart.options = options;
+    updateDataset(chart: any, newData: DatasetList, options?: any): void {
+        if(options != null){
+            chart.options = options;
+        }
         chart.data.datasets = newData;
         chart.data.labels= this.labels;
         chart.update();
@@ -52,7 +63,6 @@ class ChartObject {
      // Build the new chart dataset
     async buildChartDatasets(chart: any, newData: DatasetList, options: any, axis?: string): Promise<any> {
         let dataset: DatasetList = [];
-
         await newData.map((state) => {
             state = setAxisColor(state.label, state);
             dataset.push(state);

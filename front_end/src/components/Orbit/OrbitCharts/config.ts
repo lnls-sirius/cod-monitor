@@ -1,3 +1,5 @@
+import control from "../../../controllers/Chart";
+
 export const optionsOrbit: any = {
     showLines: true,
     spanGaps: true,
@@ -47,10 +49,17 @@ export const optionsOrbit: any = {
                 modifierKey: 'ctrl'
             },
             zoom: {
+                wheel: {
+                    enabled: true,
+                    modifierKey:'shift'
+                },
                 drag: {
                     enabled: true,
                     threshold: 1,
                     modifierKey:'shift'
+                },
+                pinch: {
+                    enabled: true
                 },
                 mode: 'xy'
             }

@@ -138,6 +138,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
       <BaseChart
         id={0}
         options={optionsDiff}
+
         ref={chartRef}/>
       <ListBPM />
       <S.TextWrapper>

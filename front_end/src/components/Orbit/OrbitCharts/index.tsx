@@ -1,4 +1,4 @@
-import React, { useEffect, createRef, RefObject } from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
@@ -40,7 +40,7 @@ const defaultProps: ChartOrbitInterface = {
 
 const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   // Display the charts of the CODX and CODY
-  const chartRef: Array<RefObject<BaseChart>> = [createRef(), createRef()];
+  const chartRef: Array<any> = [useRef(), useRef()];
   Chart.register(...registerables);
   Chart.register(zoomPlugin);
 
@@ -146,11 +146,13 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
       <BaseChart
         id={0}
         options={optionsOrbit}
+        data={control.getDatasetByIdx(0)}
         ref={chartRef[0]}/>
       COD Y
       <BaseChart
         id={1}
         options={optionsOrbit}
+        data={control.getDatasetByIdx(1)}
         ref={chartRef[1]}/>
       <ListSignatures />
     </S.ChartWrapper>

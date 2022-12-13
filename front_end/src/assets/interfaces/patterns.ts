@@ -61,7 +61,8 @@ interface DatasetInterface {
 
 interface BaseChartInterface {
     id: number,
-    options: any
+    options: any,
+    data: any
 }
 
 interface ChildrenInterface {

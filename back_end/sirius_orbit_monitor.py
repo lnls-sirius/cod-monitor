@@ -15,12 +15,14 @@ family_dict = {
     'S': 'Sextupole'
 }
 
+
 # Load a dictionary from a json file
 def load_json(filename):
     file = open('./data_sim/'+filename+'.json', "r")
     data = json.loads(file.read())
     file.close()
     return data
+
 
 # Read the response matrix from SOFB
 def read_respmat():
@@ -31,6 +33,7 @@ def read_respmat():
     respm = np.array(cdb.value)
     return respm
 
+
 # Update the interval used to fetch the pv value
 def update_time_stamp(pvds, time_ref, interval):
     if Time.now() > (time_ref + interval):
@@ -40,6 +43,7 @@ def update_time_stamp(pvds, time_ref, interval):
         pvds.time_start = time_ref - interval
         pvds.time_stop = time_ref
     pvds.update()
+
 
 # Read several PVs from archiver
 def read_archiver(pvnames, time_ref):
@@ -60,6 +64,7 @@ def read_archiver(pvnames, time_ref):
         data[pvname] = value_fit
     return data
 
+
 # Get the difference between the values read on the start and stop time
 def get_wfm_diff(pvnames, time_start, time_stop):
     """."""
@@ -68,6 +73,7 @@ def get_wfm_diff(pvnames, time_start, time_stop):
     datax = data_stop[pvnames[0]] - data_start[pvnames[0]]
     datay = data_stop[pvnames[1]] - data_start[pvnames[1]]
     return datax, datay
+
 
 # Read the Kicks from the CHs, CVs and the RF and the Orbit X and Y from Archiver
 def read_data_from_archiver(time_start, time_stop):
@@ -88,6 +94,8 @@ def read_data_from_archiver(time_start, time_stop):
 
     return kick_rf, cod
 
+
+# Calculate the correlation of a group
 def corr_per_group(cod_rebuilt, data, corrdata, kick_axis=None):
     for group in data:
         for maname in data[group]:
@@ -102,6 +110,7 @@ def corr_per_group(cod_rebuilt, data, corrdata, kick_axis=None):
             corrdata[maname+kick_axis] = (
                 magnet_type, kick_axis, corrx, corry)
     return corrdata
+
 
 # Calculate the correlation of the Signature orbits with the COD Rebuild
 def calc_correlation(cod_rebuilt, signature_files, read_json=False):
@@ -120,6 +129,7 @@ def calc_correlation(cod_rebuilt, signature_files, read_json=False):
                 cod_rebuilt, data, corrdata, kick_axis)
     return corrdata
 
+
 # Get formatted time from URL
 def get_time(start, stop):
     """."""
@@ -133,6 +143,7 @@ def get_time(start, stop):
             stop_date_str, date_format) - 10800
     return time_start, time_stop
 
+
 # Calculate the COD Rebuild
 def calc_cod_rebuilt(start, stop):
     time_start, time_stop = get_time(start, stop)
@@ -143,12 +154,14 @@ def calc_cod_rebuilt(start, stop):
     cod_rebuilt = cod - np.dot(sofb_mat, kick_rf)
     return cod_rebuilt
 
+
 # Normalize an array
 def normalized_array(array):
     norm = np.linalg.norm(array)
     if norm == 0:
         return np.array(array)
     return array/norm
+
 
 # Read the signature CODX and CODY
 def read_signatures(elem_data, read_json=False):

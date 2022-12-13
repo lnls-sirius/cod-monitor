@@ -62,6 +62,7 @@ def formatTwissData(bpm_positions, axis, spos, kick):
         bpm_positions, list(spos), axis_norm)
 
 
+# Calculate the kick on each of the dipoles segments
 def calcKickSeg(idx, angle, length):
     total_field = 0
     kick_list = []
@@ -73,6 +74,7 @@ def calcKickSeg(idx, angle, length):
     return total_field, kick_list
 
 
+# Calculate x and y orbits
 def calcOrbit(model, bpm_positions, kick):
     twiss, *_ = pyaccel.optics.calc_twiss(model)
     rx_meas = formatTwissData(bpm_positions, twiss.rx, twiss.spos, kick)
@@ -98,6 +100,7 @@ def setOrbitDist(model, idx, axis, has_segments):
     return model
 
 
+# Remove the kick on the magnet
 def unsetOrbitDist(model, idx, axis, has_segments):
     if has_segments:
         for id_di in idx:
@@ -123,6 +126,7 @@ def writeJson(dictionary, axis, fam_letter):
     jsonFile.close()
 
 
+# Get corrected orbit distortion
 def getCod(model, data, ele_idx, dev_fam, axis_kick, stren_kick, bpm_positions):
     r_meas = {'x': [], 'y': []}
     for idx, idx_e in enumerate(ele_idx):
@@ -139,21 +143,23 @@ def getCod(model, data, ele_idx, dev_fam, axis_kick, stren_kick, bpm_positions):
             data, r_meas[axis], axis)
     return data
 
-def elementSignature(
+
+# Generate magnet signature
+def magnetSignature(
         model, famdata, bpm_positions, dev_fam, axis_kick):
     # Save family to Dictionary
     data = {}
     famData = data
     family = famdata[dev_fam]
-    # Calculate distorted orbit on the elements
+    # Calculate distorted orbit on the magnets
     if dev_fam in DIPOLES:
         ele_idx = np.asarray(family['index'])
     else:
         ele_idx = np.asarray(family['index']).ravel()
-    # Loop the elements in the Families
+    # Loop the magnets in the Families
     for idx, idx_e in enumerate(ele_idx):
         print(axis_kick, dev_fam, idx_e)
-        # Save element
+        # Save magnet
         if dev_fam in DIPOLES:
             subsec = family['subsection'][idx]
             dev_name = "SI-" + subsec + ":MA-" + dev_fam
@@ -166,12 +172,14 @@ def elementSignature(
 
     return data
 
+
+# Generate magnet family signature
 def famSignature(model, famdata, bpm_positions, dev_fam, axis_kick):
     print(dev_fam)
     # Save family to Dictionary
     data = {}
     family = famdata[dev_fam]
-    # Calculate distorted orbit on the elements
+    # Calculate distorted orbit on the magnets
     if dev_fam in DIPOLES:
         ele_idx = np.asarray(family['index'])
     else:
@@ -182,6 +190,7 @@ def famSignature(model, famdata, bpm_positions, dev_fam, axis_kick):
     return data
 
 
+# Calculate all the signatures
 def calc_sign(write_json=False):
 
     model = si.create_accelerator()
@@ -218,7 +227,7 @@ def calc_sign(write_json=False):
 
             if(not ((axis_kick == 'x' and dev_fam == 'CV') or
                     (axis_kick == 'y' and dev_fam == 'CH'))):
-                codData[group_name][dev_fam] = elementSignature(
+                codData[group_name][dev_fam] = magnetSignature(
                     model, famdata, bpm_positions, dev_fam, axis_kick)
                 if dev_fam not in CORRECTORS:
                     codData[group_name][dev_fam][dev_fam+" family"] = famSignature(

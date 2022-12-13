@@ -1,9 +1,11 @@
 import threading
 from flask import Flask, render_template, request
+from flask_cors import CORS
 from sirius_orbit_monitor import calc_cod_rebuilt, \
     calc_correlation, normalized_array, read_signatures
 
 app = Flask(__name__)
+CORS(app)
 
 # Returns the list of signature with the information
 # about the correlation with the COD Rebuilt
@@ -50,11 +52,13 @@ def signOrbit():
     return sign_orbit
 
 
+# Operation done with server initialization
 def run_job():
     print("Initializing!")
     # app.SIGNATURES = calc_signatures.calc_sign()
 
 
+# Runs after the server initialization
 @app.before_first_request
 def before_first_request():
     thread = threading.Thread(target=run_job)
@@ -69,5 +73,4 @@ def home():
 
 if __name__ == "__main__":
     app.SIGNATURES = {}
-    #10.20.21.52
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    app.run(host="10.20.21.52", port=8080, debug=True)

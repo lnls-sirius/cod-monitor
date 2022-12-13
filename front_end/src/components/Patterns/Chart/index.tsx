@@ -1,32 +1,24 @@
-import React, { Component, createRef } from "react";
+import { Component, createRef } from "react";
 import { Chart } from 'chart.js';
 import 'chartjs-adapter-moment';
-import { colors } from "../../../assets/style/themes";
-import { BaseChartInterface } from "../../../assets/interfaces/patterns";
 import * as S from './styled';
 
-export const initData = {
-  datasets: [{
-      data: [],
-      label: '',
-      borderColor: colors.bg.transparent,
-      backgroundColor: colors.bg.transparent
-  }]
-}
-
-class BaseChart extends Component<BaseChartInterface>{
+// BaseChartInterface
+class BaseChart extends Component<any>{
   // Create a Basic Chart Element
   private id: number;
   private options: any;
   private chartRef: any;
+  private data: any;
   public chart: null|Chart;
 
   // Initialize chart variables
-  constructor(props: BaseChartInterface){
+  constructor(props: any){
     super(props);
     this.chartRef = createRef();
     this.options = props.options;
     this.id = props.id;
+    this.data = props.data;
     this.chart = null;
   }
 
@@ -34,7 +26,7 @@ class BaseChart extends Component<BaseChartInterface>{
     const options = this.options;
     return new Chart(
       reference,
-      { type: "line", data: initData, options });
+      { type: "line", data: this.data, options });
   }
 
   resetZoom(): void {
@@ -48,6 +40,8 @@ class BaseChart extends Component<BaseChartInterface>{
     if(this.chartRef.current != null){
       this.chart = this.createChart(
         this.chartRef.current)
+    }else{
+      console.log("Error!")
     }
   }
 
@@ -57,7 +51,7 @@ class BaseChart extends Component<BaseChartInterface>{
         <S.Chart
           id={"canvas"+this.id}
           ref={this.chartRef}/>
-        <S.Button onClick={this.resetZoom}>
+        <S.Button onClick={() => this.resetZoom()}>
           A
         </S.Button>
       </S.ChartWrapper>
