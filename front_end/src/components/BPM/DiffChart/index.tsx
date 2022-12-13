@@ -71,7 +71,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   // Detect click on canvas and update respective date
   async function handleCanvasClick(evt: React.MouseEvent): Promise<void>{
     if(chartRef.current){
-      const chart: Chart = chartRef.current.chart[0];
+      const chart: null|Chart = chartRef.current.chart;
       if(chart != null){
         const chartParameters: ChartArea = chart.chartArea;
         const chartTimeUnit: number = (props.end.getTime() - props.start.getTime())/chartParameters.width;
@@ -90,9 +90,10 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   // Update Difference Chart
   async function updateChartDiff() {
     if(chartRef.current){
-      const chart: Chart = chartRef.current.chart[0];
+      const chart: null|Chart = chartRef.current.chart;
       if(chart != null){
         const datasetList: DatasetList = await buildChartDiff();
+        control.setLabels([]);
         await control.buildChartDatasets(
           chart, datasetList, optionsDiff, 'A');
         unsetBPMChange();
@@ -140,9 +141,9 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
         ref={chartRef}/>
       <ListBPM />
       <S.TextWrapper>
-        Optimization: <input 
-          type='number' 
-          value={optimization} 
+        Optimization: <input
+          type='number'
+          value={optimization}
           onChange={
             (event)=>
               setOptimize(parseInt(event.target.value))}

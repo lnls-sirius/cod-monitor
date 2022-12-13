@@ -1,17 +1,14 @@
-import { Chart } from "chart.js";
-
 export const optionsOrbit: any = {
     showLines: true,
     spanGaps: true,
     responsiveAnimationDuration: 0,
     responsive: true,
     bezierCurve: false,
-    animation: { duration: 0 },
     elements: {
         point: {
-          hoverRadius: 1,
+            hoverRadius: 0
         }
-      },
+    },
     hover: {
         mode: "nearest",
         intersect: false
@@ -43,6 +40,21 @@ export const optionsOrbit: any = {
         }
     },
     plugins:{
+        zoom: {
+            pan: {
+                enabled: true,
+                mode: 'xy',
+                modifierKey: 'ctrl'
+            },
+            zoom: {
+                drag: {
+                    enabled: true,
+                    threshold: 1,
+                    modifierKey:'shift'
+                },
+                mode: 'xy'
+            }
+        },
         legend: {
             display: false
         }

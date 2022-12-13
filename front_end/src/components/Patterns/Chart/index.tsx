@@ -18,8 +18,8 @@ class BaseChart extends Component<BaseChartInterface>{
   // Create a Basic Chart Element
   private id: number;
   private options: any;
-  private chartRef: React.RefObject<HTMLCanvasElement>;
-  public chart: Array<Chart>;
+  private chartRef: any;
+  public chart: null|Chart;
 
   // Initialize chart variables
   constructor(props: BaseChartInterface){
@@ -27,24 +27,27 @@ class BaseChart extends Component<BaseChartInterface>{
     this.chartRef = createRef();
     this.options = props.options;
     this.id = props.id;
-    this.chart = [];
+    this.chart = null;
+  }
+
+  createChart(reference: any): Chart{
+    const options = this.options;
+    return new Chart(
+      reference,
+      { type: "line", data: initData, options });
+  }
+
+  resetZoom(): void {
+    if (this.chart) {
+      this.chart.resetZoom();
+    }
   }
 
   // Create and configure chart component
   componentDidMount(): void {
-    const options = this.options;
-    if(this.id == 0){
-      if(this.chartRef.current != null){
-        this.chart[0] = new Chart(
-          this.chartRef.current,
-          { type: "line", data: initData, options });
-      }
-    }else{
-      if(this.chartRef.current != null){
-        this.chart[1] = new Chart(
-          this.chartRef.current,
-          { type: "line", data: initData, options });
-      }
+    if(this.chartRef.current != null){
+      this.chart = this.createChart(
+        this.chartRef.current)
     }
   }
 
@@ -52,12 +55,11 @@ class BaseChart extends Component<BaseChartInterface>{
     return (
       <S.ChartWrapper>
         <S.Chart
-            id={"canvas"+this.id}
-            ref={this.chartRef}/>
-          <S.Button onClick={
-              ()=>this.chart[0].resetZoom()}>
-            A
-          </S.Button>
+          id={"canvas"+this.id}
+          ref={this.chartRef}/>
+        <S.Button onClick={this.resetZoom}>
+          A
+        </S.Button>
       </S.ChartWrapper>
     )
   }

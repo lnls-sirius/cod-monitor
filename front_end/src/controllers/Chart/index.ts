@@ -1,5 +1,3 @@
-import React from 'react';
-import { Chart } from "chart.js";
 import { TimeDispatcher } from '../../redux/dispatcher';
 import { setAxisColor } from '../chart';
 import { DatasetInterface, DictString } from '../../assets/interfaces/patterns';
@@ -9,6 +7,7 @@ class ChartObject {
     private axisColors: DictString = {};
     private dataset: any = [];
     private datasetExt: any = [];
+    private labels: Array<string> = [];
 
     // Get the axis color list
     getAxisColors(): DictString {
@@ -21,6 +20,10 @@ class ChartObject {
         }else{
             this.datasetExt = newData;
         }
+    }
+
+    setLabels(labels: Array<string>): void{
+        this.labels = labels;
     }
 
     detectNewData(name: string, changeTime: boolean, axis?: string): DatasetInterface|null{
@@ -38,19 +41,18 @@ class ChartObject {
         }
         return itemInfo;
     }
-
     // Update the chart dataset
-    updateDataset(chart: any, newData: DatasetList, options: any){
+    updateDataset(chart: any, newData: DatasetList, options: any): void {
         chart.options = options;
         chart.data.datasets = newData;
-        chart.data.labels= [];
+        chart.data.labels= this.labels;
         chart.update();
     }
 
      // Build the new chart dataset
     async buildChartDatasets(chart: any, newData: DatasetList, options: any, axis?: string): Promise<any> {
         let dataset: DatasetList = [];
-        
+
         await newData.map((state) => {
             state = setAxisColor(state.label, state);
             dataset.push(state);

@@ -68,12 +68,12 @@ interface ChildrenInterface {
     children: React.ReactNode;
 }
 
-interface HeaderInterface 
+interface HeaderInterface
     extends ChildrenInterface {
-        timeRef: boolean    
+        timeRef: boolean
 }
 
-interface TooltipInterface 
+interface TooltipInterface
     extends ChildrenInterface {
         text: string,
         movable: boolean

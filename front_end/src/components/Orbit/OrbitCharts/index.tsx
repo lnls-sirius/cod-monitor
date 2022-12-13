@@ -1,6 +1,7 @@
-import React, { createRef, RefObject, useEffect } from "react";
+import React, { useEffect, createRef, RefObject } from "react";
 import { connect } from "react-redux";
 import { Chart, registerables } from 'chart.js';
+import zoomPlugin from 'chartjs-plugin-zoom';
 
 import ListSignatures from "../ListSignatures";
 import BaseChart from "../../Patterns/Chart";
@@ -9,9 +10,10 @@ import { fetchSignatureOrbit } from "../../../controllers/simulation";
 import { buildDatasetOrbit, unsetOrbitChange } from "../../../controllers/orbit";
 
 import { optionsOrbit } from "./config";
+import { bpm_labels } from "../../../assets/constants/pos";
 import { BaseStrArrayDict, DatasetInterface } from "../../../assets/interfaces/patterns";
 import { ChartOrbitInterface, SignChartData } from "../../../assets/interfaces/orbit";
-import { ArrDictArrStr, DatasetList, DictOrbitData } from "../../../assets/interfaces/types";
+import { ArrDictArrStr, DatasetList } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
 
@@ -38,8 +40,9 @@ const defaultProps: ChartOrbitInterface = {
 
 const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   // Display the charts of the CODX and CODY
-  Chart.register(...registerables);
   const chartRef: Array<RefObject<BaseChart>> = [createRef(), createRef()];
+  Chart.register(...registerables);
+  Chart.register(zoomPlugin);
 
   // Detect change on time or selected signatures
   useEffect(() => {
@@ -49,13 +52,14 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
   // Update CODX and CODY Chart
   async function updateChartOrbit(): Promise<void>{
     if(chartRef[0].current && chartRef[1].current){
-      const chartX: Chart = chartRef[0].current.chart[0];
-      const chartY: Chart = chartRef[1].current.chart[0];
+      const chartX: null|Chart = chartRef[0].current.chart;
+      const chartY: null|Chart = chartRef[1].current.chart;
       if(chartX != null && chartY != null){
         const datasetList: Array<DatasetList> = await buildChartOrbit();
+        control.setLabels(bpm_labels)
         await control.buildChartDatasets(
           chartX, datasetList[0], optionsOrbit, 'X');
-        control.setDataset(datasetList[0], 'X')
+        control.setDataset(datasetList[0], 'X');
         await control.buildChartDatasets(
           chartY, datasetList[1], optionsOrbit, 'Y');
         control.setDataset(datasetList[1], 'Y')
@@ -66,7 +70,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
 
   // Save dataset Orbit
   function saveDataset(
-      name: string, sign_orbit: Array<number>, 
+      name: string, sign_orbit: Array<number>,
       datasetList: DatasetList): DatasetList{
     const datasetTemp: DatasetInterface = {
       data: buildDatasetOrbit(sign_orbit),
@@ -115,7 +119,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
     let datasetListX: DatasetList = []
     let datasetListY: DatasetList = []
 
-    const [signatures_created, signatures_to_read] = dictToList(props.sign_list)
+    const [signatures_created, signatures_to_read] = dictToList(props.sign_list);
     if(signatures_to_read.length > 0){
       const dictSign: SignChartData = await fetchSignatureOrbit(
         signatures_to_read, props.start, props.end);
@@ -135,7 +139,6 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
     });
     return [datasetListX, datasetListY];
   };
-
 
   return(
     <S.ChartWrapper>

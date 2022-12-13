@@ -5,11 +5,11 @@ import { SignChartData, SignData } from '../assets/interfaces/orbit';
 async function httpRequest(jsonurl: string): Promise<any>{
   return await axios
   .get(jsonurl, {
-      timeout: 5000,
+      timeout: 10000,
       method: "GET",
       headers : {
         'Content-Type':'application/json',
-        'Access-Control-Allow-Origin': 'false'
+        'Access-Control-Allow-Origin': '*'
       },
   })
   .then((res) => {

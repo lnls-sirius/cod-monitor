@@ -1,17 +1,14 @@
-import { Chart } from "chart.js";
-
 export const optionsDiff: any = {
     showLines: true,
     spanGaps: true,
     responsiveAnimationDuration: 0,
     responsive: true,
     bezierCurve: false,
-    animation: { duration: 0 },
     elements: {
         point: {
-          hoverRadius: 0,
+            hoverRadius: 0
         }
-      },
+    },
     hover: {
         mode: "nearest",
         intersect: false

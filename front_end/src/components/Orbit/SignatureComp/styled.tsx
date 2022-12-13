@@ -12,7 +12,7 @@ const SignatureWrapper = styled.div`
 `;
 
 const TableWrapper = styled.div`
-    display: flex;
+    display: block;
     width: 95%;
     max-height: 150vh;
     overflow-y: scroll;
@@ -21,6 +21,8 @@ const TableWrapper = styled.div`
 `;
 
 const Table = styled.table`
+    position: sticky;
+    margin: 0 0 0 0;
     width: 100%;
     padding: 1em 0.5em;
     border-spacing: 0em 0.25em;
