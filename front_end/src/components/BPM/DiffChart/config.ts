@@ -11,7 +11,7 @@ export const optionsDiff: any = {
     },
     hover: {
         mode: "nearest",
-        intersect: false
+        intersect: true
     },
     scales: {
         y: {
@@ -43,7 +43,8 @@ export const optionsDiff: any = {
         zoom: {
             pan: {
                 enabled: true,
-                modifierKey: 'ctrl'
+                mode: 'xy',
+                modifierKey: 'shift'
             },
             zoom: {
                 wheel: {
@@ -53,7 +54,10 @@ export const optionsDiff: any = {
                 drag: {
                     enabled: true,
                     threshold: 100,
-                    modifierKey:'shift'
+                    modifierKey:'ctrl'
+                },
+                pinch: {
+                    enabled: true
                 },
                 mode: 'xy'
             }

@@ -27,7 +27,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             <li>diff(x): Difference Function</li>
             <li>f(x): Values obtained of the PV from the Archiver</li>
             <li>x: Date (Varying from the Start date to the End date)</li>
-            <li>k: Reference date</li>
+            <li>k: Diff Ref date</li>
           </ul>
         </S.GroupWrapper>
       </S.GroupWrapper>);
@@ -66,7 +66,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
           <li>Marker-2: {props.type=='BPM'?
             "End date for the chart.":"End date of the interval."}</li>
           {props.type=='BPM'?
-            <li>Reference: Reference date used to get
+            <li>Diff Ref: Reference date used to get
             the value for the difference function.</li>:''}
           <li>
             Reference Date Selection:<br/>
@@ -94,9 +94,9 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             <li>
               Shortcuts
               <ul>
-                <li>S + CLICK (On the desired date): Select a new Start date</li>
-                <li>E + CLICK (On the desired date): Select a new End date</li>
-                <li>D + CLICK (On the desired date): Select a new Reference date</li>
+                <li>1 + CLICK (On the desired date): Select a new Marker-1 date</li>
+                <li>2 + CLICK (On the desired date): Select a new Marker-2 date</li>
+                <li>D + CLICK (On the desired date): Select a new Diff Ref date</li>
               </ul>
             </li>:''
           }
@@ -120,8 +120,8 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
           <li>
             BPM selection colors
             <ul>
-              <li>Green: BPM unselected</li>
-              <li>Blue: BPM selected</li>
+              <li>Dark Green: BPM unselected</li>
+              <li>Light Green: BPM selected</li>
             </ul>
           </li>
           <li>
@@ -138,6 +138,11 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
               <li>Y: The selection is being made only in the Y axis</li>
               <li>X & Y: The selected BPMs are selected in both axis</li>
             </ul>
+          </li>
+          <li>
+            Selection of several BPMs<br/>
+            <S.Tab/>Click near one led and drag the mouse up to the top of a second
+            led. All the leds in the drag area will toggle their selection.
           </li>
         </ul>
       </S.GroupWrapper>);
@@ -163,6 +168,14 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
           based on the element represented by the chosen header.
         </S.GroupWrapper>
         <ul>
+          <li>
+            Selection of Signatures<br/>
+            <S.Tab/>Click on the button with the plus button or anywhere in the desired row.
+            The selected signature will change color and allow the user to remove it from the chart.
+            The selection of several signatures can be made by clicking in a row and
+            dragging the mouse up to a second row. All the signatures in the drag area
+            will toggle their selection.
+          </li>
           <li>
             Filter Options
             <ul>
@@ -218,9 +231,9 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
         </S.GroupWrapper>
         Shortcuts
           <ul>
-            <li>CTRL + DRAG (To a desired location): Drag the
+            <li>SHIFT + DRAG (To a desired location): Drag the
               chart on the X or Y direction</li>
-            <li>SHIFT + DRAG (Forming a desired area): Zoom the
+            <li>CTRL + DRAG (Forming a desired area): Zoom the
               chart on the selected dragged area</li>
             <li>SHIFT + SCROLL: Zoom the chart on the
               selected scrolled area</li>

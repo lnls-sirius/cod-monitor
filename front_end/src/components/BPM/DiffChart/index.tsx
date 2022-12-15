@@ -74,9 +74,10 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
       const chart: null|Chart = chartRef.current.chart;
       if(chart != null){
         const chartParameters: ChartArea = chart.chartArea;
-        const chartTimeUnit: number = (props.end.getTime() - props.start.getTime())/chartParameters.width;
+        const chartRange: any = chart.scales.x.getMinMax(false);
+        const chartTimeUnit: number = (chartRange.max - chartRange.min)/chartParameters.width;
         const widPoint: number = evt.clientX - chartParameters.left;
-        const newRefDate: Date = new Date(chartTimeUnit * widPoint + props.start.getTime());
+        const newRefDate: Date = new Date(chartTimeUnit * widPoint + chartRange.min);
         changeDateClick(newRefDate, keyPressed);
       }
     }
@@ -141,7 +142,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
         data={control.getDatasetByIdx(0)}
         ref={chartRef}/>
       <ListBPM />
-      <S.TextWrapper>
+      {/* <S.TextWrapper>
         Optimization: <input
           type='number'
           value={optimization}
@@ -149,7 +150,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
             (event)=>
               setOptimize(parseInt(event.target.value))}
           max={1500}/>
-      </S.TextWrapper>
+      </S.TextWrapper> */}
     </S.ChartWrapper>
   );
 };

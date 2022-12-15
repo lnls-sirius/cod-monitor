@@ -2,6 +2,7 @@ import { reverseAxis } from "./patterns";
 import { getClosestDate } from "./time";
 import { BpmDispatcher } from "../redux/dispatcher";
 import control from './Modals';
+import { bpmGroups } from "../assets/constants/patterns";
 import { ArrDictState } from "../assets/interfaces/types";
 import { DatePointInterface, DictState } from "../assets/interfaces/patterns";
 import { DictBPM } from "../assets/interfaces/bpm";
@@ -60,6 +61,39 @@ async function differentiateData(diffData: DatePointInterface[], name: string, d
     return diffData;
 }
 
+function getSectionAndName(name: string): Array<string> {
+    let nameDiv: Array<string> = name.split(':');
+    let section: string = nameDiv[0].substring(3, 5);
+    let bpm_name: string = nameDiv[0].substring(5, 7);
+    if(nameDiv[1][nameDiv[1].length-1] != 'M'){
+        bpm_name += nameDiv[1].substring(nameDiv[1].length-2)
+    }
+    return [section, bpm_name]
+  }
+
+function buildBPMName(section: string, name: string): string {
+    let bpm_name: string;
+    let bpmSufix: string = "DI";
+    if(bpmGroups.sGroups.includes(name.substring(0,2))){
+        bpmSufix = "ID"
+    }
+    if(name.includes('-1') || name.includes('-2')){
+        let nameDiv: Array<string> = name.split('-');
+        bpm_name = "SI-"+section+nameDiv[0]+":"+bpmSufix+"-BPM-"+nameDiv[1];
+    }else{
+        bpm_name = "SI-"+section+name+":"+bpmSufix+"-BPM";
+    }
+    return bpm_name
+}
+
+function isBPMName(name: string): boolean{
+    let nameDiv: Array<string> = name.split(':');
+    if(nameDiv.length!=2){
+        return false
+    }
+    return true
+}
+
 export {
     getBpmName,
     formatBPMName,
@@ -67,5 +101,8 @@ export {
     deleteBPM,
     visibleBPM,
     unsetBPMChange,
-    differentiateData
+    differentiateData,
+    getSectionAndName,
+    buildBPMName,
+    isBPMName
 }

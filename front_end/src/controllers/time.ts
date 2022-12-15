@@ -173,10 +173,10 @@ function changeDateClick(newRefDate: Date, keyPressed: string): void {
   keyPressed = keyPressed.toLowerCase()
   if(keyPressed == 'd'){
     date_to_change = 'Ref'
-  }else if(keyPressed == 's'){
+  }else if(keyPressed == '1'){
     TimeDispatcher.setTimeMode('None')
     date_to_change = 'Start'
-  }else if(keyPressed == 'e'){
+  }else if(keyPressed == '2'){
     TimeDispatcher.setTimeMode('None')
     date_to_change = 'End'
   }

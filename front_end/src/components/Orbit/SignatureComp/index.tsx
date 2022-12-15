@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 
 import Item from "../../Patterns/Item";
 import SignatureFilter from "../SignatureFilter";
+import GestureRecognizer from "../../Patterns/GestureRecognizer";
+
 import { getSignatures } from "../../../controllers/archiver";
 import { deleteSignature, setSignature } from "../../../controllers/orbit";
 import { sortList } from "../../../controllers/patterns";
@@ -45,6 +47,14 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   useEffect(() => {
     updateComparisonList();
   }, [props.changeTime])
+
+  function handleActSign(properties: Array<OrbitData>): void {
+    properties.map((orbit_data: OrbitData)=>{
+      let id_name: string = orbit_data[0]+orbit_data[2];
+      let inChart: boolean = id_name in props.sign_list;
+      actionSignature(orbit_data, inChart);
+    })
+  }
 
   // Update the list of signatures
   async function updateComparisonList(): Promise<void> {
@@ -140,6 +150,17 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     );
   }
 
+  // Action on click in the signature row
+  function actionSignature(properties: OrbitData, inChart: boolean){
+    if(!inChart){
+      signToChart(
+        properties[0], properties[2], properties[1][0])
+    }else{
+      deleteSignature(
+        properties[0]+properties[2], props.sign_list)
+    }
+  }
+
   // Show add to chart button
   function showAddToChart(properties: OrbitData, inChart: boolean): React.ReactElement{
     if(!inChart){
@@ -147,8 +168,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
         <td>
           <Item
             icon='plus'
-            action={()=>signToChart(
-              properties[0], properties[2], properties[1][0])}
+            action={()=>actionSignature(properties, inChart)}
             stateActive={false}
             isSmall={true}
             tooltip={
@@ -160,8 +180,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
         icon='trash'
         isSmall={true}
         stateActive={false}
-        action={() => deleteSignature(
-          properties[0]+properties[2], props.sign_list)}
+        action={() => actionSignature(properties, inChart)}
         tooltip={
           "Remove Signature "+properties[0]+" from Chart"}/>
     );
@@ -170,12 +189,12 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   // Show one Signature information (one row)
   function showSignature(index: number, properties: OrbitData): React.ReactElement{
     let id_name: string = properties[0]+properties[2];
-    let inChart: boolean = false;
-    if(id_name in props.sign_list){
-        inChart = true;
-    }
+    let inChart: boolean = id_name in props.sign_list;
     return (
-      <S.Row key={id_name} inChart={inChart}>
+      <S.Row
+          key={id_name}
+          inChart={inChart}
+          onClick={()=>actionSignature(properties, inChart)}>
         <td>{index}</td>
         <td>{properties[0]}</td>
         <td>{properties[1]}</td>
@@ -206,18 +225,22 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   }
 
   return(
-    <S.SignatureWrapper>
-      <SignatureFilter
-        setGlobExp={setGlobExp}
-        filterState={filterState}
-        setFilterStates={setFilterStates} />
-      <S.TableWrapper>
-        <S.Table>
-          {showHeader()}
-          {listAllComparisons()}
-        </S.Table>
-      </S.TableWrapper>
-    </S.SignatureWrapper>
+    <GestureRecognizer
+        type="row"
+        gestureHandler={handleActSign}>
+      <S.SignatureWrapper>
+        <SignatureFilter
+          setGlobExp={setGlobExp}
+          filterState={filterState}
+          setFilterStates={setFilterStates} />
+        <S.TableWrapper>
+          <S.Table>
+            {showHeader()}
+            {listAllComparisons()}
+          </S.Table>
+        </S.TableWrapper>
+      </S.SignatureWrapper>
+    </GestureRecognizer>
   );
 };
 

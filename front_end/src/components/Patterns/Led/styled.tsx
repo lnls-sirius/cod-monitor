@@ -9,7 +9,7 @@ export const LedWrapper = styled.button`
     border: none;
     width: 2em;
     height: 2em;
-    margin: 0.25em;
+    padding: 0.2em;
     &:hover{
         background: ${(props: StateInterface) => props.state?
             colors.led.on.hover:colors.led.off.hover};

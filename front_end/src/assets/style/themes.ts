@@ -8,9 +8,9 @@ const colors = {
             active: 'linear-gradient(to top, #d23600CC, #ff6c3aCC)'
         },
         btn2: {
-            normal: 'radial-gradient(#00b9ff, #006bfb)',
+            normal: 'radial-gradient(#006bfb, #00357c)',
             hover: 'radial-gradient(#006bfb, #0053c4)',
-            active: 'radial-gradient(#006bfb, #00357c)'
+            active: 'radial-gradient(#00b9ff, #006bfb)'
         },
         btn_plain: {
             normal: '#006fc1',
@@ -19,12 +19,12 @@ const colors = {
     },
     led: {
         on: {
-            normal: 'radial-gradient(#0000fd, #000020)',
-            hover: 'radial-gradient(#0000ab, #00005a)'
+            normal: 'radial-gradient(#1bff1d, #006d00)',
+            hover: 'radial-gradient(#00d202, #006d00)'
         },
         off: {
-            normal: 'radial-gradient(#00ff02, #001e00)',
-            hover: 'radial-gradient(#00bf02, #005f00)'
+            normal: 'radial-gradient(#00aa02, #003e00)',
+            hover: 'radial-gradient(#00c102, #003e00)'
         },
         load: 'radial-gradient(#6400C8, #000000)'
     },
@@ -70,6 +70,6 @@ const fonts = {
 
 export {
     colors,
-    fonts, 
+    fonts,
     properties
 }

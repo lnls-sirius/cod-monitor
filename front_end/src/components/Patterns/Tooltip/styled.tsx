@@ -11,18 +11,18 @@ const TooltipText = styled.div`
     background-color: ${colors.bg.primary50};
     color: ${colors.txt.primary};
     text-align: center;
-    padding: 0.25em;
+    padding: 0em 0.25em;
     border-radius: ${properties.radius.light};
-    ${(props: StateInterface) => 
+    ${(props: StateInterface) =>
         props.state?
-        'transform: translateY(-0.5em)':''} 
+        'transform: translateY(-0.5em)':''}
 `
 
 const TooltipWrapper = styled.div`
     &:hover ${TooltipText} {
         visibility: visible;
     }
-` 
+`
 
 export {
     TooltipText,

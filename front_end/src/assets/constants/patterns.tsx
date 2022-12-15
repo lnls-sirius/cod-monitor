@@ -87,9 +87,24 @@ const bpmGroups: BaseStrArrayDict = {
         '11', '12', '13', '14', '15',
         '16', '17', '18', '19', '20'
     ],
+    sGroups: [
+        'SB', 'SA', 'SP'
+    ],
+    s1: [
+        '', '', '', '', '',
+        '', '', '', '', '10SB',
+        '', '', '', '', '',
+        '', '', '', '', ''
+    ],
+    s2: [
+        '', '', '', '', '',
+        '', '', '', '', '10SB',
+        '', '', '', '', '',
+        '', '', '', '', ''
+    ],
     bpmName: [
-        'M1', 'M2', 'C1-1', 'C1-2',
-        'C2', 'C3-1', 'C3-2', 'C4'
+        'SA/SB/SP-1', 'M1', 'M2', 'C1-1', 'C1-2',
+        'C2', 'C3-1', 'C3-2', 'C4', 'SA/SB/SP-2'
     ],
     axis: [
         'X', 'Y', 'X & Y'
@@ -101,9 +116,9 @@ const magnet_types: Array<string> = [
 ]
 
 const magnet_names: DictString = {
-    'C': "Corrector", 
+    'C': "Corrector",
     'D': "Dipole",
-    'Q': "Quadrupole", 
+    'Q': "Quadrupole",
     'S': "Sextupole"
 }
 

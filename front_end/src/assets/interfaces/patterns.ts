@@ -65,6 +65,11 @@ interface BaseChartInterface {
     data: any
 }
 
+interface GestureInterface
+    extends ChildrenInterface, InfoTypeInterface{
+        gestureHandler: (evt: any)=>void;
+}
+
 interface ChildrenInterface {
     children: React.ReactNode;
 }
@@ -124,6 +129,7 @@ export type {
     BaseChartInterface,
     DatasetInterface,
     HeaderInterface,
+    GestureInterface,
     ChildrenInterface,
     LegendInterface,
     TooltipInterface,

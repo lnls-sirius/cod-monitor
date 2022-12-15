@@ -82,7 +82,7 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
           stateActive={true}
           tooltip={
             "Show only selected signatures"}/>
-        Axis:
+        Kick Axis:
         {filterAxisBtn()}
       </S.FilterRow>
     </S.FilterWrapper>

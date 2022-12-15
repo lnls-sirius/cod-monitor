@@ -50,7 +50,7 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
     if(props.timeRef){
       return (
         <S.TextWrapper>
-          Reference:
+          Diff Ref:
           <DateInput
             type='Ref'
             date={props.refDate}

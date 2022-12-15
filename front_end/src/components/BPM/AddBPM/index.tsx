@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 import BPMLed from "../BPMLed";
 import Tooltip from "../../Patterns/Tooltip";
+import GestureRecognizer from "../../Patterns/GestureRecognizer";
 import { changeStates } from "../../../controllers/patterns";
-import { saveBPMList } from "../../../controllers/bpm";
+import { buildBPMName, getSectionAndName, saveBPMList } from "../../../controllers/bpm";
 import { bpmGroups } from "../../../assets/constants/patterns";
 import { DictState, SetterDictState } from "../../../assets/interfaces/patterns";
 import { ArrDictState, DispatchBool } from "../../../assets/interfaces/types";
@@ -15,6 +16,7 @@ const AddBPM: React.FC = () => {
   // Display the component for the selection of BPMs
   const [axis, setAxis] = useState<string>('X');
   const [ledSetters, setLedSetters] = useState<SetterDictState>({});
+
   let othAxis: DictState = {};
   let ledProps: DictState = {};
 
@@ -63,17 +65,30 @@ const AddBPM: React.FC = () => {
 
   // Select a BPM group
   function groupSelect(groupSelected: string): void{
-    let searchString: string;
+    let searchString: Array<string> = [];
+    let type: string = '';
     if(groupSelected.includes('-')){
       let searchNames: Array<string> = groupSelected.split('-');
-      searchString = searchNames[0]+":DI-BPM-"+searchNames[1];
+      type = searchNames[1];
+      if(groupSelected.includes('SA/SB/SP')){
+        searchString = searchNames[0].split('/');
+      }else{
+        searchString.push(searchNames[0]);
+      }
     }else{
-      searchString = groupSelected;
+      searchString.push(groupSelected);
     }
 
+
     Object.entries(ledProps).map(([name, state]: ArrDictState)=>{
-      if(name.includes(searchString)){
-        ledSetters[name](!state);
+      let corr_type: boolean = true;
+      if(type != ''){
+        corr_type = name.includes('BPM-'+type)
+      }
+      console.log(searchString)
+      if(searchString.some((string) => name.includes(string))
+        && corr_type){
+          ledSetters[name](!state);
       }
     })
   }
@@ -111,13 +126,7 @@ const AddBPM: React.FC = () => {
 
   // Display one BPM Led
   function findBPM(number: string, name: string): React.ReactElement {
-    let bpmName: string;
-    if(name.includes('-1') || name.includes('-2')){
-      let nameDiv: Array<string> = name.split('-');
-      bpmName = "SI-"+number+nameDiv[0]+":DI-BPM-"+nameDiv[1];
-    }else{
-      bpmName = "SI-"+number+name+":DI-BPM";
-    }
+    let bpmName: string= buildBPMName(number, name)
 
     return (
       <Tooltip
@@ -135,6 +144,38 @@ const AddBPM: React.FC = () => {
     );
   }
 
+  function idsBPMs(type: string, group: Array<string>): React.ReactElement[] {
+    return group.map((s_name: string)=>{
+      if(s_name!=''){
+        return <td>{
+          findBPM(
+            s_name.substring(0,2),
+            s_name.substring(2,4)+type)}
+        </td>
+      }
+      return <td/>
+    });
+  }
+
+  // Show BPM sections
+  function showColumns(name: string): React.ReactElement[]{
+    if(name.includes('SA/SB/SP')){
+      let group: Array<string>;
+      if(name.includes('-1')){
+        return idsBPMs('-1', bpmGroups.s1);
+      }else{
+        return idsBPMs('-2', bpmGroups.s2);
+      }
+    }
+    return bpmGroups.bpmNumber.map((number: string)=>{
+      if((number=='01') && name=='M1'){
+        return <td></td>
+      }else{
+        return <td>{findBPM(number, name)}</td>
+      }
+    })
+  }
+
   // Build the BPM table with all the headers and leds
   function bpmTable(): React.ReactElement[] {
     return bpmGroups.bpmName.map((name: string)=>{
@@ -148,15 +189,7 @@ const AddBPM: React.FC = () => {
                 {name}
             </S.Header>
           </Tooltip>
-          {
-            bpmGroups.bpmNumber.map((number: string)=>{
-              if((number=='01') && name=='M1'){
-                return <td></td>
-              }else{
-                return <td>{findBPM(number, name)}</td>
-              }
-            })
-          }
+          {showColumns(name)}
         </tr>
       )
     })
@@ -164,11 +197,10 @@ const AddBPM: React.FC = () => {
 
   // Add the BPM 01M1 to the last line
   function bpmFirst(): React.ReactElement {
-    const name = bpmGroups.bpmName[0];
+    const name = 'M1';
     const number = bpmGroups.bpmNumber[0];
     return(
       <tr>
-        
         <Tooltip
             text={"Select the BPM "+name+" in all sections"}
             movable={true}>
@@ -184,13 +216,46 @@ const AddBPM: React.FC = () => {
     )
   }
 
+  function handlePan(bpm_interval: Array<string>): void {
+    const sectionList: Array<string> = bpmGroups.bpmNumber;
+    const nameList: Array<string> = bpmGroups.bpmName;
+    const [secIni, nameIni] = getSectionAndName(bpm_interval[0])
+    const [secEnd, nameEnd] = getSectionAndName(bpm_interval[1])
+    let indexes: Array<Array<number>> = [
+      [sectionList.indexOf(secIni), sectionList.indexOf(secEnd)],
+      [nameList.indexOf(nameIni), nameList.indexOf(nameEnd)]];
+    for(let idx = 0; idx < indexes.length; idx++) {
+      if(indexes[idx][0] > indexes[idx][1]){
+        [indexes[idx][0], indexes[idx][1]] = changeStates(
+          indexes[idx][0], indexes[idx][1]);
+      }
+    }
+    for(
+      let counterSect = indexes[0][0];
+      counterSect <= indexes[0][1];
+      counterSect++){
+        for(
+          let counterName = indexes[1][0];
+          counterName <= indexes[1][1];
+          counterName++){
+            const bpm_name: string = buildBPMName(
+              sectionList[counterSect], nameList[counterName]);
+            ledSetters[bpm_name](!ledProps[bpm_name]);
+        }
+    }
+  }
+
   return(
-    <S.Table>
-      {bpmAxis()}
-      {bpmNumber()}
-      {bpmTable()}
-      {bpmFirst()}
-    </S.Table>
+    <GestureRecognizer
+        type="element"
+        gestureHandler={(bpm_interval: Array<string>)=>handlePan(bpm_interval)}>
+      <S.Table id="add_bpm_table">
+        {bpmAxis()}
+        {bpmNumber()}
+        {bpmTable()}
+        {bpmFirst()}
+      </S.Table>
+    </GestureRecognizer>
   );
 };
 

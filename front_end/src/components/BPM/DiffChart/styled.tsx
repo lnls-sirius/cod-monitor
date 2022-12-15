@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { colors } from "../../../assets/style/themes";
 
 const ChartWrapper = styled.div`
-    min-height: 82.5vh;
+    min-height: 85vh;
 `;
 
 const TextWrapper = styled.div`

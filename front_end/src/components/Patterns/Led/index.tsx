@@ -31,6 +31,7 @@ const Led: React.FC<OnMount> = (props) => {
 
   return(
     <S.LedWrapper
+      id={props.id}
       key={props.id}
       onClick={setBPM.bind(this)}
       state={state}/>

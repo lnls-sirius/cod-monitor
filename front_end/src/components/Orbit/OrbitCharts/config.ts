@@ -13,7 +13,7 @@ export const optionsOrbit: any = {
     },
     hover: {
         mode: "nearest",
-        intersect: false
+        intersect: true
     },
     scales: {
         y: {
@@ -46,7 +46,7 @@ export const optionsOrbit: any = {
             pan: {
                 enabled: true,
                 mode: 'xy',
-                modifierKey: 'ctrl'
+                modifierKey: 'shift'
             },
             zoom: {
                 wheel: {
@@ -56,7 +56,7 @@ export const optionsOrbit: any = {
                 drag: {
                     enabled: true,
                     threshold: 1,
-                    modifierKey:'shift'
+                    modifierKey:'ctrl'
                 },
                 pinch: {
                     enabled: true
