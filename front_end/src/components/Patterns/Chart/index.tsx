@@ -47,6 +47,10 @@ class BaseChart extends Component<any>{
     }
   }
 
+  componentWillUnmount(): void {
+    this.resetZoom();
+  }
+
   render() {
     return (
       <S.ChartWrapper>

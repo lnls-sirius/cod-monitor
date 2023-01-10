@@ -46,6 +46,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   // Display the chart of the BPM Drift
   const [keyPressed, onKeyPressed] = useState<string>('');
   const [optimization, setOptimize] = useState<number>(800);
+  const [optimizeFlag, setOptimizeFlag] = useState<boolean>(false);
   const chartRef: React.RefObject<BaseChart> = createRef();
   Chart.register(...registerables);
   Chart.register(zoomPlugin);
@@ -86,7 +87,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   // Detect change on time or selected BPMs
   useEffect(() => {
     updateChartDiff();
-  }, [props.changeBpm, props.changeTime])
+  }, [props.changeBpm, props.changeTime, optimizeFlag])
 
   // Update Difference Chart
   async function updateChartDiff() {
@@ -110,7 +111,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
         if(state[0] && state[1]){
           let datasetCreated: DatasetInterface|null = control.detectNewData(
             name, props.changeTime, 'A');
-          if(datasetCreated == null){
+          if(datasetCreated == null || !(props.changeBpm || props.changeTime)){
             const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(
               name, props.start, props.end, optimization);
             if(archiverResult != undefined){
@@ -140,17 +141,25 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
         id={0}
         options={optionsDiff}
         data={control.getDatasetByIdx(0)}
-        ref={chartRef}/>
+        ref={chartRef}
+        />
       <ListBPM />
-      {/* <S.TextWrapper>
+      <S.TextWrapper>
         Optimization: <input
           type='number'
           value={optimization}
           onChange={
             (event)=>
               setOptimize(parseInt(event.target.value))}
+          onKeyDown={
+            (event)=>{
+              if(event.key == 'Enter'){
+                setOptimizeFlag(!optimizeFlag);
+              }
+            }
+          }
           max={1500}/>
-      </S.TextWrapper> */}
+      </S.TextWrapper>
     </S.ChartWrapper>
   );
 };

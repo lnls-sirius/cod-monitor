@@ -15,7 +15,7 @@ const TooltipText = styled.div`
     border-radius: ${properties.radius.light};
     ${(props: StateInterface) =>
         props.state?
-        'transform: translateY(-0.5em)':''}
+        'transform: translateY(-0.3em)':''}
 `
 
 const TooltipWrapper = styled.div`

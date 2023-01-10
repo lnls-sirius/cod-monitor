@@ -1,5 +1,3 @@
-import control from "../../../controllers/Chart";
-
 export const optionsOrbit: any = {
     showLines: true,
     spanGaps: true,

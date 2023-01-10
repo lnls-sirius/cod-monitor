@@ -85,7 +85,6 @@ const AddBPM: React.FC = () => {
       if(type != ''){
         corr_type = name.includes('BPM-'+type)
       }
-      console.log(searchString)
       if(searchString.some((string) => name.includes(string))
         && corr_type){
           ledSetters[name](!state);
