@@ -1,0 +1,13 @@
+npm uninstall redux-watch --save --force
+npm uninstall react-select --save --force
+npm uninstall react-off-canvas-menu --save --force
+npm uninstall react-icons --save --force
+npm uninstall react-bootstrap --save --force
+npm uninstall path-browserify --save --force
+npm uninstall hamburger-react --save --force
+npm uninstall glob --save --force
+npm uninstall fast-glob --save --force
+npm uninstall bootstrap --save --force
+npm uninstall @testing-library/react --save --force
+npm uninstall @testing-library/jest-dom --save --force
+npm uninstall @emotion/react --save --force
