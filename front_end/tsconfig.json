@@ -21,7 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "../archiver-viewer/src/controllers copy"
+    "src"
   ]
 }
