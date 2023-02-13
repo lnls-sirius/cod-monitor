@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: 'server-orb-mon'
+    image: 'orb-mon-backend:latest'
+    build:
+      context: ./back_end
+    ports:
+      - 8080:8080
+  frontend:
+    container_name: 'orb-mon'
+    image: 'orb-mon-frontend:latest'
+    build:
+      context: ./front_end
+    ports:
+      - 3000:80
