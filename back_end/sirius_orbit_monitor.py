@@ -25,9 +25,9 @@ def load_json(filename):
 
 
 # Read the response matrix from SOFB
-def read_respmat():
+def read_respmat(config_type):
     """."""
-    cdb = ConfigDBDocument(config_type='si_orbcorr_respm')
+    cdb = ConfigDBDocument(config_type=config_type)
     cdb.name = 'ref_respmat'
     cdb.load()
     respm = np.array(cdb.value)
@@ -49,19 +49,23 @@ def update_time_stamp(pvds, time_ref, interval):
 def read_archiver(pvnames, time_ref):
     """."""
     pvds = PVDataSet(pvnames)
-    pvds.timeout = 20
+    pvds.timeout = 1000
     data = dict()
     for pvname in pvnames:
         interval = 10
         update_time_stamp(pvds, time_ref, interval)
         tstmp = np.array(pvds[pvname].timestamp)
         value = np.array(pvds[pvname].value)
-        if len(value) > 2:
-            func = interp1d(tstmp, value, axis=0, fill_value='extrapolate')
-            value_fit = func(time_ref.timestamp())
+        if(value):
+            if len(value) > 2:
+                func = interp1d(tstmp, value, axis=0, fill_value='extrapolate')
+                value_fit = func(time_ref.timestamp())
+            else:
+                value_fit = value[0]
         else:
-            value_fit = value[0]
+            value_fit = 0
         data[pvname] = value_fit
+    print(str(data))
     return data
 
 
@@ -80,19 +84,23 @@ def read_data_from_archiver(time_start, time_stop):
     """."""
     pvnames = ['SI-Glob:AP-SOFB:KickCH-Mon', 'SI-Glob:AP-SOFB:KickCV-Mon']
     kickx, kicky = get_wfm_diff(pvnames, time_start, time_stop)
+    pvnames = ['SI-Glob:AP-FOFB:KickCH-Mon', 'SI-Glob:AP-FOFB:KickCV-Mon']
+    kickfx, kickfy = get_wfm_diff(pvnames, time_start, time_stop)
     pvnames = ['SI-Glob:AP-SOFB:SlowOrbX-Mon', 'SI-Glob:AP-SOFB:SlowOrbY-Mon']
     codx, cody = get_wfm_diff(pvnames, time_start, time_stop)
 
     pvnames = ['RF-Gen:GeneralFreq-RB', 'RF-Gen:GeneralFreq-RB']
     rfx, rfy = get_wfm_diff(pvnames, time_start, time_stop)
 
-    kicks = np.append(kickx, kicky)
-    kick_rf = np.append(kicks, rfx)
+    kicks_sofb = np.append(kickx, kicky)
+    kicks_fofb = np.append(kickfx, kickfy)
+    kick_rf_sofb = np.append(kicks_sofb, rfx)
+    kick_rf_fofb = np.append(kicks_fofb, rfx)
     codx = codx[:160]
     cody = cody[:160]
     cod = np.append(codx, cody)
 
-    return kick_rf, cod
+    return kick_rf_sofb, kick_rf_fofb, cod
 
 
 # Calculate the correlation of a group
@@ -147,11 +155,14 @@ def get_time(start, stop):
 # Calculate the COD Rebuild
 def calc_cod_rebuilt(start, stop):
     time_start, time_stop = get_time(start, stop)
-    kick_rf, cod = read_data_from_archiver(time_start, time_stop)
+    kick_rf_sofb, kick_rf_fofb, cod = read_data_from_archiver(time_start, time_stop)
     #read respmat from configdb
-    sofb_mat = read_respmat()
+    sofb_mat = read_respmat('si_orbcorr_respm')
+    fofb_mat = read_respmat('si_fastorbcorr_respm')
+    print(kick_rf_fofb)
+    print(fofb_mat)
     #reconstruct orbit distortion from archived kicks difference
-    cod_rebuilt = cod - np.dot(sofb_mat, kick_rf)
+    cod_rebuilt = cod - np.dot(sofb_mat, kick_rf_sofb)
     return cod_rebuilt
 
 

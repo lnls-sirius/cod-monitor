@@ -73,4 +73,4 @@ def home():
 
 if __name__ == "__main__":
     app.SIGNATURES = {}
-    app.run()
+    app.run(debug=True)
