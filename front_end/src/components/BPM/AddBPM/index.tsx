@@ -143,6 +143,7 @@ const AddBPM: React.FC = () => {
     );
   }
 
+  // Get BPM from the IDs
   function idsBPMs(type: string, group: Array<string>): React.ReactElement[] {
     return group.map((s_name: string)=>{
       if(s_name!=''){
@@ -215,6 +216,7 @@ const AddBPM: React.FC = () => {
     )
   }
 
+  // Handle multi BPM selection
   function handlePan(bpm_interval: Array<string>): void {
     const sectionList: Array<string> = bpmGroups.bpmNumber;
     const nameList: Array<string> = bpmGroups.bpmName;

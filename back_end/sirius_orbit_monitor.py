@@ -49,23 +49,19 @@ def update_time_stamp(pvds, time_ref, interval):
 def read_archiver(pvnames, time_ref):
     """."""
     pvds = PVDataSet(pvnames)
-    pvds.timeout = 1000
+    pvds.timeout = 100
     data = dict()
     for pvname in pvnames:
         interval = 10
         update_time_stamp(pvds, time_ref, interval)
         tstmp = np.array(pvds[pvname].timestamp)
         value = np.array(pvds[pvname].value)
-        if(value):
-            if len(value) > 2:
-                func = interp1d(tstmp, value, axis=0, fill_value='extrapolate')
-                value_fit = func(time_ref.timestamp())
-            else:
-                value_fit = value[0]
+        if len(value) > 2 and not hasattr(value[0], "__len__"):
+            func = interp1d(tstmp, value, axis=0, fill_value='extrapolate')
+            value_fit = func(time_ref.timestamp())
         else:
-            value_fit = 0
+            value_fit = value[0]
         data[pvname] = value_fit
-    print(str(data))
     return data
 
 
@@ -84,6 +80,7 @@ def read_data_from_archiver(time_start, time_stop):
     """."""
     pvnames = ['SI-Glob:AP-SOFB:KickCH-Mon', 'SI-Glob:AP-SOFB:KickCV-Mon']
     kickx, kicky = get_wfm_diff(pvnames, time_start, time_stop)
+    # Change to FOFB
     pvnames = ['SI-Glob:AP-FOFB:KickCH-Mon', 'SI-Glob:AP-FOFB:KickCV-Mon']
     kickfx, kickfy = get_wfm_diff(pvnames, time_start, time_stop)
     pvnames = ['SI-Glob:AP-SOFB:SlowOrbX-Mon', 'SI-Glob:AP-SOFB:SlowOrbY-Mon']

@@ -15,6 +15,7 @@ function getRandomColor(): string {
     return color;
 }
 
+// Get BPM color based on the name
 function getBPMColor(section: number, name: string, yAxis: boolean): string {
   let hex: string = (12.7*section).toString(16).toUpperCase();
   let hex2: string = (30*bpmGroups.bpmName.indexOf(name)).toString(16).toUpperCase();
