@@ -2,18 +2,33 @@
 import json
 import numpy as np
 from scipy.interpolate import interp1d
+
+from siriuspy.search import BPMSearch
 from siriuspy.clientarch import PVDataSet, Time
 from siriuspy.clientconfigdb import ConfigDBDocument
 # import calc_signatures
 
 # Dictionary of families
-family_dict = {
+FAMILY_DICT = {
     'C': 'Corrector',
     'B': 'Dipole',
     'D': 'Dipole',
     'Q': 'Quadrupole',
     'S': 'Sextupole'
 }
+
+# Response matrices
+RESPM_SOFB = None
+RESPM_FOFB = None
+
+
+# Initialize data structures
+def initialization():
+    global RESPM_SOFB, RESPM_FOFB
+    RESPM_SOFB = read_respmat('si_orbcorr_respm')
+    RESPM_FOFB = read_respmat('si_fastorbcorr_respm')
+    # remove RF kick from FOFB respm
+    RESPM_FOFB = RESPM_FOFB[:, :-1]
 
 
 # Load a dictionary from a json file
@@ -25,9 +40,9 @@ def load_json(filename):
 
 
 # Read the response matrix from SOFB
-def read_respmat():
+def read_respmat(config_type):
     """."""
-    cdb = ConfigDBDocument(config_type='si_orbcorr_respm')
+    cdb = ConfigDBDocument(config_type=config_type)
     cdb.name = 'ref_respmat'
     cdb.load()
     respm = np.array(cdb.value)
@@ -49,14 +64,14 @@ def update_time_stamp(pvds, time_ref, interval):
 def read_archiver(pvnames, time_ref):
     """."""
     pvds = PVDataSet(pvnames)
-    pvds.timeout = 20
+    pvds.timeout = 100
     data = dict()
     for pvname in pvnames:
         interval = 10
         update_time_stamp(pvds, time_ref, interval)
         tstmp = np.array(pvds[pvname].timestamp)
         value = np.array(pvds[pvname].value)
-        if len(value) > 2:
+        if len(value) > 2 and not hasattr(value[0], "__len__"):
             func = interp1d(tstmp, value, axis=0, fill_value='extrapolate')
             value_fit = func(time_ref.timestamp())
         else:
@@ -79,20 +94,26 @@ def get_wfm_diff(pvnames, time_start, time_stop):
 def read_data_from_archiver(time_start, time_stop):
     """."""
     pvnames = ['SI-Glob:AP-SOFB:KickCH-Mon', 'SI-Glob:AP-SOFB:KickCV-Mon']
-    kickx, kicky = get_wfm_diff(pvnames, time_start, time_stop)
+    kickx_s, kicky_s = get_wfm_diff(pvnames, time_start, time_stop)
+
+    # Change to FOFB
+    pvnames = ['SI-Glob:AP-FOFB:KickCH-Mon', 'SI-Glob:AP-FOFB:KickCV-Mon']
+    kickx_f, kicky_f = get_wfm_diff(pvnames, time_start, time_stop)
+
     pvnames = ['SI-Glob:AP-SOFB:SlowOrbX-Mon', 'SI-Glob:AP-SOFB:SlowOrbY-Mon']
     codx, cody = get_wfm_diff(pvnames, time_start, time_stop)
 
     pvnames = ['RF-Gen:GeneralFreq-RB', 'RF-Gen:GeneralFreq-RB']
-    rfx, rfy = get_wfm_diff(pvnames, time_start, time_stop)
+    rfx, _ = get_wfm_diff(pvnames, time_start, time_stop)
 
-    kicks = np.append(kickx, kicky)
-    kick_rf = np.append(kicks, rfx)
-    codx = codx[:160]
-    cody = cody[:160]
+    kicks_sofb = np.append(kickx_s, kicky_s)
+    kicks_sofb = np.append(kicks_sofb, rfx)
+    kicks_fofb = np.append(kickx_f, kicky_f)
+    codx = codx[:160]  # NOTE: really necessary?
+    cody = cody[:160]  # NOTE: really necessary?
     cod = np.append(codx, cody)
 
-    return kick_rf, cod
+    return kicks_sofb, kicks_fofb, cod
 
 
 # Calculate the correlation of a group
@@ -106,7 +127,7 @@ def corr_per_group(cod_rebuilt, data, corrdata, kick_axis=None):
             cody_r = normalized_array(cod_rebuilt[160:])
             corrx = np.dot(codx, codx_r)
             corry = np.dot(cody, cody_r)
-            magnet_type = family_dict[group[:1]]
+            magnet_type = FAMILY_DICT[group[:1]]
             corrdata[maname+kick_axis] = (
                 magnet_type, kick_axis, corrx, corry)
     return corrdata
@@ -147,11 +168,12 @@ def get_time(start, stop):
 # Calculate the COD Rebuild
 def calc_cod_rebuilt(start, stop):
     time_start, time_stop = get_time(start, stop)
-    kick_rf, cod = read_data_from_archiver(time_start, time_stop)
-    #read respmat from configdb
-    sofb_mat = read_respmat()
-    #reconstruct orbit distortion from archived kicks difference
-    cod_rebuilt = cod - np.dot(sofb_mat, kick_rf)
+    kick_sofb, kick_fofb, cod = read_data_from_archiver(time_start, time_stop)
+
+    # reconstruct orbit distortion from archived kicks difference
+    cod_rebuilt_sofb = np.dot(RESPM_SOFB, kick_sofb)
+    cod_rebuilt_fofb = np.dot(RESPM_FOFB, kick_fofb)
+    cod_rebuilt = cod - cod_rebuilt_sofb - cod_rebuilt_fofb
     return cod_rebuilt
 
 
@@ -169,6 +191,7 @@ def read_signatures(elem_data, read_json=False):
         sign_madata = load_json(elem_data[2]+"_kick"+elem_data[1])
         groups_sign = sign_madata['groups']
     else:
+        # TODO: there is an undefined symbol here!
         sign_madata = app.SIGNATURES
         groups_sign = sign_madata['groups-'+elem_data[1]]
 

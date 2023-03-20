@@ -1,6 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { StoreInterface } from "../../redux/storage/store";
 import DateInterval from "../../components/Date/DateInterval";
 import DiffChart from "../../components/BPM/DiffChart";
 import Header from '../../components/Structure/Header';
@@ -10,7 +8,6 @@ import Interval from "../../components/Date/Interval";
 import Modals from "../../components/Patterns/Modals";
 import Loading from "../../components/Patterns/Loading";
 import control from "../../controllers/Modals";
-import { goToArchiverViewer } from "../../controllers/archiver_viewer";
 import { modalInfo } from "../../assets/constants/patterns";
 import * as S from './styled';
 
@@ -21,25 +18,19 @@ const BpmDrift: React.FC = () => {
     <S.AppLayout>
       <Loading/>
       <Modals/>
-      <Header>      
+      <Header>
         <S.VerticalWrapper>
           <S.HorizontalWrapper>
             <Interval/>
           </S.HorizontalWrapper>
           <S.HorizontalWrapper>
             <S.MenuWrapper>
-              <Item 
-                icon={modalInfo['Info_BPM'].icon} 
+              <Item
+                icon={modalInfo['Info_BPM'].icon}
                 stateActive={false}
                 action={()=>control.setActionModal('Info_BPM')}
                 tooltip={
                   "Show a tutorial about BPM Drift Interface"}/>
-              <Item
-                  icon='link'
-                  stateActive={false}
-                  action={()=>goToArchiverViewer()}
-                  tooltip={
-                    "Open data in Archiver Viewer"}/>
             </S.MenuWrapper>
             <Item
                 icon={modalInfo['BPM'].icon}

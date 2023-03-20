@@ -46,7 +46,9 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
 
   // Detect change on time or selected signatures
   useEffect(() => {
-    updateChartOrbit();
+    if(props.changeOrbit && props.changeTime){
+      updateChartOrbit();
+    }
   }, [props.changeOrbit, props.changeTime])
 
   // Update CODX and CODY Chart

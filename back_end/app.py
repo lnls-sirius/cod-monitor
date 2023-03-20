@@ -1,8 +1,8 @@
 import threading
 from flask import Flask, render_template, request
 from flask_cors import CORS
-from sirius_orbit_monitor import calc_cod_rebuilt, \
-    calc_correlation, normalized_array, read_signatures
+
+import sirius_orbit_monitor as som
 
 app = Flask(__name__)
 CORS(app)
@@ -18,9 +18,9 @@ def signComp():
     ]
 
     read_json = True#not app.SIGNATURES
-    cod_rebuilt = calc_cod_rebuilt(
+    cod_rebuilt = som.calc_cod_rebuilt(
                 request.args.get("start"), request.args.get("stop"))
-    corr = calc_correlation(
+    corr = som.calc_correlation(
         cod_rebuilt, signature_files, read_json)
     return corr
 
@@ -41,13 +41,13 @@ def signOrbit():
                 request.args.get("start"), request.args.get("stop"))
 
             sign_orbit['cod_rebuilt'] = [
-                normalized_array(cod_rebuilt[:160]).tolist(),
-                normalized_array(cod_rebuilt[160:]).tolist()]
+                som.normalized_array(cod_rebuilt[:160]).tolist(),
+                som.normalized_array(cod_rebuilt[160:]).tolist()]
         else:
             elem_data = name.split("_")
             elem_name = elem_data[0] + elem_data[1]
 
-            sign_orbit[elem_name] = read_signatures(
+            sign_orbit[elem_name] = som.read_signatures(
                 elem_data, read_json)
     return sign_orbit
 
@@ -72,5 +72,6 @@ def home():
 
 
 if __name__ == "__main__":
+    som.initialization()
     app.SIGNATURES = {}
-    app.run(host="10.20.21.52", port=8080, debug=True)
+    app.run(debug=True)

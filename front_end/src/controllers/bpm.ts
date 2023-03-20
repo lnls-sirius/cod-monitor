@@ -61,6 +61,7 @@ async function differentiateData(diffData: DatePointInterface[], name: string, d
     return diffData;
 }
 
+// Get sector and BPM name of a PV name
 function getSectionAndName(name: string): Array<string> {
     let nameDiv: Array<string> = name.split(':');
     let section: string = nameDiv[0].substring(3, 5);
@@ -69,8 +70,9 @@ function getSectionAndName(name: string): Array<string> {
         bpm_name += nameDiv[1].substring(nameDiv[1].length-2)
     }
     return [section, bpm_name]
-  }
+}
 
+// Generate a PV name of a BPM
 function buildBPMName(section: string, name: string): string {
     let bpm_name: string;
     let bpmSufix: string = "DI";
@@ -86,6 +88,7 @@ function buildBPMName(section: string, name: string): string {
     return bpm_name
 }
 
+// Get if string is a BPM name
 function isBPMName(name: string): boolean{
     let nameDiv: Array<string> = name.split(':');
     if(nameDiv.length!=2){

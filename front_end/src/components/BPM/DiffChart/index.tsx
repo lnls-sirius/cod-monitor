@@ -86,7 +86,9 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
 
   // Detect change on time or selected BPMs
   useEffect(() => {
-    updateChartDiff();
+    if(props.changeBpm || props.changeTime || optimizeFlag){
+      updateChartDiff();
+    }
   }, [props.changeBpm, props.changeTime, optimizeFlag])
 
   // Update Difference Chart
