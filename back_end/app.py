@@ -37,7 +37,7 @@ def signOrbit():
     for name in data:
 
         if name == 'cod_rebuilt':
-            cod_rebuilt = calc_cod_rebuilt(
+            cod_rebuilt = som.calc_cod_rebuilt(
                 request.args.get("start"), request.args.get("stop"))
 
             sign_orbit['cod_rebuilt'] = [
@@ -55,6 +55,7 @@ def signOrbit():
 # Operation done with server initialization
 def run_job():
     print("Initializing!")
+    som.initialization()
     # app.SIGNATURES = calc_signatures.calc_sign()
 
 
@@ -72,6 +73,5 @@ def home():
 
 
 if __name__ == "__main__":
-    som.initialization()
-    app.SIGNATURES = {}
+    # app.SIGNATURES = {}
     app.run(debug=True)

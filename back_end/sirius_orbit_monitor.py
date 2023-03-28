@@ -3,7 +3,6 @@ import json
 import numpy as np
 from scipy.interpolate import interp1d
 
-from siriuspy.search import BPMSearch
 from siriuspy.clientarch import PVDataSet, Time
 from siriuspy.clientconfigdb import ConfigDBDocument
 # import calc_signatures
@@ -57,6 +56,7 @@ def update_time_stamp(pvds, time_ref, interval):
     else:
         pvds.time_start = time_ref - interval
         pvds.time_stop = time_ref
+
     pvds.update()
 
 
@@ -67,11 +67,13 @@ def read_archiver(pvnames, time_ref):
     pvds.timeout = 100
     data = dict()
     for pvname in pvnames:
-        interval = 10
+        interval = 100
+
         update_time_stamp(pvds, time_ref, interval)
         tstmp = np.array(pvds[pvname].timestamp)
         value = np.array(pvds[pvname].value)
-        if len(value) > 2 and not hasattr(value[0], "__len__"):
+
+        if value.size > 2 and not hasattr(value[0], "__len__"):
             func = interp1d(tstmp, value, axis=0, fill_value='extrapolate')
             value_fit = func(time_ref.timestamp())
         else:
@@ -96,7 +98,6 @@ def read_data_from_archiver(time_start, time_stop):
     pvnames = ['SI-Glob:AP-SOFB:KickCH-Mon', 'SI-Glob:AP-SOFB:KickCV-Mon']
     kickx_s, kicky_s = get_wfm_diff(pvnames, time_start, time_stop)
 
-    # Change to FOFB
     pvnames = ['SI-Glob:AP-FOFB:KickCH-Mon', 'SI-Glob:AP-FOFB:KickCV-Mon']
     kickx_f, kicky_f = get_wfm_diff(pvnames, time_start, time_stop)
 

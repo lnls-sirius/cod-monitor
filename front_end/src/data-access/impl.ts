@@ -112,21 +112,6 @@ export class ArchiverDataAccess implements DataAccess{
 
   // Fetch the URL
   getUrl(): string {
-    if (window.location.host === "vpn.cnpem.br") {
-      // If using WEB VPN
-      // Capture IPv4 address
-      const match = ipRegExp.exec(window.location.href);
-      if (match && match.length > 1) {
-        this.host = match[1];
-      }
-    } else {
-      this.host = window.location.host.indexOf(":") !== -1 ? window.location.host.split(":")[0] : window.location.host;
-    }
-
-    if (window.location.host === "localhost:3000" || window.location.host === "10.0.105.16:3000") {
-      this.host = defaultHost;
-      console.log(`DEBUG SERVER. Setting host to ${this.host}`);
-    }
-    return this.host;
+    return defaultHost;
   }
 }
