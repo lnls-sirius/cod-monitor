@@ -1,11 +1,8 @@
 import threading
-from flask import Flask, render_template, request
-from flask_cors import CORS
+from app import app
+from flask import render_template, request
 
 import sirius_orbit_monitor as som
-
-app = Flask(__name__)
-CORS(app)
 
 # Returns the list of signature with the information
 # about the correlation with the COD Rebuilt
