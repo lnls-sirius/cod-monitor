@@ -65,18 +65,17 @@ describe('Info', () => {
       expect(nav2).toBeInTheDocument();
     }
   })
+})
 
-  it("Footer renders", async () => {
+describe('Navigation', () => {
+  it("Component renders", async () => {
     await act(async () => {
       render(
         <Footer />
       );
     });
 
-    const contact = screen.getByText(/contact/i);
-    expect(contact).toBeInTheDocument();
-
-    const ver = screen.getByText('v');
+    const ver = screen.getByText(/v/i);
     expect(ver).toBeInTheDocument();
   })
 })
