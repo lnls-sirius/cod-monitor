@@ -1,7 +1,7 @@
 name: COD Monitor CD
 
 on:
-  push:
+  pull_request:
     branches: main
 
 defaults:
@@ -15,7 +15,7 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: list
-        run: ls
+      - name: Print working directory
+        run: pwd
       - name: Run Docker Compose 🐳
         run: docker-compose build
