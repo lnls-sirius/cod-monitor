@@ -15,7 +15,8 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Print working directory
-        run: pwd
+      - name: List
+        run: ls
       - name: Run Docker Compose 🐳
         run: docker-compose build
+        context: .
