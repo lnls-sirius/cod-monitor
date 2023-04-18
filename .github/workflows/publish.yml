@@ -15,5 +15,17 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: p1
+        run: pwd
+      - name: t2
+        run: ls
+      - name: t5
+        run: cd ./front_end
+      - name: t6
+        run: ls
+      - name: t3
+        run: cd ../../
+      - name: t4
+        run: ls
       - name: Run Docker Compose 🐳
         run: docker-compose build
