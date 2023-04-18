@@ -1,0 +1,25 @@
+name: COD Monitor Frontend CI
+
+on:
+  pull_request:
+    branches: main
+
+defaults:
+  run:
+    working-directory: ./front_end
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@master
+
+      - name: Install 🔧
+        run: npm install
+
+      - name: Test 🚨
+        run: npm test
+
+      - name: Build 🏗️
+        run: npm run build
