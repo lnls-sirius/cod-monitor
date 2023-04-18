@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { act, render, screen } from '@testing-library/react';
 import { BrowserRouter } from "react-router-dom";
-import { version } from "../assets/constants/text";
 import Footer from '../components/Structure/Footer';
 import Info from '../components/Structure/Info';
 import Navigator from "../components/Structure/Navigator";
@@ -77,7 +76,7 @@ describe('Info', () => {
     const contact = screen.getByText(/contact/i);
     expect(contact).toBeInTheDocument();
 
-    const ver = screen.getByText(version);
+    const ver = screen.getByText('v');
     expect(ver).toBeInTheDocument();
   })
 })
