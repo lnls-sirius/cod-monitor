@@ -11,6 +11,8 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@master
       - name: p1
         run: pwd
       - name: t2
