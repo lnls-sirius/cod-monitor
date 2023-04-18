@@ -56,7 +56,7 @@ const Interval: React.FC<IntervalBtnsInterface> = (props): React.ReactElement =>
     if(props.intervalMode !== 'None'){
       return Object.entries(intervals).reverse().map(([name, data]: [key: string, value: Array<string>]) => {
         let stateBtn: boolean = false;
-        if(selIntBtn == name){
+        if(selIntBtn === name){
           stateBtn = true;
         }
         return(

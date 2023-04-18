@@ -20,12 +20,12 @@ const DateInput: React.FC<SetDateInterface> = (props) => {
   // Build tooltip for all date types
   function buildTooltipText(): string {
     let text: string = "Set the "
-    if(props.type == 'Ref'){
+    if(props.type === 'Ref'){
       text += "reference"
     }else{
       text += props.type
     }
-    if(window.location.pathname == "/orbitDrift"){
+    if(window.location.pathname === "/orbitDrift"){
       text += " interval"
     }else{
       text += " date on the chart"

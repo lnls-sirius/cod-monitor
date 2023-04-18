@@ -1,8 +1,5 @@
 // File that contain the static text present in the interface
-
 import { DictString } from "../interfaces/patterns"
-
-const version: string = '2022-11-29-73kw9a1'
 
 const pages: DictString = {
     '/bpmDrift': 'BPM Drift',
@@ -21,7 +18,6 @@ const alert_messages: DictString = {
 }
 
 export {
-    version,
     pages,
     alert_messages
 }

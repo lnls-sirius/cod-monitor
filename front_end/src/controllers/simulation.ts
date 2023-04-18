@@ -38,10 +38,10 @@ async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date
   jsonurl += `&data=`
 
   sign_list.map((elem_data: Array<any>)=>{
-    if(elem_data!=sign_list[0]){
+    if(elem_data!==sign_list[0]){
       jsonurl += `,`
     }
-    if(elem_data[0] == 'cod_rebuilt'){
+    if(elem_data[0] === 'cod_rebuilt'){
       jsonurl += elem_data[0]
     }else{
       jsonurl += elem_data[0] + '_' + elem_data[1] + '_' + elem_data[2];

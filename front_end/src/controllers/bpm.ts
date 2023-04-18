@@ -66,7 +66,7 @@ function getSectionAndName(name: string): Array<string> {
     let nameDiv: Array<string> = name.split(':');
     let section: string = nameDiv[0].substring(3, 5);
     let bpm_name: string = nameDiv[0].substring(5, 7);
-    if(nameDiv[1][nameDiv[1].length-1] != 'M'){
+    if(nameDiv[1][nameDiv[1].length-1] !== 'M'){
         bpm_name += nameDiv[1].substring(nameDiv[1].length-2)
     }
     return [section, bpm_name]
@@ -91,7 +91,7 @@ function buildBPMName(section: string, name: string): string {
 // Get if string is a BPM name
 function isBPMName(name: string): boolean{
     let nameDiv: Array<string> = name.split(':');
-    if(nameDiv.length!=2){
+    if(nameDiv.length!==2){
         return false
     }
     return true

@@ -59,7 +59,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   // Update the list of signatures
   async function updateComparisonList(): Promise<void> {
     const simulationResult: SignData|undefined = await getSignatures(props.start, props.end);
-    if(simulationResult != undefined){
+    if(simulationResult !== undefined){
       let sortedList: Array<OrbitData> = [];
       Object.entries(simulationResult).map(
         ([name, property]: [string, DictOrbitData]) => {
@@ -76,13 +76,13 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     let sortOrder: boolean = true;
     let states:[number, boolean] = [elem, sortOrder];
 
-    if(rawList == undefined){
+    if(rawList === undefined){
       sortedList = [...compList]
     }else{
       sortedList = [...rawList]
     }
 
-    if(sortState[0] == elem && change == undefined){
+    if(sortState[0] === elem && change === undefined){
       sortOrder = !sortState[1]
     }
 
@@ -111,9 +111,9 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
 
   // Filter Magnets by kick axis
   function showAxis(axis: string): boolean {
-    if(axis == 'X' && filterState.X){
+    if(axis === 'X' && filterState.X){
       return true;
-    }else if(axis == 'Y' && filterState.Y){
+    }else if(axis === 'Y' && filterState.Y){
       return true;
     }
     return false;

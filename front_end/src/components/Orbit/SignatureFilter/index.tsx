@@ -27,7 +27,7 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
 
   // Submit text filter changes on Enter press
   function submitHandler(event: React.KeyboardEvent): void {
-    if(event.key == 'Enter'){
+    if(event.key === 'Enter'){
       props.setGlobExp(nameFilter);
     }
   }

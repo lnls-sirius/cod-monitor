@@ -7,6 +7,7 @@ const defaultProps: InfoTypeInterface = {
   type: 'BPM'
 }
 
+
 const Info: React.FC<InfoTypeInterface> = (props) => {
   // Display the Page Documentation
 
@@ -60,12 +61,12 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
           <S.Tab/>Date Modification
         </S.Title>
         <ul>
-          <li>Marker-1: {props.type=='BPM'?
+          <li>Marker-1: {props.type==='BPM'?
             "Start date for the chart.":"Start date of the interval."}
           </li>
-          <li>Marker-2: {props.type=='BPM'?
+          <li>Marker-2: {props.type==='BPM'?
             "End date for the chart.":"End date of the interval."}</li>
-          {props.type=='BPM'?
+          {props.type==='BPM'?
             <li>Diff Ref: Reference date used to get
             the value for the difference function.</li>:''}
           <li>
@@ -90,7 +91,7 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
             <br/>
           </li>
           {
-            props.type=='BPM'?
+            props.type==='BPM'?
             <li>
               Shortcuts
               <ul>
@@ -243,10 +244,10 @@ const Info: React.FC<InfoTypeInterface> = (props) => {
 
   return (
     <S.InfoWrapper>
-      {props.type=='BPM'?
+      {props.type==='BPM'?
         bpmPageInfo(): orbitPageInfo()}
       {IntervalInfo()}
-      {props.type=='BPM'?
+      {props.type==='BPM'?
         bpmInfo():signatureInfo()}
       {chartInfo()}
     </S.InfoWrapper>
