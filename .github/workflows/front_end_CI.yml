@@ -1,4 +1,4 @@
-name: COD Monitor Frontend CI
+name: COD Monitor front-end CI
 
 on:
   pull_request:

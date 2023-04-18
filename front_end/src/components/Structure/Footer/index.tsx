@@ -8,7 +8,7 @@ const Menu: React.FC = (): React.ReactElement => {
 
   return (
     <S.FooterWrapper>
-      For further information, contact FAC.
+      For further information, contact FAC or SwC.
       <br/>
       {version}
     </S.FooterWrapper>

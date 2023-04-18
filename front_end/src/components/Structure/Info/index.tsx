@@ -7,6 +7,7 @@ const defaultProps: InfoTypeInterface = {
   type: 'BPM'
 }
 
+
 const Info: React.FC<InfoTypeInterface> = (props) => {
   // Display the Page Documentation
 
