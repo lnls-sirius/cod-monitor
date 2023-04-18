@@ -16,7 +16,7 @@ class ChartObject {
 
     // Save chart datasets
     setDataset(newData: DatasetList, axis?: string): void{
-        if (axis == 'A' || axis == 'X'){
+        if (axis === 'A' || axis === 'X'){
             this.dataset = newData;
         }else{
             this.datasetExt = newData;
@@ -30,7 +30,7 @@ class ChartObject {
 
     // Get dataset information by index
     getDatasetByIdx(index: number): any {
-        if (index == 0){
+        if (index === 0){
             return this.dataset;
         }else{
             return this.datasetExt;
@@ -41,7 +41,7 @@ class ChartObject {
     detectNewData(name: string, changeTime: boolean, axis?: string): DatasetInterface|null{
         let itemInfo: DatasetInterface|null = null;
         let dataset: any = this.dataset;
-        if(axis == 'Y'){
+        if(axis === 'Y'){
             dataset = this.datasetExt;
         }
         if(!changeTime){
@@ -56,7 +56,7 @@ class ChartObject {
 
     // Update the chart dataset
     updateDataset(chart: any, newData: DatasetList, options?: any): void {
-        if(options != null){
+        if(options !== null){
             chart.options = options;
         }
         chart.data.datasets = newData;

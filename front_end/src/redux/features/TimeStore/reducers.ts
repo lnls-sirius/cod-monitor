@@ -3,7 +3,7 @@ import { pastDate, updateTimeRef, validInterval } from "../../../controllers/tim
 import { timeStore } from "./initialState";
 
 function setStart (state: timeStore, action: PayloadAction<string>): void {
-    if(state.time_mode != 'None'){
+    if(state.time_mode !== 'None'){
         const interval = updateTimeRef(
             state.interval_mil, new Date(action.payload), state.time_mode);
         if(pastDate(new Date(action.payload), interval)){
@@ -20,7 +20,7 @@ function setStart (state: timeStore, action: PayloadAction<string>): void {
 }
 
 function setEnd (state: timeStore, action: PayloadAction<string>): void {
-    if(state.time_mode != 'None'){
+    if(state.time_mode !== 'None'){
         const interval = updateTimeRef(
             state.interval_mil, new Date(action.payload), state.time_mode);
         if(pastDate(interval, new Date(action.payload))){

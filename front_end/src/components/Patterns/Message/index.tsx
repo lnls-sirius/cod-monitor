@@ -10,7 +10,7 @@ const Message: React.FC = () => {
 
   // Handle error message
   function chartUpdateText(): string {
-    if(control.getModalId() != "Err_Server"){
+    if(control.getModalId() !== "Err_Server"){
       return "and the chart is being updated!"
     }
     return ""

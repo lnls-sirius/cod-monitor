@@ -10,7 +10,7 @@ function changeStates(state1: any, state2: any): Array<any>{
 
 // Return the other BPM Axis
 function reverseAxis(axis: string): string {
-    if(axis == 'X'){
+    if(axis === 'X'){
         return 'Y';
     }else{
         return 'X';

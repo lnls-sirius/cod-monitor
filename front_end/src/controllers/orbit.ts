@@ -18,7 +18,7 @@ function buildDatasetOrbit(dataList: Array<number>): Array<BpmPointInterface>{
 
 // Add signature to the selected signature list
 function setSignature(id: string, element_info: any, list: BaseStrArrayDict){
-    if (id != undefined){
+    if (id !== undefined){
         list[id] = element_info;
         control.setAlert('Al_Add_Sign');
         OrbitDispatcher.setSignatureListInterface(list);

@@ -56,7 +56,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
     if(chartRef[0].current && chartRef[1].current){
       const chartX: null|Chart = chartRef[0].current.chart;
       const chartY: null|Chart = chartRef[1].current.chart;
-      if(chartX != null && chartY != null){
+      if(chartX !== null && chartY !== null){
         const datasetList: Array<DatasetList> = await buildChartOrbit();
         control.setLabels(bpm_labels)
         await control.buildChartDatasets(
@@ -92,8 +92,8 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
       'cod_rebuilt', props.changeTime, 'X');
     let datasetY: DatasetInterface|null = control.detectNewData(
       'cod_rebuilt', props.changeTime, 'Y');
-    if(datasetX == null || datasetY == null ||
-        datasetX == undefined || datasetY == undefined){
+    if(datasetX === null || datasetY === null ||
+        datasetX === undefined || datasetY === undefined){
       signatures.push(['cod_rebuilt']);
     }else{
       datasets.push([datasetX, datasetY])
@@ -106,7 +106,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
           sign_label, props.changeTime, 'X');
         let datasetY: DatasetInterface|null = control.detectNewData(
           sign_label, props.changeTime, 'Y');
-        if(datasetX == null || datasetY == null){
+        if(datasetX === null || datasetY === null){
           signatures.push(elem_info);
         }else{
           datasets.push([datasetX, datasetY])
@@ -126,7 +126,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
       const dictSign: SignChartData = await fetchSignatureOrbit(
         signatures_to_read, props.start, props.end);
       Object.entries(dictSign).map(([name, sign_orbit]: [string, Array<Array<number>>]) => {
-        if(name!='cod_rebuilt'){
+        if(name!=='cod_rebuilt'){
           name = name.slice(0, -1) + '- Kick:' + name.slice(-1)
         }
         datasetListX = saveDataset(

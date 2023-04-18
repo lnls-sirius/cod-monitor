@@ -12,11 +12,11 @@ const GestureRecognizer: React.FC<GestureInterface> = (props) => {
     let panList: Array<string> = [];
 
     function registerItem(target: any, type_reg: number): void {
-        if(target.nodeName == 'BUTTON'){
+        if(target.nodeName === 'BUTTON'){
             if(isBPMName(target.id)){
                 panSelector[type_reg] = target.id;
             }
-        }else if(target.nodeName == 'DIV'){
+        }else if(target.nodeName === 'DIV'){
             const button = target.childNodes[0];
             if(button && ('id' in button)){
                 if(isBPMName(target.id)){
@@ -28,7 +28,7 @@ const GestureRecognizer: React.FC<GestureInterface> = (props) => {
 
     function selectByElement(evt: any): void {
         if('nodeName' in evt.target){
-            let pan_type: number = panSelector.length == 0?0:1;
+            let pan_type: number = panSelector.length === 0?0:1;
             registerItem(evt.target, pan_type);
         }
     }
@@ -43,11 +43,11 @@ const GestureRecognizer: React.FC<GestureInterface> = (props) => {
     }
 
     function selectByRow(evt: any): void {
-        if(evt.target.parentNode.nodeName == 'TR'){
+        if(evt.target.parentNode.nodeName === 'TR'){
             let children: any = evt.target.parentNode.childNodes;
             let orbit: OrbitData = generateOrbitData(children);
-            if(orbit[1]!="Element Name"){
-                if(evt.type=='panstart'){
+            if(orbit[1]!=="Element Name"){
+                if(evt.type==='panstart'){
                     panList = [];
                     panSelector.push(orbit);
                     panList.push(orbit[0]+orbit[2]);
@@ -65,12 +65,12 @@ const GestureRecognizer: React.FC<GestureInterface> = (props) => {
     }
 
     useEffect(() => {
-        if(gest_container.current!=null){
+        if(gest_container.current!==null){
             let mc: HammerManager = new Hammer(
                 gest_container.current);
             mc.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0}));
             mc.on('panstart panend panmove', function(evt){
-                if(evt.type == 'panstart'){
+                if(evt.type === 'panstart'){
                     panSelector = [];
                 }
                 switch(props.type){
@@ -86,7 +86,7 @@ const GestureRecognizer: React.FC<GestureInterface> = (props) => {
                         break;
                     }
                 }
-                if(evt.type == 'panend'){
+                if(evt.type === 'panend'){
                     if(panSelector.length >= 2){
                         props.gestureHandler(panSelector);
                     }

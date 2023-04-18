@@ -7,7 +7,7 @@ class ModalObject {
     private id: string = 'BPM';
     private styling: string = 'normal';
     private flagSetter: DispatchBool | undefined;
-    
+
     getModalState(): boolean {
         return this.state;
     }
@@ -46,7 +46,7 @@ class ModalObject {
     }
 
     signalFlag(): void {
-        if(this.flagSetter!=undefined){
+        if(this.flagSetter!==undefined){
             this.flagSetter(true);
         }
     }

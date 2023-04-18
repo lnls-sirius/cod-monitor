@@ -52,7 +52,7 @@ const AddBPM: React.FC = () => {
 
   // Change led selection axis
   function onChangeAxis(axis_name: string): void {
-    if(axis_name == 'X' || axis_name == 'Y'){
+    if(axis_name === 'X' || axis_name === 'Y'){
       [ledProps, othAxis] = changeStates(ledProps, othAxis);
       changeAxis();
     }else{
@@ -82,7 +82,7 @@ const AddBPM: React.FC = () => {
 
     Object.entries(ledProps).map(([name, state]: ArrDictState)=>{
       let corr_type: boolean = true;
-      if(type != ''){
+      if(type !== ''){
         corr_type = name.includes('BPM-'+type)
       }
       if(searchString.some((string) => name.includes(string))
@@ -98,7 +98,7 @@ const AddBPM: React.FC = () => {
       return (
         <S.Select
           key={name}
-          state={(axis == name)}
+          state={(axis === name)}
           onClick={() => onChangeAxis(name)}>
             {name}
         </S.Select>);
@@ -146,7 +146,7 @@ const AddBPM: React.FC = () => {
   // Get BPM from the IDs
   function idsBPMs(type: string, group: Array<string>): React.ReactElement[] {
     return group.map((s_name: string)=>{
-      if(s_name!=''){
+      if(s_name!==''){
         return <td>{
           findBPM(
             s_name.substring(0,2),
@@ -168,7 +168,7 @@ const AddBPM: React.FC = () => {
       }
     }
     return bpmGroups.bpmNumber.map((number: string)=>{
-      if((number=='01') && name=='M1'){
+      if((number==='01') && name==='M1'){
         return <td></td>
       }else{
         return <td>{findBPM(number, name)}</td>
