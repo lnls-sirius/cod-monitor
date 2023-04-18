@@ -1,0 +1,15 @@
+name: Epics-React library CD
+
+on:
+  push:
+    branches: main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Run Docker Compose 🐳
+        run: docker-compose build
