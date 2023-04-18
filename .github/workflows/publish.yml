@@ -6,7 +6,7 @@ on:
 
 defaults:
   run:
-    working-directory: .
+    working-directory: ./
 
 jobs:
   deploy:
@@ -15,7 +15,5 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: List
-        run: ls
       - name: Run Docker Compose 🐳
         run: docker-compose build
