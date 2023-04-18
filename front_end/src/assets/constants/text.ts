@@ -1,8 +1,9 @@
 // File that contain the static text present in the interface
-
+import GitInfo from 'react-git-info/macro';
 import { DictString } from "../interfaces/patterns"
 
-const version: string = '2022-11-29-73kw9a1'
+const git_version = GitInfo()
+const version: string = "v"+git_version.tags + "--" + git_version.commit.date;
 
 const pages: DictString = {
     '/bpmDrift': 'BPM Drift',
