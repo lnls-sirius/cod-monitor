@@ -19,4 +19,3 @@ jobs:
         run: ls
       - name: Run Docker Compose 🐳
         run: docker-compose build
-        context: .
