@@ -15,8 +15,11 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@master
 
+      - name: Update
+        run: npm update
+
       - name: Install 🔧
-        run: npm install --production
+        run: npm install
 
       - name: Test 🚨
         run: npm test
