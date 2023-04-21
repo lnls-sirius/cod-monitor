@@ -17,16 +17,6 @@ function reverseAxis(axis: string): string {
     }
 }
 
-// Generate a random id
-function randomIdGen(list: {[key: string]: any}): string {
-    let letters: string = 'AJRTFGSN46283';
-    let randomId: string = '';
-    for (let i = 0; i < 5; i++) {
-        randomId += letters[Math.floor((Math.random() * 13))];
-    }
-    return randomId;
-}
-
 // Sort a string or number list
 function sortList(listToSort: Array<OrbitData>, elem: number): Array<OrbitData>{
     if(typeof listToSort[0][elem] === "string"){
@@ -48,6 +38,5 @@ function sortList(listToSort: Array<OrbitData>, elem: number): Array<OrbitData>{
 export {
     changeStates,
     reverseAxis,
-    randomIdGen,
     sortList
 }
