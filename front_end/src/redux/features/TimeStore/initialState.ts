@@ -1,5 +1,3 @@
-import { getTimeMilliseconds } from "../../../controllers/time";
-
 const current = new Date();
 const ref = current.getTime() - 5000;
 
@@ -18,7 +16,7 @@ const initialState: timeStore = {
     end_date: current.toString(),
     ref_date: (new Date(ref)).toString(),
     change_time: false,
-    interval_mil: getTimeMilliseconds("Hour")
+    interval_mil: 3600000
 }
 
 export default initialState;

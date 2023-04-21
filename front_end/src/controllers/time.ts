@@ -32,11 +32,10 @@ function validInterval(start: Date, end: Date): boolean{
 // Get the difference value based on the reference date
 async function getClosestDate(name: string, dataArray: ArchiverDataPoint[], dates: Array<Date>): Promise<number>{
   let closestDate: number = dates[2].getTime();
-  let valueComp: number = 0;
   if(dates[2] !== undefined){
     if (closestDate >= dates[0].getTime() &&
       closestDate <= dates[1].getTime()){
-        valueComp = getDataInArray(dates[2], dataArray);
+        return getDataInArray(dates[2], dataArray);
     }else{
       const valueRef: undefined|DictNumber = await getDataInArchiver([name], dates[2]);
       if(valueRef!==undefined){
@@ -45,9 +44,8 @@ async function getClosestDate(name: string, dataArray: ArchiverDataPoint[], date
         }
       }
     }
-    return valueComp;
   }
-  return -1;
+  return 0;
 }
 
 // Get interval name with the milliseconds interval
@@ -151,20 +149,11 @@ function setIntervalMode(intervalMode: string): void {
 }
 
 // Get a date from the time interval
-function getNewTimeInterval(time: number, dateRef: Date, intervalMode: string): Date{
+function getNewTimeInterval(timeMil: number, dateRef: Date, intervalMode: string): Date{
   if(intervalMode === 'End'){
-    time = -time;
+    timeMil = -timeMil;
   }
-  return new Date(dateRef.getTime() + time);
-}
-
-// Update the static date(start or end) from the selected time interval
-// and the configurable date(end or start)
-function updateTimeRef(timeMil: number, dateRef: Date, intervalMode: string): Date{
-  let newDate: Date = new Date();
-  newDate = getNewTimeInterval(
-    timeMil, dateRef, intervalMode);
-  return newDate;
+  return new Date(dateRef.getTime() + timeMil);
 }
 
 // Change date with a click
@@ -196,6 +185,5 @@ export {
   changeInterval,
   setIntervalMode,
   getNewTimeInterval,
-  updateTimeRef,
   changeDateClick
 }
