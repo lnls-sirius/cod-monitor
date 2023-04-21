@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom';
 import * as time from '../controllers/time';
+import * as patterns from '../controllers/patterns';
+import {buildDatasetOrbit} from '../controllers/orbit';
 
-describe('Time', () => {
+describe('Date/Time', () => {
   it("pastDate", () => {
     const dates: any = [
       ["2023-01-04T10:34:23Z", "2016-01-05T10:34:23Z", true],
@@ -121,3 +123,79 @@ describe('Time', () => {
     }
   })
 })
+
+
+describe('Patterns', () => {
+  it("changeStates", () => {
+    const param: any = [
+      [3, 5],
+      ["Orbit", "Monitor"],
+      [324, "Sirius"],
+      [["LOCO", "RAD"], [1, 3]]
+    ]
+    for(let id=0; id<4; id++){
+      const [stateIni, stateEnd] = param[id];
+      const [state1, state2] = patterns.changeStates(stateIni, stateEnd)
+      expect(state1).toEqual(stateEnd)
+      expect(state2).toEqual(stateIni)
+    }
+  })
+
+  it("reverseAxis", () => {
+    expect(patterns.reverseAxis('X')).toEqual('Y')
+    expect(patterns.reverseAxis('Y')).toEqual('X')
+  })
+
+  it("sortList", () => {
+    const list: any = [
+      ["Item 92", "Dipole", "X", 1.3, 92.4],
+      ["Item 23", "Quadrupole", "Y", 0.3, 73.4],
+      ["Item 12", "Corrector", "Y", 1.7, 4.2],
+      ["Item 43", "Dipole", "X", 0.3, 53.4]
+    ]
+    const sorted = [
+      [["Item 12", "Corrector", "Y", 1.7, 4.2],
+        ["Item 23", "Quadrupole", "Y", 0.3, 73.4],
+        ["Item 43", "Dipole", "X", 0.3, 53.4],
+        ["Item 92", "Dipole", "X", 1.3, 92.4]],
+      [["Item 12", "Corrector", "Y", 1.7, 4.2],
+        ["Item 43", "Dipole", "X", 0.3, 53.4],
+        ["Item 92", "Dipole", "X", 1.3, 92.4],
+        ["Item 23", "Quadrupole", "Y", 0.3, 73.4]],
+      [["Item 43", "Dipole", "X", 0.3, 53.4],
+        ["Item 92", "Dipole", "X", 1.3, 92.4],
+        ["Item 12", "Corrector", "Y", 1.7, 4.2],
+        ["Item 23", "Quadrupole", "Y", 0.3, 73.4]],
+      [["Item 43", "Dipole", "X", 0.3, 53.4],
+        ["Item 23", "Quadrupole", "Y", 0.3, 73.4],
+        ["Item 92", "Dipole", "X", 1.3, 92.4],
+        ["Item 12", "Corrector", "Y", 1.7, 4.2]],
+      [["Item 12", "Corrector", "Y", 1.7, 4.2],
+        ["Item 43", "Dipole", "X", 0.3, 53.4],
+        ["Item 23", "Quadrupole", "Y", 0.3, 73.4],
+        ["Item 92", "Dipole", "X", 1.3, 92.4]]
+    ]
+
+    for(let id=0; id<4; id++){
+      const sorted_list = patterns.sortList(list, id)
+      expect(sorted_list).toEqual(sorted[id])
+    }
+  })
+})
+
+
+describe('Orbit', () => {
+  it("buildDatasetOrbit", () => {
+    const dataList = [0.102, 0.523, 0.023, 0.523, 0.234, 0];
+    const finalList = [
+      {x: "01M2", y: 0.102},
+      {x: "01C1-1", y: 0.523},
+      {x: "01C1-2", y: 0.023},
+      {x: "01C2", y: 0.523},
+      {x: "01C3-1", y: 0.234},
+      {x: "01C3-2", y: 0},
+    ]
+    const orbit_list = buildDatasetOrbit(dataList)
+    expect(orbit_list).toEqual(finalList)
+  })
+});
