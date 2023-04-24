@@ -4,8 +4,9 @@ import { BpmDispatcher } from "../redux/dispatcher";
 import control from './Modals';
 import { bpmGroups } from "../assets/constants/patterns";
 import { ArrDictState } from "../assets/interfaces/types";
-import { DatePointInterface, DictState } from "../assets/interfaces/patterns";
+import { DictState } from "../assets/interfaces/patterns";
 import { DictBPM } from "../assets/interfaces/bpm";
+import { ArchiverDataPoint } from "../assets/interfaces/data_access";
 
 // Format the BPM Axis with the axis
 function getBpmName(name: string, axis: string): string {
@@ -53,10 +54,10 @@ function unsetBPMChange(): void {
 }
 
 // Differentiate a list of data points
-async function differentiateData(diffData: DatePointInterface[], name: string, dates: Array<Date>): Promise<DatePointInterface[]>{
+async function differentiateData(diffData: ArchiverDataPoint[], name: string, dates: Array<Date>): Promise<ArchiverDataPoint[]>{
     let valueComp: number = await getClosestDate(name, diffData, dates);
-    diffData.map((point) =>{
-        point.y = point.y - valueComp;
+    diffData.map((point: ArchiverDataPoint) =>{
+        point.y = Number((point.y - valueComp).toFixed(8));
     });
     return diffData;
 }
@@ -91,10 +92,10 @@ function buildBPMName(section: string, name: string): string {
 // Get if string is a BPM name
 function isBPMName(name: string): boolean{
     let nameDiv: Array<string> = name.split(':');
-    if(nameDiv.length!==2){
-        return false
+    if(nameDiv.length===3){
+        return true
     }
-    return true
+    return false
 }
 
 export {
