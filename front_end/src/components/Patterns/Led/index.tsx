@@ -34,7 +34,8 @@ const Led: React.FC<OnMount> = (props) => {
       id={props.id}
       key={props.id}
       onClick={setBPM.bind(this)}
-      state={state}/>
+      state={state}
+      data-testid={props.id+"-test"}/>
   );
 };
 

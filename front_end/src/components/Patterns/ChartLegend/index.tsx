@@ -46,8 +46,9 @@ const ChartLegend: React.FC<LegendInterface> = (props) => {
 
   return (
     <S.ItemWrapper
-      isVisible={props.isVisible}>
-        <S.Circle color={props.color} />
+      isVisible={props.isVisible}
+      data-testid="legend-item">
+        <S.Circle color={props.color} data-testid="color"/>
         {props.children}
         {showVisibleOpt()}
         {showDeleteOpt()}
