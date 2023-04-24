@@ -3,7 +3,6 @@ import sys
 sys.path.append('..')
 from datetime import datetime
 import sirius_orbit_monitor as som
-import calc_signatures as sign
 import numpy as np
 
 class TestSOM(unittest.TestCase):
