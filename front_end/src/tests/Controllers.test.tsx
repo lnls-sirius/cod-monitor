@@ -1,6 +1,10 @@
 import '@testing-library/jest-dom';
 import * as time from '../controllers/time';
 import * as patterns from '../controllers/patterns';
+import * as bpm from '../controllers/bpm';
+import * as fchart from '../controllers/chart';
+import modal from "../controllers/Modals";
+import chart from "../controllers/Chart";
 import {buildDatasetOrbit} from '../controllers/orbit';
 
 describe('Date/Time', () => {
@@ -197,5 +201,224 @@ describe('Orbit', () => {
     ]
     const orbit_list = buildDatasetOrbit(dataList)
     expect(orbit_list).toEqual(finalList)
+  })
+});
+
+describe('BPM', () => {
+  it("getBpmName", () => {
+    const param: any = [
+      ["X", "SI-01M2:DI-BPM", "SI-01M2:DI-BPM:PosX-Mon"],
+      ["Y", "SI-01C1:DI-BPM-1", "SI-01C1:DI-BPM-1:PosY-Mon"],
+      ["Y", "SI-18C4:DI-BPM", "SI-18C4:DI-BPM:PosY-Mon"],
+      ["Y", "SI-08C3:DI-BPM-2", "SI-08C3:DI-BPM-2:PosY-Mon"],
+      ["X", "SI-05M2:DI-BPM", "SI-05M2:DI-BPM:PosX-Mon"]]
+    for(let id=0; id<5; id++){
+      const [axis, name, real_name] = param[id];
+      const bpm_name = bpm.getBpmName(name, axis);
+      expect(bpm_name).toEqual(real_name);
+    }
+  })
+
+  it("formatBPMName", () => {
+    const param: any = [
+      ["SI-01M2:DI-BPM:PosX-Mon", "01M2:PosX"],
+      ["SI-01C1:DI-BPM-1:PosY-Mon", "01C1-1:PosY"],
+      ["SI-18C4:DI-BPM:PosY-Mon", "18C4:PosY"],
+      ["SI-08C3:DI-BPM-2:PosY-Mon", "08C3-2:PosY"],
+      ["SI-05M2:DI-BPM:PosX-Mon", "05M2:PosX"]]
+    for(let id=0; id<5; id++){
+      const [name, real_name] = param[id];
+      const bpm_name = bpm.formatBPMName(name);
+      expect(bpm_name).toEqual(real_name);
+    }
+  })
+
+  it("getSectionAndName", () => {
+    const param: any = [
+      ["SI-01M2:DI-BPM:PosX-Mon", ["01", "M2"]],
+      ["SI-01C1:DI-BPM-1:PosY-Mon", ["01", "C1-1"]],
+      ["SI-18C4:DI-BPM:PosY-Mon", ["18", "C4"]],
+      ["SI-08C3:DI-BPM-2:PosY-Mon", ["08", "C3-2"]],
+      ["SI-05M2:DI-BPM:PosX-Mon", ["05", "M2"]]
+    ]
+
+    for(let id=0; id<5; id++){
+      const [name, sect_name] = param[id];
+      const bpm_name = bpm.getSectionAndName(name);
+      expect(bpm_name).toEqual(sect_name);
+    }
+  })
+
+  it("buildBPMName", () => {
+    const param: any = [
+      ["01", "M2", "SI-01M2:DI-BPM"],
+      ["01", "C1-1", "SI-01C1:DI-BPM-1"],
+      ["18", "C4", "SI-18C4:DI-BPM"],
+      ["08", "C3-2", "SI-08C3:DI-BPM-2"],
+      ["05", "M2", "SI-05M2:DI-BPM"]]
+    for(let id=0; id<5; id++){
+      const [sect, name, real_name] = param[id];
+      const bpm_name = bpm.buildBPMName(sect, name);
+      expect(bpm_name).toEqual(real_name);
+    }
+  })
+
+  it("differentiateData", async () => {
+    const data: any = [
+      {x:new Date("2016-01-05T10:34:23Z"), y: 1.4},
+      {x:new Date("2016-01-05T11:34:23Z"), y: 0.9},
+      {x:new Date("2016-01-05T12:34:23Z"), y: 1.1},
+      {x:new Date("2016-01-05T13:34:23Z"), y: 1.8},
+      {x:new Date("2016-01-05T14:34:23Z"), y: 0.4}
+    ]
+    const diff_data = [
+      {x:new Date("2016-01-05T10:34:23Z"), y: -0.4},
+      {x:new Date("2016-01-05T11:34:23Z"), y: -0.9},
+      {x:new Date("2016-01-05T12:34:23Z"), y: -0.7},
+      {x:new Date("2016-01-05T13:34:23Z"), y: 0},
+      {x:new Date("2016-01-05T14:34:23Z"), y: -1.4}
+    ]
+    const dates_list = [
+      new Date("2016-01-05T10:34:23Z"),
+      new Date("2016-01-05T14:34:23Z"),
+      new Date("2016-01-05T13:06:23Z"),
+    ]
+    const diff_list = await bpm.differentiateData(
+      data, "FAKE:PV", dates_list);
+    expect(diff_list).toEqual(diff_data);
+  })
+
+  it("isBPMName", () => {
+    const param: any = [
+      ["SI-01M2:DI-BPM:PosX-Mon", true],
+      ["FANDOM:PV", false],
+      ["SI-18C4:DI-BPM:PosY-Mon", true],
+      ["SI-08C3:DI-BPM-2:PosY-Mon", true],
+      ["RAD:Thermo10:Gamma:Dose", false]
+    ]
+
+    for(let id=0; id<5; id++){
+      const [name, isBPM] = param[id];
+      const bpm_name = bpm.isBPMName(name);
+      expect(bpm_name).toEqual(isBPM);
+    }
+  })
+});
+
+describe('Modals', () => {
+  it("id", () => {
+    const param = ["K10:", "2K3P", "5F2", "8LK", "R93"]
+    const read_back = modal.getModalId();
+    expect(read_back).toEqual("BPM");
+    for(let id=0; id<5; id++){
+      modal.setModalId(param[id]);
+      const read_back = modal.getModalId();
+      expect(read_back).toEqual(param[id]);
+    }
+  })
+
+  it("state", () => {
+    const param = [true, false, true, false, true];
+    const read_back = modal.getModalState();
+    expect(read_back).toEqual(false);
+    for(let id=0; id<6; id++){
+      modal.setModalState(param[id]);
+      const read_back = modal.getModalState();
+      expect(read_back).toEqual(param[id]);
+    }
+  })
+
+  it("styling", () => {
+    const param = ["alert", "normal", "modal"];
+    const read_back = modal.getModalStyling();
+    expect(read_back).toEqual("normal");
+    for(let id=0; id<6; id++){
+      modal.setModalStyling(param[id]);
+      const read_back = modal.getModalStyling();
+      expect(read_back).toEqual(param[id]);
+    }
+  })
+
+  it("timeout", () => {
+    const param = [true, false, true, false, true];
+    const read_back = modal.getModalTimeout();
+    expect(read_back).toEqual(false);
+    for(let id=0; id<6; id++){
+      modal.setModalTimeout(param[id]);
+      const read_back = modal.getModalTimeout();
+      expect(read_back).toEqual(param[id]);
+    }
+  })
+});
+
+
+describe('Chart', () => {
+  it("getColor", () => {
+    const param = [
+      ["cod_rebuilt", "#000000"],
+      ["SI-08C3:DI-BPM-2:PosY-Mon", "#D5565D"],
+      ["SI-18C4:DI-BPM:PosY-Mon", "#F44E4F"]];
+    for(let id=0; id<3; id++){
+      const color = fchart.getColor(param[id][0]);
+      expect(color).toEqual(param[id][1]);
+    }
+  })
+
+  it("setColor", () => {
+    const color = "#D5565D";
+    const state = fchart.setAxisColor("SI-08C3:DI-BPM-2:PosY-Mon", {
+      data: [],
+      xAxisID: '',
+      label: ''
+    });
+    expect(state.backgroundColor).toEqual(color);
+    expect(state.borderColor).toEqual(color);
+  })
+
+  it("getAxisColors", () => {
+    const color_list = {
+      "cod_rebuilt": "#000000",
+      "SI-08C3:DI-BPM-2:PosY-Mon": "#D5565D",
+      "SI-18C4:DI-BPM:PosY-Mon": "#F44E4F"
+    };
+    const axis_colors = chart.getAxisColors()
+    expect(axis_colors).toEqual(color_list);
+  })
+
+  it("setDataset", () => {
+    const dataset: any = [{
+      data: [1, 2, 3],
+      xAxisID: '',
+      label: 'BPM1'
+    },
+    {
+      data: [1, 2, 3],
+      xAxisID: '',
+      label: 'BPM2'
+    }];
+    chart.setDataset(dataset, 'X')
+    expect(dataset).toEqual(chart.getDatasetByIdx(0));
+
+    chart.setDataset(dataset, 'Y')
+    expect(dataset).toEqual(chart.getDatasetByIdx(1));
+  })
+
+  it("detectNewData", () => {
+    const data2Detect = ["BPM1", "BPM7", "BPM4", "BPM2"];
+    for(let i=0; i<4; i++){
+      let result;
+      if(i==0 || i==3){
+        result = {
+          data: [1, 2, 3],
+          xAxisID: '',
+          label: data2Detect[i]
+        };
+      }else{
+        result = null;
+      }
+      const item = chart.detectNewData(
+        data2Detect[i], false, 'X');
+      expect(item).toEqual(result);
+    }
   })
 });

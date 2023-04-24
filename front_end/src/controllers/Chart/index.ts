@@ -46,10 +46,10 @@ class ChartObject {
         }
         if(!changeTime){
             dataset.map((item: DatasetInterface) => {
-            if(item.label === name && item.data.length > 0){
-              itemInfo = item;
-            }
-          });
+                if(item.label === name && item.data.length > 0){
+                    itemInfo = item;
+                }
+            });
         }
         return itemInfo;
     }
