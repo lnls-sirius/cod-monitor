@@ -40,7 +40,8 @@ const Item: React.FC<ActionItem> = (props): React.ReactElement => {
           icon={iconList[props.icon]}
           onClick={() =>{clickHandler()}}
           state={state}
-          small={props.isSmall}/>
+          small={props.isSmall}
+          data-testid="item-test"/>
       </Tooltip>
     </S.ItemWrapper>
   );

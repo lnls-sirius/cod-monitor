@@ -96,7 +96,7 @@ const GestureRecognizer: React.FC<GestureInterface> = (props) => {
     }, [])
 
     return (
-        <div ref={gest_container}>
+        <div ref={gest_container} data-testid="gesture">
             {props.children}
         </div>
     )

@@ -7,12 +7,11 @@ import ListBPM from "../ListBPM";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { getArchiver } from "../../../controllers/archiver";
-import { buildDataset } from "../../../controllers/chart";
 import { differentiateData, unsetBPMChange } from "../../../controllers/bpm";
 import { changeDateClick } from "../../../controllers/time";
 
 import { optionsDiff } from "./config";
-import { DatasetInterface, DatePointInterface } from "../../../assets/interfaces/patterns";
+import { DatasetInterface} from "../../../assets/interfaces/patterns";
 import { ChartDiffProperties } from "../../../assets/interfaces/bpm";
 import { DatasetList } from "../../../assets/interfaces/types";
 import { ArchiverDataPoint } from "../../../assets/interfaces/data_access";
@@ -117,9 +116,8 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
             const archiverResult: ArchiverDataPoint[]|undefined = await getArchiver(
               name, props.start, props.end, optimization);
             if(archiverResult !== undefined){
-              const rawDataset: Array<ArchiverDataPoint> = await buildDataset(archiverResult);
-              const finalDataset: Array<DatePointInterface> = await differentiateData(
-                rawDataset, name, [props.start, props.end, props.refDate]);
+              const finalDataset: Array<ArchiverDataPoint> = await differentiateData(
+                archiverResult, name, [props.start, props.end, props.refDate]);
               const datasetTemp: DatasetInterface = {
                 data: finalDataset,
                 xAxisID: 'x',

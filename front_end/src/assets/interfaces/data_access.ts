@@ -26,8 +26,6 @@ type DBRType =
 interface ArchiverDataPoint {
   x: Date;
   y: number;
-  // severity: number;
-  // status: number;
 }
 
 interface ArchiverListRaw {

@@ -1,8 +1,7 @@
 import control from "./Chart";
 import { colors } from "../assets/style/themes";
 import { getSectionAndName } from "./bpm";
-import { DatasetInterface, DatePointInterface, DictString } from "../assets/interfaces/patterns";
-import { ArchiverDataPoint } from "../assets/interfaces/data_access";
+import { DatasetInterface, DictString } from "../assets/interfaces/patterns";
 import { bpmGroups } from "../assets/constants/patterns";
 
 // Generate a random color
@@ -56,19 +55,8 @@ function setAxisColor(name: string, state: DatasetInterface): DatasetInterface{
     return state;
 }
 
-// Build a list of data points from a list from Archiver
-function buildDataset(dataList: ArchiverDataPoint[]): DatePointInterface[]{
-  return dataList.map((data: ArchiverDataPoint) => {
-    return {
-      x: data.x,
-      y: data.y
-    };
-  });
-}
-
 export {
   getRandomColor,
   getColor,
-  setAxisColor,
-  buildDataset
+  setAxisColor
 }
