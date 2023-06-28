@@ -14,7 +14,7 @@ const DateShow: React.FC<GetDateInterface> = (props) => {
 
   return(
     <S.TimeWrapper>
-      {format(props.date, 'yyyy/MM/dd h:mm:ss aa')}
+      {format(props.date, 'yyyy/MM/dd h:mm:ss.SSS')}
     </S.TimeWrapper>
   );
 };

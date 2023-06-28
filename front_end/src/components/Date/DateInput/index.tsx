@@ -41,9 +41,9 @@ const DateInput: React.FC<SetDateInterface> = (props) => {
         showTimeSelect
         selected={props.date}
         onChange={setDateImp}
-        timeFormat="HH:mm"
+        timeFormat="HH:mm:ss.SSS"
         timeCaption="time"
-        dateFormat="yyyy/MM/dd h:mm:ss aa"
+        dateFormat="yyyy/MM/dd hh:mm:ss.SSS"
         maxDate={new Date()}/>
     </Tooltip>
   );
