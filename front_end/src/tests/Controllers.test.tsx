@@ -290,10 +290,10 @@ describe('BPM', () => {
 
   it("isBPMName", () => {
     const param: any = [
-      ["SI-01M2:DI-BPM:PosX-Mon", true],
-      ["FANDOM:PV", false],
-      ["SI-18C4:DI-BPM:PosY-Mon", true],
-      ["SI-08C3:DI-BPM-2:PosY-Mon", true],
+      ["SI-01M2:DI-BPM", true],
+      ["FANDOM:PV:PosX-Mon", false],
+      ["SI-18C4:DI-BPM", true],
+      ["SI-08C3:DI-BPM-2", true],
       ["RAD:Thermo10:Gamma:Dose", false]
     ]
 
