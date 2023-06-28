@@ -92,10 +92,10 @@ function buildBPMName(section: string, name: string): string {
 // Get if string is a BPM name
 function isBPMName(name: string): boolean{
     let nameDiv: Array<string> = name.split(':');
-    if(nameDiv.length===3){
-        return true
+    if(nameDiv.length!==2){
+        return false
     }
-    return false
+    return true
 }
 
 export {

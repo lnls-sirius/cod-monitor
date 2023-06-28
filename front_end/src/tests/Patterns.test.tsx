@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom'
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import BaseChart from '../components/Patterns/Chart';
 import ChartLegend from '../components/Patterns/ChartLegend';
 import GestureRecognizer from '../components/Patterns/GestureRecognizer';
 import Item from '../components/Patterns/Item';
