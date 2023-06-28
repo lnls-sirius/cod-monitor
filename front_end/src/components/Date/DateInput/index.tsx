@@ -41,7 +41,7 @@ const DateInput: React.FC<SetDateInterface> = (props) => {
         showTimeSelect
         selected={props.date}
         onChange={setDateImp}
-        timeFormat="HH:mm:ss.SSS"
+        timeFormat="HH:mm"
         timeCaption="time"
         dateFormat="yyyy/MM/dd hh:mm:ss.SSS"
         maxDate={new Date()}/>
