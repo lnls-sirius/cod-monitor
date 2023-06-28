@@ -145,7 +145,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
         />
       <ListBPM />
       <S.TextWrapper>
-        Optimization: <input
+        Number of Points: <input
           type='number'
           value={optimization}
           onChange={
