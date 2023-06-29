@@ -122,6 +122,7 @@ const OrbitCharts: React.FC<ChartOrbitInterface> = (props) => {
     let datasetListY: DatasetList = []
 
     const [signatures_created, signatures_to_read] = dictToList(props.sign_list);
+
     if(signatures_to_read.length > 0){
       const dictSign: SignChartData = await fetchSignatureOrbit(
         signatures_to_read, props.start, props.end);

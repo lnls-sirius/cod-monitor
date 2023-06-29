@@ -11,7 +11,7 @@ import { StoreInterface } from "../../../redux/storage/store";
 import * as S from './styled';
 
 function mapStateToProps(state: StoreInterface){
-  const {signatures} = state.orbit;
+  const { signatures } = state.orbit;
   return {
     sign_list: JSON.parse(signatures)
   }

@@ -28,6 +28,31 @@ async function fetchSimulationData(start: Date, end: Date): Promise<SignData> {
 }
 
 
+function invert_signal_data(res: number[]): number[] {
+  return res.map((val: number) => {
+    return (val * -1);
+  });
+}
+
+
+function invert_signal(res: SignChartData, sign_list: Array<string>): SignChartData {
+  sign_list.map((element: string) => {
+    if(element[0] !== "cod_rebuilt"){
+      let elem_id: string = element[0] + element[1]
+      let cur_signal = res[elem_id];
+
+      if(element[4] === "true"){
+        cur_signal[0] = invert_signal_data(cur_signal[0]);
+      }
+      if(element[5] === "true"){
+        cur_signal[1] = invert_signal_data(cur_signal[1]);
+      }
+    }
+  });
+  return res
+}
+
+
 // Fetch the dictionary with the information of the CODX and CODY of the signatures
 async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date): Promise<SignChartData> {
   let jsonurl: string = '';
@@ -48,8 +73,8 @@ async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date
     }
   })
 
-  const res: Promise<SignChartData> = httpRequest(jsonurl);
-  return res
+  let res: SignChartData = await httpRequest(jsonurl);
+  return invert_signal(res, sign_list)
 }
 
 export {

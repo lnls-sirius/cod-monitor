@@ -130,9 +130,22 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   }
 
   // Add Signature to Chart
-  function signToChart(name: string, axis: string, magnet: string): void {
+  function signToChart(properties: OrbitData): void {
+    const name: string = properties[0];
+    const axis: string = properties[2];
+    const magnet: string = properties[1][0];
+    let neg_corr: string[] = ['false', 'false'];
+
+    if(properties[3] < 0){
+      neg_corr[0] = 'true';
+    }
+    if(properties[4] < 0){
+      neg_corr[1] = 'true';
+    }
+    const a: string[] = [name, axis, magnet, 'true'].concat(neg_corr);
+
     setSignature(
-      name+axis, [name, axis, magnet, 'true'], props.sign_list);
+      name+axis, a, props.sign_list);
   }
 
   // Show list head with Sort Buttons
@@ -153,8 +166,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   // Action on click in the signature row
   function actionSignature(properties: OrbitData, inChart: boolean){
     if(!inChart){
-      signToChart(
-        properties[0], properties[2], properties[1][0])
+      signToChart(properties)
     }else{
       deleteSignature(
         properties[0]+properties[2], props.sign_list)
