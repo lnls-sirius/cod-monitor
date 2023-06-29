@@ -8,7 +8,7 @@ const InfoWrapper = styled.div`
   overflow-y: scroll;
 `
 
-const GroupWrapper = styled.div` 
+const GroupWrapper = styled.div`
   margin: 1em 0.25em;
 `
 
