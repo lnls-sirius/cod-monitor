@@ -36,11 +36,10 @@ function deleteSignature(id: string, list: BaseStrArrayDict): void {
 
 // Toggle signature visibility
 function visibleSignature(id: string, list: BaseStrArrayDict): void {
-    console.log(list);
-    // let isVisible: boolean = (list[id][3] === 'True');
-    // list[id][3] = (!isVisible).toString();
-    // control.setAlert('Vis_Sign');
-    // OrbitDispatcher.setSignatureListInterface(list);
+    let isVisible: boolean = (list[id][3] === 'True');
+    list[id][3] = (!isVisible).toString();
+    control.setAlert('Vis_Sign');
+    OrbitDispatcher.setSignatureListInterface(list);
     OrbitDispatcher.setChangeOrbit(true);
 }
 
