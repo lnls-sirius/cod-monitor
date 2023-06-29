@@ -188,13 +188,15 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
         </td>);
     }
     return (
-      <Item
-        icon='trash'
-        isSmall={true}
-        stateActive={false}
-        action={() => actionSignature(properties, inChart)}
-        tooltip={
-          "Remove Signature "+properties[0]+" from Chart"}/>
+      <td>
+        <Item
+          icon='trash'
+          isSmall={true}
+          stateActive={false}
+          action={() => actionSignature(properties, inChart)}
+          tooltip={
+            "Remove Signature "+properties[0]+" from Chart"}/>
+        </td>
     );
   }
 
