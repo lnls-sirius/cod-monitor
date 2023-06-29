@@ -85,7 +85,7 @@ interface LegendInterface extends ChildrenInterface {
     color: string;
     isVisible: boolean;
     deleteAction: null | (() => void);
-    visibleAction: () => void;
+    visibleAction: null | (() => void);
 }
 
 interface ChangeInterface

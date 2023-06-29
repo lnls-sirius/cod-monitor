@@ -33,11 +33,11 @@ const Modals: React.FC<ChangeInterface> = (props) => {
   // Operations made after the modal is closed
   function closeModal(): void {
     const modal: ModalInterface = modalInfo[control.getModalId()];
-    control.setModalState(false);
-    control.setModalTimeout(false);
     if(Object.keys(modal).includes("close")) {
       modal.close();
     }
+    control.setModalState(false);
+    control.setModalTimeout(false);
     setChange(true);
   }
 

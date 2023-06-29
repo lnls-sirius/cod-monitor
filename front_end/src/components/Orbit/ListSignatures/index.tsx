@@ -52,8 +52,7 @@ const ListSignatures: React.FC<SignatureListInterface> = (props) => {
         color={getColor('cod_rebuilt')}
         isVisible={true}
         deleteAction={null}
-        visibleAction={
-          () => visibleSignature('cod_rebuilt', props.sign_list)}>
+        visibleAction={null}>
           <S.TextWrapper>
             COD Rebuilt
           </S.TextWrapper>
