@@ -144,7 +144,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
         ref={chartRef}
         />
       <ListBPM />
-      <S.TextWrapper>
+      {/* <S.TextWrapper>
         Number of Points: <input
           type='number'
           value={optimization}
@@ -160,7 +160,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
             }
           }
           max={1500}/>
-      </S.TextWrapper>
+      </S.TextWrapper> */}
     </S.ChartWrapper>
   );
 };
