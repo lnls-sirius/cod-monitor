@@ -7,7 +7,7 @@ import ListBPM from "../ListBPM";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { getArchiver } from "../../../controllers/archiver";
-import { differentiateData, unsetBPMChange } from "../../../controllers/bpm";
+import { differentiateData, setBPMChange } from "../../../controllers/bpm";
 import { changeDateClick } from "../../../controllers/time";
 
 import { optionsDiff } from "./config";
@@ -87,6 +87,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
   useEffect(() => {
     if(props.changeBpm || props.changeTime || optimizeFlag){
       updateChartDiff();
+      setOptimizeFlag(false);
     }
   }, [props.changeBpm, props.changeTime, optimizeFlag])
 
@@ -99,7 +100,6 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
         control.setLabels([]);
         await control.buildChartDatasets(
           chart, datasetList, optionsDiff, 'A');
-        unsetBPMChange();
       }
     }
   }
@@ -154,7 +154,8 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
           onKeyDown={
             (event)=>{
               if(event.key === 'Enter'){
-                setOptimizeFlag(!optimizeFlag);
+                setBPMChange();
+                setOptimizeFlag(true);
               }
             }
           }

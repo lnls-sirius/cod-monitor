@@ -7,7 +7,7 @@ const TooltipText = styled.div`
     z-index: 1;
     visibility: hidden;
     font-size: 12px;
-    min-width: 5em;
+    min-width: 3em;
     background-color: ${colors.bg.primary50};
     color: ${colors.txt.primary};
     text-align: center;

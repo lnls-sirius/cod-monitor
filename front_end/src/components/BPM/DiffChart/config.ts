@@ -1,7 +1,7 @@
 export const optionsDiff: any = {
+    animation: false,
     showLines: true,
     spanGaps: true,
-    responsiveAnimationDuration: 0,
     responsive: true,
     bezierCurve: false,
     elements: {

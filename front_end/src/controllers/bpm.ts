@@ -47,10 +47,9 @@ function visibleBPM(id: string, list: DictBPM): void {
     BpmDispatcher.setChangeBpm(true);
 }
 
-
 // Remove change flag of BPM
-function unsetBPMChange(): void {
-    BpmDispatcher.setChangeBpm(false);
+function setBPMChange(): void {
+    BpmDispatcher.setChangeBpm(true);
 }
 
 // Differentiate a list of data points
@@ -104,7 +103,7 @@ export {
     saveBPMList,
     deleteBPM,
     visibleBPM,
-    unsetBPMChange,
+    setBPMChange,
     differentiateData,
     getSectionAndName,
     buildBPMName,

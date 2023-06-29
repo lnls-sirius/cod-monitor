@@ -1,4 +1,4 @@
-import { TimeDispatcher } from '../../redux/dispatcher';
+import { TimeDispatcher, BpmDispatcher } from '../../redux/dispatcher';
 import { setAxisColor } from '../chart';
 import { DatasetInterface, DictString } from '../../assets/interfaces/patterns';
 import { DatasetList } from '../../assets/interfaces/types';
@@ -73,6 +73,7 @@ class ChartObject {
         });
         this.updateDataset(chart, dataset, options);
         TimeDispatcher.setChangeTime(false);
+        BpmDispatcher.setChangeBpm(false);
         this.setDataset(dataset, axis);
         return dataset;
     };
