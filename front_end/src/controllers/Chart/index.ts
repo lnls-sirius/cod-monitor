@@ -71,10 +71,10 @@ class ChartObject {
             state = setAxisColor(state.label, state);
             dataset.push(state);
         });
-        this.updateDataset(chart, dataset, options);
+        await this.updateDataset(chart, dataset, options);
+        this.setDataset(dataset, axis);
         TimeDispatcher.setChangeTime(false);
         BpmDispatcher.setChangeBpm(false);
-        this.setDataset(dataset, axis);
         return dataset;
     };
 }

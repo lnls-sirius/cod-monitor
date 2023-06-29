@@ -48,12 +48,15 @@ function unsetOrbitChange(): void {
   OrbitDispatcher.setChangeOrbit(false);
 }
 
+function setOrbitChange(): void {
+    OrbitDispatcher.setChangeOrbit(true);
+}
 
 export {
     buildDatasetOrbit,
     setSignature,
     deleteSignature,
     visibleSignature,
-    unsetOrbitChange
-
+    unsetOrbitChange,
+    setOrbitChange
 }

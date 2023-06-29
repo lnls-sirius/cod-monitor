@@ -7,7 +7,7 @@ import SignatureFilter from "../SignatureFilter";
 import GestureRecognizer from "../../Patterns/GestureRecognizer";
 
 import { getSignatures } from "../../../controllers/archiver";
-import { deleteSignature, setSignature } from "../../../controllers/orbit";
+import { deleteSignature, unsetOrbitChange, setOrbitChange, setSignature } from "../../../controllers/orbit";
 import { sortList } from "../../../controllers/patterns";
 import { DictState } from "../../../assets/interfaces/patterns";
 import { OrbitChartInterface, SignData } from "../../../assets/interfaces/orbit";
@@ -75,6 +75,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     let sortedList: Array<OrbitData> = [];
     let sortOrder: boolean = true;
     let states:[number, boolean] = [elem, sortOrder];
+    setOrbitChange();
 
     if(rawList === undefined){
       sortedList = [...compList]
@@ -93,6 +94,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     states = [elem, sortOrder];
     setSortStates(states);
     setComparison(sortedList);
+    unsetOrbitChange();
   }
 
   // Filter Magnets by type
