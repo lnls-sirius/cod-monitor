@@ -30,7 +30,7 @@ def initialization():
     RESPM_FOFB = RESPM_FOFB[:, :-1]
 
 
-# Load a dictionary from a json file
+# Load a simulation data from a json file
 def load_json(filename):
     file = open('./data_sim/'+filename+'.json', "r")
     data = json.loads(file.read())
@@ -92,27 +92,45 @@ def get_wfm_diff(pvnames, time_start, time_stop):
     return datax, datay
 
 
-# Read the Kicks from the CHs, CVs and the RF and the Orbit X and Y from Archiver
-def read_data_from_archiver(time_start, time_stop):
-    """."""
+# Read and format the SOFB kicks read from archiver
+def read_sofb_kicks(time_start, time_stop):
     pvnames = ['SI-Glob:AP-SOFB:KickCH-Mon', 'SI-Glob:AP-SOFB:KickCV-Mon']
     kickx_s, kicky_s = get_wfm_diff(pvnames, time_start, time_stop)
-
-    pvnames = ['SI-Glob:AP-FOFB:KickCH-Mon', 'SI-Glob:AP-FOFB:KickCV-Mon']
-    kickx_f, kicky_f = get_wfm_diff(pvnames, time_start, time_stop)
-
-    pvnames = ['SI-Glob:AP-SOFB:SlowOrbX-Mon', 'SI-Glob:AP-SOFB:SlowOrbY-Mon']
-    codx, cody = get_wfm_diff(pvnames, time_start, time_stop)
+    kicks_sofb = np.append(kickx_s, kicky_s)
 
     pvnames = ['RF-Gen:GeneralFreq-RB', 'RF-Gen:GeneralFreq-RB']
     rfx, _ = get_wfm_diff(pvnames, time_start, time_stop)
+    kicks_sofb_w_rf = np.append(kicks_sofb, rfx)
 
-    kicks_sofb = np.append(kickx_s, kicky_s)
-    kicks_sofb = np.append(kicks_sofb, rfx)
+    return kicks_sofb_w_rf
+
+
+# Read and format the FOFB kicks read from archiver
+def read_fofb_kicks(time_start, time_stop):
+    pvnames = ['SI-Glob:AP-FOFB:KickCH-Mon', 'SI-Glob:AP-FOFB:KickCV-Mon']
+    kickx_f, kicky_f = get_wfm_diff(pvnames, time_start, time_stop)
     kicks_fofb = np.append(kickx_f, kicky_f)
-    codx = codx[:160]  # NOTE: really necessary?
-    cody = cody[:160]  # NOTE: really necessary?
+    return kicks_fofb
+
+
+# Read and format the COD read from archiver
+def read_cod(time_start, time_stop):
+    pvnames = ['SI-Glob:AP-SOFB:SlowOrbX-Mon', 'SI-Glob:AP-SOFB:SlowOrbY-Mon']
+    codx, cody = get_wfm_diff(pvnames, time_start, time_stop)
+
+    codx = codx[:160]
+    cody = cody[:160]
     cod = np.append(codx, cody)
+    return cod
+
+
+# Read the Kicks from the CHs, CVs and the RF and the Orbit X and Y from Archiver
+def read_data_from_archiver(time_start, time_stop):
+    """."""
+
+    kicks_sofb = read_sofb_kicks(time_start, time_stop)
+    kicks_fofb = read_fofb_kicks(time_start, time_stop)
+    cod = read_cod(time_start, time_stop)
 
     return kicks_sofb, kicks_fofb, cod
 
@@ -134,8 +152,8 @@ def corr_per_group(cod_rebuilt, data, corrdata, kick_axis=None):
     return corrdata
 
 
-# Calculate the correlation of the Signature orbits with the COD Rebuild
-def calc_correlation(cod_rebuilt, signature_files, read_json=False):
+# Calculate the correlation of the Signature orbits with the COD Rebuilt
+def calc_correlation(app, cod_rebuilt, signature_files, read_json=False):
     """."""
 
     corrdata = dict()
@@ -145,9 +163,9 @@ def calc_correlation(cod_rebuilt, signature_files, read_json=False):
                 data = load_json(fname+kick_axis)
                 corrdata = corr_per_group(
                     cod_rebuilt, data['groups'], corrdata, kick_axis)
-        else:
-            data = app.SIGNATURES['groups-'+kick_axis]
-            corrdata = corr_per_group(
+        # else:
+        #     data = app.SIGNATURES['groups-'+kick_axis]
+        #     corrdata = corr_per_group(
                 cod_rebuilt, data, corrdata, kick_axis)
     return corrdata
 
@@ -187,14 +205,13 @@ def normalized_array(array):
 
 
 # Read the signature CODX and CODY
-def read_signatures(elem_data, read_json=False):
+def read_signatures(app, elem_data, read_json=False):
     if read_json:
         sign_madata = load_json(elem_data[2]+"_kick"+elem_data[1])
         groups_sign = sign_madata['groups']
-    else:
-        # TODO: there is an undefined symbol here!
-        sign_madata = app.SIGNATURES
-        groups_sign = sign_madata['groups-'+elem_data[1]]
+    # else:
+    #     sign_madata = app.SIGNATURES
+    #     groups_sign = sign_madata['groups-'+elem_data[1]]
 
     for group in groups_sign:
         if elem_data[0] in groups_sign[group]:

@@ -190,6 +190,26 @@ def famSignature(model, famdata, bpm_positions, dev_fam, axis_kick):
     return data
 
 
+# Calculate the Families signatures
+def calc_families(famdata, model, codData, bpm_positions, axis_kick, write_json):
+    act_fam = ''
+    for dev_fam in GROUPS:
+        if dev_fam[:1] != act_fam and write_json:
+            group_name = "groups"
+            codData[group_name] = {}
+            act_fam = dev_fam[:1]
+
+        if(not ((axis_kick == 'x' and dev_fam == 'CV') or
+                (axis_kick == 'y' and dev_fam == 'CH'))):
+            codData[group_name][dev_fam] = magnetSignature(
+                model, famdata, bpm_positions, dev_fam, axis_kick)
+            if dev_fam not in CORRECTORS:
+                codData[group_name][dev_fam][dev_fam+" family"] = famSignature(
+                    model, famdata, bpm_positions, dev_fam, axis_kick)
+            if write_json:
+                writeJson(codData, axis_kick, dev_fam[:1])
+
+
 # Calculate all the signatures
 def calc_sign(write_json=False):
 
@@ -199,7 +219,6 @@ def calc_sign(write_json=False):
         "unit": "um/urad",
         "bpm_names": {}
     }
-    act_fam = ''
 
     # get BPM Information
     bpm_fam = famdata['BPM']
@@ -218,22 +237,9 @@ def calc_sign(write_json=False):
 
         if not write_json:
             codData[group_name] = {}
-        # Loop the Families
-        for dev_fam in GROUPS:
-            if dev_fam[:1] != act_fam and write_json:
-                group_name = "groups"
-                codData[group_name] = {}
-                act_fam = dev_fam[:1]
-
-            if(not ((axis_kick == 'x' and dev_fam == 'CV') or
-                    (axis_kick == 'y' and dev_fam == 'CH'))):
-                codData[group_name][dev_fam] = magnetSignature(
-                    model, famdata, bpm_positions, dev_fam, axis_kick)
-                if dev_fam not in CORRECTORS:
-                    codData[group_name][dev_fam][dev_fam+" family"] = famSignature(
-                        model, famdata, bpm_positions, dev_fam, axis_kick)
-                if write_json:
-                    writeJson(codData, axis_kick, dev_fam[:1])
+        calc_families(
+            famdata, model, codData, bpm_positions,
+            axis_kick, write_json)
     if not write_json:
         return codData
 

@@ -24,7 +24,7 @@ class TestSOM(unittest.TestCase):
         test_data = som.load_json("C_kickX")
         data_cod = test_data['groups']['CH']['SI-01C1:MA-CH']
         cod_test = data_cod['codx'] + data_cod['cody']
-        corr = som.calc_correlation(cod_test, ['C_kick'], True)
+        corr = som.calc_correlation(self, cod_test, ['C_kick'], True)
         self.assertIsNotNone(corr)
 
     def test_get_time(self):
@@ -38,7 +38,7 @@ class TestSOM(unittest.TestCase):
         self.assertEqual(norm, 1)
 
     def test_read_signatures(self):
-        sign = som.read_signatures(['SI-01C3:MA-CH', 'X', 'C'], True)
+        sign = som.read_signatures(self, ['SI-01C3:MA-CH', 'X', 'C'], True)
         self.assertIsNotNone(sign)
 
 if __name__ == '__main__':
