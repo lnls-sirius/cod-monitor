@@ -20,7 +20,8 @@ def signComp():
             'Q_kick', 'S_kick'
     ]
 
-    read_json = False if app.SIGNATURES else True
+    # read_json = False if app.SIGNATURES else True
+    read_json = True
     cod_rebuilt = som.calc_cod_rebuilt(
                 request.args.get("start"), request.args.get("stop"))
     corr = som.calc_correlation(
@@ -33,9 +34,12 @@ def signComp():
 @app.route("/sign_orbit", methods=["GET"])
 def signOrbit():
     sign_orbit = dict()
-    read_json = False if app.SIGNATURES else True
+    read_json = True
     data = request.args.get("data")
     data = data.split(',')
+    norm = False
+    if request.args.get("norm"):
+        norm = False
 
     for name in data:
 
@@ -43,9 +47,15 @@ def signOrbit():
             cod_rebuilt = som.calc_cod_rebuilt(
                 request.args.get("start"), request.args.get("stop"))
 
+            # if norm:
             sign_orbit['cod_rebuilt'] = [
                 som.normalized_array(cod_rebuilt[:160]).tolist(),
                 som.normalized_array(cod_rebuilt[160:]).tolist()]
+            # else:
+            #     sign_orbit['cod_rebuilt'] = [
+            #         cod_rebuilt[:160],
+            #         cod_rebuilt[160:].tolist()
+            #     ]
         else:
             elem_data = name.split("_")
             elem_name = elem_data[0] + elem_data[1]
