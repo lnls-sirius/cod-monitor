@@ -166,7 +166,7 @@ def calc_correlation(app, cod_rebuilt, signature_files, read_json=False):
         # else:
         #     data = app.SIGNATURES['groups-'+kick_axis]
         #     corrdata = corr_per_group(
-                cod_rebuilt, data, corrdata, kick_axis)
+        #         cod_rebuilt, data, corrdata, kick_axis)
     return corrdata
 
 
