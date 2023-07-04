@@ -37,7 +37,7 @@ def signOrbit():
     read_json = True
     data = request.args.get("data")
     data = data.split(',')
-    norm = False
+    norm = True
     if request.args.get("norm"):
         norm = False
 
@@ -47,15 +47,15 @@ def signOrbit():
             cod_rebuilt = som.calc_cod_rebuilt(
                 request.args.get("start"), request.args.get("stop"))
 
-            # if norm:
-            sign_orbit['cod_rebuilt'] = [
-                som.normalized_array(cod_rebuilt[:160]).tolist(),
-                som.normalized_array(cod_rebuilt[160:]).tolist()]
-            # else:
-            #     sign_orbit['cod_rebuilt'] = [
-            #         cod_rebuilt[:160],
-            #         cod_rebuilt[160:].tolist()
-            #     ]
+            if norm:
+                sign_orbit['cod_rebuilt'] = [
+                    som.normalized_array(cod_rebuilt[:160]).tolist(),
+                    som.normalized_array(cod_rebuilt[160:]).tolist()]
+            else:
+                sign_orbit['cod_rebuilt'] = [
+                    cod_rebuilt[:160].tolist(),
+                    cod_rebuilt[160:].tolist()
+                ]
         else:
             elem_data = name.split("_")
             elem_name = elem_data[0] + elem_data[1]
