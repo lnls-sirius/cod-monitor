@@ -8,7 +8,7 @@ import control from "./Modals";
 
 // Get the closest value of the position difference from a data point array,
 // based on a reference date
-function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[]): number{
+function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[]): number {
   let valueComp: number = 0;
   let closestDate: number = selectedDate.getTime();
 
@@ -27,13 +27,14 @@ function getDataInArray(selectedDate: Date, dataArray: ArchiverDataPoint[]): num
 
 // Get the closest value of the position difference from Archiver,
 // based on a reference date
-async function getDataInArchiver(pv: Array<string>, refDate: Date): Promise<undefined|DictNumber> {
+async function getDataInArchiver(pv: string, refDate: Date): Promise<number> {
   try {
-    let archiverInterval: DictNumber = await archInterface.fetchSeveralPV(pv, refDate);
-    return archiverInterval;
+    let archiverInterval: ArchiverDataPoint[] = await archInterface.fetchPointPV(pv, refDate);
+    return getDataInArray(refDate, archiverInterval);
   } catch (e) {
     errorMsg();
   }
+  return 0;
 }
 
 // Get an interval from Archiver

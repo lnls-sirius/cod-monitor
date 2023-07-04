@@ -5,7 +5,6 @@ import control from "./Modals";
 import { intervals } from "../assets/constants/date";
 import { ArrDictArrStr } from "../assets/interfaces/types";
 import { DateInfoInterface } from "../assets/interfaces/date";
-import { DictNumber } from "../assets/interfaces/patterns";
 
 
 // Detect if the date is in the past
@@ -37,12 +36,7 @@ async function getClosestDate(name: string, dataArray: ArchiverDataPoint[], date
       closestDate <= dates[1].getTime()){
         return getDataInArray(dates[2], dataArray);
     }else{
-      const valueRef: undefined|DictNumber = await getDataInArchiver([name], dates[2]);
-      if(valueRef!==undefined){
-        if(Object.keys(valueRef).length === 1){
-          return valueRef[name]
-        }
-      }
+      return await getDataInArchiver(name, dates[2]);
     }
   }
   return 0;
