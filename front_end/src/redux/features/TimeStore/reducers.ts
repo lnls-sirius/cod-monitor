@@ -8,7 +8,7 @@ function setStart (state: timeStore, action: PayloadAction<string>): void {
             state.interval_mil, new Date(action.payload), state.time_mode);
         if(pastDate(new Date(action.payload), interval)){
             state.start_date = action.payload;
-            state.end_date = interval.toString();
+            state.end_date = interval.toISOString();
         }
     }else{
         const endDate = new Date(state.end_date)
@@ -25,7 +25,7 @@ function setEnd (state: timeStore, action: PayloadAction<string>): void {
             state.interval_mil, new Date(action.payload), state.time_mode);
         if(pastDate(interval, new Date(action.payload))){
             state.end_date = action.payload;
-            state.start_date = interval.toString();
+            state.start_date = interval.toISOString();
         }
     }else{
         const startDate = new Date(state.start_date)

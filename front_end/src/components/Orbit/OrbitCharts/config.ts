@@ -1,6 +1,7 @@
 export const optionsOrbit: any = {
     showLines: true,
     spanGaps: true,
+    animation: false,
     responsiveAnimationDuration: 0,
     responsive: true,
     bezierCurve: false,

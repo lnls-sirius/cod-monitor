@@ -10,19 +10,21 @@ import * as S from './styled';
 function mapStateToProps(state: StoreInterface){
   const {change_time} = state.time;
   const {change_bpm} = state.bpm;
-  const {change_orbit} = state.orbit;
+  const {change_cod_orbit, change_orbit} = state.orbit;
 
   return {
     changeBpm: change_bpm,
     changeTime: change_time,
-    changeOrbit: change_orbit
+    changeOrbit: change_orbit,
+    changeCodOrbit: change_cod_orbit
   }
 }
 
 const defaultProps: ChangeInterface = {
   changeBpm: false,
   changeTime: false,
-  changeOrbit: false
+  changeOrbit: false,
+  changeCodOrbit: false
 }
 
 const Modals: React.FC<ChangeInterface> = (props) => {
@@ -33,11 +35,11 @@ const Modals: React.FC<ChangeInterface> = (props) => {
   // Operations made after the modal is closed
   function closeModal(): void {
     const modal: ModalInterface = modalInfo[control.getModalId()];
-    control.setModalState(false);
-    control.setModalTimeout(false);
     if(Object.keys(modal).includes("close")) {
       modal.close();
     }
+    control.setModalState(false);
+    control.setModalTimeout(false);
     setChange(true);
   }
 

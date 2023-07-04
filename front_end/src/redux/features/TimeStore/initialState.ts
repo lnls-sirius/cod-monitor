@@ -12,9 +12,9 @@ export interface timeStore{
 
 const initialState: timeStore = {
     time_mode: 'End',
-    start_date: current.toString(),
-    end_date: current.toString(),
-    ref_date: (new Date(ref)).toString(),
+    start_date: current.toISOString(),
+    end_date: current.toISOString(),
+    ref_date: (new Date(ref)).toISOString(),
     change_time: false,
     interval_mil: 3600000
 }

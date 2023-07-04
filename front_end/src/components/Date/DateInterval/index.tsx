@@ -72,17 +72,19 @@ const DateInterval: React.FC<DateIntervalInterface> = (props) => {
           Marker-2
             {dateMode('End')}
         </S.TextWrapper>
-        <Tooltip
-            text="Change the date reference of the interval buttons"
-            movable={false}>
-          <S.SelectTime
-            value={props.intervalMode}
-            onChange={(selec: SelectChange)=>setIntervalMode(selec.target.value)}>
-              <option value='Start' label='Start'/>
-              <option value='End' label='End'/>
-              <option value='None' label='None'/>
-          </S.SelectTime>
-        </Tooltip>
+        <S.TextWrapper>
+          <Tooltip
+              text="Change the date reference of the interval buttons"
+              movable={false}>
+            <S.SelectTime
+              value={props.intervalMode}
+              onChange={(selec: SelectChange)=>setIntervalMode(selec.target.value)}>
+                <option value='Start' label='Start'/>
+                <option value='End' label='End'/>
+                <option value='None' label='None'/>
+            </S.SelectTime>
+          </Tooltip>
+        </S.TextWrapper>
       </S.DateWrapper>
       <S.DateWrapper>
         {inputReference()}

@@ -47,10 +47,9 @@ function visibleBPM(id: string, list: DictBPM): void {
     BpmDispatcher.setChangeBpm(true);
 }
 
-
 // Remove change flag of BPM
-function unsetBPMChange(): void {
-    BpmDispatcher.setChangeBpm(false);
+function setBPMChange(): void {
+    BpmDispatcher.setChangeBpm(true);
 }
 
 // Differentiate a list of data points
@@ -92,10 +91,10 @@ function buildBPMName(section: string, name: string): string {
 // Get if string is a BPM name
 function isBPMName(name: string): boolean{
     let nameDiv: Array<string> = name.split(':');
-    if(nameDiv.length===3){
-        return true
+    if(nameDiv.length!==2){
+        return false
     }
-    return false
+    return true
 }
 
 export {
@@ -104,7 +103,7 @@ export {
     saveBPMList,
     deleteBPM,
     visibleBPM,
-    unsetBPMChange,
+    setBPMChange,
     differentiateData,
     getSectionAndName,
     buildBPMName,

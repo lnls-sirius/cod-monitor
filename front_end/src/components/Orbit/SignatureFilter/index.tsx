@@ -28,7 +28,11 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
   // Submit text filter changes on Enter press
   function submitHandler(event: React.KeyboardEvent): void {
     if(event.key === 'Enter'){
-      props.setGlobExp(nameFilter);
+      let regex_pattern: string = '*';
+      if(nameFilter !== ""){
+        regex_pattern = nameFilter;
+      }
+      props.setGlobExp(regex_pattern);
     }
   }
 
@@ -69,7 +73,7 @@ const SignatureFilter: React.FC<FilterInterface> = (props) => {
           <S.NameFilter type='text'
             value={nameFilter}
             onChange={(event: InputChange)=>setNameFilter(
-              event.target.value)}
+              event.target.value.trim())}
             onKeyDown={submitHandler}/>
         </Tooltip>
       </S.FilterRow>

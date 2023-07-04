@@ -24,7 +24,7 @@ class TestSOM(unittest.TestCase):
         test_data = som.load_json("C_kickX")
         data_cod = test_data['groups']['CH']['SI-01C1:MA-CH']
         cod_test = data_cod['codx'] + data_cod['cody']
-        corr = som.calc_correlation(cod_test, ['C_kick'], True)
+        corr = som.calc_correlation(self, cod_test, ['C_kick'], True)
         self.assertIsNotNone(corr)
 
     def test_get_time(self):
@@ -38,25 +38,8 @@ class TestSOM(unittest.TestCase):
         self.assertEqual(norm, 1)
 
     def test_read_signatures(self):
-        sign = som.read_signatures(['SI-01C3:MA-CH', 'X', 'C'], True)
+        sign = som.read_signatures(self, ['SI-01C3:MA-CH', 'X', 'C'], True)
         self.assertIsNotNone(sign)
-
-# class TestSIGN(unittest.TestCase):
-
-#     def test_load_json(self):
-#         nparray = np.array([6, 10, 4, 8, 2])
-#         result = np.array([3, 5, 2, 4, 1])
-#         norm = sign.normalize(nparray, 2)
-#         self.assertCountEqual(norm, result)
-
-#     def test_calc_kick_seg(self):
-#         idx = ['1', '2', '3', '4', '5']
-#         angle = [0.1, 0.4, 0.7, 0.4, 0.1]
-#         length = [1, 10, 20, 10, 1]
-#         total_field, kick_list = sign.calcKickSeg(idx, angle, length)
-#         self.assertIsNotNone(total_field)
-#         self.assertIsNotNone(kick_list)
-#         self.assertGreater(len(kick_list), 0)
 
 if __name__ == '__main__':
     unittest.main()

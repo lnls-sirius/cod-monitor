@@ -51,12 +51,10 @@ const GestureRecognizer: React.FC<GestureInterface> = (props) => {
                     panList = [];
                     panSelector.push(orbit);
                     panList.push(orbit[0]+orbit[2]);
-                    console.log(orbit[0]+orbit[2])
                 }else{
                     if(!(panList.includes(orbit[0]+orbit[2]))){
                         panSelector.push(orbit);
                         panList.push(orbit[0]+orbit[2]);
-                        console.log(orbit[0]+orbit[2])
                     }
                 }
             }

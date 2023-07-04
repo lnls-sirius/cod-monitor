@@ -4,7 +4,7 @@ import { StateInterface, IconStyle } from "../interfaces/patterns";
 import { colors, fonts, properties } from "./themes";
 
 const DateTheme = css`
-    width: 8rem;
+    width: 9rem;
     margin: 0.25rem;
     text-align: center;
     font-family: ${fonts.primary};

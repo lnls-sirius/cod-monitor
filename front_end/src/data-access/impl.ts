@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { DictNumber } from '../assets/interfaces/patterns';
-import { DataAccess, ArchiverData, ArchiverDataPoint, ArchiverListRaw, ArchiverRawArray} from "../assets/interfaces/data_access";
+import { DataAccess, ArchiverData, ArchiverDataPoint } from "../assets/interfaces/data_access";
 
 export const ipRegExp = /https?\/((?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])))\//;
 export const defaultHost = "10.0.38.42";
@@ -40,35 +39,23 @@ export class ArchiverDataAccess implements DataAccess{
     return outData;
   }
 
-  // Parse a list from the values read in Archiver
-  private parseDataList(data: ArchiverListRaw): DictNumber {
-    const outData: DictNumber = {};
-    Object.entries(data).map(([name, info]: ArchiverRawArray) => {
-      outData[name] = info.val;
-    })
-    return outData;
-  }
-
   // Fetch several PVs at one fixed time
-  async fetchSeveralPV(pvList: Array<string>, date: Date): Promise<DictNumber> {
-    let jsonurl: string = '';
-    let finalData: DictNumber = {};
-    this.GET_DATA_URL = `${window.location.protocol}//${this.url}/retrieval/data/getDataAtTime`;
-    jsonurl = `${this.GET_DATA_URL}?at=`+date.toJSON()
+  async fetchPointPV(pvname: string, date: Date): Promise<ArchiverDataPoint[]> {
+    const now: Date = new Date();
+    const interval: number = 1000;
+    let dates: Date[] = [];
 
-    const res = await axios.post(jsonurl,
-      pvList,
-      {
-        method: "POST",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"
-        }
-      }
-    )
-
-    finalData = this.parseDataList(res.data);
-    return finalData;
+    let mil_date = date.getTime();
+    if(mil_date >= (now.getTime()-interval)){
+      dates[0] = new Date(mil_date-interval);
+      dates[1] = now;
+    }else{
+      dates[0] = new Date(mil_date-interval);
+      dates[1] = new Date(mil_date+interval);
+    }
+    const res = await this.fetchData(
+      pvname, dates[0], dates[1], 800);
+    return res.data;
   }
 
   // Fetch PV data in an interval

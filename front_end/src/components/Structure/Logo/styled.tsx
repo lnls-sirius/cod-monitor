@@ -11,8 +11,8 @@ const LogoWrapper = styled.div`
 `;
 
 const ImageWrapper = styled.img`
-  height: 35px;
-  margin: 4px;
+  height: 40px;
+  margin-right: 1em;
   padding: 2px;
   background-color: ${colors.bg.white};
   border-radius: ${properties.radius.extlight};

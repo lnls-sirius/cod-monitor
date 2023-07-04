@@ -9,6 +9,10 @@ class OrbitDispatcherImpl implements OrbitDispatcherInterface{
         store.dispatch(actionsOrbit.setChange(change));
     }
 
+    setChangeCodOrbit(change: boolean): void {
+        store.dispatch(actionsOrbit.setChangeCod(change));
+    }
+
     setSignatureListInterface(list: BaseStrArrayDict): void {
         store.dispatch(actionsOrbit.setSignatureListInterface(JSON.stringify(list)));
     }

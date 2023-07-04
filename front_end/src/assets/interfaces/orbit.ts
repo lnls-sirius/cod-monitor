@@ -27,6 +27,7 @@ interface OrbitChartInterface
 
 interface ChangeOrbitInterface{
     changeOrbit: boolean;
+    changeCodOrbit: boolean;
     changeTime: boolean;
 }
 

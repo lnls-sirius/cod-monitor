@@ -7,7 +7,7 @@ import SignatureFilter from "../SignatureFilter";
 import GestureRecognizer from "../../Patterns/GestureRecognizer";
 
 import { getSignatures } from "../../../controllers/archiver";
-import { deleteSignature, setSignature } from "../../../controllers/orbit";
+import { deleteSignature, unsetOrbitChange, setOrbitChange, setSignature } from "../../../controllers/orbit";
 import { sortList } from "../../../controllers/patterns";
 import { DictState } from "../../../assets/interfaces/patterns";
 import { OrbitChartInterface, SignData } from "../../../assets/interfaces/orbit";
@@ -75,6 +75,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     let sortedList: Array<OrbitData> = [];
     let sortOrder: boolean = true;
     let states:[number, boolean] = [elem, sortOrder];
+    setOrbitChange();
 
     if(rawList === undefined){
       sortedList = [...compList]
@@ -93,6 +94,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
     states = [elem, sortOrder];
     setSortStates(states);
     setComparison(sortedList);
+    unsetOrbitChange();
   }
 
   // Filter Magnets by type
@@ -130,9 +132,22 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   }
 
   // Add Signature to Chart
-  function signToChart(name: string, axis: string, magnet: string): void {
+  function signToChart(properties: OrbitData): void {
+    const name: string = properties[0];
+    const axis: string = properties[2];
+    const magnet: string = properties[1][0];
+    let neg_corr: string[] = ['false', 'false'];
+
+    if(properties[3] < 0){
+      neg_corr[0] = 'true';
+    }
+    if(properties[4] < 0){
+      neg_corr[1] = 'true';
+    }
+    const a: string[] = [name, axis, magnet, 'true'].concat(neg_corr);
+
     setSignature(
-      name+axis, [name, axis, magnet, 'true'], props.sign_list);
+      name+axis, a, props.sign_list);
   }
 
   // Show list head with Sort Buttons
@@ -153,8 +168,7 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
   // Action on click in the signature row
   function actionSignature(properties: OrbitData, inChart: boolean){
     if(!inChart){
-      signToChart(
-        properties[0], properties[2], properties[1][0])
+      signToChart(properties)
     }else{
       deleteSignature(
         properties[0]+properties[2], props.sign_list)
@@ -176,13 +190,15 @@ const SignatureComp: React.FC<OrbitChartInterface> = (props) => {
         </td>);
     }
     return (
-      <Item
-        icon='trash'
-        isSmall={true}
-        stateActive={false}
-        action={() => actionSignature(properties, inChart)}
-        tooltip={
-          "Remove Signature "+properties[0]+" from Chart"}/>
+      <td>
+        <Item
+          icon='trash'
+          isSmall={true}
+          stateActive={false}
+          action={() => actionSignature(properties, inChart)}
+          tooltip={
+            "Remove Signature "+properties[0]+" from Chart"}/>
+        </td>
     );
   }
 

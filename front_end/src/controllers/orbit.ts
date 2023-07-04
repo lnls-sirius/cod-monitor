@@ -43,9 +43,21 @@ function visibleSignature(id: string, list: BaseStrArrayDict): void {
     OrbitDispatcher.setChangeOrbit(true);
 }
 
+// Show raw COD Rebuilt
+function toggleNormalizeCod(norm: boolean, list: BaseStrArrayDict){
+    list["cod_rebuilt"][1] = norm.toString();
+    OrbitDispatcher.setSignatureListInterface(list);
+    OrbitDispatcher.setChangeCodOrbit(true);
+}
+
 // Remove change flag of Orbit
 function unsetOrbitChange(): void {
   OrbitDispatcher.setChangeOrbit(false);
+  OrbitDispatcher.setChangeCodOrbit(false);
+}
+
+function setOrbitChange(): void {
+    OrbitDispatcher.setChangeOrbit(true);
 }
 
 export {
@@ -53,5 +65,7 @@ export {
     setSignature,
     deleteSignature,
     visibleSignature,
-    unsetOrbitChange
+    toggleNormalizeCod,
+    unsetOrbitChange,
+    setOrbitChange
 }

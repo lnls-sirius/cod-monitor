@@ -19,7 +19,7 @@ const Menu: React.FC = (): React.ReactElement => {
     //     }
     //   };
     // }
-    return "v1.0.0.";
+    return "v1.2.0.";
       // + git_version.commit.shortHash + " / " +
       // git_version.commit.date;
   }
