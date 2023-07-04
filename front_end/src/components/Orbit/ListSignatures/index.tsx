@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import ChartLegend from "../../Patterns/ChartLegend";
 import { getColor } from "../../../controllers/chart";
-import { deleteSignature, visibleSignature } from "../../../controllers/orbit";
+import { deleteSignature, toggleNormalizeCod, visibleSignature, setSignature } from "../../../controllers/orbit";
 import { SignatureListInterface } from "../../../assets/interfaces/orbit";
 import { ArrDictArrStr } from "../../../assets/interfaces/types";
 import { StoreInterface } from "../../../redux/storage/store";
@@ -23,11 +23,39 @@ const defaultProps: SignatureListInterface = {
 
 const ListSignatures: React.FC<SignatureListInterface> = (props) => {
   // Display all the legend items of the Signatures in the Orbit Drift
+  const [norm, setNorm] = useState<boolean>(true);
+
+  useEffect(() => {
+    setSignature(
+      "cod_rebuilt", ["cod_rebuilt", norm], props.sign_list);
+  }, []);
+
+  function toggleNormalize(): void {
+    setNorm(!norm);
+    toggleNormalizeCod(!norm, props.sign_list);
+  }
 
   function listAllSignatures(): (React.ReactElement | undefined)[]{
     // Show all the selected Signatures in the legend
     return Object.entries(props.sign_list).map(([name, property]: ArrDictArrStr) => {
-      if(property){
+      if(name == "cod_rebuilt"){
+          return (
+            <ChartLegend
+              color={getColor('cod_rebuilt')}
+              isVisible={true}
+              deleteAction={null}
+              visibleAction={null}>
+                <S.TextWrapper>
+                  COD Rebuilt
+                </S.TextWrapper>
+                <S.TextWrapper>
+                  Normalized?
+                  <input type="checkbox" checked={norm}
+                    onClick={toggleNormalize}/>
+                </S.TextWrapper>
+              </ChartLegend>
+          )
+      }else if(property){
         const color_label = property[0] + '- Kick:' + property[1]
         return (
           <ChartLegend
@@ -48,15 +76,6 @@ const ListSignatures: React.FC<SignatureListInterface> = (props) => {
 
   return(
     <S.ListWrapper>
-      <ChartLegend
-        color={getColor('cod_rebuilt')}
-        isVisible={true}
-        deleteAction={null}
-        visibleAction={null}>
-          <S.TextWrapper>
-            COD Rebuilt
-          </S.TextWrapper>
-      </ChartLegend>
       {listAllSignatures()}
     </S.ListWrapper>
   );

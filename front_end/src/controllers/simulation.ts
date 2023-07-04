@@ -56,6 +56,7 @@ function invert_signal(res: SignChartData, sign_list: Array<string>): SignChartD
 // Fetch the dictionary with the information of the CODX and CODY of the signatures
 async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date): Promise<SignChartData> {
   let jsonurl: string = '';
+  let cod_normalized: boolean = false;
   const GET_DATA_URL = `${window.location.protocol}//10.30.1.61:80/sign_orbit`;
 
   jsonurl = `${GET_DATA_URL}?start=${start.toJSON()}&stop=${end.toJSON()}`;
@@ -68,10 +69,17 @@ async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date
     }
     if(elem_data[0] === 'cod_rebuilt'){
       jsonurl += elem_data[0]
+      if(elem_data[1]){
+        cod_normalized = true;
+      }
     }else{
       jsonurl += elem_data[0] + '_' + elem_data[1] + '_' + elem_data[2];
     }
   })
+
+  if(cod_normalized){
+    jsonurl += "&norm=true"
+  }
 
   let res: SignChartData = await httpRequest(jsonurl);
   return invert_signal(res, sign_list)

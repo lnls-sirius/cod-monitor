@@ -38,13 +38,13 @@ class ChartObject {
     }
 
     // Detect if the data is already on the chart
-    detectNewData(name: string, changeTime: boolean, axis?: string): DatasetInterface|null{
+    detectNewData(name: string, dataset_changed: boolean, axis?: string): DatasetInterface|null{
         let itemInfo: DatasetInterface|null = null;
         let dataset: any = this.dataset;
         if(axis === 'Y'){
             dataset = this.datasetExt;
         }
-        if(!changeTime){
+        if(!dataset_changed){
             dataset.map((item: DatasetInterface) => {
                 if(item.label === name && item.data.length > 0){
                     itemInfo = item;

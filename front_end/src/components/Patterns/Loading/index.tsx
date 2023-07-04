@@ -8,19 +8,21 @@ import * as S from './styled';
 function mapStateToProps(state: StoreInterface){
   const {change_time} = state.time;
   const {change_bpm} = state.bpm;
-  const {change_orbit} = state.orbit;
+  const {change_cod_orbit, change_orbit} = state.orbit;
 
   return {
     changeBpm: change_bpm,
     changeTime: change_time,
-    changeOrbit: change_orbit
+    changeOrbit: change_orbit,
+    changeCodOrbit: change_cod_orbit
   }
 }
 
 const defaultProps: ChangeInterface = {
   changeBpm: false,
   changeTime: false,
-  changeOrbit: false
+  changeOrbit: false,
+  changeCodOrbit: false
 }
 
 const Loading: React.FC<ChangeInterface> = (props) => {
@@ -29,7 +31,8 @@ const Loading: React.FC<ChangeInterface> = (props) => {
 
   // Set animation if any change flag is detected as true
   useEffect(() => {
-    setLoading(props.changeBpm || props.changeTime || props.changeOrbit);
+    setLoading(props.changeBpm || props.changeTime ||
+      props.changeOrbit || props.changeCodOrbit);
   }, [props.changeBpm, props.changeTime, props.changeOrbit])
 
   function showAnimation(): React.ReactElement {
