@@ -21,7 +21,7 @@ async function httpRequest(jsonurl: string): Promise<any>{
 // Fetch the list with the information of the signatures
 async function fetchSimulationData(start: Date, end: Date): Promise<SignData> {
     let jsonurl: string = '';
-    const GET_DATA_URL = `${window.location.protocol}//10.30.1.61:80/sign_comp`;
+    const GET_DATA_URL = `${window.location.protocol}//cod-mon-api.lnls.br/sign_comp`;
     jsonurl = `${GET_DATA_URL}?start=${start.toJSON()}&stop=${end.toJSON()}`;
     const res: Promise<SignData> = httpRequest(jsonurl);
     return res
@@ -57,7 +57,7 @@ function invert_signal(res: SignChartData, sign_list: Array<string>): SignChartD
 async function fetchSignatureOrbit(sign_list: Array<any>, start: Date, end: Date): Promise<SignChartData> {
   let jsonurl: string = '';
   let cod_normalized: boolean = false;
-  const GET_DATA_URL = `${window.location.protocol}//10.30.1.61:80/sign_orbit`;
+  const GET_DATA_URL = `${window.location.protocol}//cod-mon-api.lnls.br/sign_orbit`;
 
   jsonurl = `${GET_DATA_URL}?start=${start.toJSON()}&stop=${end.toJSON()}`;
 

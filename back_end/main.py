@@ -37,9 +37,9 @@ def signOrbit():
     read_json = True
     data = request.args.get("data")
     data = data.split(',')
-    norm = True
-    if request.args.get("norm"):
-        norm = False
+    norm = False
+    if request.args.get("norm") != None:
+        norm = request.args.get("norm")
 
     for name in data:
 

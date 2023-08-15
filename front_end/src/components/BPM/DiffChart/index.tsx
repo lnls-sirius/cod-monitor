@@ -7,7 +7,8 @@ import ListBPM from "../ListBPM";
 import BaseChart from "../../Patterns/Chart";
 import control from "../../../controllers/Chart";
 import { getArchiver } from "../../../controllers/archiver";
-import { differentiateData, setBPMChange } from "../../../controllers/bpm";
+import { differentiateData } from "../../../controllers/bpm";
+import { unsetOrbitChange } from "../../../controllers/orbit";
 import { changeDateClick } from "../../../controllers/time";
 
 import { optionsDiff } from "./config";
@@ -85,6 +86,7 @@ const DiffChart: React.FC<ChartDiffProperties> = (props) => {
 
   // Detect change on time or selected BPMs
   useEffect(() => {
+    unsetOrbitChange();
     if(props.changeBpm || props.changeTime || optimizeFlag){
       updateChartDiff();
       setOptimizeFlag(false);
