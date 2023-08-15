@@ -48,11 +48,11 @@ const ListSignatures: React.FC<SignatureListInterface> = (props) => {
                 <S.TextWrapper>
                   COD Rebuilt
                 </S.TextWrapper>
-                <S.TextWrapper>
+                {/* <S.TextWrapper>
                   Normalized?
                   <input type="checkbox" checked={norm}
                     onClick={toggleNormalize}/>
-                </S.TextWrapper>
+                </S.TextWrapper> */}
               </ChartLegend>
           )
       }else if(property){
