@@ -25,7 +25,7 @@ services:
     ports:
       - 80:80
 
-  frontend:
+  frontend-latest:
     container_name: cod-mon
     image: 'ghcr.io/lnls-sirius/cod-mon-frontend'
     build:
