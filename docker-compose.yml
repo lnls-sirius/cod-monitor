@@ -3,7 +3,7 @@ version: '3.8'
 services:
   backend:
     container_name: cod-mon-api
-    image: 'ghcr.io/lnls-sirius/cod-mon-backend:1.2.1'
+    image: 'ghcr.io/lnls-sirius/cod-mon-backend:1.2.2'
     build:
       context: ./back_end
     ports:
@@ -19,7 +19,7 @@ services:
 
   frontend:
     container_name: cod-mon
-    image: 'ghcr.io/lnls-sirius/cod-mon-frontend:1.2.1'
+    image: 'ghcr.io/lnls-sirius/cod-mon-frontend:1.2.2'
     build:
       context: ./front_end
     ports:
